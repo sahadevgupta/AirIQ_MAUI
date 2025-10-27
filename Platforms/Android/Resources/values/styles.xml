@@ -1,0 +1,14 @@
+﻿<resources>
+
+	<!-- Style for dropdown list dividers -->
+	<style name="DropDownListViewStyle">
+		<item name="android:divider">#DCDCDE</item>
+		<item name="android:dividerHeight">1dp</item>
+	</style>
+
+	<!-- Custom theme that applies the dropdown style -->
+	<style name="MyTheme" parent="Theme.AppCompat.Light">
+		<item name="android:dropDownListViewStyle">@style/DropDownListViewStyle</item>
+	</style>
+
+</resources>

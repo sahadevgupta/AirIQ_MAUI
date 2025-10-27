@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirIQ.Controls.ExtendedDropdown"
+             xmlns:local="clr-namespace:AirIQ.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Name="dropdownview">
+    
+    <Grid RowDefinitions="Auto,Auto,Auto"
+          RowSpacing="5" >
+
+        <!--Title Label-->
+        <Label Style="{StaticResource TitleStyleBlackBold}"
+               x:Name="titlelbl"
+               IsVisible="{Binding Title,Source={x:Reference dropdownview},Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}" 
+               VerticalOptions="Center"
+               Text="{Binding Title,Source={x:Reference dropdownview}}"/>
+
+        <!--Dropdown with Frame-->
+        <Border x:Name="frameDropdown"
+               StrokeThickness="1"
+               Stroke="{StaticResource RoyalMailLightGrey}"
+               Grid.Row="1"
+               HeightRequest="50">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="4"/>
+            </Border.StrokeShape>
+            <Border.Triggers>
+
+                <DataTrigger Binding="{Binding Source={x:Reference errorView},Path=IsVisible}"
+                             TargetType="Border"
+                             Value="true">
+                    <Setter Property="Stroke" Value="{StaticResource RoyalMailRed}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Source={x:Reference dropdown},Path=ShowDropdown}"
+                             TargetType="Border"
+                             Value="true">
+                    <Setter Property="Stroke" Value="{StaticResource RoyalMailBlack}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Source={x:Reference dropdownview},Path=IsEnabled}"
+                             TargetType="Border"
+                             Value="False">
+                    <Setter Property="BackgroundColor" Value="Gray"/>
+                    <Setter Property="Opacity" Value="0.8"/>
+                </DataTrigger>
+            </Border.Triggers>
+
+
+            <Grid ColumnDefinitions="*,Auto" 
+                  RowDefinitions="Auto"
+                  IsClippedToBounds="True"
+                  VerticalOptions="Center"
+                  ColumnSpacing="4">
+
+                <!--Custom Dropdown-->
+                <local:CustomDropdown x:Name="dropdown"
+                                      AutomationId="dropdownview"
+                                      CanEdit="{Binding CanEdit,Source={x:Reference dropdownview}}"
+                                      ItemSource="{Binding ItemsSource,Source={x:Reference dropdownview}}"
+                                      InputViewStyle="{Binding InputViewStyle,Source={x:Reference dropdownview}}"
+                                      PlaceholderText="{Binding PlaceholderText,Source={x:Reference dropdownview}}"
+                                      SelectedItem="{Binding SelectedItem,Source={x:Reference dropdownview}}"
+                                      DisplayMemberPath="{Binding DisplayMemberPath,Source={x:Reference dropdownview}}"
+                                      TextChanged="DropdownTextChanged"
+                                      Grid.ColumnSpan="2"/>
+
+                <!--Image-->
+                <Image HeightRequest="20"
+                       Source="{Binding Icon,Source={x:Reference dropdownview}}"
+                       Grid.Column="1"
+                       Margin="10,0,12,0"
+                       InputTransparent="True">
+                    <Image.Triggers>
+                        <DataTrigger TargetType="Image"
+                                     Binding="{Binding Source={x:Reference dropdown}, Path= ShowDropdown}"
+                                     Value="True">
+                            <Setter Property="Rotation" Value="180"/>
+                        </DataTrigger>
+                    </Image.Triggers>
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizerTapped" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+        </Border>
+
+        <!-- Error Label-->
+        <Grid Grid.Row="2" 
+              ColumnSpacing="6"
+              ColumnDefinitions="Auto,*"
+              x:Name="errorView"
+              IsVisible="{Binding IsError,Source={x:Reference dropdownview}}">
+
+            <Image Grid.Column="0"
+                   Source="error_image.png"
+                   Aspect="AspectFit"
+                   WidthRequest="20"/>
+
+            <Label Grid.Column="1"
+                   Text="{Binding ErrorText,Source={x:Reference dropdownview}}"
+                   Style="{StaticResource ErrorStyleBlackRegular}"/>
+        </Grid>
+    </Grid>
+</ContentView>
+

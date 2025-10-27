@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirIQ.Views.LoginPage"
+             xmlns:controls="clr-namespace:AirIQ.Controls"
+             Title="Login"
+             NavigationPage.HasNavigationBar="False">
+
+   
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30"
+            Spacing="25"
+            VerticalOptions="Fill"
+            HorizontalOptions="Fill">
+
+            <Image 
+                Source="airiq_logo.png" 
+                HeightRequest="120"
+                HorizontalOptions="Center" />
+
+            <Label 
+                Text="Welcome to AIR iQ"
+                Style="{StaticResource TitleLabel}"
+                HorizontalOptions="Center" />
+
+            <Label 
+                Text="Sign in to continue"
+                FontSize="16"
+                TextColor="{StaticResource DarkGray}"
+                HorizontalOptions="Center" />
+
+            <controls:ExtendedEntry PlaceholderText="Email"
+                                    Title="Email"/>
+
+            <controls:ExtendedEntry PlaceholderText="Password"
+                                    Title="Password"/>
+
+            <Label 
+                Text="Forgot Password?"
+                FontAttributes="Bold"
+                TextColor="{StaticResource AccentColor}"
+                FontSize="14"
+                HorizontalOptions="End" />
+
+            
+            <Button 
+                Text="Login"
+                BackgroundColor="{StaticResource PrimaryColor}"
+                TextColor="White"
+                CornerRadius="12"
+                FontAttributes="Bold"
+                HeightRequest="50"
+                Margin="0,10,0,0"/>
+
+            
+            <HorizontalStackLayout 
+                Spacing="10"
+                VerticalOptions="Center"
+                HorizontalOptions="Center">
+                <BoxView Color="#E0E0E0" HeightRequest="1" WidthRequest="80"/>
+                <Label Text="OR" TextColor="#9E9E9E" FontSize="14"/>
+                <BoxView Color="#E0E0E0" HeightRequest="1" WidthRequest="80"/>
+            </HorizontalStackLayout>
+
+            
+            <Button 
+                Text="Create an Account"
+                BackgroundColor="{StaticResource AccentColor}"
+                TextColor="White"
+                CornerRadius="12"
+                FontAttributes="Bold"
+                HeightRequest="50"/>
+
+            
+            <Label 
+                Text="© 2025 AIR iQ Groups &amp; Series"
+                FontSize="12"
+                TextColor="#9E9E9E"
+                HorizontalOptions="Center"
+                Margin="0,20,0,0"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

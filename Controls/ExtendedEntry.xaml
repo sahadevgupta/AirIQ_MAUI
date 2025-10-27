@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirIQ.Controls.ExtendedEntry"
+             xmlns:controls="clr-namespace:AirIQ.Controls"     
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Name="customEntryControlWithTitle">
+    <Grid RowSpacing="4"
+          RowDefinitions="Auto,Auto,52, Auto">
+
+        <Label x:Name="TitleLabel"
+               Grid.Row="0"
+               Style="{StaticResource TitleStyleBlackBold}"
+               Text="{Binding Title, Source={x:Reference customEntryControlWithTitle}}"
+               IsVisible="{Binding Title, Source={x:Reference customEntryControlWithTitle}, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"/>
+
+        <Label x:Name="SupportLabel"
+               Grid.Row="1"
+               IsVisible="{Binding IsSupportingTextVisible, Source={x:Reference customEntryControlWithTitle}}"
+               Style="{StaticResource SupportLabelStyleBlackRegular}"
+               Text="{Binding SupportingText, Source={x:Reference customEntryControlWithTitle}}"/>
+
+        <Border Grid.Row="2"
+                StrokeThickness="1"
+                Stroke="{Binding EntryBorderColor, Source={x:Reference customEntryControlWithTitle}}"
+                BackgroundColor="White"
+                Padding="0"
+                StrokeShape="RoundRectangle 10"
+                x:Name="EntryBorder">
+
+            <Border.Triggers>
+                <DataTrigger TargetType="Border" Binding="{Binding IsErrorViewVisible, Source={x:Reference customEntryControlWithTitle}}"
+                             Value="True">
+                    <Setter Property="Stroke" Value="Red"/>
+                </DataTrigger>
+            </Border.Triggers>
+
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                <controls:BorderlessEntry x:Name="InputEntry"  
+                           BackgroundColor="Transparent"
+                           Margin="12,4,0,4"
+                           VerticalTextAlignment="Center"
+                           Placeholder="{Binding PlaceholderText,Source={x:Reference customEntryControlWithTitle}}"     
+                           Text="{Binding EntryText, Source={x:Reference customEntryControlWithTitle} }"                
+                           Keyboard="{Binding EntryKeyboard, Source={x:Reference customEntryControlWithTitle}}"
+                           ReturnCommand="{Binding ReturnCommand,Source={x:Reference customEntryControlWithTitle}}"
+                           MaxLength="{Binding MaxLength,Source={x:Reference customEntryControlWithTitle}}"
+                           Style="{StaticResource FieldEntryStyleGreyRegular}"
+                           Focused="InputEntry_Focused"
+                           VerticalOptions="Center">
+                    <controls:BorderlessEntry.Triggers>
+                        <DataTrigger TargetType="controls:BorderlessEntry"
+                                     Binding="{Binding Source={x:Reference img}, Path=IsVisible}"
+                                     Value="False">
+                            <Setter Property="Grid.ColumnSpan" Value="2"/>
+                        </DataTrigger>
+                    </controls:BorderlessEntry.Triggers>
+                </controls:BorderlessEntry>
+
+                <Image Source="{Binding Icon,Source={x:Reference customEntryControlWithTitle}}" 
+                       IsVisible="{Binding Icon,Source={x:Reference customEntryControlWithTitle}, Converter={toolkit:IsStringNotNullOrEmptyConverter}}"
+                       x:Name="img"
+                       Grid.Column="1"
+                       Margin="0,0,12,0">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding IconTapCommand,Source={x:Reference customEntryControlWithTitle}}"
+                                              CommandParameter="{Binding IconTapCommandParameter,Source={x:Reference customEntryControlWithTitle}}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="3" 
+              ColumnSpacing="6"
+              ColumnDefinitions="Auto,*"
+              IsVisible="{Binding IsErrorViewVisible, Source={x:Reference customEntryControlWithTitle}}">
+
+            <Image Grid.Column="0"
+                   Source="error_image.png"
+                   Aspect="AspectFit"/>
+
+            <Label Grid.Column="1"
+                   Text="{Binding ErrorText, Source={x:Reference customEntryControlWithTitle}}"
+                   Style="{StaticResource ErrorStyleBlackRegular}"/>
+        </Grid>
+    </Grid>
+</ContentView>
