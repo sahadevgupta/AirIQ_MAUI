@@ -6,7 +6,8 @@ namespace AirIQ.Extensions
     {
         public static MauiAppBuilder ViewInit(this MauiAppBuilder builder)
         {
-            builder.Services.AddTransient<LoginPage>();
+            builder.Services.AddTransient<LoginPage>()
+                            .AddTransient<DashboardPage>();
 
             return builder;
         }

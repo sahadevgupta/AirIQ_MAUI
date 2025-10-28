@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirIQ.Views.LoginPage"
              xmlns:controls="clr-namespace:AirIQ.Controls"
+             xmlns:viewModels="clr-namespace:AirIQ.ViewModels"
+             x:DataType="viewModels:LoginPageViewModel"
              Title="Login"
              NavigationPage.HasNavigationBar="False">
-
-   
 
     <ScrollView>
         <VerticalStackLayout
@@ -52,7 +52,8 @@
                 CornerRadius="12"
                 FontAttributes="Bold"
                 HeightRequest="50"
-                Margin="0,10,0,0"/>
+                Margin="0,10,0,0"
+                Command="{Binding LoginCommand}"/>
 
             
             <HorizontalStackLayout 

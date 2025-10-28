@@ -59,6 +59,11 @@
         <Setter Property="TextColor" Value="Red"/>
     </Style>
 
+    <Style x:Key="TitleSmallWithPrimaryFontColor" TargetType="Label">
+        <Setter Property="FontSize" Value="Small" />
+        <Setter Property="TextColor" Value="{DynamicResource PrimaryFontColor}" />
+    </Style>
+
     <!-- ==================== -->
     <!--   ENTRY STYLES      -->
     <!-- ==================== -->

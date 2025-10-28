@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Grid xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirIQ.Controls.TabButton"
+      x:Name="tabView"
+      IsClippedToBounds="True">
+
+    <Grid.GestureRecognizers>
+        <TapGestureRecognizer Tapped="TabButton_OnClicked"/>
+    </Grid.GestureRecognizers>
+
+    <Label
+     x:Name="TabLabelView"
+     FontAttributes="Bold"
+     FontSize="Medium"
+     HorizontalOptions="CenterAndExpand"
+     InputTransparent="True"
+     VerticalOptions="CenterAndExpand" />
+    <!--  Horizontal indicator for Android  -->
+    <BoxView
+     x:Name="HorizontalIndicator"
+     HeightRequest="2"
+     InputTransparent="True"
+     IsVisible="False"
+     VerticalOptions="End" />
+    <!--  Vertical separator for iOS  -->
+    <BoxView
+     x:Name="VerticalSeparator"
+     HorizontalOptions="Start"
+     InputTransparent="True"
+     IsVisible="False"
+     VerticalOptions="FillAndExpand"
+     WidthRequest="1" />
+
+</Grid>

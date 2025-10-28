@@ -9,6 +9,7 @@ namespace AirIQ.Extensions
     {
         public static MauiAppBuilder RegisterForNavigation(this MauiAppBuilder builder)
         {
+            NavigationRegistry.Register<DashboardPage, DashboardPageViewModel>(NavigationConstants.Dashboard);
             NavigationRegistry.Register<LoginPage, LoginPageViewModel>(NavigationConstants.Login);
 
             return builder;

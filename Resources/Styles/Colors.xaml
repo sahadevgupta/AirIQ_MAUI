@@ -43,11 +43,12 @@
     <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
     <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
 
-    <Color x:Key="PopupBackground">#4DF5F5F5</Color>
+    <Color x:Key="PrimaryFontColor">#333333</Color>
+    <Color x:Key="PopupBackground">#A0000000</Color>
     <Color x:Key="AccentColor">#F26B6C</Color>
     <Color x:Key="DarkGray">#555555</Color>
     <Color x:Key="LightGray">#E0E0E0</Color>
-    <Color x:Key="BackgroundColor">#FFFFFF</Color>
+    <Color x:Key="BackgroundColor">#efefef</Color>
 
     <!-- ==================== -->
     <!--   DARK THEME COLORS  -->

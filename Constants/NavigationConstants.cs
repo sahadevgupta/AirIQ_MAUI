@@ -2,6 +2,7 @@
 {
     public class NavigationConstants
     {
+        public const string Dashboard = nameof(Dashboard);
         public const string Login = nameof(Login);
     }
 }

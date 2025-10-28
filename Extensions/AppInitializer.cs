@@ -41,6 +41,7 @@ namespace AirIQ.Extensions
                 fonts.AddFont("Poppins-Medium.otf", "PoppinsMedium");
                 fonts.AddFont("Poppins-Regular.otf", "PoppinsRegular");
                 fonts.AddFont("Poppins-SemiBold.ttf", "PoppinsSemiBold");
+                fonts.AddFont("fa-solid-900.ttf", "MyFont");
             });
         }
     }

@@ -4,6 +4,11 @@
              x:Class="AirIQ.Controls.LoadingIndicatorView"
              BackgroundColor="{StaticResource PopupBackground}">
 
-    <Image Source="loader.gif" IsAnimationPlaying="True"/>
+    <Grid ColumnDefinitions="2*,6*,2*">
+
+        <Border StrokeShape="RoundRectangle 12" VerticalOptions="Center" Stroke="{DynamicResource PopupBackground}"  Grid.Column="1">
+        <Image Source="loader.gif" IsAnimationPlaying="True"/>
+        </Border>
+    </Grid>
 
 </ContentPage>

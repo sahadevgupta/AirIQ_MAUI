@@ -50,7 +50,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Resources\Fonts\IconFont.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Platforms\Android\Resources\values\styles.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiFont Include="Extensions\IconFont.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -61,6 +69,21 @@
 		<PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
 		<PackageReference Include="Refit.Newtonsoft.Json" Version="8.0.0" />
 		<PackageReference Include="Sentry.Maui" Version="5.16.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Controls\AdvSegmentedControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Controls\ExtendedDatePicker.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Controls\TabButton.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\DashboardPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>
