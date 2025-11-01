@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:helpers="clr-namespace:AirIQ.Extensions"
+       xmlns:local="clr-namespace:AirIQ.Views"
+       xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
+       x:Class="AirIQ.AppShell">
+
+    <Shell.Resources>
+        <Style TargetType="TabBar">
+            <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource Gray600}"/>
+        </Style>
+    </Shell.Resources>
+
+    <TabBar>
+        <ShellContent
+            Title="{x:Static resx:AppResource.Home}"
+            ContentTemplate="{DataTemplate local:DashboardPage}">
+            <ShellContent.Icon>
+                <FontImageSource
+                    FontFamily="MyFont"
+                    Glyph="{x:Static helpers:FontAwesomeIcons.Home}"
+                    Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
+
+
+        <ShellContent
+            Title="{x:Static resx:AppResource.Account}"
+            ContentTemplate="{DataTemplate local:LoginPage}" >
+            <ShellContent.Icon>
+                <FontImageSource
+                    FontFamily="MyFont"
+                    Glyph="{x:Static helpers:FontAwesomeIcons.UserCircle}"
+                    Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
+
+        <ShellContent
+            Title="{x:Static resx:AppResource.Settings}"
+            ContentTemplate="{DataTemplate local:DashboardPage}">
+            <ShellContent.Icon>
+                <FontImageSource
+                    FontFamily="MyFont"
+                    Glyph="{x:Static helpers:FontAwesomeIcons.Cog}"
+                    Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
+
+    </TabBar>
+    
+</Shell>

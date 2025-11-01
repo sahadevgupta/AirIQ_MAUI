@@ -1,6 +1,8 @@
-﻿using AirIQ.Services;
+﻿using AirIQ.Controls;
+using AirIQ.Services;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels;
+using AirIQ.ViewModels.Common;
 using AirIQ.Views;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,7 @@ namespace AirIQ.Extensions
         {
             builder
                 .ConfigureAppFonts()
+                .ConfigureAppHandlers()
                 .ViewInit()
                 .ViewModelInit()
                 .RefitClientInit()
@@ -29,6 +32,10 @@ namespace AirIQ.Extensions
         {
             builder.Services.AddSingleton<ILoadingPopUpService, AirIQ.Platforms.Services.LoadingPopupService>();
             builder.Services.AddSingleton<INavigationService, NavigationService>();
+            builder.Services.AddSingleton<IShellNavigationService, ShellNavigationService>();
+
+            //Transient Services
+            builder.Services.AddTransient<IViewModelParameters, ViewModelParameters>();
 
             return builder;
         }
@@ -42,6 +49,17 @@ namespace AirIQ.Extensions
                 fonts.AddFont("Poppins-Regular.otf", "PoppinsRegular");
                 fonts.AddFont("Poppins-SemiBold.ttf", "PoppinsSemiBold");
                 fonts.AddFont("fa-solid-900.ttf", "MyFont");
+            });
+        }
+
+        private static MauiAppBuilder ConfigureAppHandlers(this MauiAppBuilder builder)
+        {
+            return builder.ConfigureMauiHandlers(handlers =>
+            {
+                handlers.AddHandler<CustomDropdown, AirIQ.Platforms.Handlers.CustomDropdownHandler>();
+#if ANDROID
+                handlers.AddHandler(typeof(Shell), typeof(AirIQ.Platforms.Handlers.CustomShellRenderer));
+#endif
             });
         }
     }

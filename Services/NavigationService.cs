@@ -13,7 +13,7 @@ namespace AirIQ.Services
         {
             get
             {
-                INavigation? navigation = Application.Current?.MainPage?.Navigation;
+                INavigation? navigation = Application.Current?.MainPage.Navigation;
                 if (navigation != null)
                 {
                     return navigation;

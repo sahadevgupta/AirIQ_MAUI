@@ -122,7 +122,7 @@ namespace AirIQ.Platforms.iOS.Handlers
                 };
 
                 SelectionList.Layer.CornerRadius = 4;
-                SelectionList.Layer.BorderColor = ((Color)Application.Current.Resources["RoyalMailLightGrey"]).ToCGColor();
+                SelectionList.Layer.BorderColor = ((Color)Application.Current.Resources["LightGray"]).ToCGColor();
                 SelectionList.Layer.BorderWidth = 1;
 
                 _parentViewController?.View?.AddSubview(SelectionList);
@@ -144,7 +144,7 @@ namespace AirIQ.Platforms.iOS.Handlers
                 InputTextField.Placeholder ?? string.Empty,
                 new UIStringAttributes
                 {
-                    ForegroundColor = ((Color)Application.Current.Resources["RoyalMailDarkGrey"]).ToPlatform()
+                    ForegroundColor = ((Color)Application.Current.Resources["DarkGray"]).ToPlatform()
                 });
         }
 
@@ -305,7 +305,7 @@ namespace AirIQ.Platforms.iOS.Handlers
                 else
                 {
                     InputTextField.Text = textFunc(selection);
-                    InputTextField.TextColor = ((Color)Application.Current.Resources["RoyalMailBlack"]).ToPlatform();
+                    InputTextField.TextColor = ((Color)Application.Current.Resources["Black"]).ToPlatform();
                 }
             }
             suppressTextChangedEvent = false;
@@ -382,8 +382,8 @@ namespace AirIQ.Platforms.iOS.Handlers
 
                 cell.TextLabel.Text = labelText;
                 cell.TextLabel.TextColor = labelText == StringConstants.NoResultAvailable
-                    ? ((Color)Application.Current.Resources["RoyalMailRed"]).ToPlatform()
-                    : ((Color)Application.Current.Resources["RoyalMailBlack"]).ToPlatform();
+                    ? ((Color)Application.Current.Resources["Red"]).ToPlatform()
+                    : ((Color)Application.Current.Resources["Black"]).ToPlatform();
                 cell.TextLabel.LineBreakMode = UILineBreakMode.WordWrap;
                 cell.TextLabel.Lines = 0;
 

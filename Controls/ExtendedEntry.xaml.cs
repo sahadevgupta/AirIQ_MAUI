@@ -181,7 +181,7 @@ public partial class ExtendedEntry : ContentView
                 nameof(EntryBorderColor),
                 typeof(Color),
                 typeof(ExtendedEntry),
-                default,
+                (Color)(Application.Current?.Resources["LightGray"])!,
                 BindingMode.TwoWay,
                 propertyChanged: OnEntryBorderColorPropertyChanged);
     public Color EntryBorderColor
@@ -213,7 +213,7 @@ public partial class ExtendedEntry : ContentView
 
     private void InputEntry_Focused(object sender, FocusEventArgs e)
     {
-        EntryBorderColor = (Application.Current?.Resources.TryGetValue("RoyalMailBlack", out var value) == true
+        EntryBorderColor = (Application.Current?.Resources.TryGetValue("Black", out var value) == true
                      && value is Color color) ? color : Colors.Black;
     }
 

@@ -88,11 +88,11 @@ namespace AirIQ.Platforms.Handlers
             Box.UserInteractionEnabled = customDropdown.IsEnabled;
             if (!customDropdown.IsEnabled)
             {
-                Box.SetPlaceholderTextColor((Color)Application.Current.Resources["RoyalMailDarkGrey"]);
+                Box.SetPlaceholderTextColor((Color)Application.Current.Resources["DarkGray"]);
             }
             else
             {
-                Box.SetPlaceholderTextColor((Color)Application.Current.Resources["RoyalMailBlack"]);
+                Box.SetPlaceholderTextColor((Color)Application.Current.Resources["Black"]);
             }
         }
 

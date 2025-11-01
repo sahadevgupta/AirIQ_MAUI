@@ -1,4 +1,5 @@
-﻿using AirIQ.ViewModels.Common;
+﻿using AirIQ.Services.Interfaces;
+using AirIQ.ViewModels.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AirIQ.ViewModels
 {
-    public partial class DashboardPageViewModel : BaseViewModel
+    public partial class DashboardPageViewModel(IViewModelParameters viewModelParameters) : BaseViewModel(viewModelParameters)
     {
     }
 }

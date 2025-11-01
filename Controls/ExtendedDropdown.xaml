@@ -19,7 +19,7 @@
         <!--Dropdown with Frame-->
         <Border x:Name="frameDropdown"
                StrokeThickness="1"
-               Stroke="{StaticResource RoyalMailLightGrey}"
+               Stroke="{StaticResource LightGray}"
                Grid.Row="1"
                HeightRequest="50">
             <Border.StrokeShape>
@@ -30,12 +30,12 @@
                 <DataTrigger Binding="{Binding Source={x:Reference errorView},Path=IsVisible}"
                              TargetType="Border"
                              Value="true">
-                    <Setter Property="Stroke" Value="{StaticResource RoyalMailRed}" />
+                    <Setter Property="Stroke" Value="{StaticResource Red}" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Source={x:Reference dropdown},Path=ShowDropdown}"
                              TargetType="Border"
                              Value="true">
-                    <Setter Property="Stroke" Value="{StaticResource RoyalMailBlack}" />
+                    <Setter Property="Stroke" Value="{StaticResource Black}" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Source={x:Reference dropdownview},Path=IsEnabled}"
                              TargetType="Border"

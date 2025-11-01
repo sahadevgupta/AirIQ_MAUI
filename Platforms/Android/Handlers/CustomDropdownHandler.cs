@@ -50,10 +50,10 @@ namespace AirIQ.Platforms.Handlers
             }
 
             autoCompleteTextView.Threshold = 0;
-            autoCompleteTextView.SetHintTextColor(((Color)Application.Current.Resources["RoyalMailLightGrey"]).ToPlatform());
+            autoCompleteTextView.SetHintTextColor(((Color)Application.Current.Resources["LightGray"]).ToPlatform());
 
             autoCompleteTextView.SetSingleLine(true);
-            autoCompleteTextView.SetTextColor(((Color)Application.Current.Resources["RoyalMailDarkGrey"]).ToPlatform());
+            autoCompleteTextView.SetTextColor(((Color)Application.Current.Resources["DarkGray"]).ToPlatform());
 
             autoCompleteTextView.Click += AutoCompleteTextView_Click;
             autoCompleteTextView.ItemClick += AutoCompleteTextView_ItemClick;
@@ -136,7 +136,7 @@ namespace AirIQ.Platforms.Handlers
         {
             var rowHeight = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip, 40, Platform.AppContext.Resources.DisplayMetrics);
             int maxHeight = rowHeight * 3;
-            int dropdownHeight = Math.Min(items!.Count * rowHeight, maxHeight);
+            int dropdownHeight = items is null ? 350 : Math.Min(items!.Count * rowHeight, maxHeight);
             autoCompleteTextView.DropDownHeight = dropdownHeight;
             VirtualView.HeightRequest = dropdownHeight;
         }
@@ -195,7 +195,7 @@ namespace AirIQ.Platforms.Handlers
             {
                 string value = FormatType(customDropdown.SelectedItem, customDropdown.DisplayMemberPath);
                 autoCompleteTextView.SetText(value, true);
-                autoCompleteTextView.SetTextColor(((Color)Application.Current.Resources["RoyalMailDarkGrey"]).ToPlatform());
+                autoCompleteTextView.SetTextColor(((Color)Application.Current.Resources["DarkGray"]).ToPlatform());
             }
         }
 

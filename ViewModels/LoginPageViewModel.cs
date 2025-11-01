@@ -5,7 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace AirIQ.ViewModels
 {
-    public partial class LoginPageViewModel(ILoadingPopUpService loadingPopUpService,INavigationService navigationService) : BaseViewModel
+    public partial class LoginPageViewModel(IViewModelParameters viewModelParameters) : BaseViewModel(viewModelParameters)
     {
         #region [ Commands ]
 
@@ -16,14 +16,14 @@ namespace AirIQ.ViewModels
                 return;
             try
             {
-                loadingPopUpService.ShowLoading();
+                LoadingService.ShowLoading();
                 IsBusy = true;
-                // Simulate a login process
+
                 await Task.Delay(5000);
 
-                loadingPopUpService.HideLoading();
-                // Navigate to the dashboard or main page after successful login
-                await navigationService.Navigate(NavigationConstants.Dashboard);
+                LoadingService.HideLoading();
+
+                Application.Current!.Windows[0].Page = new AppShell();
             }
             catch (Exception ex)
             {

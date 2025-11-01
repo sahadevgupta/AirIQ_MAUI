@@ -1,4 +1,5 @@
 ﻿using AirIQ.Constants;
+using AirIQ.Controls;
 using AirIQ.Services.Interfaces;
 using AirIQ.Views;
 
@@ -11,12 +12,22 @@ namespace AirIQ
         {
             InitializeComponent();
             _navigationService = navigationService;
-            MainThread.BeginInvokeOnMainThread(async () =>
-            {
-                var navPage = new NavigationPage();
-                MainPage = navPage;
-                await _navigationService.Navigate(NavigationConstants.Login);
-            });
         }
+
+        protected override Window CreateWindow(IActivationState? activationState)
+        {
+            var window = new Window(new NavigationPage(new LoadingIndicatorView()));
+
+            window.Created += (s, e) =>
+            {
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await _navigationService.Navigate(NavigationConstants.Login);
+                });
+            };
+
+            return window;
+        }
+
     }
 }
