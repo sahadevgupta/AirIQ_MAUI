@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirIQ.Views.SummaryPage"
+             Title="SummaryPage">
+    <!--<AbsoluteLayout>
+        <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1"
+          AbsoluteLayout.LayoutFlags="All">
+            --><!-- Main Structure--><!--
+            <Grid RowSpacing="0" RowDefinitions="Auto,Auto,Auto,*">
+                --><!-- Price block-->
+                <!-- Frame with price information--><!--
+                <Frame Grid.Row="0" Margin="30,30,30,0" HeightRequest="80" >
+                    <Grid RowDefinitions="Auto,Auto,Auto" HorizontalOptions="Center">
+                        <Label Grid.Row="0" Text="{Binding TotalPrice}" Style="{StaticResource MainAmount}" />
+                        <Label Grid.Row="1" Text="{Binding SelectedAirline.DepartureDate}" HorizontalOptions="Center" Style="{StaticResource SecundaryText}"/>
+                        <Line  Grid.Row="2" Style="{StaticResource DivisionLine}" 
+                       TranslationY="20"/>
+                    </Grid>
+                </Frame>
+                --><!-- Main image--><!--
+                <Frame HorizontalOptions="Center" 
+               CornerRadius="10"
+               IsVisible="false"
+               Padding="0"
+               BackgroundColor="Transparent">
+                    <Image Grid.Row="0" 
+                   TranslationY="-55">
+                        <Image.Source>
+                            <UriImageSource Uri="http://www.thekaizervalleyhotel.com/demo/airiq-web/img/indigo.png"/>
+                        </Image.Source>
+                    </Image>
+                </Frame>
+
+                --><!-- Indicator Bar-->
+                <!--<PanCake:PancakeView Grid.Row="0" CornerRadius="20,0,0,30" TranslationY="30" TranslationX="30" HorizontalOptions="Start" VerticalOptions="Start" WidthRequest="100" HeightRequest="35">
+                    <Grid RowDefinitions="*" BackgroundColor="#1277e3" Padding="15,5">
+                        <Label Grid.Row="0" Text="ONLINE" FontAttributes="Bold" TextColor="White" FontSize="15"/>
+                    </Grid>
+                </PanCake:PancakeView>-->
+                <!-- 2. Details & Total--><!--
+                <StackLayout Grid.Row="1" Margin="30,-15,30,0">
+                    <Frame >
+                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*,*"
+                  >
+
+                            <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto"
+                      Grid.Row="1" Grid.Column="0" Margin="0,-15,0,12" Grid.ColumnSpan="2" VerticalOptions="StartAndExpand">
+                                <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" HeightRequest="60" WidthRequest="60" 
+                               Aspect="AspectFill"
+                           Margin="0,5,0,0">
+                                    <Image.Source>
+                                        <UriImageSource Uri="{Binding SelectedAirline.ImageUrl}"/>
+                                    </Image.Source>
+                                </Image>
+
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding SelectedAirline.AirlineName}" Margin="0,5,0,0" FontAttributes="Bold" FontSize="16" TextColor="Silver"/>
+
+
+
+                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding SelectedAirline.FlightRoute}" FontAttributes="Bold" FontSize="16" VerticalOptions="End" Margin="0,0,0,5"/>
+                                <Label Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Text="{Binding TotalPrice}" VerticalOptions="Center" FontSize="18" FontAttributes="Bold"/>
+                                <Line  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" X1="260" StrokeThickness="0.5" Stroke="Silver"/>
+                            </Grid>
+
+                            --><!-- Amount of products --><!--
+                            <Label Grid.Row="2" Grid.Column="0" Text="Subtotal" FontSize="16" TextColor="#4f4f4f" FontAttributes="Bold" Margin="0,0,0,10"/>
+                            <Label Grid.Row="3" Grid.Column="0" Text="Discount" FontSize="16" 
+                       IsVisible="false"
+                       TextColor="#4f4f4f" FontAttributes="Bold"/>
+                            <Label Grid.Row="3" Grid.Column="0" Text="2%"
+                       IsVisible="false"
+                       TextColor="Black"
+                       BackgroundColor="Silver" Padding="5,2" FontSize="10" 
+                       VerticalTextAlignment="Center" HorizontalOptions="Center" TranslationX="10" TranslationY="-2"/>
+                            <Label Grid.Row="2" Grid.Column="1" Text="$185.65"  FontSize="18" FontAttributes="Bold" Margin="0,0,0,10" HorizontalOptions="End"/>
+                            <Label Grid.Row="3" Grid.Column="1" Text="-$3.71"   
+                       IsVisible="false"
+                       FontSize="18" FontAttributes="Bold" TextColor="#2880e5" HorizontalOptions="End"/>
+
+                            --><!--<Line  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,15"
+                       Style="{StaticResource DivisionLine}" />--><!--
+
+                        </Grid>
+                    </Frame>
+                </StackLayout>
+                --><!-- Rounded borders--><!--
+                <Ellipse Grid.Row="1" HorizontalOptions="Start"  TranslationY="-155" TranslationX="20"  Fill="#efefef" VerticalOptions="End" HeightRequest="26" WidthRequest="26" StrokeThickness="0"/>
+                <Ellipse Grid.Row="1" HorizontalOptions="End" TranslationY="-155" TranslationX="-20" Fill="#efefef" VerticalOptions="End" HeightRequest="26" WidthRequest="26" StrokeThickness="0"/>
+
+                --><!-- Timeline--><!--
+                <Frame Grid.Row="2" Margin="30,20,30,0">
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto">
+                        <Label Grid.Row="0" Grid.Column="0" Text="TRAVELLERS" TextColor="Silver" FontSize="14" CharacterSpacing="2"/>
+
+                        <StackLayout BindableLayout.ItemsSource="{Binding Passengers}"
+                             Grid.Row="1">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout Orientation="Horizontal">
+
+                                        <Image>
+                                            <Image.Source>
+                                                <FontImageSource FontFamily="MyFont"
+                                                         Color="#1277e3"
+                                                         Glyph="{x:Static resources:FontAwesomeIcons.UserCircle}"/>
+                                            </Image.Source>
+                                        </Image>
+
+                                        <Label Style="{StaticResource TitleBodyWithPrimaryFontColor}"
+                                       VerticalOptions="CenterAndExpand">
+                                            <Label.Text>
+                                                <MultiBinding  StringFormat="{}{0} {1} {2}">
+                                                    <Binding Path="Title" />
+                                                    <Binding Path="FirstName" />
+                                                    <Binding Path="LastName" />
+                                                </MultiBinding>
+                                            </Label.Text>
+                                        </Label>
+                                    </StackLayout>
+
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+
+                        --><!--<Label Grid.Row="1" Grid.Column="0" Text="Sept 26" Padding="0,0,15,0" FontSize="16" FontAttributes="Bold" />
+                <Label Grid.Row="1" Grid.Column="1" Text="Confirm received commodity, $181.94 is included in this month bills." FontSize="13" LineBreakMode="WordWrap"/>
+                <Line Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="CenterAndExpand" Margin="0,5,0,0"
+                           X1="260"
+                           StrokeThickness="0.5"
+                           Stroke="Silver"/>
+                <Image Grid.Row="3" Grid.Column="0" HorizontalOptions="End" Source="LogoPaypal" TranslationY="3"/>
+                <Label Grid.Row="3" Grid.Column="1" Padding="0,5,0,0" HorizontalOptions="Start" Text="lyh4852@icloud.com" HorizontalTextAlignment="Center" FontSize="15" FontAttributes="Bold"/>--><!--
+                    </Grid>
+                </Frame>
+                --><!-- Paymnet buttons--><!--
+
+
+                <Grid Grid.Row="3" ColumnDefinitions="*,*" Padding="15" VerticalOptions="End"
+              RowSpacing="0">
+
+                    <Label Grid.Row="0" HorizontalTextAlignment="Center" 
+                   Grid.ColumnSpan="2"
+                   VerticalOptions="End">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Have problem about this bill?" FontSize="15" FontAttributes="Bold" TextColor="Silver"/>
+                                <Span Text=" Customer service" TextColor="#4e4e4e" FontAttributes="Bold" FontSize="15"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Button Grid.Column="0" Grid.Row="1"  ImageSource="Arrow" Text="Cancel" TextColor="Black" FontAttributes="Bold" BackgroundColor="#e4e4e4" 
+                    CornerRadius="10" HeightRequest="50" 
+                    Margin="10,20,10,20"
+                    Command="{prism:GoBack GoBackType=ToRoot, Animated=False}"/>
+                    <Button Grid.Column="1" Grid.Row="1" Text="Pay now" TextColor="White" FontAttributes="Bold" BackgroundColor="Black" CornerRadius="10" 
+                    Command="{Binding PayNowCommand}"
+                    Margin="5,20,10,20" HeightRequest="50"/>
+                </Grid>
+
+            </Grid>
+        </ScrollView>
+
+        --><!--<controls:LoadingView 
+        AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+        AbsoluteLayout.LayoutFlags="All"
+        IsVisible="{Binding IsBusy}"/>--><!--
+
+    </AbsoluteLayout>-->
+</ContentPage>

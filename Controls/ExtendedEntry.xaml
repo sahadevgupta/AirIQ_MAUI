@@ -25,7 +25,7 @@
                 Stroke="{Binding EntryBorderColor, Source={x:Reference customEntryControlWithTitle}}"
                 BackgroundColor="White"
                 Padding="0"
-                StrokeShape="RoundRectangle 10"
+                StrokeShape="RoundRectangle 8"
                 x:Name="EntryBorder">
 
             <Border.Triggers>
@@ -41,7 +41,7 @@
                            Margin="12,4,0,4"
                            VerticalTextAlignment="Center"
                            Placeholder="{Binding PlaceholderText,Source={x:Reference customEntryControlWithTitle}}"     
-                           Text="{Binding EntryText, Source={x:Reference customEntryControlWithTitle} }"                
+                           Text="{Binding Text, Source={x:Reference customEntryControlWithTitle} }"                
                            Keyboard="{Binding EntryKeyboard, Source={x:Reference customEntryControlWithTitle}}"
                            ReturnCommand="{Binding ReturnCommand,Source={x:Reference customEntryControlWithTitle}}"
                            MaxLength="{Binding MaxLength,Source={x:Reference customEntryControlWithTitle}}"
@@ -75,7 +75,7 @@
               IsVisible="{Binding IsErrorViewVisible, Source={x:Reference customEntryControlWithTitle}}">
 
             <Image Grid.Column="0"
-                   Source="error_image.png"
+                   Source="error_image"
                    Aspect="AspectFit"/>
 
             <Label Grid.Column="1"

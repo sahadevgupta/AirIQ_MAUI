@@ -53,7 +53,7 @@ public partial class ExtendedEntry : ContentView
                             BindableProperty.Create(nameof(Icon),
                             typeof(string),
                             typeof(ExtendedEntry),
-                            string.Empty,
+                            null,
                             BindingMode.TwoWay);
 
     public string Icon
@@ -89,18 +89,18 @@ public partial class ExtendedEntry : ContentView
     }
 
     // Bindable Property for Entry Text
-    public static readonly BindableProperty EntryTextProperty =
-                           BindableProperty.Create(nameof(EntryText),
+    public static readonly BindableProperty TextProperty =
+                           BindableProperty.Create(nameof(Text),
                            typeof(string),
                            typeof(ExtendedEntry),
                            string.Empty,
                            BindingMode.TwoWay,
                            propertyChanged: OnEntryTextChanged);
 
-    public string EntryText
+    public string Text
     {
-        get => (string)GetValue(EntryTextProperty);
-        set => SetValue(EntryTextProperty, value);
+        get => (string)GetValue(TextProperty);
+        set => SetValue(TextProperty, value);
     }
 
     private static void OnEntryTextChanged(BindableObject bindable, object oldValue, object newValue)

@@ -2,23 +2,18 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirIQ.Views.DashboardPage"
+             xmlns:viewmodel="clr-namespace:AirIQ.ViewModels"
+             x:DataType="viewmodel:DashboardPageViewModel"
+             xmlns:view="clr-namespace:AirIQ.Views.ContentViews"
              xmlns:controls="clr-namespace:AirIQ.Controls"
-             Title="DashboardPage">
+             BackgroundColor="AliceBlue"
+             Shell.NavBarIsVisible="False">
 
-    <Grid RowDefinitions="Auto,Auto">
-        <controls:AdvSegmentedControl ItemsSource="{Binding TabOptions}"
-                                      Margin="0,10,0,0"
-                                      Grid.Row="0"
-                                      DisplayMemberPath="Name"
-                                      x:Name="segmentedControl"/>
-
-        <controls:ExtendedDropdown x:Name="filterDropdown"
-                                   Title="Select Filter"
-                                   ItemsSource="{Binding FilterOptions}"
-                                   SelectedItem="{Binding SelectedFilterOption}"
-                                   Grid.Row="1"/>
-
-
+    <Grid RowDefinitions="Auto,Auto" 
+          RowSpacing="0">
+        <view:TopTabView x:Name="FlightTabs" 
+                         SelectedTab="{Binding SelectedTab, Mode=TwoWay}" 
+                         TabChangedCommand="{Binding SelectTabCommand}"/>
     </Grid>
-    
+
 </ContentPage>

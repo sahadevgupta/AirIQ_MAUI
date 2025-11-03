@@ -92,7 +92,7 @@
               IsVisible="{Binding IsError,Source={x:Reference dropdownview}}">
 
             <Image Grid.Column="0"
-                   Source="error_image.png"
+                   Source="error_image"
                    Aspect="AspectFit"
                    WidthRequest="20"/>
 

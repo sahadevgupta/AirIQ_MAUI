@@ -3,31 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirIQ.Controls.ExtendedDatePicker"
              xmlns:fonts="clr-namespace:AirIQ.Extensions"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Name="extendedDatepicker">
 
     <VerticalStackLayout>
         <Label Text="{Binding Title,Source={x:Reference extendedDatepicker}}" 
-       Style="{Binding TitleStyle,Source={x:Reference extendedDatepicker}}"
-       IsVisible="{Binding Title,Source={x:Reference extendedDatepicker},Converter={StaticResource IsNotNullOrEmptyConverter}}"/>
-        <Border Padding="10">
+               Style="{Binding TitleStyle,Source={x:Reference extendedDatepicker}}"
+               IsVisible="{Binding Title,Source={x:Reference extendedDatepicker},Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"/>
+        
+        <Border Padding="10" StrokeShape="RoundRectangle 8" HeightRequest="52">
             <Border.GestureRecognizers>
                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
             </Border.GestureRecognizers>
             <Grid ColumnDefinitions="*,Auto">
-                <Label Text="DD/MM/YYYY" x:Name="datelbl"/>
+                <Label Text="DD/MM/YYYY" x:Name="datelbl" VerticalTextAlignment="Center"/>
                 <DatePicker IsVisible="false" x:Name="datepicker"
-                    Date="{Binding Date,Source={x:Reference extendedDatepicker}}"
-                DateSelected="datepicker_DateSelected"/>
-                <Image VerticalOptions="Center"
-           HorizontalOptions="End" >
+                            Date="{Binding Date,Source={x:Reference extendedDatepicker}}"
+                            DateSelected="datepicker_DateSelected"/>
+                <Image VerticalOptions="Center" HorizontalOptions="End" >
                     <Image.Source>
                         <FontImageSource FontFamily="MyFont"
                          Size="Body"
-                         Glyph="{x:Static fonts:FontAwesomeIcons.CalendarAlt}"/>
+                         Glyph="{x:Static fonts:FontAwesomeIcons.CalendarAlt}"
+                                         Color="DimGray"/>
                     </Image.Source>
-                    <Image.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="DimGray"/>
-                    </Image.Behaviors>
                 </Image>
             </Grid>
         </Border>
