@@ -64,6 +64,7 @@ public partial class TopTabView : ContentView
     {
         try
         {
+            DynamicHost.Content = null;
             if (!Resources.TryGetValue("BookingTypeSelector", out var selectorObj))
             {
                 System.Diagnostics.Debug.WriteLine("Selector not found in Resources.");

@@ -29,7 +29,7 @@
 
         <ShellContent
             Title="{x:Static resx:AppResource.Account}"
-            ContentTemplate="{DataTemplate local:LoginPage}" >
+            ContentTemplate="{DataTemplate local:AccountsPage}" >
             <ShellContent.Icon>
                 <FontImageSource
                     FontFamily="MyFont"
@@ -40,7 +40,7 @@
 
         <ShellContent
             Title="{x:Static resx:AppResource.Settings}"
-            ContentTemplate="{DataTemplate local:DashboardPage}">
+            ContentTemplate="{DataTemplate local:SettingsPage}">
             <ShellContent.Icon>
                 <FontImageSource
                     FontFamily="MyFont"
