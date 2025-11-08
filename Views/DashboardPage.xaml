@@ -23,9 +23,7 @@
         TextColor="Black"
         VerticalOptions="Center" />
     </Border>
-
-
-
+    
     <template:OneWayTripContentView Grid.Row="1" />
 
   </Grid>

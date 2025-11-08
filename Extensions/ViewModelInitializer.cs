@@ -1,4 +1,5 @@
 ﻿using AirIQ.ViewModels;
+using CommunityToolkit.Maui;
 
 namespace AirIQ.Extensions
 {
@@ -7,7 +8,8 @@ namespace AirIQ.Extensions
         public static MauiAppBuilder ViewModelInit(this MauiAppBuilder builder)
         {
             builder.Services.AddTransient<LoginPageViewModel>()
-                            .AddTransient<DashboardPageViewModel>();
+                            .AddTransient<DashboardPageViewModel>()
+                            .AddTransient<HotelsPageViewModel>();
 
             return builder;
         }

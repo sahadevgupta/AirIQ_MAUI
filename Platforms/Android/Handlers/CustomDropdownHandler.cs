@@ -32,7 +32,7 @@ namespace AirIQ.Platforms.Handlers
 
         protected override AutoCompleteTextView CreatePlatformView()
         {
-            Context themedContext = new ContextThemeWrapper(Context,Resource.Style.MyTheme);
+            Context themedContext = new ContextThemeWrapper(Context, Resource.Style.MyTheme);
 
             autoCompleteTextView = new AutoCompleteTextView(themedContext);
             customDropdown = VirtualView;
@@ -136,9 +136,9 @@ namespace AirIQ.Platforms.Handlers
         {
             var rowHeight = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip, 40, Platform.AppContext.Resources.DisplayMetrics);
             int maxHeight = rowHeight * 3;
-            int dropdownHeight = items is null ? 350 : Math.Min(items!.Count * rowHeight, maxHeight);
+            var itemCount = items != null ? items.Count : 0;
+            int dropdownHeight = Math.Min(itemCount * rowHeight, maxHeight);
             autoCompleteTextView.DropDownHeight = dropdownHeight;
-            VirtualView.HeightRequest = dropdownHeight;
         }
 
         private void UpdateDropdownVisibility()

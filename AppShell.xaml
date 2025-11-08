@@ -28,7 +28,7 @@
 
         <ShellContent
             Title="{x:Static resx:AppResource.Hotels}"
-            ContentTemplate="{DataTemplate local:DashboardPage}">
+            ContentTemplate="{DataTemplate local:HotelsPage}">
             <ShellContent.Icon>
                 <FontImageSource
                     FontFamily="MyFont"
