@@ -13,7 +13,7 @@ namespace AirIQ.Platforms.Handlers
 {
     public class CustomShellRenderer : ShellRenderer
     {
-        
+
         protected override IShellBottomNavViewAppearanceTracker CreateBottomNavViewAppearanceTracker(ShellItem item)
         {
             return new CustomBottomNavAppearance(this, item);
@@ -76,8 +76,6 @@ namespace AirIQ.Platforms.Handlers
             var indicatorHeight = 10;
             indicatorWidth = bottomNavigationView.ItemIconSize * itemCount;
             indicatorViewParameter = new FrameLayout.LayoutParams(indicatorWidth, indicatorHeight);
-            indicatorViewParameter.MarginStart = 70;
-            indicatorViewParameter.LeftMargin = 30;
             tabIndicatorView.LayoutParameters = indicatorViewParameter;
 
             SetGradient();
@@ -87,22 +85,21 @@ namespace AirIQ.Platforms.Handlers
             {
                 bottomNavigationView.AddView(tabIndicatorView);
             });
-            
-            
+
+
         }
 
         public void AnimateIndicatorView(int position)
         {
             if (tabIndicatorView == null) return;
 
-            var screenWidth = (float)DeviceDisplay.MainDisplayInfo.Width/DeviceDisplay.MainDisplayInfo.Density;
-            var itemWidth = screenWidth / 1.5;
-            float x = (float)(itemWidth * position) + (position * 120) + 10;
 
-            float targetX = position * indicatorWidth;
+            int navWidth = bottomNavigationView.Width;
+            int itemCount = bottomNavigationView.Menu.Size();
+            int tabWidth = navWidth / itemCount;
 
             tabIndicatorView?.Animate()?
-                .TranslationX(x)
+                .TranslationX(tabWidth*position)
                 .SetDuration(300)
                 .SetInterpolator(new Animation.DecelerateInterpolator())
                 .Start();

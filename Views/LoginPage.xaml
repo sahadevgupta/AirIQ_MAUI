@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AirIQ.Views.LoginPage"
-             xmlns:controls="clr-namespace:AirIQ.Controls"
-             xmlns:viewModels="clr-namespace:AirIQ.ViewModels"
-             x:DataType="viewModels:LoginPageViewModel"
-             Title="Login"
-             NavigationPage.HasNavigationBar="False">
+<views:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                x:Class="AirIQ.Views.LoginPage"
+                xmlns:controls="clr-namespace:AirIQ.Controls"
+                xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
+                xmlns:views="clr-namespace:AirIQ.Views"
+                xmlns:viewModels="clr-namespace:AirIQ.ViewModels"
+                x:DataType="viewModels:LoginPageViewModel">
 
     <ScrollView>
         <VerticalStackLayout
@@ -21,24 +21,24 @@
                 HorizontalOptions="Center" />
 
             <Label 
-                Text="Welcome to AIR iQ"
+                Text="{x:Static resx:AppResource.WelcomeToAIRiQ}"
                 Style="{StaticResource TitleLabel}"
                 HorizontalOptions="Center" />
 
             <Label 
-                Text="Sign in to continue"
+                Text="{x:Static resx:AppResource.SignInToContinue}"
                 FontSize="16"
                 TextColor="{StaticResource DarkGray}"
                 HorizontalOptions="Center" />
 
-            <controls:ExtendedEntry PlaceholderText="Email"
-                                    Title="Email"/>
+            <controls:ExtendedEntry PlaceholderText="{x:Static resx:AppResource.Email}"
+                                    Title="{x:Static resx:AppResource.Email}"/>
 
-            <controls:ExtendedEntry PlaceholderText="Password"
-                                    Title="Password"/>
+            <controls:ExtendedEntry PlaceholderText="{x:Static resx:AppResource.Password}"
+                                    Title="{x:Static resx:AppResource.Password}"/>
 
             <Label 
-                Text="Forgot Password?"
+                Text="{x:Static resx:AppResource.ForgotPassword}"
                 FontAttributes="Bold"
                 TextColor="{StaticResource AccentColor}"
                 FontSize="14"
@@ -46,7 +46,7 @@
 
             
             <Button 
-                Text="Login"
+                Text="{x:Static resx:AppResource.Login}"
                 BackgroundColor="{StaticResource PrimaryColor}"
                 TextColor="White"
                 CornerRadius="12"
@@ -61,13 +61,13 @@
                 VerticalOptions="Center"
                 HorizontalOptions="Center">
                 <BoxView Color="#E0E0E0" HeightRequest="1" WidthRequest="80"/>
-                <Label Text="OR" TextColor="#9E9E9E" FontSize="14"/>
+                <Label Text="{x:Static resx:AppResource.OR}" TextColor="#9E9E9E" FontSize="14"/>
                 <BoxView Color="#E0E0E0" HeightRequest="1" WidthRequest="80"/>
             </HorizontalStackLayout>
 
             
             <Button 
-                Text="Create an Account"
+                Text="{x:Static resx:AppResource.CreateAnAccount}"
                 BackgroundColor="{StaticResource AccentColor}"
                 TextColor="White"
                 CornerRadius="12"
@@ -76,11 +76,11 @@
 
             
             <Label 
-                Text="© 2025 AIR iQ Groups &amp; Series"
+                Text="{x:Static resx:AppResource.AIRIQGroupsSeries}"
                 FontSize="12"
                 TextColor="#9E9E9E"
                 HorizontalOptions="Center"
                 Margin="0,20,0,0"/>
         </VerticalStackLayout>
     </ScrollView>
-</ContentPage>
+</views:BasePage>

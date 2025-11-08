@@ -86,5 +86,167 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Departure Airport.
+        /// </summary>
+        internal static string SearchDepartureAirport {
+            get {
+                return ResourceManager.GetString("SearchDepartureAirport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Destination Airport.
+        /// </summary>
+        internal static string SearchDestinationAirport {
+            get {
+                return ResourceManager.GetString("SearchDestinationAirport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Travel Date.
+        /// </summary>
+        internal static string TravelDate {
+            get {
+                return ResourceManager.GetString("TravelDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pax Size.
+        /// </summary>
+        internal static string PaxSize {
+            get {
+                return ResourceManager.GetString("PaxSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Flights.
+        /// </summary>
+        internal static string SearchFlights {
+            get {
+                return ResourceManager.GetString("SearchFlights", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From.
+        /// </summary>
+        internal static string From {
+            get {
+                return ResourceManager.GetString("From", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To.
+        /// </summary>
+        internal static string To {
+            get {
+                return ResourceManager.GetString("To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flights.
+        /// </summary>
+        internal static string Flights {
+            get {
+                return ResourceManager.GetString("Flights", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hotels.
+        /// </summary>
+        internal static string Hotels {
+            get {
+                return ResourceManager.GetString("Hotels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to AIR iQ.
+        /// </summary>
+        internal static string WelcomeToAIRiQ {
+            get {
+                return ResourceManager.GetString("WelcomeToAIRiQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign in to continue.
+        /// </summary>
+        internal static string SignInToContinue {
+            get {
+                return ResourceManager.GetString("SignInToContinue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        internal static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        internal static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        internal static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OR.
+        /// </summary>
+        internal static string OR {
+            get {
+                return ResourceManager.GetString("OR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create an Account.
+        /// </summary>
+        internal static string CreateAnAccount {
+            get {
+                return ResourceManager.GetString("CreateAnAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to © 2025 AIR iQ Groups &amp; Series.
+        /// </summary>
+        internal static string AIRIQGroupsSeries {
+            get {
+                return ResourceManager.GetString("AIRIQGroupsSeries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forgot Password?.
+        /// </summary>
+        internal static string ForgotPassword {
+            get {
+                return ResourceManager.GetString("ForgotPassword", resourceCulture);
+            }
+        }
     }
 }

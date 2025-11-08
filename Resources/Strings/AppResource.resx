@@ -126,4 +126,58 @@
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="SearchDepartureAirport" xml:space="preserve">
+    <value>Search Departure Airport</value>
+  </data>
+  <data name="SearchDestinationAirport" xml:space="preserve">
+    <value>Search Destination Airport</value>
+  </data>
+  <data name="TravelDate" xml:space="preserve">
+    <value>Travel Date</value>
+  </data>
+  <data name="PaxSize" xml:space="preserve">
+    <value>Pax Size</value>
+  </data>
+  <data name="SearchFlights" xml:space="preserve">
+    <value>Search Flights</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="Flights" xml:space="preserve">
+    <value>Flights</value>
+  </data>
+  <data name="Hotels" xml:space="preserve">
+    <value>Hotels</value>
+  </data>
+  <data name="WelcomeToAIRiQ" xml:space="preserve">
+    <value>Welcome to AIR iQ</value>
+  </data>
+  <data name="SignInToContinue" xml:space="preserve">
+    <value>Sign in to continue</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="OR" xml:space="preserve">
+    <value>OR</value>
+  </data>
+  <data name="CreateAnAccount" xml:space="preserve">
+    <value>Create an Account</value>
+  </data>
+  <data name="AIRIQGroupsSeries" xml:space="preserve">
+    <value>© 2025 AIR iQ Groups &amp;amp; Series</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Forgot Password?</value>
+  </data>
 </root>

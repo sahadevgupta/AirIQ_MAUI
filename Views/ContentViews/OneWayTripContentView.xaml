@@ -2,6 +2,7 @@
 <Grid xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
       xmlns:controls ="clr-namespace:AirIQ.Controls"
+      xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
       x:Class="AirIQ.Views.ContentViews.OneWayTripContentView" 
       Padding="16">
 
@@ -12,22 +13,22 @@
 
         <VerticalStackLayout Spacing="18">
 
-            <controls:ExtendedEntry Title="From"
-            PlaceholderText="Search Departure Airport"
+            <controls:ExtendedEntry Title="{x:Static resx:AppResource.From}"
+            PlaceholderText="{x:Static resx:AppResource.SearchDepartureAirport}"
             Text="{Binding DepartureText}"/>
 
-            <controls:ExtendedEntry Title="To"
-            PlaceholderText="Search Destination Airport"
+            <controls:ExtendedEntry Title="{x:Static resx:AppResource.To}"
+            PlaceholderText="{x:Static resx:AppResource.SearchDestinationAirport}"
             Text="{Binding DestinationText}"
             Grid.Row="1"/>
 
-            <controls:ExtendedDatePicker Title="Travel Date"
+            <controls:ExtendedDatePicker Title="{x:Static resx:AppResource.TravelDate}"
                  Grid.Row="2"/>
 
-            <controls:ExtendedDropdown Title="Pax Size"
+            <controls:ExtendedDropdown Title="{x:Static resx:AppResource.PaxSize}"
                            Grid.Row="3"/>
 
-            <Button Text="Search Flights"
+            <Button Text="{x:Static resx:AppResource.SearchFlights}"
                     BackgroundColor="#FFD93B"
                     TextColor="Black"
                     CornerRadius="12"

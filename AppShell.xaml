@@ -16,12 +16,23 @@
 
     <TabBar>
         <ShellContent
-            Title="{x:Static resx:AppResource.Home}"
+            Title="{x:Static resx:AppResource.Flights}"
             ContentTemplate="{DataTemplate local:DashboardPage}">
             <ShellContent.Icon>
                 <FontImageSource
                     FontFamily="MyFont"
-                    Glyph="{x:Static helpers:FontAwesomeIcons.Home}"
+                    Glyph="{x:Static helpers:FontAwesomeIcons.Plane}"
+                    Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
+
+        <ShellContent
+            Title="{x:Static resx:AppResource.Hotels}"
+            ContentTemplate="{DataTemplate local:DashboardPage}">
+            <ShellContent.Icon>
+                <FontImageSource
+                    FontFamily="MyFont"
+                    Glyph="{x:Static helpers:FontAwesomeIcons.Hotel}"
                     Size="24" />
             </ShellContent.Icon>
         </ShellContent>
