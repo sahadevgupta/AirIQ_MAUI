@@ -1,41 +1,54 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Grid xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-      xmlns:controls ="clr-namespace:AirIQ.Controls"
-      xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
-      x:Class="AirIQ.Views.ContentViews.OneWayTripContentView" 
-      Padding="16">
+<Grid
+    x:Class="AirIQ.Views.ContentViews.OneWayTripContentView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:AirIQ.Controls"
+    xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
+    Padding="16">
 
-    <Border BackgroundColor="White"
-            StrokeThickness="0"
-            Padding="15"
-            StrokeShape="RoundRectangle 12">
+    <Border
+        Padding="15"
+        BackgroundColor="White"
+        StrokeShape="RoundRectangle 12"
+        StrokeThickness="0">
 
         <VerticalStackLayout Spacing="18">
 
-            <controls:ExtendedEntry Title="{x:Static resx:AppResource.From}"
-            PlaceholderText="{x:Static resx:AppResource.SearchDepartureAirport}"
-            Text="{Binding DepartureText}"/>
+            <controls:ExtendedDropdown
+                Title="{x:Static resx:AppResource.From}"
+                ItemsSource="{Binding SourceAirports}"
+                PlaceholderText="{x:Static resx:AppResource.SearchDepartureAirport}" />
 
-            <controls:ExtendedEntry Title="{x:Static resx:AppResource.To}"
-            PlaceholderText="{x:Static resx:AppResource.SearchDestinationAirport}"
-            Text="{Binding DestinationText}"
-            Grid.Row="1"/>
+            <controls:ExtendedDropdown
+                Title="{x:Static resx:AppResource.To}"
+                ItemsSource="{Binding DestinationAirports}"
+                PlaceholderText="{x:Static resx:AppResource.SearchDestinationAirport}" />
 
-            <controls:ExtendedDatePicker Title="{x:Static resx:AppResource.TravelDate}"
-                 Grid.Row="2"/>
 
-            <controls:ExtendedDropdown Title="{x:Static resx:AppResource.PaxSize}"
-                           Grid.Row="3"/>
+            <controls:ExtendedDatePicker Title="{x:Static resx:AppResource.TravelDate}" Grid.Row="2" />
 
-            <Button Text="{x:Static resx:AppResource.SearchFlights}"
-                    BackgroundColor="#FFD93B"
-                    TextColor="Black"
-                    CornerRadius="12"
-                    FontAttributes="Bold"
-                    HeightRequest="48"
-                    Margin="0,10,0,0"
-                    Grid.Row="4"/>
+            <controls:ExtendedDropdown Title="{x:Static resx:AppResource.PaxSize}" Grid.Row="3">
+                <controls:ExtendedDropdown.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>1</x:String>
+                        <x:String>2</x:String>
+                        <x:String>3</x:String>
+                        <x:String>4</x:String>
+                        <x:String>5</x:String>
+                    </x:Array>
+                </controls:ExtendedDropdown.ItemsSource>
+            </controls:ExtendedDropdown>
+
+            <Button
+                Grid.Row="4"
+                Margin="0,10,0,0"
+                BackgroundColor="#FFD93B"
+                CornerRadius="12"
+                FontAttributes="Bold"
+                HeightRequest="48"
+                Text="{x:Static resx:AppResource.SearchFlights}"
+                TextColor="Black" />
 
         </VerticalStackLayout>
 
