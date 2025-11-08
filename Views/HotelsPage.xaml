@@ -36,8 +36,7 @@
                     Padding="15"
                     BackgroundColor="White"
                     CornerRadius="15"
-                    HasShadow="True"
-                    Shadow="Medium">
+                    HasShadow="True">
                     <VerticalStackLayout Spacing="10">
                         <Label
                             FontAttributes="Bold"
@@ -112,8 +111,7 @@
                                         Grid.Row="1"
                                         Grid.Column="1"
                                         Padding="10"
-                                        BackgroundColor="Transparent"
-                                        Source="{Binding IsFavorite, Converter={StaticResource BoolToHeartIconConverter}}" />
+                                        BackgroundColor="Transparent"/>
                                     <!--  Rating and Price  -->
                                     <HorizontalStackLayout
                                         Grid.Row="2"
