@@ -1,3 +1,4 @@
+using AirIQ.ViewModels.Common;
 using CommunityToolkit.Maui.Behaviors;
 using CommunityToolkit.Maui.Core;
 using Microsoft.Maui.Controls.PlatformConfiguration;
@@ -39,4 +40,17 @@ public abstract class BasePage : ContentPage
 		}
 	}
     #endregion
+
+	#region [ Override Methods ]
+
+	protected override void OnNavigatedTo(NavigatedToEventArgs args)
+	{
+		base.OnNavigatedTo(args);
+		if (this.BindingContext is BaseViewModel vm)
+		{
+			vm.LoadDataWhenNavigatedTo();
+		}
+	}
+
+	#endregion
 }

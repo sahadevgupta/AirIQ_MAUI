@@ -18,5 +18,10 @@ namespace AirIQ.ViewModels.Common
             NavigationService = parameters.NavigationService;
             ShellNavigationService = parameters.ShellNavigationService;
         }
+
+        public virtual Task LoadDataWhenNavigatedTo()
+        {
+            return Task.CompletedTask;
+        }
     }
 }

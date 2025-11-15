@@ -32,10 +32,12 @@
                 HorizontalOptions="Center" />
 
             <controls:ExtendedEntry PlaceholderText="{x:Static resx:AppResource.Email}"
-                                    Title="{x:Static resx:AppResource.Email}"/>
+                                    Title="{x:Static resx:AppResource.Email}"
+                                    Text="{Binding Username}"/>
 
             <controls:ExtendedEntry PlaceholderText="{x:Static resx:AppResource.Password}"
-                                    Title="{x:Static resx:AppResource.Password}"/>
+                                    Title="{x:Static resx:AppResource.Password}"
+                                    Text="{Binding Password}"/>
 
             <Label 
                 Text="{x:Static resx:AppResource.ForgotPassword}"

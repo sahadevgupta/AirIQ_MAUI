@@ -49,7 +49,7 @@
     <Color x:Key="AccentColor">#F26B6C</Color>
     <Color x:Key="DarkGray">#555555</Color>
     <Color x:Key="LightGray">#E0E0E0</Color>
-    <Color x:Key="BackgroundColor">#efefef</Color>
+    <Color x:Key="BackgroundColor">#F5F5F5</Color>
 
     <!-- ==================== -->
     <!--   DARK THEME COLORS  -->

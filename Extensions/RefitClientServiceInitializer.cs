@@ -1,5 +1,5 @@
 ﻿using AirIQ.Constants;
-using AirIQ.Services.Backend;
+using AirIQ.Services.Interfaces;
 using Refit;
 using System.Diagnostics;
 using System.Text;
@@ -17,8 +17,6 @@ namespace AirIQ.Extensions
             .ConfigureHttpClient(j =>
             {
                 j.BaseAddress = defaultUri;
-                //var byteArray = Encoding.UTF8.GetBytes("ajhgfksdghdsfjguidjrkgvlh:aagsdtfhtfujyyukvb");
-                //j.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
             })
 #if DEBUG
             .AddHttpMessageHandler<HttpMessageLogHandler>()
@@ -42,6 +40,8 @@ namespace AirIQ.Extensions
             var id = Guid.NewGuid().ToString();
             var msg = $"[{id} -   Request]";
             StringBuilder apiDetails = new();
+
+            string body = await request.Content.ReadAsStringAsync();
 
             Debug.WriteLine($"{msg}========Start==========");
             Debug.WriteLine($"{msg} {req.Method} {req.RequestUri.PathAndQuery} {req.RequestUri.Scheme}/{req.Version}");

@@ -22,7 +22,14 @@ namespace AirIQ
             {
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {
-                    await _navigationService.Navigate(NavigationConstants.Login);
+                    if (AppConfiguration.IsLoggedInUser)
+                    {
+                        window.Page = new AppShell();
+                    }
+                    else
+                    {
+                        await _navigationService.Navigate(NavigationConstants.Login);
+                    }
                 });
             };
 

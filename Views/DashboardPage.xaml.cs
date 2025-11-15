@@ -4,9 +4,8 @@ namespace AirIQ.Views;
 
 public partial class DashboardPage : ContentPage
 {
-	public DashboardPage(DashboardPageViewModel viewModel)
+	public DashboardPage()
 	{
 		InitializeComponent();
-		BindingContext = viewModel;
 	}
 }

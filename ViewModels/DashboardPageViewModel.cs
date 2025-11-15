@@ -21,5 +21,7 @@ namespace AirIQ.ViewModels
         private ObservableCollection<string> _destinationAirports = new ObservableCollection<string> { "Chennai", "Mumbai", "Bangalore" };
 
         #endregion
+
+
     }
 }

@@ -4,6 +4,7 @@ using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels;
 using AirIQ.ViewModels.Common;
 using AirIQ.Views;
+using CommunityToolkit.Maui;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,12 +31,18 @@ namespace AirIQ.Extensions
 
         private static MauiAppBuilder RegisterAppServices(this MauiAppBuilder builder)
         {
+            //Transient Services
+            builder.Services.AddTransient<IViewModelParameters, ViewModelParameters>()
+                            .AddTransient<IApiServiceBaseParams, ApiServiceBaseParams>();
+
+
             builder.Services.AddSingleton<ILoadingPopUpService, AirIQ.Platforms.Services.LoadingPopupService>();
             builder.Services.AddSingleton<INavigationService, NavigationService>();
-            builder.Services.AddSingleton<IShellNavigationService, ShellNavigationService>();
+            builder.Services.AddSingleton<IShellNavigationService, ShellNavigationService>()
+                            .AddSingleton<IConnectivityService, ConnectivityService>()
+                            .AddSingleton<ISecureStorageService, SecureStorageService>()
+                            .AddSingleton<ILoginService, LoginService>();
 
-            //Transient Services
-            builder.Services.AddTransient<IViewModelParameters, ViewModelParameters>();
 
             return builder;
         }
