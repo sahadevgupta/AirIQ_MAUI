@@ -16,4 +16,14 @@ public static class BackendToAppModelMapper
         var converter = new UserDtoToUseConverter();
         return converter.Convert(userDto);
     }
+
+    public static IEnumerable<FlightRoute> GetAvailableRoutes(IEnumerable<FlightRouteDto> flightRouteDtos)
+    {
+        if (flightRouteDtos == null)
+        {
+            return new List<FlightRoute>();
+        }
+        var converter = new FlightRouteDtoToFlightRouteConverter();
+        return flightRouteDtos.Select(converter.Convert);
+    }
 }

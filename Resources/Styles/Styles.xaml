@@ -34,6 +34,12 @@
         <Setter Property="TextColor" Value="Black"/>
     </Style>
 
+    <Style x:Key="Label14StyleBlack" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+         <Setter Property="TextColor" Value="Black"/>
+        <Setter Property="FontFamily" Value="PoppinsRegular"/>
+    </Style>
+
     <Style x:Key="HeaderTitleStyleBlackBold" TargetType="Label">
         <Setter Property="FontFamily" Value="PoppinsBold" />
         <Setter Property="FontSize" Value="20" />

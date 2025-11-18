@@ -54,6 +54,7 @@ namespace AirIQ.ViewModels
             }
             finally
             {
+                LoadingService.HideLoading();
                 IsBusy = false;
             }
         }

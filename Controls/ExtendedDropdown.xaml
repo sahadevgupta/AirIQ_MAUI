@@ -18,13 +18,9 @@
 
         <!--Dropdown with Frame-->
         <Border x:Name="frameDropdown"
-               StrokeThickness="1"
-               Stroke="{StaticResource LightGray}"
+               StrokeShape="RoundRectangle 8"
                Grid.Row="1"
                HeightRequest="50">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="4"/>
-            </Border.StrokeShape>
             <Border.Triggers>
 
                 <DataTrigger Binding="{Binding Source={x:Reference errorView},Path=IsVisible}"

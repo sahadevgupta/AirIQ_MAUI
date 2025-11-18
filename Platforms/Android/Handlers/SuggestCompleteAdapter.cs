@@ -13,10 +13,14 @@ namespace AirIQ.Platforms.Android.Handlers
         private List<object> resultList;
         Func<object, string> labelFunc;
 
-        public SuggestCompleteAdapter(Context context, int resource, int textViewResourceId) : base(context, resource, textViewResourceId)
+        private string _displayMemberPath;
+
+        public SuggestCompleteAdapter(Context context, int resource, int textViewResourceId, string displayMemberPath) : base(context, resource, textViewResourceId)
         {
             resultList = new List<object>();
             SetNotifyOnChange(true);
+
+            _displayMemberPath = displayMemberPath;
         }
 
         public void UpdateList(IEnumerable<object> list, Func<object, string> labelFunc)
@@ -34,7 +38,8 @@ namespace AirIQ.Platforms.Android.Handlers
         {
             var view = base.GetView(position, convertView, parent);
             var item = resultList[position];
-            if (item.ToString() == StringConstants.NoResultAvailable)
+             var text = item.GetType().GetProperty(_displayMemberPath).GetValue(item).ToString();
+            if (text.Contains(StringConstants.NoResultAvailable, StringComparison.OrdinalIgnoreCase))
             {
                 var textview = view.FindViewById<TextView>(Resource.Id.autocomplete_textview);
                 textview.SetTextColor(Colors.Red.ToPlatform());

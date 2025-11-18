@@ -1,6 +1,7 @@
 ﻿using AirIQ.Extensions;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Mopups.Hosting;
 
 namespace AirIQ
 {
@@ -12,6 +13,7 @@ namespace AirIQ
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .ConfigureMopups()
                 .InitializeApp()
                 .UseSentry(options => {
                    // The DSN is the only required setting.

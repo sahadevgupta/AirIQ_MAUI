@@ -21,8 +21,6 @@
                Text="{Binding SupportingText, Source={x:Reference customEntryControlWithTitle}}"/>
 
         <Border Grid.Row="2"
-                StrokeThickness="1"
-                Stroke="{Binding EntryBorderColor, Source={x:Reference customEntryControlWithTitle}}"
                 BackgroundColor="White"
                 Padding="0"
                 StrokeShape="RoundRectangle 8"

@@ -343,7 +343,7 @@ namespace AirIQ.Platforms.iOS.Handlers
             var height = Math.Min(AutocompleteTableViewHeight, (int)SelectionList.ContentSize.Height);
             SelectionList.Frame = new CGRect(
                 relativeFrame.X,
-                relativeFrame.Y + this.Frame.Height + 50,
+                relativeFrame.Y + this.Frame.Height + 20,
                 InputTextField.Frame.Width, height);
 
             selectionListFrame = SelectionList.Frame;

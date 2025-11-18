@@ -4,8 +4,10 @@ namespace AirIQ.Views;
 
 public partial class HotelsPage : BasePage
 {
-	public HotelsPage()
+	public HotelsPage(HotelsPageViewModel viewModel)
 	{
 		InitializeComponent();
+
+		BindingContext = viewModel;
 	}
 }

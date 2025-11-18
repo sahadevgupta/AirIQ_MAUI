@@ -17,10 +17,7 @@
             </Border.GestureRecognizers>
             <Grid ColumnDefinitions="*,Auto">
                 <Label Text="DD/MM/YYYY" x:Name="datelbl" VerticalTextAlignment="Center"/>
-                <DatePicker x:Name="datepicker"
-                            Opacity="0"
-                            Date="{Binding Date,Source={x:Reference extendedDatepicker}}"
-                            DateSelected="datepicker_DateSelected"/>
+                
                 <Image VerticalOptions="Center" HorizontalOptions="End" >
                     <Image.Source>
                         <FontImageSource FontFamily="MyFont"

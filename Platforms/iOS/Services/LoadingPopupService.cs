@@ -22,7 +22,7 @@ namespace AirIQ.Platforms.Services
                 loadingView = new UIView();
 
                 loadingView.Frame = new CoreGraphics.CGRect(0, 0, UIScreen.MainScreen.Bounds.Width, UIScreen.MainScreen.Bounds.Height);
-                loadingView.BackgroundColor = Color.FromArgb("#4DF5F5F5").ToPlatform();
+                loadingView.BackgroundColor = Color.FromArgb("#A0000000").ToPlatform();
                 var mainDisplay = DeviceDisplay.MainDisplayInfo;
                 loadingIndicatorView.Layout(new Rect(0, 0, mainDisplay.Width / mainDisplay.Density, mainDisplay.Height / mainDisplay.Density));
 

@@ -50,6 +50,7 @@
     <Color x:Key="DarkGray">#555555</Color>
     <Color x:Key="LightGray">#E0E0E0</Color>
     <Color x:Key="BackgroundColor">#F5F5F5</Color>
+    <Color x:Key="AshtonSkies">#7b8eb0</Color>
 
     <!-- ==================== -->
     <!--   DARK THEME COLORS  -->

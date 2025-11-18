@@ -5,6 +5,8 @@ using AirIQ.ViewModels;
 using AirIQ.ViewModels.Common;
 using AirIQ.Views;
 using CommunityToolkit.Maui;
+using Mopups.Interfaces;
+using Mopups.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +43,9 @@ namespace AirIQ.Extensions
             builder.Services.AddSingleton<IShellNavigationService, ShellNavigationService>()
                             .AddSingleton<IConnectivityService, ConnectivityService>()
                             .AddSingleton<ISecureStorageService, SecureStorageService>()
-                            .AddSingleton<ILoginService, LoginService>();
+                            .AddSingleton<ILoginService, LoginService>()
+                            .AddSingleton<IFlightService,FlightService>()
+                            .AddSingleton<IPopupNavigation>(MopupService.Instance);;
 
 
             return builder;

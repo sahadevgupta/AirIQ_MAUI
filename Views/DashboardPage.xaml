@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<views:BasePage
   x:Class="AirIQ.Views.DashboardPage"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:controls="clr-namespace:AirIQ.Controls"
   xmlns:template="clr-namespace:AirIQ.Views.ContentViews"
-  xmlns:view="clr-namespace:AirIQ.Views.ContentViews"
+  xmlns:views="clr-namespace:AirIQ.Views"
   xmlns:viewmodel="clr-namespace:AirIQ.ViewModels"
   x:DataType="viewmodel:DashboardPageViewModel"
   BackgroundColor="AliceBlue"
-  Shell.NavBarIsVisible="False">
+  Shell.NavBarIsVisible="False"
+  x:Name="thisPage">
 
-  <Grid RowDefinitions="Auto,*">
+  <Grid RowDefinitions="Auto,*,Auto">
 
-    <Border Grid.Row="0" BackgroundColor="White">
+    <Border Grid.Row="0"
+            BackgroundColor="White">
       <Label
         Grid.Row="0"
         Margin="0,10,0,10"
@@ -21,11 +23,11 @@
         HorizontalOptions="Center"
         Text="Book Flights"
         TextColor="Black"
-        VerticalOptions="Center" />
+        VerticalOptions="Center"/>
     </Border>
-    
-    <template:OneWayTripContentView Grid.Row="1" />
+
+    <template:OneWayTripContentView Grid.Row="1" BindingContext="{Binding Source={x:Reference thisPage}, Path=BindingContext}"/>
 
   </Grid>
 
-</ContentPage>
+</views:BasePage>

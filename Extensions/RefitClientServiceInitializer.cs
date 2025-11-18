@@ -1,4 +1,5 @@
-﻿using AirIQ.Constants;
+﻿using AirIQ.Configurations.CustomExceptions;
+using AirIQ.Constants;
 using AirIQ.Services.Interfaces;
 using Refit;
 using System.Diagnostics;
@@ -13,7 +14,18 @@ namespace AirIQ.Extensions
             builder.Services.AddTransient<HttpMessageLogHandler>();
             Uri defaultUri = new Uri(AppConfiguration.BaseUrl);
 
-            builder.Services.AddRefitClient<IAppBackendService>()
+            builder.Services.AddRefitClient<IAppBackendService>(new RefitSettings
+            {
+                ExceptionFactory = async (response) =>
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                    {
+                        var content = await response.Content.ReadAsStringAsync();
+                        return new UnauthorizedException($"Unauthorized: {content}");
+                    }
+                    return null; // Default for other status codes            
+                }
+            })
             .ConfigureHttpClient(j =>
             {
                 j.BaseAddress = defaultUri;
@@ -41,7 +53,7 @@ namespace AirIQ.Extensions
             var msg = $"[{id} -   Request]";
             StringBuilder apiDetails = new();
 
-            string body = await request.Content.ReadAsStringAsync();
+
 
             Debug.WriteLine($"{msg}========Start==========");
             Debug.WriteLine($"{msg} {req.Method} {req.RequestUri.PathAndQuery} {req.RequestUri.Scheme}/{req.Version}");
@@ -66,6 +78,16 @@ namespace AirIQ.Extensions
                 {
                     var result = await req.Content.ReadAsStringAsync(cancellationToken);
                     var reqString = System.Text.Json.JsonSerializer.Serialize(result, System.Text.Json.JsonSerializerOptions.Default);
+
+                    Debug.WriteLine($"{msg} Content:");
+                    Debug.WriteLine($"{msg} {string.Join("", reqString)}");
+                    apiDetails.Append($"{"Request "}{reqString}");
+                }
+                else
+                {
+                    string body = await request.Content.ReadAsStringAsync();
+
+                    var reqString = System.Text.Json.JsonSerializer.Serialize(body, System.Text.Json.JsonSerializerOptions.Default);
 
                     Debug.WriteLine($"{msg} Content:");
                     Debug.WriteLine($"{msg} {string.Join("", reqString)}");

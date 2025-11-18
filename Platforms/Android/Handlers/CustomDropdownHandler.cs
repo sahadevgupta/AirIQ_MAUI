@@ -59,7 +59,7 @@ namespace AirIQ.Platforms.Handlers
             autoCompleteTextView.ItemClick += AutoCompleteTextView_ItemClick;
             autoCompleteTextView.TextChanged += AutoCompleteTextView_TextChanged;
             autoCompleteTextView.FocusChange += AutoCompleteTextView_FocusChange;
-            adapter = new SuggestCompleteAdapter(Context, Resource.Layout.autocomplete_list_row, Resource.Id.autocomplete_textview);
+            adapter = new SuggestCompleteAdapter(Context, Resource.Layout.autocomplete_list_row, Resource.Id.autocomplete_textview, customDropdown.DisplayMemberPath);
 
             UpdateItemsSource(customDropdown?.ItemSource?.OfType<object>());
             UpdateDropdownHeight(customDropdown?.ItemSource);
@@ -113,7 +113,23 @@ namespace AirIQ.Platforms.Handlers
                 var items = ((CustomDropdown)sender).ItemSource;
                 if (items != null && items.Count == 0)
                 {
-                    items.Add(StringConstants.NoResultAvailable);
+                    var itemType = items.GetType().GetGenericArguments().FirstOrDefault();
+                    if (itemType != null)
+                    {
+                        // Create an instance of the item type        
+                        var placeholder = Activator.CreateInstance(itemType);
+
+                        // Try to set a property like "Name" or "Title" dynamically        
+                        //var prop = itemType.GetProperty(customDropdown.DisplayMemberPath) ?? itemType.GetProperty("Name") ?? itemType.GetProperty("Title");
+                        // Find a writable string property to set placeholder text    
+                        var prop = itemType.GetProperties().FirstOrDefault(p => p.PropertyType == typeof(string) && p.CanWrite);
+                        if (prop != null && prop.CanWrite)
+                        {
+                            prop.SetValue(placeholder, StringConstants.NoResultAvailable);
+                        }
+                        items.Add(placeholder);
+
+                    }
                 }
 
                 UpdateDropdownHeight(items);

@@ -362,3 +362,12 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 .DS_Store
+.idea
+.idea/*
+.idea/.idea.AirIQ/.idea/.gitignore
+.idea/.idea.AirIQ/.idea/.name
+.idea/.idea.AirIQ/.idea/AndroidProjectSystem.xml
+.idea/.idea.AirIQ/.idea/deploymentTargetSelector.xml
+.idea/.idea.AirIQ/.idea/encodings.xml
+.idea/.idea.AirIQ/.idea/indexLayout.xml
+.idea/.idea.AirIQ/.idea/vcs.xml

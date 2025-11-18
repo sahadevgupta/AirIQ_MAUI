@@ -92,6 +92,9 @@ public partial class ExtendedDropdown : ContentView
     public static readonly BindableProperty InputViewStyleProperty =
         BindableProperty.Create(nameof(InputViewStyle), typeof(Style), typeof(ExtendedDropdown));
 
+        public static readonly BindableProperty TextChangeCommandProperty =
+        BindableProperty.Create(nameof(TextChangeCommand), typeof(ICommand), typeof(ExtendedDropdown));
+
     public string Title
     {
         get => (string)GetValue(TitleProperty);
@@ -166,9 +169,15 @@ public partial class ExtendedDropdown : ContentView
         set => SetValue(OnLoadShowDropdownProperty, value);
     }
 
+    public ICommand TextChangeCommand
+    {
+        get => (ICommand)GetValue(TextChangeCommandProperty);
+        set => SetValue(TextChangeCommandProperty, value);
+    }
+
     #region Events
 
-    public ICommand TextChangeCommand { get; set; }
+   
 
     public event EventHandler SelectedIndexChanged;
 

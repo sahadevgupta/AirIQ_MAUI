@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopup:PopupPage  xmlns:mopup="clr-namespace:Mopups.Pages;assembly=Mopups"
+                  xmlns:mopupsanim="clr-namespace:Mopups.Animations;assembly=Mopups"
+                  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:helpers="clr-namespace:AirIQ.Extensions"
+                  x:Class="AirIQ.Controls.CalendarView"
+                  CloseWhenBackgroundIsClicked="True"
+                  BackgroundColor="{StaticResource PopupBackground}">
+
+    <!-- <mopup:PopupPage.Animation>
+        <mopupsanim:MoveAnimation
+            DurationIn="400"
+            DurationOut="400"
+            EasingIn="CubicIn"
+            EasingOut="CubicOut"
+            PositionIn="Bottom"
+            PositionOut="Bottom"/>
+    </mopup:PopupPage.Animation> -->
+
+    <mopup:PopupPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="HorizontalOptions"
+                    Value="Center"/>
+            <Setter Property="VerticalOptions"
+                    Value="Center"/>
+        </Style>
+    </mopup:PopupPage.Resources>
+
+
+    <Border StrokeShape="RoundRectangle 12"
+            StrokeThickness="1"
+            Stroke="{StaticResource AshtonSkies}"
+            BackgroundColor="White"
+            VerticalOptions="Center"
+            Margin="10,0">
+        <Grid Padding="0"
+              RowSpacing="5"
+              ColumnSpacing="5"
+              RowDefinitions="50,Auto,Auto">
+
+            <Grid ColumnDefinitions="Auto,*,Auto"
+                  Padding="10"
+                  BackgroundColor="{StaticResource Secondary}">
+                <ImageButton Aspect="Center"
+                             x:Name="leftArrow"
+                             Clicked="leftArrow_Clicked">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="{x:Static helpers:FontAwesomeIcons.ArrowLeft}"
+                                         FontFamily="MyFont"
+                                         Size="20"
+                                         Color="{StaticResource PrimaryColor}"/>
+                    </ImageButton.Source>
+                </ImageButton>
+                <Label Text="Novmeber 2025"
+                       Grid.Column="1"
+                       Style="{StaticResource TitleStyleBlackBold}"
+                       x:Name="monthLabel"/>
+
+                <ImageButton Grid.Column="2"
+                             Aspect="Center"
+                             Clicked="rightArrow_Clicked">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="{x:Static helpers:FontAwesomeIcons.ArrowRight}"
+                                         FontFamily="MyFont"
+                                         Size="20"
+                                         Color="{StaticResource PrimaryColor}"/>
+                    </ImageButton.Source>
+                </ImageButton>
+            </Grid>
+
+            <!-- WEEkDAY HEADER -->
+            <Grid ColumnDefinitions="*,*,*,*,*,*,*"
+                  Grid.Row="1"
+                  ColumnSpacing="5">
+                <Label Text="Sun"
+                       Style="{StaticResource Label14StyleBlack}"/>
+                <Label Text="Mon"
+                       Style="{StaticResource Label14StyleBlack}"
+                       Grid.Column="1"/>
+                <Label Text="Tue"
+                       Style="{StaticResource Label14StyleBlack}"
+                       Grid.Column="2"/>
+                <Label Text="Wed"
+                       Style="{StaticResource Label14StyleBlack}"
+                       Grid.Column="3"/>
+                <Label Text="Thu"
+                       Style="{StaticResource Label14StyleBlack}"
+                       Grid.Column="4"/>
+                <Label Text="Fri"
+                       Style="{StaticResource Label14StyleBlack}"
+                       Grid.Column="5"/>
+                <Label Text="Sat"
+                       Style="{StaticResource Label14StyleBlack}"
+                       Grid.Column="6"/>
+            </Grid>
+            
+            <!-- Calendar Grid: pooled cells created in code-behind -->
+            <Grid x:Name="CalendarGrid"
+                Padding="0,0,0,10"
+                    Grid.Row="2"
+                    ColumnSpacing="5"
+                    RowSpacing="4">
+                <!-- 6 rows x 7 cols will be added from code-behind at runtime -->
+            </Grid>
+
+        </Grid>
+    </Border>
+</mopup:PopupPage>

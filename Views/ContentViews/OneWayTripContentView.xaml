@@ -18,15 +18,26 @@
             <controls:ExtendedDropdown
                 Title="{x:Static resx:AppResource.From}"
                 ItemsSource="{Binding SourceAirports}"
-                PlaceholderText="{x:Static resx:AppResource.SearchDepartureAirport}" />
+                PlaceholderText="{x:Static resx:AppResource.SearchDepartureAirport}" 
+                SelectedItem="{Binding SelectedSourceAirport}"
+                CanEdit="True"
+                TextChangeCommand="{Binding SearchSourceAirportsCommand}"
+                DisplayMemberPath="OriginRoute"/>
 
             <controls:ExtendedDropdown
                 Title="{x:Static resx:AppResource.To}"
                 ItemsSource="{Binding DestinationAirports}"
-                PlaceholderText="{x:Static resx:AppResource.SearchDestinationAirport}" />
+                PlaceholderText="{x:Static resx:AppResource.SearchDestinationAirport}" 
+                SelectedItem="{Binding SelectedDestinationAirport}"
+                TextChangeCommand="{Binding SearchDestinationAirportsCommand}"
+                DisplayMemberPath="DestinationRoute"
+                CanEdit="True"/>
 
 
-            <controls:ExtendedDatePicker Title="{x:Static resx:AppResource.TravelDate}" Grid.Row="2" />
+            <controls:ExtendedDatePicker Title="{x:Static resx:AppResource.TravelDate}" 
+                Date="{Binding SelectedDate}"
+                AllowedDates="{Binding AllowedDates}"
+                Grid.Row="2" />
 
             <controls:ExtendedDropdown Title="{x:Static resx:AppResource.PaxSize}" Grid.Row="3">
                 <controls:ExtendedDropdown.ItemsSource>

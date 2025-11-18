@@ -1,3 +1,5 @@
+using Mopups.Interfaces;
+
 namespace AirIQ.Controls;
 
 public partial class ExtendedDatePicker : ContentView
@@ -11,6 +13,14 @@ public partial class ExtendedDatePicker : ContentView
     public static readonly BindableProperty DateProperty =
        BindableProperty.Create(propertyName: nameof(Date), returnType: typeof(DateTime), declaringType: typeof(ExtendedDatePicker), default(DateTime), defaultBindingMode: BindingMode.TwoWay);
 
+    public static readonly BindableProperty AllowedDatesProperty =
+        BindableProperty.Create(nameof(AllowedDates), typeof(IList<DateTime>), typeof(ExtendedDatePicker), null, BindingMode.TwoWay);
+
+    public IList<DateTime> AllowedDates
+    {
+        get => (IList<DateTime>)GetValue(AllowedDatesProperty);
+        set => SetValue(AllowedDatesProperty, value);
+    }
 
     public Style TitleStyle
     {
@@ -36,12 +46,17 @@ public partial class ExtendedDatePicker : ContentView
 
     private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
     {
-        datepicker.Focus();
-    }
 
-    private void datepicker_DateSelected(object sender, DateChangedEventArgs e)
-    {
-        datelbl.Text = e.NewDate.ToString("dd/MM/yyyy");
-        datelbl.TextColor = Colors.Black;
+        var popupNavigation = IPlatformApplication.Current?.Services.GetService<IPopupNavigation>();
+        var popup = new CalendarView();
+        popup.SetBinding(CalendarView.AllowedDatesProperty,
+                new Binding(nameof(AllowedDates), BindingMode.TwoWay, source: this));
+        popup.DatePicked += (arg) =>
+        {
+            Date = arg;
+            datelbl.Text = arg.ToString("dd/MM/yyyy");
+            datelbl.TextColor = Colors.Black;
+        };
+        popupNavigation?.PushAsync(popup);
     }
 }

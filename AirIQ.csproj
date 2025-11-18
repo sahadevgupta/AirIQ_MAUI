@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net9.0-android35.0;net9.0-ios</TargetFrameworks>
+		<TargetFrameworks>net9.0-android;net9.0-ios</TargetFrameworks>
 		
 		<OutputType>Exe</OutputType>
 		<RootNamespace>AirIQ</RootNamespace>
@@ -36,7 +36,8 @@
 		<MauiIcon Include="Resources\AppIcon\appicon.png" Color="#ffffff" BaseSize="128,128" Resize="True" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\appsplash.png" Color="White" BaseSize="256,256"/>
+		<MauiSplashScreen Include="Resources\Splash\appsplash.png" Color="White" BaseSize="256,256" Condition="$(TargetFramework.Contains('-ios'))"/>
+		<MauiSplashScreen Include="Resources\Splash\appsplash.png" Color="White" Condition="$(TargetFramework.Contains('-android'))" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -55,6 +56,7 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.10" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="12.2.0" />
+		<PackageReference Include="Mopups" Version="1.3.4" />
 		<PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
 		<PackageReference Include="Refit.Newtonsoft.Json" Version="8.0.0" />
 		<PackageReference Include="Sentry.Maui" Version="5.16.1" />
