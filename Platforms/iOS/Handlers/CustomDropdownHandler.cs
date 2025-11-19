@@ -163,7 +163,27 @@ namespace AirIQ.Platforms.Handlers
                 var items = ((CustomDropdown)sender).ItemSource;
                 if (items != null && items.Count == 0)
                 {
-                    items.Add(StringConstants.NoResultAvailable);
+                    var itemType = items.GetType().GetGenericArguments().FirstOrDefault();
+                    if (itemType != null && itemType == typeof(System.String))
+                    {
+                        items.Add(StringConstants.NoResultAvailable);
+                    }
+                    else if (itemType != null)
+                    {
+                        // Create an instance of the item type        
+                        var placeholder = Activator.CreateInstance(itemType);
+
+                        // Try to set a property like "Name" or "Title" dynamically        
+                        //var prop = itemType.GetProperty(customDropdown.DisplayMemberPath) ?? itemType.GetProperty("Name") ?? itemType.GetProperty("Title");
+                        // Find a writable string property to set placeholder text    
+                        var prop = itemType.GetProperties().FirstOrDefault(p => p.PropertyType == typeof(string) && p.CanWrite);
+                        if (prop != null && prop.CanWrite)
+                        {
+                            prop.SetValue(placeholder, StringConstants.NoResultAvailable);
+                        }
+                        items.Add(placeholder);
+
+                    }
                 }
                 UpdateItemsSource();
             }

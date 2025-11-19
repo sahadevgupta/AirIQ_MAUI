@@ -39,7 +39,8 @@
                 AllowedDates="{Binding AllowedDates}"
                 Grid.Row="2" />
 
-            <controls:ExtendedDropdown Title="{x:Static resx:AppResource.PaxSize}" Grid.Row="3">
+            <controls:ExtendedDropdown Title="{x:Static resx:AppResource.PaxSize}" Grid.Row="3"
+                                       SelectedItem="{Binding SelectedPaxSize}">
                 <controls:ExtendedDropdown.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
                         <x:String>1</x:String>
@@ -59,7 +60,8 @@
                 FontAttributes="Bold"
                 HeightRequest="48"
                 Text="{x:Static resx:AppResource.SearchFlights}"
-                TextColor="Black" />
+                TextColor="Black" 
+                Command="{Binding SearchFlightsCommand}"/>
 
         </VerticalStackLayout>
 

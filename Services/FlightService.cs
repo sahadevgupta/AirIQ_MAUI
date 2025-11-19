@@ -33,7 +33,7 @@ public class FlightService(IApiServiceBaseParams apiServiceBaseParams) : ApiServ
 
     public async Task<IEnumerable<DateTime>> GetAvailableBookingDatesAsync(string origin, string destination)
     {
-        List<DateTime> availableDates = new ();
+        List<DateTime> availableDates = new();
         try
         {
             await Connectivity.CheckConnected();
@@ -66,4 +66,21 @@ public class FlightService(IApiServiceBaseParams apiServiceBaseParams) : ApiServ
         return availableDates;
     }
 
+    public async Task<IEnumerable<FlightSearchResultDto>> GetFlightAvailabilityAsync(FlightSearchRequest request)
+    {
+        IEnumerable<FlightSearchResultDto>? flightAvailabilityResponse = Enumerable.Empty<FlightSearchResultDto>();
+        try
+        {
+            await Connectivity.CheckConnected();
+            var headers = await GetHeader();
+
+            var response = await BackendService.SearchFlights(request, headers).ConfigureAwait(false);
+            flightAvailabilityResponse = SetResponse(flightAvailabilityResponse, response);
+        }
+        catch (Exception exception)
+        {
+            HandleException(exception);
+        }
+        return flightAvailabilityResponse;
+    }
 }

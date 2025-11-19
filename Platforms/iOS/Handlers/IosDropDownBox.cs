@@ -381,7 +381,7 @@ namespace AirIQ.Platforms.iOS.Handlers
                 string labelText = _labelFunc(item);
 
                 cell.TextLabel.Text = labelText;
-                cell.TextLabel.TextColor = labelText == StringConstants.NoResultAvailable
+                cell.TextLabel.TextColor = labelText.Contains(StringConstants.NoResultAvailable, StringComparison.OrdinalIgnoreCase)
                     ? ((Color)Application.Current.Resources["Red"]).ToPlatform()
                     : ((Color)Application.Current.Resources["Black"]).ToPlatform();
                 cell.TextLabel.LineBreakMode = UILineBreakMode.WordWrap;

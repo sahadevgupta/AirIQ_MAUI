@@ -26,4 +26,14 @@ public static class BackendToAppModelMapper
         var converter = new FlightRouteDtoToFlightRouteConverter();
         return flightRouteDtos.Select(converter.Convert);
     }
+
+    public static IEnumerable<Flight> GetFlights(IEnumerable<FlightSearchResultDto> flightSearchResultDtos)
+    {
+        if (flightSearchResultDtos == null)
+        {
+            return new List<Flight>();
+        }
+        var converter = new FlightSearchResultDtoToFlight();
+        return flightSearchResultDtos.Select(converter.Convert);
+    }
 }

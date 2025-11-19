@@ -9,7 +9,7 @@ namespace AirIQ.Services.Interfaces
     public interface IAppBackendService
     {
         // GET Calls
-        [Get(UrlConstants.Sectors)] 
+        [Get(UrlConstants.Sectors)]
         Task<ServiceResponse<IEnumerable<FlightRouteDto>>> GetAvailableSectors([HeaderCollection] IDictionary<string, string> headers);
 
         // POST CALLS
@@ -19,5 +19,7 @@ namespace AirIQ.Services.Interfaces
         [Post(UrlConstants.Login)]
         Task<LoginDto> Login([Body(BodySerializationMethod.Serialized)] LoginRequest request, [HeaderCollection] IDictionary<string, string> headers);
 
+        [Post(UrlConstants.Search)]
+        Task<ServiceResponse<IEnumerable<FlightSearchResultDto>>> SearchFlights([Body(BodySerializationMethod.Serialized)] FlightSearchRequest request, [HeaderCollection] IDictionary<string, string> headers);
     }
 }

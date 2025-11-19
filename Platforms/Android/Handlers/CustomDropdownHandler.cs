@@ -114,7 +114,11 @@ namespace AirIQ.Platforms.Handlers
                 if (items != null && items.Count == 0)
                 {
                     var itemType = items.GetType().GetGenericArguments().FirstOrDefault();
-                    if (itemType != null)
+                    if (itemType != null && itemType == typeof(string))
+                    {
+                        items.Add(NoResultAvailable);
+                    }
+                    else if (itemType != null)
                     {
                         // Create an instance of the item type        
                         var placeholder = Activator.CreateInstance(itemType);
@@ -128,7 +132,6 @@ namespace AirIQ.Platforms.Handlers
                             prop.SetValue(placeholder, StringConstants.NoResultAvailable);
                         }
                         items.Add(placeholder);
-
                     }
                 }
 

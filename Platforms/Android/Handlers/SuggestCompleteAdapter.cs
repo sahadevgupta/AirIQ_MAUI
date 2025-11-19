@@ -37,11 +37,10 @@ namespace AirIQ.Platforms.Android.Handlers
         public override global::Android.Views.View GetView(int position, global::Android.Views.View? convertView, ViewGroup parent)
         {
             var view = base.GetView(position, convertView, parent);
-            var item = resultList[position];
-             var text = item.GetType().GetProperty(_displayMemberPath).GetValue(item).ToString();
+            var textview = view.FindViewById<TextView>(Resource.Id.autocomplete_textview);
+            var text = textview.Text;
             if (text.Contains(StringConstants.NoResultAvailable, StringComparison.OrdinalIgnoreCase))
             {
-                var textview = view.FindViewById<TextView>(Resource.Id.autocomplete_textview);
                 textview.SetTextColor(Colors.Red.ToPlatform());
             }
             return view;

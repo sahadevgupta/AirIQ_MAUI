@@ -39,6 +39,9 @@ namespace AirIQ.ViewModels
         [ObservableProperty]
         private DateTime _selectedDateTime;
 
+        [ObservableProperty]
+        private string _selectedPaxSize = "1";
+
         #endregion
 
         #region [ Methods & Service Calls ]
@@ -137,6 +140,24 @@ namespace AirIQ.ViewModels
         private void SearchDestinationAirports(string searchKey)
         {
             FilterListByQuery(searchKey, "destination");
+        }
+
+        [RelayCommand]
+        private async Task SearchFlights()
+        {
+            var request = new Model.Request.FlightSearchRequest
+            {
+                Origin = SelectedSourceAirport?.Origin,
+                Destination = SelectedDestinationAirport?.Destination,
+                DepartureDate = SelectedDateTime.ToString("yyyy/MM/dd"),
+                Adult = int.Parse(SelectedPaxSize),
+                Child = 0,
+                Infant = 0,
+                AirlineCode = null
+            };
+
+            var response = await flightService.GetFlightAvailabilityAsync(request);
+            BackendToAppModelMapper.GetFlights(response);
         }
 
         #endregion
