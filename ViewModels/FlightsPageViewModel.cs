@@ -13,6 +13,7 @@ using CommunityToolkit.Mvvm.Input;
 namespace AirIQ.ViewModels;
 
 [QueryProperty(nameof(FlightSearchRequest), NavigationParamConstants.FlightSearchRequest)]
+[QueryProperty(nameof(AllowedDates), NavigationParamConstants.TravelAllowedDates)]
 public partial class FlightsPageViewModel(IViewModelParameters viewModelParameters, IFlightService flightService) : BaseViewModel(viewModelParameters)
 {
     #region [ Properties ]
@@ -23,9 +24,21 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
     [ObservableProperty]
     private ObservableCollection<Flight>? _availableFlights;
 
+    [ObservableProperty]
+    private ObservableCollection<DateTime> _allowedDates = new();
+
+    [ObservableProperty]
+    private DateTime _selectedTravelDate;
+
+    [ObservableProperty]
+    private string? _sourceAirport;
+
+    [ObservableProperty]
+    private string? _destinationAirport;
+
     #endregion
 
-    #region [ Methods & Service Calls ]
+    #region [ Methods & Service Calls ].    
 
     private async Task IniatializeDataAsync()
     {
@@ -33,6 +46,10 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
         {
             LoadingService.ShowLoading();
 
+
+            SelectedTravelDate = DateTime.Parse(FlightSearchRequest!.DepartureDate!);
+            SourceAirport = FlightSearchRequest.SourceAirport?.OriginRoute;
+            DestinationAirport = FlightSearchRequest.DestinationAirport?.DestinationRoute;
             var response = await flightService.GetFlightAvailabilityAsync(FlightSearchRequest!);
             LoadingService.HideLoading();
             AvailableFlights = new ObservableCollection<Flight>(BackendToAppModelMapper.GetFlights(response));
@@ -57,7 +74,8 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
     {
         await ShellNavigationService.Navigate<FlightBookingPage>(parameters: new Dictionary<string, object>
         {
-            { NavigationParamConstants.SelectedFlight, selectedFlight! }
+            { NavigationParamConstants.SelectedFlight, selectedFlight! },
+            { NavigationParamConstants.FlightSearchRequest, FlightSearchRequest! }
         });
 
     }

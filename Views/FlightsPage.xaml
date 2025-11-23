@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:AirIQ.Controls"
-    xmlns:models="clr-namespace:AirIQ.Model"
+    xmlns:models="clr-namespace:AirIQ.Models"
     xmlns:viewmodels="clr-namespace:AirIQ.ViewModels"
     xmlns:views="clr-namespace:AirIQ.Views"
     Title="FlightsPage"
@@ -31,15 +31,16 @@
                     RowDefinitions="Auto,Auto">
 
 
-                    <controls:ExtendedEntry Margin="0,0,0,10" Text="{Binding FlightSearchRequest.Origin}" />
+                    <controls:ExtendedEntry Margin="0,0,0,10" 
+                        IsReadOnly ="True"
+                        Text="{Binding SourceAirport}" />
 
 
                     <controls:ExtendedEntry
                         Grid.Column="1"
                         Margin="0,0,0,10"
-                        Text="{Binding FlightSearchRequest.Destination}" />
-
-
+                        IsReadOnly="True"
+                        Text="{Binding DestinationAirport}" />
 
                 </Grid>
 
@@ -47,7 +48,9 @@
 
             </Border>
 
-            <controls:ExtendedDatePicker
+            <controls:ExtendedDatePicker Title="Change Date"
+                Date="{Binding SelectedTravelDate}"
+                AllowedDates="{Binding AllowedDates}"
                 Grid.Row="0"
                 BackgroundColor="Transparent"
                 HorizontalOptions="Center"

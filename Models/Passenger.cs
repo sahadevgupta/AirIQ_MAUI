@@ -1,9 +1,10 @@
 using System;
 using AirIQ.Enums;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AirIQ.Models;
 
-public class Passenger
+public partial class Passenger : ObservableObject
 {
     public string? Id { get; set; }
     public string? Title { get; set; }
@@ -15,5 +16,14 @@ public class Passenger
     public string? PassportIssuingCountryCode { get; set; }
     public string? Nationality { get; set; }
     public PassengerType PassengerType { get; set; }
+
+    [ObservableProperty]
+    private bool _isExpanded;
+
+    [ObservableProperty]
+    private string? _selectedPassengerType = nameof(PassengerType.Adult);
+
+    [ObservableProperty]
+    private string? _selectedTitle = "Mr.";
 
 }

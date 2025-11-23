@@ -11,7 +11,15 @@ public partial class ExtendedDatePicker : ContentView
        BindableProperty.Create(propertyName: nameof(TitleStyle), returnType: typeof(Style), declaringType: typeof(ExtendedDatePicker), (Style)Application.Current.Resources["TitleSmallWithPrimaryFontColor"], defaultBindingMode: BindingMode.TwoWay);
 
     public static readonly BindableProperty DateProperty =
-       BindableProperty.Create(propertyName: nameof(Date), returnType: typeof(DateTime), declaringType: typeof(ExtendedDatePicker), default(DateTime), defaultBindingMode: BindingMode.TwoWay);
+       BindableProperty.Create(propertyName: nameof(Date), returnType: typeof(DateTime), declaringType: typeof(ExtendedDatePicker), default(DateTime), defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
+       {
+           var control = (ExtendedDatePicker)bindable;
+           if (newValue != null && (DateTime)newValue != default)
+           {
+               control.datelbl.Text = ((DateTime)newValue).ToString("dd/MM/yyyy");
+               control.datelbl.TextColor = Colors.Black;
+           }
+       });
 
     public static readonly BindableProperty AllowedDatesProperty =
         BindableProperty.Create(nameof(AllowedDates), typeof(IList<DateTime>), typeof(ExtendedDatePicker), null, BindingMode.TwoWay);
@@ -37,7 +45,11 @@ public partial class ExtendedDatePicker : ContentView
     public DateTime Date
     {
         get { return (DateTime)GetValue(DateProperty); }
-        set { SetValue(DateProperty, value); }
+        set 
+        { 
+            SetValue(DateProperty, value); 
+            
+        }
     }
     public ExtendedDatePicker()
     {
@@ -54,9 +66,8 @@ public partial class ExtendedDatePicker : ContentView
         popup.DatePicked += (arg) =>
         {
             Date = arg;
-            datelbl.Text = arg.ToString("dd/MM/yyyy");
-            datelbl.TextColor = Colors.Black;
         };
         popupNavigation?.PushAsync(popup);
     }
+
 }

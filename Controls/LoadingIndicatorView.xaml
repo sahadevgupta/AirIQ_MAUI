@@ -6,9 +6,12 @@
 
     <Grid ColumnDefinitions="2*,6*,2*">
 
-        <Border StrokeShape="RoundRectangle 12" VerticalOptions="Center" Stroke="{DynamicResource AshtonSkies}"  Grid.Column="1">
-        <Image Source="loader.gif" IsAnimationPlaying="True"/>
-        </Border>
+        <Image Source="loader.gif" 
+            MaximumHeightRequest="150"
+            Grid.Column="1"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsAnimationPlaying="True"/>
     </Grid>
 
 </ContentPage>

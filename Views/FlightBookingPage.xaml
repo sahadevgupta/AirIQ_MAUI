@@ -4,8 +4,9 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:AirIQ.Controls"
+    xmlns:enums="clr-namespace:AirIQ.Enums"
     xmlns:helpers="clr-namespace:AirIQ.Extensions"
-    xmlns:models="clr-namespace:AirIQ.Model"
+    xmlns:models="clr-namespace:AirIQ.Models"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodels="clr-namespace:AirIQ.ViewModels"
     xmlns:views="clr-namespace:AirIQ.Views"
@@ -86,7 +87,8 @@
                         HorizontalTextAlignment="End"
                         Style="{StaticResource TitleStyleBlackBold}"
                         Text="{Binding SelectedAirline.Price, StringFormat='₹ {0}'}"
-                        TextColor="{StaticResource Azure}"
+                        TextColor="{StaticResource PrimaryColor}"
+                        CharacterSpacing="1.1"
                         VerticalOptions="Start" />
 
                     <!--  Times  -->
@@ -136,17 +138,19 @@
             </Border>
 
             <!--  Passenger Details  -->
-            <Label Margin="0,20,0,0"
+            <Label
                 Grid.Row="2"
+                Margin="0,20,0,0"
                 Padding="20"
                 FontSize="20"
-                VerticalOptions="Center"
                 Style="{StaticResource Label14StyleBlack}"
                 Text="Passenger Details"
-                TextColor="Black" />
+                TextColor="Black"
+                VerticalOptions="Center" />
 
-            <Button Margin="0,25,10,0"
+            <Button
                 Grid.Row="2"
+                Margin="0,25,10,0"
                 Command="{Binding AddPassengerCommand}"
                 HorizontalOptions="End"
                 Text="Add Infant"
@@ -158,11 +162,21 @@
                         Size="14"
                         Color="White" />
                 </Button.ImageSource>
+
+                <Button.Triggers>
+                    <DataTrigger
+                        TargetType="Button"
+                        Binding="{Binding AdultPassengers.Count}"
+                        Value="1">
+                        <Setter Property="IsVisible" Value="False" />
+                    </DataTrigger>
+                </Button.Triggers>
             </Button>
 
-            <CollectionView BackgroundColor="Transparent"
+            <CollectionView
                 Grid.Row="3"
                 Margin="10,0"
+                BackgroundColor="Transparent"
                 ItemsSource="{Binding AdultPassengers}"
                 SelectionMode="None"
                 VerticalOptions="Start">
@@ -174,43 +188,73 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Passenger">
 
-                        <toolkit:Expander>
+                        <toolkit:Expander IsExpanded="{Binding IsExpanded, Mode=TwoWay}">
                             <toolkit:Expander.Header>
 
-                                <Border StrokeShape="RoundRectangle 8"
-                                     StrokeThickness="1" Stroke="#DADADA" BackgroundColor="#EDF2FA">
-                                <Grid
-                                    Padding="10"
-                                    ColumnDefinitions="Auto,*,Auto"
-                                    ColumnSpacing="10">
+                                <Border
+                                    BackgroundColor="#EDF2FA"
+                                    Stroke="#DADADA"
+                                    StrokeShape="RoundRectangle 8"
+                                    StrokeThickness="1">
+                                    <Grid
+                                        Padding="10"
+                                        ColumnDefinitions="Auto,*,Auto"
+                                        ColumnSpacing="10">
 
-                                    <Label
-                                        FontSize="16"
-                                        Style="{StaticResource Label16StyleBold}"
-                                        Text="{Binding Id}"
-                                        TextColor="Black"
-                                        VerticalOptions="Center" />
+                                        <Label
+                                            FontSize="16"
+                                            Style="{StaticResource Label16StyleBold}"
+                                            Text="{Binding Id}"
+                                            TextColor="Black"
+                                            VerticalOptions="Center" />
 
 
-                                    <Image
-                                        Grid.Column="2"
-                                        Aspect="Center"
-                                        Source="arrow_down.png" />
+                                        <Image
+                                            Grid.Column="2"
+                                            Aspect="Center"
+                                            Source="arrow_down.png">
+                                            <Image.Triggers>
+                                                <DataTrigger
+                                                    Binding="{Binding IsExpanded}"
+                                                    TargetType="Image"
+                                                    Value="True">
+                                                    <Setter Property="Rotation" Value="180" />
+                                                </DataTrigger>
+                                            </Image.Triggers>
+                                        </Image>
 
-                                </Grid>
-</Border>
+                                    </Grid>
+                                </Border>
                             </toolkit:Expander.Header>
-                            <Border Margin="0,10,0,0"
+                            <Border
+                                Margin="0,10,0,0"
                                 Padding="10"
-                                StrokeShape="RoundRectangle 8"
                                 BackgroundColor="White"
-                                Stroke="White">
+                                Stroke="White"
+                                StrokeShape="RoundRectangle 8">
                                 <Grid
                                     ColumnDefinitions="*,*"
                                     ColumnSpacing="10"
                                     RowDefinitions="Auto,Auto">
-                                    <controls:ExtendedDropdown PlaceholderText="Gender" />
-                                    <controls:ExtendedDropdown Grid.Column="1" PlaceholderText="Title" />
+                                    <controls:ExtendedDropdown PlaceholderText="Type" SelectedItem="{Binding SelectedPassengerType}">
+                                        <controls:ExtendedDropdown.ItemsSource>
+                                            <x:Array Type="{x:Type x:String}">
+                                                <x:String>Adult</x:String>
+                                                <x:String>Child</x:String>
+                                            </x:Array>
+                                        </controls:ExtendedDropdown.ItemsSource>
+                                    </controls:ExtendedDropdown>
+                                    <controls:ExtendedDropdown Grid.Column="1" PlaceholderText="Title" SelectedItem="{Binding SelectedTitle}">
+                                        <controls:ExtendedDropdown.ItemsSource>
+                                            <x:Array Type="{x:Type x:String}">
+                                                <x:String>Mr.</x:String>
+                                                <x:String>Mrs.</x:String>
+                                                <x:String>Ms.</x:String>
+                                                <x:String>Mstr.</x:String>
+                                                <x:String>Miss</x:String>
+                                            </x:Array>
+                                        </controls:ExtendedDropdown.ItemsSource>
+                                    </controls:ExtendedDropdown>
 
                                     <controls:ExtendedEntry
                                         Grid.Row="1"
@@ -262,13 +306,13 @@
                             FontAttributes="Bold"
                             FontSize="22"
                             Text="{Binding TotalPrice, StringFormat='₹ {0}'}"
-                            TextColor="{StaticResource Azure}" />
+                            TextColor="{StaticResource PrimaryColor}" />
                     </VerticalStackLayout>
 
                     <Button
                         Grid.Column="1"
                         Padding="25,12"
-                        BackgroundColor="#0A84FF"
+                        BackgroundColor="{StaticResource PrimaryColor}"
                         Command="{Binding ContinueCommand}"
                         CornerRadius="18"
                         FontAttributes="Bold"

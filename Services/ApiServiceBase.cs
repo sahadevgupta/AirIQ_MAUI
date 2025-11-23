@@ -3,6 +3,8 @@ using System.Diagnostics;
 using AirIQ.Constants;
 using AirIQ.Models.Response;
 using AirIQ.Services.Interfaces;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 
 namespace AirIQ.Services;
 
@@ -22,6 +24,16 @@ public abstract class ApiServiceBase
     {
         //Handle the exception
         Debug.WriteLine("ApiServiceBase HandleException [{exceptionName}] \n{exceptionToString}", exception.GetType().Name, exception.ToString());
+
+
+        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
+        ToastDuration duration = ToastDuration.Short;
+        double fontSize = 14;
+
+        var toast = Toast.Make(exception.Message, duration, fontSize);
+
+        toast.Show(cancellationTokenSource.Token);
     }
 
     protected async Task<Dictionary<string, string>> GetHeader()

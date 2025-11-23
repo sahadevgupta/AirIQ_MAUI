@@ -1,5 +1,6 @@
 ﻿using AirIQ.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace AirIQ.ViewModels.Common
 {
@@ -23,5 +24,15 @@ namespace AirIQ.ViewModels.Common
         {
             return Task.CompletedTask;
         }
+
+        #region [ Commands ]
+
+        [RelayCommand]
+        private async Task Back()
+        {
+            await ShellNavigationService.NavigateBack();
+        }
+
+        #endregion
     }
 }

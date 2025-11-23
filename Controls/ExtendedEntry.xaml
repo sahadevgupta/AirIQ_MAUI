@@ -43,6 +43,7 @@
                            Keyboard="{Binding EntryKeyboard, Source={x:Reference customEntryControlWithTitle}}"
                            ReturnCommand="{Binding ReturnCommand,Source={x:Reference customEntryControlWithTitle}}"
                            MaxLength="{Binding MaxLength,Source={x:Reference customEntryControlWithTitle}}"
+                           IsReadOnly="{Binding IsReadOnly,Source={x:Reference customEntryControlWithTitle}}"
                            Style="{StaticResource FieldEntryStyleGreyRegular}"
                            Focused="InputEntry_Focused"
                            VerticalOptions="Center">

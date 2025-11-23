@@ -1,6 +1,6 @@
 using System;
 using System.Text.Json.Serialization;
-using Newtonsoft.Json;
+using JsonIgnoreAttribute = System.Text.Json.Serialization.JsonIgnoreAttribute;
 
 namespace AirIQ.Models.Request;
 
@@ -26,4 +26,10 @@ public class FlightSearchRequest
 
     [JsonPropertyName("airline_code")]
     public string? AirlineCode { get; set; }
+
+    [JsonIgnore]
+    public FlightRoute? SourceAirport;
+
+    [JsonIgnore]
+    public FlightRoute? DestinationAirport;
 }

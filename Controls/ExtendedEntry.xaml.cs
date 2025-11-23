@@ -17,7 +17,7 @@ public partial class ExtendedEntry : ContentView
                             string.Empty);
 
     public string Title
-    { 
+    {
         get => (string)GetValue(TitleProperty);
         set => SetValue(TitleProperty, value);
     }
@@ -86,6 +86,18 @@ public partial class ExtendedEntry : ContentView
     {
         get => GetValue(IconTapCommandParameterProperty);
         set => SetValue(IconTapCommandParameterProperty, value);
+    }
+
+    public static readonly BindableProperty IsReadOnlyProperty =
+        BindableProperty.Create(nameof(IsReadOnly),
+        typeof(bool),
+        typeof(ExtendedEntry),
+        false);
+
+    public bool IsReadOnly
+    {
+        get => (bool)GetValue(IsReadOnlyProperty);
+        set => SetValue(IsReadOnlyProperty, value);
     }
 
     // Bindable Property for Entry Text

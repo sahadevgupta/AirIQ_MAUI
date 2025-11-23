@@ -152,6 +152,8 @@ namespace AirIQ.ViewModels
                 Destination = SelectedDestinationAirport?.Destination,
                 DepartureDate = SelectedTravelDate.ToString("yyyy/MM/dd"),
                 Adult = int.Parse(SelectedPaxSize),
+                SourceAirport = SelectedSourceAirport,
+                DestinationAirport = SelectedDestinationAirport,
                 Child = 0,
                 Infant = 0,
                 AirlineCode = null
@@ -159,7 +161,8 @@ namespace AirIQ.ViewModels
 
             await ShellNavigationService.Navigate<FlightsPage>(parameters: new Dictionary<string, object>
             {
-                { NavigationParamConstants.FlightSearchRequest, request }
+                { NavigationParamConstants.FlightSearchRequest, request },
+                { NavigationParamConstants.TravelAllowedDates, AllowedDates },
             });
 
             
