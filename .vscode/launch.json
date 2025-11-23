@@ -9,7 +9,7 @@
         "name": ".NET MAUI",
         "type": "maui",
         "request": "launch",
-        "preLaunchTask": "maui: Build"
+        "preLaunchTask": "maui: Build",
     }
     ]
 }

@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace AirIQ.Model.Request;
+namespace AirIQ.Models.Request;
 
 public class BookingDatesAvailabilityRequest
 {

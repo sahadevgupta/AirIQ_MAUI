@@ -1,8 +1,8 @@
 using System;
 using System.Globalization;
 using AirIQ.Configurations.CustomExceptions;
-using AirIQ.Model.Request;
-using AirIQ.Model.Response;
+using AirIQ.Models.Request;
+using AirIQ.Models.Response;
 using AirIQ.Services.Interfaces;
 
 namespace AirIQ.Services;
@@ -23,6 +23,10 @@ public class FlightService(IApiServiceBaseParams apiServiceBaseParams) : ApiServ
         catch (NotConnectedException notConntectedException)
         {
             HandleException(notConntectedException);
+        }
+        catch(UnauthorizedAccessException unauthorizedAccessException)
+        {
+            HandleException(unauthorizedAccessException);
         }
         catch (Exception exception)
         {

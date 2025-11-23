@@ -35,7 +35,7 @@
 
 
             <controls:ExtendedDatePicker Title="{x:Static resx:AppResource.TravelDate}" 
-                Date="{Binding SelectedDate}"
+                Date="{Binding SelectedTravelDate}"
                 AllowedDates="{Binding AllowedDates}"
                 Grid.Row="2" />
 

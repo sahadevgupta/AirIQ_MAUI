@@ -1,6 +1,6 @@
 using System;
-using AirIQ.Model;
-using AirIQ.Model.Response;
+using AirIQ.Models;
+using AirIQ.Models.Response;
 
 namespace AirIQ.Configurations.Mapper.Converters;
 

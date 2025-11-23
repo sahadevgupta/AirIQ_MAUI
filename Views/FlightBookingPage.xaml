@@ -1,188 +1,286 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AirIQ.Views.FlightBookingPage"
-             xmlns:controls="clr-namespace:AirIQ.Controls"
-             Title="FlightBookingPage">
-    <AbsoluteLayout>
+<views:BasePage
+    x:Class="AirIQ.Views.FlightBookingPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:AirIQ.Controls"
+    xmlns:helpers="clr-namespace:AirIQ.Extensions"
+    xmlns:models="clr-namespace:AirIQ.Model"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodels="clr-namespace:AirIQ.ViewModels"
+    xmlns:views="clr-namespace:AirIQ.Views"
+    Title="FlightBookingPage"
+    x:DataType="viewmodels:FlightBookingPageViewModel">
 
-        <Grid AbsoluteLayout.LayoutBounds="0,0,1,1"
-              AbsoluteLayout.LayoutFlags="All"
-              RowDefinitions="Auto,*,Auto"
-              Padding="0,10,0,0">
+    <views:BasePage.PageContent>
 
-            <!-- Flight Summary -->
-            <Frame CornerRadius="12"
-                   Margin="16,0,16,8"
-                   Padding="16"
-                   HasShadow="True"
-                   BackgroundColor="White"
-                   BorderColor="#eeeeee">
-                <Grid RowDefinitions="Auto,Auto" ColumnSpacing="8">
-                    <StackLayout Orientation="Horizontal" Spacing="8">
-                        <Image Source="{Binding SelectedAirline.ImageUrl}" HeightRequest="40" WidthRequest="40"/>
-                        <StackLayout>
-                            <Label Text="{Binding SelectedAirline.AirlineName}" FontAttributes="Bold" FontSize="Medium" TextColor="Black"/>
-                            <Label Text="{Binding SelectedAirline.FlightNumber}" FontSize="Small" TextColor="Gray"/>
-                        </StackLayout>
-                        <Label Text="{Binding SelectedAirline.TotalTime}" 
-                               HorizontalOptions="EndAndExpand"
-                               VerticalOptions="Center"
-                               FontSize="Small"
-                               TextColor="Gray"/>
-                    </StackLayout>
+        <Grid
+            ColumnDefinitions="*"
+            ColumnSpacing="20"
+            RowDefinitions="Auto,Auto,Auto,*,Auto"
+            RowSpacing="10">
 
-                    <Grid Grid.Row="1" ColumnDefinitions="2*,*,2*" Padding="0,8,0,0">
-                        <!-- Departure -->
-                        <StackLayout>
-                            <Label Text="{Binding SelectedAirline.DepartureTime}" FontSize="24" FontAttributes="Bold"/>
-                            <Label Text="{Binding SelectedAirline.Origin}" FontSize="Small" TextColor="Gray"/>
-                        </StackLayout>
 
-                        <!-- Line with plane -->
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
-                            <BoxView HeightRequest="2" WidthRequest="60" Color="Orange" VerticalOptions="Center"/>
-                            <Image Source="plane_icon.png" HeightRequest="16" WidthRequest="16" Margin="4,0"/>
-                            <BoxView HeightRequest="2" WidthRequest="60" Color="Orange" VerticalOptions="Center"/>
-                        </StackLayout>
+            <Border
+                Padding="20,0"
+                BackgroundColor="{StaticResource PrimaryColor}"
+                StrokeShape="RoundRectangle 0,0,20,20"
+                StrokeThickness="0">
 
-                        <!-- Arrival -->
-                        <StackLayout Grid.Column="2" HorizontalOptions="End">
-                            <Label Text="{Binding SelectedAirline.ArivalTime}" FontSize="24" FontAttributes="Bold" HorizontalTextAlignment="End"/>
-                            <Label Text="{Binding SelectedAirline.Destination}" FontSize="Small" TextColor="Gray" HorizontalTextAlignment="End"/>
-                        </StackLayout>
-                    </Grid>
+                <!--  Title  -->
+                <Label
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    FontSize="26"
+                    Text="Booking Details"
+                    TextColor="White"
+                    VerticalOptions="Start" />
 
-                    <Label Grid.Row="2" 
-                           Text="{Binding SelectedAirline.Price}" 
-                           FontSize="Large" 
-                           FontAttributes="Bold" 
-                           HorizontalOptions="End" 
-                           TextColor="Black" 
-                           Margin="0,8,0,0"/>
-                </Grid>
-            </Frame>
+            </Border>
 
-            <!-- Passenger Details -->
-            <ScrollView Grid.Row="1" Margin="16,0" VerticalScrollBarVisibility="Never">
-                <StackLayout Spacing="16">
+            <!--  Flight Card  -->
+            <Border
+                Grid.Row="0"
+                Grid.RowSpan="1"
+                Margin="20,0"
+                Padding="20"
+                BackgroundColor="White"
+                StrokeShape="RoundRectangle 20"
+                TranslationY="50"
+                VerticalOptions="End">
 
-                    <!-- Adult Section -->
-                    <Frame HasShadow="False" BorderColor="#eeeeee" CornerRadius="8" Padding="12">
-                        <StackLayout BindableLayout.ItemsSource="{Binding AdultPassengers}" Spacing="8">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate>
-                                    <StackLayout Spacing="4">
-                                        <Label Text="{Binding Id}" FontAttributes="Bold" FontSize="Medium" TextColor="Black"/>
-                                        <controls:ExtendedDropdown SelectedItem="{Binding Title}" PlaceholderText="Title">
-                                            <controls:ExtendedDropdown.ItemsSource>
-                                                <x:Array Type="{x:Type x:String}">
-                                                    <x:String>Mr.</x:String>
-                                                    <x:String>Mrs.</x:String>
-                                                    <x:String>Ms.</x:String>
-                                                    <x:String>Mstr.</x:String>
-                                                    <x:String>Miss.</x:String>
-                                                </x:Array>
-                                            </controls:ExtendedDropdown.ItemsSource>
-                                        </controls:ExtendedDropdown>
-                                        <controls:ExtendedEntry Text="{Binding FirstName}" Title="First Name"/>
-                                        <controls:ExtendedEntry Text="{Binding LastName}" Title="Last Name"/>
-                                    </StackLayout>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </StackLayout>
-                    </Frame>
+                <Grid
+                    ColumnDefinitions="Auto,*,Auto"
+                    ColumnSpacing="15"
+                    RowDefinitions="Auto,Auto">
 
-                    <!-- Child Section -->
-                    <Frame HasShadow="False" BorderColor="#eeeeee" CornerRadius="8" Padding="12"
-                           IsVisible="{Binding ChildPassengers.Count, Converter={StaticResource ZeroToBoolConverter}}">
-                        <StackLayout BindableLayout.ItemsSource="{Binding ChildPassengers}" Spacing="8">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate>
-                                    <StackLayout Spacing="4">
-                                        <Label Text="{Binding Id}" FontAttributes="Bold" FontSize="Medium" TextColor="Black"/>
-                                        <controls:ExtendedDropdown SelectedItem="{Binding Title}" PlaceholderText="Title">
-                                            <controls:ExtendedDropdown.ItemsSource>
-                                                <x:Array Type="{x:Type x:String}">
-                                                    <x:String>Mr.</x:String>
-                                                    <x:String>Mrs.</x:String>
-                                                    <x:String>Ms.</x:String>
-                                                    <x:String>Mstr.</x:String>
-                                                    <x:String>Miss.</x:String>
-                                                </x:Array>
-                                            </controls:ExtendedDropdown.ItemsSource>
-                                        </controls:ExtendedDropdown>
-                                        <controls:ExtendedEntry Text="{Binding FirstName}" Title="First Name"/>
-                                        <controls:ExtendedEntry Text="{Binding LastName}" Title="Last Name"/>
-                                    </StackLayout>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </StackLayout>
-                    </Frame>
+                    <!--  Airline Logo  -->
+                    <Image
+                        Grid.RowSpan="2"
+                        HeightRequest="50"
+                        Source="{Binding SelectedAirline.AirlineLogoUrl}"
+                        VerticalOptions="Start"
+                        WidthRequest="50" />
 
-                    <!-- Infant Section -->
-                    <Frame HasShadow="False" BorderColor="#eeeeee" CornerRadius="8" Padding="12"
-                           IsVisible="{Binding InfantPassengers.Count, Converter={StaticResource ZeroToBoolConverter}}">
-                        <StackLayout BindableLayout.ItemsSource="{Binding InfantPassengers}" Spacing="8">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate>
-                                    <StackLayout Spacing="4">
-                                        <Label Text="{Binding Id}" FontAttributes="Bold" FontSize="Medium" TextColor="Black"/>
-                                        <controls:ExtendedDropdown SelectedItem="{Binding Title}" PlaceholderText="Title">
-                                            <controls:ExtendedDropdown.ItemsSource>
-                                                <x:Array Type="{x:Type x:String}">
-                                                    <x:String>Mr.</x:String>
-                                                    <x:String>Mrs.</x:String>
-                                                    <x:String>Ms.</x:String>
-                                                    <x:String>Mstr.</x:String>
-                                                    <x:String>Miss.</x:String>
-                                                </x:Array>
-                                            </controls:ExtendedDropdown.ItemsSource>
-                                        </controls:ExtendedDropdown>
-                                        <controls:ExtendedEntry Text="{Binding FirstName}" Title="First Name"/>
-                                        <controls:ExtendedEntry Text="{Binding LastName}" Title="Last Name"/>
-                                    </StackLayout>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </StackLayout>
-                    </Frame>
-
-                </StackLayout>
-            </ScrollView>
-
-            <!-- Bottom Bar -->
-            <Grid Grid.Row="2" BackgroundColor="Black" Padding="16" ColumnDefinitions="*,Auto">
-                <StackLayout>
-                    <Label Text="Total" TextColor="White" FontSize="Small"/>
-                    <Label>
+                    <!--  Airline Name  -->
+                    <Label Grid.Column="1">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="{Binding TravellersCountText}" TextColor="White"/>
-                                <Span Text="   " />
-                                <Span Text="{Binding TotalPrice}" FontAttributes="Bold" TextColor="White"/>
+                                <Span
+                                    Style="{StaticResource TitleStyleBlackBold}"
+                                    Text="{Binding SelectedAirline.Airline}"
+                                    TextColor="Black" />
+                                <Span Text=" | " />
+                                <Span
+                                    FontAttributes="None"
+                                    Style="{StaticResource TitleStyleBlackBold}"
+                                    Text="{Binding SelectedAirline.FlightNumber}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-                </StackLayout>
-                <Button Text="Continue"
-                        Command="{Binding ContinueCommand}"
-                        BackgroundColor="#007AFF"
-                        CornerRadius="25"
-                        TextColor="White"
-                        FontAttributes="Bold"
-                        Margin="10,0,0,0"
+
+                    <!--  Price  -->
+                    <Label
+                        Grid.Column="2"
+                        FontSize="18"
+                        HorizontalTextAlignment="End"
+                        Style="{StaticResource TitleStyleBlackBold}"
+                        Text="{Binding SelectedAirline.Price, StringFormat='₹ {0}'}"
+                        TextColor="{StaticResource Azure}"
+                        VerticalOptions="Start" />
+
+                    <!--  Times  -->
+                    <Grid
+                        Grid.Row="1"
+                        Grid.ColumnSpan="3"
+                        Margin="0,10,0,0"
+                        ColumnDefinitions="*,*">
+
+                        <!--  Departure  -->
+                        <VerticalStackLayout>
+                            <Label
+                                FontSize="28"
+                                Style="{StaticResource HeaderTitleStyleBlackBold}"
+                                Text="{Binding SelectedAirline.DepartureTime}"
+                                TextColor="Black" />
+                            <Label
+                                FontSize="13"
+                                Text="{Binding SelectedAirline.Origin}"
+                                TextColor="#777" />
+                        </VerticalStackLayout>
+
+                        <Label
+                            Grid.ColumnSpan="2"
+                            HorizontalTextAlignment="Center"
+                            Style="{StaticResource SupportLabelStyleBlackRegular}"
+                            Text="{Binding SelectedAirline.FlightRoute}"
+                            TextColor="#777"
+                            VerticalTextAlignment="Center" />
+
+                        <!--  Arrival  -->
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label
+                                FontSize="28"
+                                HorizontalTextAlignment="End"
+                                Style="{StaticResource Label18StyleBold}"
+                                Text="{Binding SelectedAirline.ArrivalTime}"
+                                TextColor="Black" />
+                            <Label
+                                FontSize="13"
+                                HorizontalTextAlignment="End"
+                                Text="{Binding SelectedAirline.Destination}"
+                                TextColor="#777" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!--  Passenger Details  -->
+            <Label Margin="0,20,0,0"
+                Grid.Row="2"
+                Padding="20"
+                FontSize="20"
+                VerticalOptions="Center"
+                Style="{StaticResource Label14StyleBlack}"
+                Text="Passenger Details"
+                TextColor="Black" />
+
+            <Button Margin="0,25,10,0"
+                Grid.Row="2"
+                Command="{Binding AddPassengerCommand}"
+                HorizontalOptions="End"
+                Text="Add Infant"
+                VerticalOptions="Center">
+                <Button.ImageSource>
+                    <FontImageSource
+                        FontFamily="MyFont"
+                        Glyph="{x:Static helpers:FontAwesomeIcons.Plus}"
+                        Size="14"
+                        Color="White" />
+                </Button.ImageSource>
+            </Button>
+
+            <CollectionView BackgroundColor="Transparent"
+                Grid.Row="3"
+                Margin="10,0"
+                ItemsSource="{Binding AdultPassengers}"
+                SelectionMode="None"
+                VerticalOptions="Start">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Passenger">
+
+                        <toolkit:Expander>
+                            <toolkit:Expander.Header>
+
+                                <Border StrokeShape="RoundRectangle 8"
+                                     StrokeThickness="1" Stroke="#DADADA" BackgroundColor="#EDF2FA">
+                                <Grid
+                                    Padding="10"
+                                    ColumnDefinitions="Auto,*,Auto"
+                                    ColumnSpacing="10">
+
+                                    <Label
+                                        FontSize="16"
+                                        Style="{StaticResource Label16StyleBold}"
+                                        Text="{Binding Id}"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
+
+
+                                    <Image
+                                        Grid.Column="2"
+                                        Aspect="Center"
+                                        Source="arrow_down.png" />
+
+                                </Grid>
+</Border>
+                            </toolkit:Expander.Header>
+                            <Border Margin="0,10,0,0"
+                                Padding="10"
+                                StrokeShape="RoundRectangle 8"
+                                BackgroundColor="White"
+                                Stroke="White">
+                                <Grid
+                                    ColumnDefinitions="*,*"
+                                    ColumnSpacing="10"
+                                    RowDefinitions="Auto,Auto">
+                                    <controls:ExtendedDropdown PlaceholderText="Gender" />
+                                    <controls:ExtendedDropdown Grid.Column="1" PlaceholderText="Title" />
+
+                                    <controls:ExtendedEntry
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        PlaceholderText="First Name"
+                                        Text="{Binding FirstName}" />
+                                    <controls:ExtendedEntry
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        PlaceholderText="Last Name"
+                                        Text="{Binding LastName}" />
+                                </Grid>
+                            </Border>
+                        </toolkit:Expander>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+            <!--  Bottom Sheet  -->
+            <Border
+                Grid.Row="4"
+                Padding="20"
+                BackgroundColor="White"
+                Stroke="{StaticResource AshtonSkies}"
+                StrokeShape="RoundRectangle 30,30,0,0"
+                VerticalOptions="End">
+
+                <Border.Shadow>
+                    <Shadow
+                        Brush="#33000000"
+                        Opacity="0.7"
+                        Radius="10"
+                        Offset="0, -2" />
+                </Border.Shadow>
+
+                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+
+                    <VerticalStackLayout>
+                        <Label Style="{StaticResource Label18StyleBold}" Text="Total" />
+
+                        <Label
+                            Style="{StaticResource SupportLabelStyleBlackRegular}"
+                            Text="{Binding TravellersCountText}"
+                            TextColor="#777" />
+
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="22"
+                            Text="{Binding TotalPrice, StringFormat='₹ {0}'}"
+                            TextColor="{StaticResource Azure}" />
+                    </VerticalStackLayout>
+
+                    <Button
                         Grid.Column="1"
-                        HeightRequest="48"
-                        WidthRequest="140"
-                        HorizontalOptions="End"/>
-            </Grid>
+                        Padding="25,12"
+                        BackgroundColor="#0A84FF"
+                        Command="{Binding ContinueCommand}"
+                        CornerRadius="18"
+                        FontAttributes="Bold"
+                        Text="Continue"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
         </Grid>
 
-        <!-- Loading overlay -->
-        <!--<controls:LoadingView
-            AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
-            AbsoluteLayout.LayoutFlags="All"
-            IsVisible="{Binding IsBusy}" />-->
-    </AbsoluteLayout>
 
-</ContentPage>
+    </views:BasePage.PageContent>
+
+</views:BasePage>

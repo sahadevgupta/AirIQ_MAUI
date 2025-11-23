@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AirIQ.ViewModels.Common
 {
-    public partial class BaseViewModel : ViewModelBase, IDestructible
+    public abstract partial class BaseViewModel : ViewModelBase, IDestructible
     {
         protected readonly ILoadingPopUpService LoadingService;
         protected readonly INavigationService NavigationService;

@@ -1,28 +1,29 @@
 using System;
+using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
-namespace AirIQ.Model.Request;
+namespace AirIQ.Models.Request;
 
 public class FlightSearchRequest
 {
-    [JsonProperty("origin")]
+    [JsonPropertyName("origin")]
     public string? Origin { get; set; }
 
-    [JsonProperty("destination")]
+    [JsonPropertyName("destination")]
     public string? Destination { get; set; }
 
-    [JsonProperty("departure_date")]
+    [JsonPropertyName("departure_date")]
     public string? DepartureDate { get; set; }
 
-    [JsonProperty("adult")]
+    [JsonPropertyName("adult")]
     public int Adult { get; set; }
 
-    [JsonProperty("child")]
+    [JsonPropertyName("child")]
     public int Child { get; set; }
 
-    [JsonProperty("infant")]
+    [JsonPropertyName("infant")]
     public int Infant { get; set; }
 
-    [JsonProperty("airline_code")]
+    [JsonPropertyName("airline_code")]
     public string? AirlineCode { get; set; }
 }

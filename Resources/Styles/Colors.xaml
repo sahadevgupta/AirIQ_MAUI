@@ -19,6 +19,7 @@
     <Color x:Key="MidnightBlue">#190649</Color>
     <Color x:Key="OffBlack">#1f1f1f</Color>
     <Color x:Key="Red">Red</Color>
+    <Color x:Key="Azure">#0A84FF</Color>
 
     <Color x:Key="Gray100">#E1E1E1</Color>
     <Color x:Key="Gray200">#C8C8C8</Color>
@@ -62,6 +63,7 @@
     <Color x:Key="BackgroundColorDark">#121212</Color>
     <Color x:Key="CardColorDark">#1E1E1E</Color>
     <Color x:Key="PlaceholderColorDark">#A0A0A0</Color>
+    <Color x:Key="Firebrick">#D32F2F</Color>
 
     <!-- ==================== -->
     <!--    BRUSHES           -->

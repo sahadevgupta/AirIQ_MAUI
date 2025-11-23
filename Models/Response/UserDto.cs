@@ -2,7 +2,7 @@ using System;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
-namespace AirIQ.Model.Response;
+namespace AirIQ.Models.Response;
 
 public record UserDto
 {

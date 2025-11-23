@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace AirIQ.Model.Response;
+namespace AirIQ.Models.Response;
 
 public sealed class ServiceResponse<T>
 {
@@ -13,4 +13,7 @@ public sealed class ServiceResponse<T>
 
     [JsonPropertyName("status")]
     public string? Status { get; set; }
+
+    [JsonPropertyName("message")]
+    public string? Message { get; set; }
 }

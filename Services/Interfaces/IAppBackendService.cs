@@ -1,6 +1,6 @@
 ﻿using AirIQ.Constants;
-using AirIQ.Model.Request;
-using AirIQ.Model.Response;
+using AirIQ.Models.Request;
+using AirIQ.Models.Response;
 using Refit;
 
 namespace AirIQ.Services.Interfaces

@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 using AirIQ.Constants;
-using AirIQ.Model.Response;
+using AirIQ.Models.Response;
 using AirIQ.Services.Interfaces;
 
 namespace AirIQ.Services;

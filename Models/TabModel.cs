@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Windows.Input;
 
-namespace AirIQ.Model
+namespace AirIQ.Models
 {
     public partial class TabModel : ObservableObject
     {

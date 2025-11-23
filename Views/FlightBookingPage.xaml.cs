@@ -1,9 +1,12 @@
+using AirIQ.ViewModels;
+
 namespace AirIQ.Views;
 
-public partial class FlightBookingPage : ContentPage
+public partial class FlightBookingPage : BasePage
 {
-	public FlightBookingPage()
+	public FlightBookingPage(FlightBookingPageViewModel viewModel)
 	{
 		InitializeComponent();
+		BindingContext = viewModel;
 	}
 }

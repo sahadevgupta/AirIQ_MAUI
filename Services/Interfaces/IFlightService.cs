@@ -1,6 +1,6 @@
 using System;
-using AirIQ.Model.Request;
-using AirIQ.Model.Response;
+using AirIQ.Models.Request;
+using AirIQ.Models.Response;
 
 namespace AirIQ.Services.Interfaces;
 

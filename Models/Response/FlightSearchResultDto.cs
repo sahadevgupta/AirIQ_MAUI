@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace AirIQ.Model.Response;
+namespace AirIQ.Models.Response;
 
 public record FlightSearchResultDto
 {

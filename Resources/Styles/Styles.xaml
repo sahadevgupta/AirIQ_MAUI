@@ -70,6 +70,17 @@
         <Setter Property="TextColor" Value="{DynamicResource PrimaryFontColor}" />
     </Style>
 
+    <Style TargetType="Label" x:Key="Label18StyleBold">
+        <Setter Property="FontFamily" Value="PoppinsBold" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="TextColor">
+            <Setter.Value>
+                <AppThemeBinding Light="{StaticResource DarkGray}" Dark="{StaticResource LightGray}"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+    </Style>
+
     <!-- ==================== -->
     <!--   ENTRY STYLES      -->
     <!-- ==================== -->

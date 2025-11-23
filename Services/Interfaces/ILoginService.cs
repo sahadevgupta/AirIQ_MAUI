@@ -1,5 +1,5 @@
 using System;
-using AirIQ.Model.Response;
+using AirIQ.Models.Response;
 
 namespace AirIQ.Services.Interfaces;
 

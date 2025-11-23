@@ -11,7 +11,9 @@
                Style="{Binding TitleStyle,Source={x:Reference extendedDatepicker}}"
                IsVisible="{Binding Title,Source={x:Reference extendedDatepicker},Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"/>
         
-        <Border Padding="10" StrokeShape="RoundRectangle 8" HeightRequest="52">
+        <Border Padding="10" StrokeShape="RoundRectangle 8" 
+            BackgroundColor="White"
+            HeightRequest="52">
             <Border.GestureRecognizers>
                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
             </Border.GestureRecognizers>

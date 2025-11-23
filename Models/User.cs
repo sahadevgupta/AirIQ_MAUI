@@ -1,6 +1,6 @@
 using System;
 
-namespace AirIQ.Model;
+namespace AirIQ.Models;
 
 public class User
 {

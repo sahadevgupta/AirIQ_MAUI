@@ -1,6 +1,6 @@
 using System;
 
-namespace AirIQ.Model;
+namespace AirIQ.Models;
 
 public class Flight
 {
@@ -37,4 +37,14 @@ public class Flight
     public string? HandLuggage { get; set; }
 
     public bool Isinternational { get; set; }
+
+    public string? AirlineLogoUrl
+    {
+        get
+        {
+            var airline = Airline?.Replace(" ", "");
+
+            return $"https://logo.clearbit.com/{airline}.com";
+        } 
+    }
 }

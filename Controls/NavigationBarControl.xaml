@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirIQ.Controls.NavigationBarControl"
+             x:Name="navigationBarControl"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+    
+
+<Grid ColumnDefinitions="2*,6*,2*" HeightRequest="52" Padding="10,0" 
+    BackgroundColor="{Binding BackgroundColor, Source={x:Reference navigationBarControl}}">
+
+    <Grid.Shadow>
+        <Shadow Brush="Black" Opacity="0.2" Radius="10" Offset="5,5" />
+    </Grid.Shadow>
+
+        <ImageButton
+            Aspect="AspectFit"
+            BackgroundColor="transparent"
+            Command="{Binding BackCommand, Source={x:Reference navigationBarControl}}"
+            HorizontalOptions="Start"
+            IsVisible="{Binding IsBackVisible, Source={x:Reference navigationBarControl}}"
+            Source="back_button.png"
+            VerticalOptions="Center">
+
+            <ImageButton.Behaviors>
+                <toolkit:IconTintColorBehavior TintColor="{Binding BackButtonTintColor, Source={x:Reference navigationBarControl}}" />
+            </ImageButton.Behaviors>
+
+        </ImageButton>
+
+        <Label
+            Grid.Column="1"
+            FontSize="18"
+            HorizontalOptions="Center"
+            Style="{StaticResource Label12BlackPoppinsMedium}"
+            Text="{Binding Title, Source={x:Reference navigationBarControl}}"
+            VerticalTextAlignment="Center" />
+
+        <ImageButton
+            Grid.Column="2"
+            Aspect="AspectFit"
+            HorizontalOptions="End"
+            IsVisible="{Binding EndIconSource, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}, Source={x:Reference navigationBarControl}}"
+            Source="{Binding EndIconSource, Source={x:Reference navigationBarControl}}"
+            Command="{Binding MenuCommand, Source={x:Reference navigationBarControl}}"
+            VerticalOptions="Center" />
+
+    </Grid>
+
+</ContentView>

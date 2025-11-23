@@ -1,6 +1,6 @@
 using System;
 
-namespace AirIQ.Model.Response;
+namespace AirIQ.Models.Response;
 
 public record FlightRouteDto
 {
