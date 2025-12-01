@@ -31,8 +31,9 @@
                     RowDefinitions="Auto,Auto">
 
 
-                    <controls:ExtendedEntry Margin="0,0,0,10" 
-                        IsReadOnly ="True"
+                    <controls:ExtendedEntry
+                        Margin="0,0,0,10"
+                        IsReadOnly="True"
                         Text="{Binding SourceAirport}" />
 
 
@@ -48,22 +49,23 @@
 
             </Border>
 
-            <controls:ExtendedDatePicker Title="Change Date"
-                Date="{Binding SelectedTravelDate}"
-                AllowedDates="{Binding AllowedDates}"
+            <controls:ExtendedDatePicker
+                Title="Change Date"
                 Grid.Row="0"
+                AllowedDates="{Binding AllowedDates}"
                 BackgroundColor="Transparent"
+                Date="{Binding SelectedTravelDate}"
                 HorizontalOptions="Center"
                 MinimumWidthRequest="200"
                 TranslationY="30"
                 VerticalOptions="End" />
 
             <CollectionView
+                x:Name="flightsCollectionView"
                 Grid.Row="2"
                 Grid.ColumnSpan="2"
                 Margin="10,40,10,10"
-                ItemsSource="{Binding AvailableFlights}"
-                x:Name="flightsCollectionView">
+                ItemsSource="{Binding AvailableFlights}">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
                 </CollectionView.ItemsLayout>
@@ -80,13 +82,20 @@
                                 RowDefinitions="Auto,Auto,Auto">
 
                                 <!--  Logo  -->
-                                <Image
+                                <VerticalStackLayout Grid.RowSpan="2">
+                                    <!-- <Image
                                     Grid.RowSpan="2"
                                     Aspect="AspectFit"
                                     HeightRequest="60"
                                     Source="{Binding AirlineLogoUrl}"
                                     VerticalOptions="Start"
-                                    WidthRequest="60" />
+                                    WidthRequest="60" />-->
+
+<Label Text="{Binding FlightRoute}"
+    Style="{StaticResource Label14StyleBlack}"/>
+
+                                </VerticalStackLayout>
+
 
                                 <!--  Airline Name  -->
                                 <Label
@@ -96,12 +105,12 @@
                                     Text="{Binding Airline}" />
 
                                 <!--  Price  -->
-                                <Label
+                                <!-- <Label
                                     Grid.Column="2"
                                     FontAttributes="Bold"
                                     FontSize="17"
                                     Text="{Binding Price, StringFormat='{}{0:C}'}"
-                                    TextColor="#0A84FF" />
+                                    TextColor="#0A84FF" />-->
 
                                 <!--  Times  -->
 
@@ -177,11 +186,11 @@
                                     Grid.Column="2"
                                     Margin="0,8,0,0"
                                     BackgroundColor="{StaticResource Firebrick}"
+                                    Command="{Binding BindingContext.NavigateToBookFlightViewCommand, Source={x:Reference flightsCollectionView}}"
+                                    CommandParameter="{Binding .}"
                                     CornerRadius="10"
                                     Text="Book Ticket"
-                                    TextColor="White" 
-                                    Command="{Binding BindingContext.NavigateToBookFlightViewCommand, Source={x:Reference flightsCollectionView}}"
-                                    CommandParameter="{Binding .}"/>
+                                    TextColor="White" />
 
                             </Grid>
                         </Border>

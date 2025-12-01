@@ -22,12 +22,13 @@ namespace AirIQ.Platforms.iOS.Handlers
         private NSObject _keyboardShowObserver;
         private NSObject _keyboardHideObserver;
         private CGRect _keyboardFrame;
-        public int AutocompleteTableViewHeight { get; set; } = 150;
+        public int AutocompleteTableViewHeight { get; set; } = 200;
         public static List<IosDropDownBox> Instances = [];
         public UITextField InputTextField { get; }
         private bool _isSuggestionListOpen;
         private UITableViewController _vc;
-
+        private UIView shadowView;
+        private UIView contentView;
 
         public AutoCompleteTableView SelectionList { get; set; }
         public virtual UIFont Font
@@ -46,6 +47,7 @@ namespace AirIQ.Platforms.iOS.Handlers
             set
             {
                 _isSuggestionListOpen = value;
+
                 DropdownVisibiltyChanged?.Invoke(this, value);
                 UpdateSuggestionListOpenState();
             }
@@ -112,8 +114,6 @@ namespace AirIQ.Platforms.iOS.Handlers
                 CancelsTouchesInView = false
             };
 
-            _parentViewController?.View?.AddGestureRecognizer(tapGesture);
-
             if (SelectionList == null)
             {
                 SelectionList = new AutoCompleteTableView()
@@ -121,12 +121,42 @@ namespace AirIQ.Platforms.iOS.Handlers
                     Hidden = true,
                 };
 
-                SelectionList.Layer.CornerRadius = 4;
-                SelectionList.Layer.BorderColor = ((Color)Application.Current.Resources["LightGray"]).ToCGColor();
-                SelectionList.Layer.BorderWidth = 1;
+                shadowView = new UIView();
+                shadowView.Layer.ShadowColor = UIColor.Black.CGColor;
+                shadowView.Layer.ShadowOpacity = 0.3f;
+                shadowView.Layer.ShadowRadius = 10;
+                shadowView.Layer.ShadowOffset = new CGSize(0, 5);
+                shadowView.Hidden = true; // start hidden
 
-                _parentViewController?.View?.AddSubview(SelectionList);
+                contentView = new UIView();
+                contentView.Layer.CornerRadius = 12;
+                contentView.Layer.BorderColor = ((Color)Application.Current!.Resources["BorderColor"]).ToCGColor();
+                contentView.Layer.BorderWidth = 1;
+
+                contentView.ClipsToBounds = true;
+                contentView.BackgroundColor = UIColor.White; // required for radius
+
+                shadowView.UserInteractionEnabled = true;
+                contentView.UserInteractionEnabled = true;
+                SelectionList.UserInteractionEnabled = true;
+
+                shadowView.Layer.MasksToBounds = false;
+                contentView.Layer.MasksToBounds = true;
+
+                shadowView.AccessibilityIdentifier = "DropdownArea";
+                contentView.AccessibilityIdentifier = "DropdownArea";
+                SelectionList.AccessibilityIdentifier = "DropdownArea";
+
+                contentView.AddSubview(SelectionList);
+                shadowView.AddSubview(contentView);
+
+                _parentViewController?.View?.AddSubview(shadowView);
             }
+
+            // attach delegate that ignores touches inside the dropdown
+            tapGesture.Delegate = new OutsideTapGestureDelegate(contentView);
+
+            _parentViewController?.View?.AddGestureRecognizer(tapGesture);
         }
 
         public void CloseExistingOpenDropdown()
@@ -186,6 +216,7 @@ namespace AirIQ.Platforms.iOS.Handlers
 
                 SelectionList.ReloadData();
                 SelectionList.Hidden = !_isSuggestionListOpen;
+                shadowView.Hidden = !_isSuggestionListOpen;
                 UpdateDropdownFrame();
             }
             else
@@ -251,7 +282,8 @@ namespace AirIQ.Platforms.iOS.Handlers
             if (!suppressTextChangedEvent)
                 this.TextChanged?.Invoke(this, Text);
 
-            IsSuggestionListOpen = true;
+            if (!IsSuggestionListOpen)
+                IsSuggestionListOpen = true;
         }
 
         private void OnOutsideTap(UITapGestureRecognizer gesture)
@@ -275,7 +307,11 @@ namespace AirIQ.Platforms.iOS.Handlers
         {
             if (SelectionList == null) return;
 
+            contentView.Hidden = !_isSuggestionListOpen;
+            shadowView.Hidden = !_isSuggestionListOpen;
+
             SelectionList.Hidden = !_isSuggestionListOpen;
+
             UpdateDropdownFrame();
         }
 
@@ -341,10 +377,28 @@ namespace AirIQ.Platforms.iOS.Handlers
             }
 
             var height = Math.Min(AutocompleteTableViewHeight, (int)SelectionList.ContentSize.Height);
-            SelectionList.Frame = new CGRect(
+
+            // 1. ShadowView frame (slightly larger for shadow blur)
+            shadowView.Frame = new CGRect(
                 relativeFrame.X,
                 relativeFrame.Y + this.Frame.Height + 20,
-                InputTextField.Frame.Width, height);
+                 InputTextField.Frame.Width,
+                height
+            );
+
+            // 2. ContentView frame same as table
+            contentView.Frame = new CGRect(
+                0, 0,
+                InputTextField.Frame.Width,
+                height
+            );
+
+            // 3. Table inside content view
+            SelectionList.Frame = new CGRect(
+                0, 0,
+                contentView.Frame.Width,
+                contentView.Frame.Height
+            );
 
             selectionListFrame = SelectionList.Frame;
             AdjustDropdownForKeyboard();
@@ -386,6 +440,9 @@ namespace AirIQ.Platforms.iOS.Handlers
                     : ((Color)Application.Current.Resources["Black"]).ToPlatform();
                 cell.TextLabel.LineBreakMode = UILineBreakMode.WordWrap;
                 cell.TextLabel.Lines = 0;
+
+                cell.ContentView.AccessibilityIdentifier = "DropdownArea";
+                cell.TextLabel.AccessibilityIdentifier = "DropdownArea";
 
                 return cell;
             }
@@ -459,7 +516,7 @@ namespace AirIQ.Platforms.iOS.Handlers
 
         public AutoCompleteTableView()
         {
-            
+
         }
 
 
@@ -474,4 +531,60 @@ namespace AirIQ.Platforms.iOS.Handlers
             }
         }
     }
+
+    class OutsideTapGestureDelegate : UIGestureRecognizerDelegate
+    {
+        readonly UIView _dropdownContainer; // contentView or shadowView
+        readonly UIWindow _window;
+        public OutsideTapGestureDelegate(UIView dropdownContainer)
+        {
+            _dropdownContainer = dropdownContainer;
+            _window = UIApplication.SharedApplication.KeyWindow;
+        }
+
+        // Allow simultaneous recognition so UITableView's internal gestures can fire
+        public override bool ShouldRecognizeSimultaneously(UIGestureRecognizer gestureRecognizer, UIGestureRecognizer otherGestureRecognizer)
+        {
+            return true;
+        }
+
+        // If touch is inside the dropdown container (or its subviews), ignore this gesture so table gets it
+        public override bool ShouldReceiveTouch(UIGestureRecognizer recognizer, UITouch touch)
+        {
+            if (touch == null) return true;
+
+            // 1) Walk up the touched view's superview chain and check AccessibilityIdentifier
+            var touchedView = touch.View;
+            while (touchedView != null)
+            {
+                if (!string.IsNullOrEmpty(touchedView.AccessibilityIdentifier) &&
+                    touchedView.AccessibilityIdentifier == "DropdownArea")
+                {
+                    // Touch is inside dropdown — ignore this gesture (allow table to receive)
+                    return false;
+                }
+                touchedView = touchedView.Superview;
+            }
+
+            // 2) Fallback: check coordinates — if the tapped point lies inside dropdown container frame, ignore
+            // Use window coordinates for a reliable comparison
+            var tapPointInWindow = touch.LocationInView(_window);
+
+            // Convert dropdown container frame to window coordinates
+            var dropdownFrameInWindow = _dropdownContainer.Superview != null
+                ? _dropdownContainer.Superview.ConvertRectToView(_dropdownContainer.Frame, _window)
+                : _dropdownContainer.Frame;
+
+            if (dropdownFrameInWindow.Contains(tapPointInWindow))
+            {
+                // tap is inside dropdown bounds
+                return false;
+            }
+
+            // otherwise it's an outside tap — allow gesture to receive touch
+            return true;
+        }
+    }
 }
+
+

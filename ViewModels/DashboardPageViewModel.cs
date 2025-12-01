@@ -69,9 +69,9 @@ namespace AirIQ.ViewModels
         {
             try
             {
-                LoadingService.ShowLoading();
+                //LoadingService.ShowLoading();
 
-                var result = await flightService.GetAvailableRoutesAsync();
+                 var result = await flightService.GetAvailableRoutesAsync();
 
                 Airports = BackendToAppModelMapper.GetAvailableRoutes(result);
                 SourceAirports = new ObservableCollection<FlightRoute>(Airports.Where(x => !string.IsNullOrEmpty(x.Origin))
@@ -80,7 +80,7 @@ namespace AirIQ.ViewModels
 
                 sourceTemp = new List<FlightRoute>(SourceAirports);
 
-                LoadingService.HideLoading();
+                //LoadingService.HideLoading();
 
             }
             catch (Exception exception)

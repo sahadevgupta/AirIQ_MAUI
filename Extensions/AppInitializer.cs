@@ -45,7 +45,8 @@ namespace AirIQ.Extensions
                             .AddSingleton<ISecureStorageService, SecureStorageService>()
                             .AddSingleton<ILoginService, LoginService>()
                             .AddSingleton<IFlightService,FlightService>()
-                            .AddSingleton<IPopupNavigation>(MopupService.Instance);;
+                            .AddSingleton<IPopupNavigation>(MopupService.Instance)
+                            .AddSingleton<IAuthService,AuthService>();
 
 
             return builder;

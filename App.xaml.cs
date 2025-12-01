@@ -1,7 +1,9 @@
 ﻿using AirIQ.Constants;
 using AirIQ.Controls;
+using AirIQ.Models.Response;
 using AirIQ.Services.Interfaces;
 using AirIQ.Views;
+using Newtonsoft.Json;
 
 namespace AirIQ
 {
@@ -24,6 +26,7 @@ namespace AirIQ
                 {
                     if (AppConfiguration.IsLoggedInUser)
                     {
+                        AppConfiguration.CurrentUser = JsonConvert.DeserializeObject<UserDto>(AppConfiguration.UserDetails);
                         window.Page = new AppShell();
                     }
                     else

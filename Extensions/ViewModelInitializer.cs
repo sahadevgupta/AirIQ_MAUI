@@ -1,4 +1,5 @@
 ﻿using AirIQ.ViewModels;
+using AirIQ.ViewModels.Common;
 using CommunityToolkit.Maui;
 
 namespace AirIQ.Extensions
@@ -11,7 +12,8 @@ namespace AirIQ.Extensions
                             .AddTransient<DashboardPageViewModel>()
                             .AddTransient<FlightsPageViewModel>()
                             .AddTransient<FlightBookingPageViewModel>()
-                            .AddTransient<HotelsPageViewModel>();
+                            .AddTransient<HotelsPageViewModel>()
+                            .AddTransient<SessionExpiryPopupViewModel>();
 
             return builder;
         }

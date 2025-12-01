@@ -36,13 +36,20 @@ namespace AirIQ.Platforms.Services
 
         public void HideLoading()
         {
-            loadingView?.RemoveFromSuperview();
+            Application.Current?.Dispatcher.Dispatch(() =>
+            {
+                loadingView?.RemoveFromSuperview();
+            });
         }
 
         public void ShowLoading()
         {
             InitLoader();
-            UIApplication.SharedApplication.KeyWindow.AddSubview(loadingView!);
+            Application.Current?.Dispatcher.Dispatch(() =>
+            {
+                UIApplication.SharedApplication.KeyWindow.AddSubview(loadingView!);
+
+            });
         }
 
     }

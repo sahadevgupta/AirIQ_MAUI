@@ -1,4 +1,6 @@
-﻿namespace AirIQ.Constants
+﻿using AirIQ.Models.Response;
+
+namespace AirIQ.Constants
 {
     public static class AppConfiguration
     {
@@ -16,5 +18,7 @@
             get => Preferences.Get(nameof(UserDetails), string.Empty);
             set => Preferences.Set(nameof(UserDetails), value);
         }
+
+        public static UserDto? CurrentUser;
     }
 }

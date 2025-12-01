@@ -13,10 +13,12 @@ public abstract class ApiServiceBase
     protected IConnectivityService Connectivity;
     protected IAppBackendService BackendService;
     readonly ISecureStorageService _secureStorageService;
+    protected readonly IAuthService AuthService;
     public ApiServiceBase(IApiServiceBaseParams parameters)
     {
         Connectivity = parameters.Connectivity;
         BackendService = parameters.BackendService;
+        AuthService = parameters.AuthService;
         _secureStorageService = parameters.SecureStorageService;
     }
 
@@ -36,17 +38,20 @@ public abstract class ApiServiceBase
         toast.Show(cancellationTokenSource.Token);
     }
 
-    protected async Task<Dictionary<string, string>> GetHeader()
+    protected async Task<Dictionary<string, string>> GetHeader(bool istokenRequired = true)
     {
 
         var header = new Dictionary<string, string> { };
         try
         {
 
-            var authInfo = await _secureStorageService.GetAsync(PreferenceKeyConstants.AuthKey);
-            if (!string.IsNullOrWhiteSpace(authInfo))
+            if (istokenRequired)
             {
-                header.Add("Authorization", authInfo);
+                var authInfo = await AuthService.Auth();
+                if (authInfo != null)
+                {
+                    header.Add("Authorization", authInfo.AccessToken!);
+                }
             }
 
             header.Add("api-key", AppConfiguration.ApiKey);

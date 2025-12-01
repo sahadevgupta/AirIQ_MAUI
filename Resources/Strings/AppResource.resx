@@ -180,4 +180,13 @@
   <data name="ForgotPassword" xml:space="preserve">
     <value>Forgot Password?</value>
   </data>
+  <data name="InformationRequired" xml:space="preserve">
+    <value>Information Required</value>
+  </data>
+  <data name="SessionExpired" xml:space="preserve">
+    <value>Your session has expired, please enter your password to continue.</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
 </root>

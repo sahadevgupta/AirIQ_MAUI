@@ -21,7 +21,7 @@ IAppBackendService appBackendService) : ApiServiceBase(apiServiceBaseParams), IL
                 UserName = username,
                 Password = password,
             };
-            var headers = await GetHeader();
+            var headers = await GetHeader(false);
             var loginResponse = await appBackendService.Login(request, headers).ConfigureAwait(false);
             if (!string.IsNullOrWhiteSpace(loginResponse.Token))
             {

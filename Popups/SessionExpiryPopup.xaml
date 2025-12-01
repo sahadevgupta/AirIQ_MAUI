@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopup:PopupPage
+    x:Class="AirIQ.Popups.SessionExpiryPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:AirIQ.Controls"
+    xmlns:mopup="clr-namespace:Mopups.Pages;assembly=Mopups"
+    xmlns:mopupsanim="clr-namespace:Mopups.Animations;assembly=Mopups"
+    xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:AirIQ.ViewModels.Common"
+    x:DataType="vm:SessionExpiryPopupViewModel"
+    BackgroundColor="{StaticResource PopupBackground}"
+    CloseWhenBackgroundIsClicked="False">
+
+    <!-- <mopup:PopupPage.Animation>
+        <mopupsanim:MoveAnimation
+            DurationIn="400"
+            DurationOut="400"
+            EasingIn="CubicIn"
+            EasingOut="CubicOut"
+            PositionIn="Bottom"
+            PositionOut="Bottom"/>
+    </mopup:PopupPage.Animation> -->
+
+ <Border StrokeShape="RoundRectangle 8" VerticalOptions="Center" 
+    Margin="10,0"
+     BackgroundColor="White"
+    Padding="24"> 
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="10" >
+        <Label
+            FontSize="24"
+            Style="{StaticResource Label18StyleBold}"
+            Text="{x:Static resx:AppResource.InformationRequired}" />
+
+        <Label
+            Grid.Row="1"
+            FontSize="16"
+            LineHeight="1.2"
+            Style="{StaticResource Label12BlackPoppinsMedium}"
+            Text="{x:Static resx:AppResource.SessionExpired}" />
+
+        <controls:ExtendedEntry
+            Title="{x:Static resx:AppResource.Password}"
+            Grid.Row="2"
+            EntryKeyboard="Password"
+            IsErrorViewVisible="{Binding IsPasswordErrorVisible}"
+            Text="{Binding Password}" />
+
+        <Button
+            Grid.Row="3"
+            Margin="0,16"
+            Command="{Binding ConfirmCommand}"
+            Text="{x:Static resx:AppResource.Confirm}" 
+            IsEnabled="{Binding Password,Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"/>
+
+    </Grid>
+</Border>
+</mopup:PopupPage>

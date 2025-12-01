@@ -248,5 +248,32 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("ForgotPassword", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information Required.
+        /// </summary>
+        internal static string InformationRequired {
+            get {
+                return ResourceManager.GetString("InformationRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your session has expired, please enter your password to continue..
+        /// </summary>
+        internal static string SessionExpired {
+            get {
+                return ResourceManager.GetString("SessionExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        internal static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
     }
 }
