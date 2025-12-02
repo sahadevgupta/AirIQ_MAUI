@@ -55,13 +55,9 @@
             <Button
                 Grid.Row="4"
                 Margin="0,10,0,0"
-                BackgroundColor="#FFD93B"
-                CornerRadius="12"
-                FontAttributes="Bold"
-                HeightRequest="48"
                 Text="{x:Static resx:AppResource.SearchFlights}"
-                TextColor="Black" 
-                Command="{Binding SearchFlightsCommand}"/>
+                Command="{Binding SearchFlightsCommand}"
+                Style="{StaticResource AccentButton}"/>
 
         </VerticalStackLayout>
 

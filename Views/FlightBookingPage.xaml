@@ -18,7 +18,7 @@
         <Grid
             ColumnDefinitions="*"
             ColumnSpacing="20"
-            RowDefinitions="Auto,Auto,Auto,*,Auto"
+            RowDefinitions="Auto,Auto,Auto,*"
             RowSpacing="10">
 
 
@@ -61,7 +61,7 @@
                         HeightRequest="50"
                         Source="{Binding SelectedAirline.AirlineLogoUrl}"
                         VerticalOptions="Start"
-                        WidthRequest="50" /> -->
+                        WidthRequest="50" />-->
 
                     <!--  Airline Name  -->
                     <Label Grid.Column="1">
@@ -83,12 +83,12 @@
                     <!--  Price  -->
                     <Label
                         Grid.Column="2"
+                        CharacterSpacing="1.1"
                         FontSize="18"
                         HorizontalTextAlignment="End"
                         Style="{StaticResource TitleStyleBlackBold}"
                         Text="{Binding SelectedAirline.Price, StringFormat='₹ {0}'}"
                         TextColor="{StaticResource PrimaryColor}"
-                        CharacterSpacing="1.1"
                         VerticalOptions="Start" />
 
                     <!--  Times  -->
@@ -165,13 +165,11 @@
             </Button>
 
             <CollectionView
+                x:Name="passengerList"
                 Grid.Row="3"
                 Margin="10,0"
-                BackgroundColor="Transparent"
                 ItemsSource="{Binding AdultPassengers}"
-                SelectionMode="None"
-                VerticalOptions="Start"
-                x:Name="passengerList">
+                SelectionMode="None">
 
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
@@ -222,7 +220,7 @@
                                 Margin="0,10,0,0"
                                 Padding="10"
                                 BackgroundColor="White"
-                                Stroke="White"
+                                Stroke="{StaticResource BorderColor}"
                                 StrokeShape="RoundRectangle 8">
                                 <Grid
                                     ColumnDefinitions="*,*"
@@ -236,10 +234,11 @@
                                             </x:Array>
                                         </controls:ExtendedDropdown.ItemsSource>
                                     </controls:ExtendedDropdown>
-                                    <controls:ExtendedDropdown Grid.Column="1" PlaceholderText="Title" 
-                                        SelectedItem="{Binding SelectedTitle}"
-                                        ItemsSource="{Binding BindingContext.PassengerTitles, Source={x:Reference passengerList}}">
-                                    </controls:ExtendedDropdown>
+                                    <controls:ExtendedDropdown
+                                        Grid.Column="1"
+                                        ItemsSource="{Binding BindingContext.PassengerTitles, Source={x:Reference passengerList}}"
+                                        PlaceholderText="Title"
+                                        SelectedItem="{Binding SelectedTitle}" />
 
                                     <controls:ExtendedEntry
                                         Grid.Row="1"
@@ -257,98 +256,91 @@
 
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-            </CollectionView>
+
+                <CollectionView.Footer>
+
+                    <Grid Margin="0,10" RowDefinitions="Auto,Auto">
+
+                        <Label
+                            Padding="10"
+                            FontSize="16"
+                            Style="{StaticResource Label18StyleBold}"
+                            Text="Infant Passenger"
+                            TextColor="Black"
+                            VerticalOptions="Center" />
+
+                        <!--  Infant Passenger List View  -->
 
 
-<!--Infant Passenger List View-->
-                    <Border Padding="10" Grid.Row="4">
-
-                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding InfantPassengers}">
+                        <VerticalStackLayout
+                            Grid.Row="1"
+                            Padding="10,0,10,10"
+                            BindableLayout.ItemsSource="{Binding InfantPassengers}"
+                            Spacing="10">
                             <BindableLayout.ItemTemplate>
-                                <DataTemplate>
-                                    <VerticalStackLayout>
-                                        <Label Text="{Binding Id}" Style="{StaticResource TitleBodyWithPrimaryFontColor}"
-                                               FontAttributes="Bold"/>
+                                <DataTemplate x:DataType="models:Passenger">
+                                    <Border
+                                        Padding="10"
+                                        BackgroundColor="White"
+                                        Stroke="{StaticResource BorderColor}"
+                                        StrokeShape="RoundRectangle 8">
+                                        <Grid
+                                            BackgroundColor="White"
+                                            ColumnDefinitions="*,*"
+                                            ColumnSpacing="10"
+                                            RowDefinitions="Auto,Auto">
 
-                                        <controls:ExtendedDropdown SelectedItem="{Binding Title}"
-                                                                      PlaceholderText="Title">
-                                            <controls:ExtendedDropdown.ItemsSource>
-                                                <x:Array Type="{x:Type x:String}">
-                                                    <x:String>Mr.</x:String>
-                                                    <x:String>Mrs.</x:String>
-                                                    <x:String>Ms.</x:String>
-                                                    <x:String>Mstr.</x:String>
-                                                    <x:String>Miss.</x:String>
-                                                </x:Array>
-                                            </controls:ExtendedDropdown.ItemsSource>
-                                        </controls:ExtendedDropdown>
+                                            <controls:ExtendedDropdown
+                                                Grid.Column="0"
+                                                PlaceholderText="Title"
+                                                SelectedItem="{Binding Title}">
+                                                <controls:ExtendedDropdown.ItemsSource>
+                                                    <x:Array Type="{x:Type x:String}">
+                                                        <x:String>Mstr.</x:String>
+                                                        <x:String>Miss.</x:String>
+                                                    </x:Array>
+                                                </controls:ExtendedDropdown.ItemsSource>
+                                            </controls:ExtendedDropdown>
 
-                                        <controls:ExtendedEntry Text="{Binding FirstName,Mode=TwoWay}"
-                                                                       Title="First Name"/>
-                                        <controls:ExtendedEntry Text="{Binding LastName,Mode=TwoWay}"
-                                                                       Title="Last Name"/>
-                                    </VerticalStackLayout>
+                                            <controls:ExtendedDropdown
+                                                Grid.Column="1"
+                                                ItemsSource="{Binding BindingContext.InfantTravelPartners, Source={x:Reference passengerList}}"
+                                                PlaceholderText="Title"
+                                                SelectedItem="{Binding TravelWith}" />
+
+                                            <controls:ExtendedEntry
+                                                Title="First Name"
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                Text="{Binding FirstName, Mode=TwoWay}" />
+
+                                            <controls:ExtendedEntry
+                                                Title="Last Name"
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                Text="{Binding LastName, Mode=TwoWay}" />
+                                        </Grid>
+                                    </Border>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
 
-                        <Border.Triggers>
-                            <DataTrigger TargetType="Border" Binding="{Binding InfantPassengers.Count}" Value="0">
-                                <Setter Property="IsVisible" Value="false"/>
+                        <Grid.Triggers>
+                            <DataTrigger
+                                Binding="{Binding InfantPassengers.Count}"
+                                TargetType="Grid"
+                                Value="0">
+                                <Setter Property="IsVisible" Value="false" />
                             </DataTrigger>
-                        </Border.Triggers>
-                        
-                    </Border>
+                        </Grid.Triggers>
 
-            <!--  Bottom Sheet  -->
-            <Border IsVisible="false"
-                Grid.Row="4"
-                Padding="20"
-                BackgroundColor="White"
-                Stroke="{StaticResource BorderColor}"
-                StrokeShape="RoundRectangle 30,30,0,0"
-                VerticalOptions="End">
+                    </Grid>
 
-                <Border.Shadow>
-                    <Shadow
-                        Brush="#33000000"
-                        Opacity="0.7"
-                        Radius="10"
-                        Offset="0, -2" />
-                </Border.Shadow>
+                </CollectionView.Footer>
 
-                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
-
-                    <VerticalStackLayout>
-                        <Label Style="{StaticResource Label18StyleBold}" Text="Total" />
-
-                        <Label
-                            Style="{StaticResource SupportLabelStyleBlackRegular}"
-                            Text="{Binding TravellersCountText}"
-                            TextColor="#777" />
-
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="22"
-                            Text="{Binding TotalPrice, StringFormat='₹ {0}'}"
-                            TextColor="{StaticResource PrimaryColor}" />
-                    </VerticalStackLayout>
-
-                    <Button
-                        Grid.Column="1"
-                        Padding="25,12"
-                        BackgroundColor="{StaticResource PrimaryColor}"
-                        Command="{Binding ContinueCommand}"
-                        CornerRadius="18"
-                        FontAttributes="Bold"
-                        Text="Continue"
-                        TextColor="White"
-                        VerticalOptions="Center" />
-                </Grid>
-            </Border>
+            </CollectionView>
 
         </Grid>
-
 
     </views:BasePage.PageContent>
 

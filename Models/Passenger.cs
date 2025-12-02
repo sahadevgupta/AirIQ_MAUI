@@ -1,4 +1,5 @@
 using System;
+using System.Collections.ObjectModel;
 using AirIQ.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -25,5 +26,8 @@ public partial class Passenger : ObservableObject
 
     [ObservableProperty]
     private string? _selectedTitle = "Mr.";
+
+    [ObservableProperty]
+    private string? _travelWith;
 
 }

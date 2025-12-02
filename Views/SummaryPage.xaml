@@ -43,7 +43,6 @@
                             ColumnDefinitions="Auto,*"
                             HeightRequest="120"
                             HorizontalOptions="FillAndExpand"
-                            StrokeShape="RoundRectangle 20"
                             VerticalOptions="Center">
 
                             <!--  ONLINE LABEL  -->
