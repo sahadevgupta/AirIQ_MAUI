@@ -1,8 +1,8 @@
 ﻿namespace AirIQ.Services.Interfaces
 {
-    public interface ILoadingPopUpService
+    public interface ILoadingPopUpService : IDisposable
     {
-        void ShowLoading();
-        void HideLoading();
+        IDisposable Show();
+        void Hide();
     }
 }

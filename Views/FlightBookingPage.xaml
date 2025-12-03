@@ -7,6 +7,7 @@
     xmlns:enums="clr-namespace:AirIQ.Enums"
     xmlns:helpers="clr-namespace:AirIQ.Extensions"
     xmlns:models="clr-namespace:AirIQ.Models"
+    xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodels="clr-namespace:AirIQ.ViewModels"
     xmlns:views="clr-namespace:AirIQ.Views"
@@ -18,7 +19,7 @@
         <Grid
             ColumnDefinitions="*"
             ColumnSpacing="20"
-            RowDefinitions="Auto,Auto,Auto,*"
+            RowDefinitions="Auto,Auto,Auto,*,Auto"
             RowSpacing="10">
 
 
@@ -56,12 +57,12 @@
                     RowDefinitions="Auto,Auto">
 
                     <!--  Airline Logo  -->
-                    <!-- <Image
+                    <Image
                         Grid.RowSpan="2"
                         HeightRequest="50"
                         Source="{Binding SelectedAirline.AirlineLogoUrl}"
                         VerticalOptions="Start"
-                        WidthRequest="50" />-->
+                        WidthRequest="50" />
 
                     <!--  Airline Name  -->
                     <Label Grid.Column="1">
@@ -178,7 +179,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Passenger">
 
-                        <toolkit:Expander IsExpanded="{Binding IsExpanded, Mode=TwoWay}">
+                        <toolkit:Expander IsExpanded="{Binding IsSectionOpen, Mode=TwoWay}">
                             <toolkit:Expander.Header>
 
                                 <Border
@@ -340,8 +341,13 @@
 
             </CollectionView>
 
+            <Button
+                Grid.Row="4"
+                Margin="0,5,0,10"
+                Text="{x:Static resx:AppResource.ConfirmBooking}"
+                Command="{Binding ConfirmBookingCommand}"
+                VerticalOptions="End" />
         </Grid>
-
     </views:BasePage.PageContent>
 
 </views:BasePage>

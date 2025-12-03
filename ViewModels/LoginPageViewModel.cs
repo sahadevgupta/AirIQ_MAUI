@@ -1,5 +1,6 @@
 ﻿using AirIQ.Configurations.Mapper;
 using AirIQ.Constants;
+using AirIQ.Models.Response;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -16,7 +17,7 @@ namespace AirIQ.ViewModels
         private string? _username = "9382915717";
 
         [ObservableProperty]
-        private string? _password ="123456789";
+        private string? _password = "123456789";
 
         public LoginPageViewModel(IViewModelParameters viewModelParameters,
         ILoginService loginService) : base(viewModelParameters)
@@ -33,18 +34,19 @@ namespace AirIQ.ViewModels
                 return;
             try
             {
-                LoadingService.ShowLoading();
-                IsBusy = true;
 
-                var userDto = await _loginService.LoginAsync(Username!, Password!);
+                UserDto? userDto = null;
+                using (LoadingService.Show())
+                {
+                    IsBusy = true;
+                    userDto = await _loginService.LoginAsync(Username!, Password!);
+                }
 
-                LoadingService.HideLoading();
-
-                if(userDto != default)
+                if (userDto != default)
                 {
                     AppConfiguration.IsLoggedInUser = true;
                     AppConfiguration.UserDetails = JsonConvert.SerializeObject(userDto);
-                    
+
                     Application.Current!.Windows[0].Page = new AppShell();
                 }
             }
@@ -54,7 +56,6 @@ namespace AirIQ.ViewModels
             }
             finally
             {
-                LoadingService.HideLoading();
                 IsBusy = false;
             }
         }

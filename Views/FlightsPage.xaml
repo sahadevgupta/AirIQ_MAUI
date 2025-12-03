@@ -83,19 +83,14 @@
                                 RowDefinitions="Auto,Auto,Auto">
 
                                 <!--  Logo  -->
-                                <VerticalStackLayout Grid.RowSpan="2">
-                                     <Image
-                                    Grid.RowSpan="2"
-                                    Aspect="AspectFit"
-                                    HeightRequest="60"
-                                    Source="{Binding AirlineLogoUrl}"
-                                    VerticalOptions="Start"
-                                    WidthRequest="60" />
+                                    <Image
+                                        Grid.RowSpan="2"
+                                        Aspect="AspectFit"
+                                        HeightRequest="60"
+                                        Source="{Binding AirlineLogoUrl}"
+                                        VerticalOptions="Center"
+                                        WidthRequest="60" />
 
-<Label Text="{Binding FlightRoute}"
-    Style="{StaticResource Label14StyleBlack}"/>
-
-                                </VerticalStackLayout>
 
 
                                 <!--  Airline Name  -->
@@ -112,6 +107,14 @@
                                     FontSize="17"
                                     Text="{Binding Price, StringFormat='{}{0:C}'}"
                                     TextColor="#0A84FF" />-->
+
+
+
+                                <Label
+                                    Grid.Column="2"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource Label14StyleBlack}"
+                                    Text="{Binding FlightRoute}" />
 
                                 <!--  Times  -->
 

@@ -1,4 +1,5 @@
 ﻿using AirIQ.Controls;
+using AirIQ.Extensions;
 using AirIQ.Services.Interfaces;
 using Android.App;
 using Android.Graphics.Drawables;
@@ -6,7 +7,7 @@ using Android.Views;
 using Microsoft.Maui.Platform;
 using Application = Microsoft.Maui.Controls.Application;
 using View = Android.Views.View;
-using Window =Android.Views.Window;
+using Window = Android.Views.Window;
 
 namespace AirIQ.Platforms.Services
 {
@@ -18,16 +19,23 @@ namespace AirIQ.Platforms.Services
 
         private bool isInitialized;
 
-        public void ShowLoading()
+        public IDisposable Show()
         {
             InitLoaderView();
             _dialog?.Show();
-        }
 
-        public void HideLoading()
-        {
-            _dialog?.Hide();
-            _dialog?.Dismiss();
+            return new DisposableAction(() =>
+            {
+                try
+                {
+                    _dialog?.Hide();
+                    _dialog?.Dismiss();
+                }
+                catch (Exception)
+                {
+                    // ignore
+                }
+            });
         }
 
         private void InitLoaderView()
@@ -54,6 +62,31 @@ namespace AirIQ.Platforms.Services
                 window?.SetBackgroundDrawable(new ColorDrawable(Colors.Transparent.ToPlatform()));
 
                 isInitialized = true;
+            }
+        }
+
+        public void Hide()
+        {
+            _dialog?.Hide();
+            _dialog?.Dismiss();
+        }
+
+        /// <summary>
+        /// Dispose pattern for Android service
+        /// </summary>
+        public void Dispose()
+        {
+            try
+            {
+                _dialog?.Hide();
+                _dialog?.Dismiss();
+                _dialog?.Dispose();
+                _dialog = null;
+                _nativeView = null;
+            }
+            catch (Exception)
+            {
+                // ignore
             }
         }
     }

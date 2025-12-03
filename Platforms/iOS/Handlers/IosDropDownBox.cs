@@ -22,7 +22,7 @@ namespace AirIQ.Platforms.iOS.Handlers
         private NSObject _keyboardShowObserver;
         private NSObject _keyboardHideObserver;
         private CGRect _keyboardFrame;
-        public int AutocompleteTableViewHeight { get; set; } = 200;
+        public int AutocompleteTableViewHeight { get; set; } = 170;
         public static List<IosDropDownBox> Instances = [];
         public UITextField InputTextField { get; }
         private bool _isSuggestionListOpen;

@@ -15,7 +15,7 @@ namespace AirIQ.ViewModels;
 
 [QueryProperty(nameof(SelectedAirline), NavigationParamConstants.SelectedFlight)]
 [QueryProperty(nameof(FlightSearchRequest), NavigationParamConstants.FlightSearchRequest)]
-public partial class FlightBookingPageViewModel(IViewModelParameters viewModelParameters) : BaseViewModel(viewModelParameters)
+public partial class FlightBookingPageViewModel(IViewModelParameters viewModelParameters, IFlightService flightService) : BaseViewModel(viewModelParameters)
 {
     #region [ Properties ]
 
@@ -47,7 +47,7 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
 
     private int? adultCount;
 
-    private double infantCount = 0;
+    private int infantId = 1;
 
     #endregion
 
@@ -55,39 +55,40 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
 
     private async Task InitializeData()
     {
-        LoadingService.ShowLoading();
 
         try
         {
-            adultCount = FlightSearchRequest?.Adult;
-            AddInfantPassengerCommand.NotifyCanExecuteChanged();
-
-            if (SelectedAirline != null)
+            using (LoadingService.Show())
             {
-                AdultPassengers = new ObservableCollection<Passenger>();
-                for (int i = 1; i <= adultCount; i++)
+                adultCount = FlightSearchRequest?.Adult;
+                AddInfantPassengerCommand.NotifyCanExecuteChanged();
+
+                if (SelectedAirline != null)
                 {
-                    var passenger = new Passenger
+                    AdultPassengers = new ObservableCollection<Passenger>();
+                    for (int i = 1; i <= adultCount; i++)
                     {
-                        Id = i,
-                        Header = $"Passenger {i}",
-                        Type = PassengerType.Adult,
-                        IsExpanded = i == 0 ? true : false
-                    };
-                    passenger.PropertyChanged += OnPassengerPropertyChanged;
-                    AdultPassengers.Add(passenger);
+                        var passenger = new Passenger
+                        {
+                            Id = i,
+                            Header = $"Passenger {i}",
+                            Type = PassengerType.Adult,
+                            IsSectionOpen = i == 1 ? true : false
+                        };
+                        passenger.PropertyChanged += OnPassengerPropertyChanged;
+                        AdultPassengers.Add(passenger);
+                    }
+
+                    InfantTravelPartners = new ObservableCollection<string>(AdultPassengers.Where(p => p.Type == PassengerType.Adult)
+                                                                                            .Select(a => a.Header.Replace("Passenger", "Adult")));
+
                 }
-
-                InfantTravelPartners = new ObservableCollection<string>(AdultPassengers.Where(p => p.Type == PassengerType.Adult)
-                                                                                        .Select(a => a.Header.Replace("Passenger", "Adult")));
-
             }
         }
         catch (Exception ex)
         {
             // Handle exceptions
         }
-        LoadingService.HideLoading();
 
     }
 
@@ -133,7 +134,7 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
 
     private bool CanAddInfant()
     {
-        return InfantPassengers?.Count <= adultCount;
+        return InfantPassengers?.Count < adultCount;
     }
 
 
@@ -142,57 +143,64 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
     #region [ Commands ]
 
     [RelayCommand]
-    private async Task Continue()
+    private async Task ConfirmBooking()
     {
-        var bookingRequest = new TicketBookingRequest
+        using (LoadingService.Show())
         {
-            TicketId = SelectedAirline.TicketId,
-            TotalPax = (AdultPassengers?.Count + InfantPassengers?.Count)?.ToString(),
-            Adult = AdultPassengers?.Where(x => x.Type == PassengerType.Adult).Count().ToString(),
-            Child = AdultPassengers?.Where(x => x.Type == PassengerType.Child).Count().ToString(),
-            Infant = InfantPassengers?.Count.ToString(),
-            AdultInfo = new List<PassengerRequest>(),
-            ChildInfo = new List<PassengerRequest>(),
-            InfantInfo = new List<InfantInfoRequest>()
-        };
 
-        foreach (var adultInfo in AdultPassengers?.Where(x => x.Type == PassengerType.Adult))
-        {
-            bookingRequest.AdultInfo.Add(new PassengerRequest
+
+            var bookingRequest = new TicketBookingRequest
             {
-                Title = adultInfo.Title,
-                FirstName = adultInfo.FirstName,
-                LastName = adultInfo.LastName
-            });
-        }
+                TicketId = SelectedAirline.TicketId,
+                TotalPax = (AdultPassengers?.Count + InfantPassengers?.Count)?.ToString(),
+                Adult = AdultPassengers?.Where(x => x.Type == PassengerType.Adult).Count().ToString(),
+                Child = AdultPassengers?.Where(x => x.Type == PassengerType.Child).Count().ToString(),
+                Infant = InfantPassengers?.Count.ToString(),
+                AdultInfo = new List<PassengerRequest>(),
+                ChildInfo = new List<PassengerRequest>(),
+                InfantInfo = new List<InfantInfoRequest>()
+            };
 
-        foreach (var childInfo in AdultPassengers?.Where(x => x.Type == PassengerType.Child))
-        {
-            bookingRequest.ChildInfo.Add(new PassengerRequest
+            foreach (var adultInfo in AdultPassengers?.Where(x => x.Type == PassengerType.Adult))
             {
-                Title = childInfo.Title,
-                FirstName = childInfo.FirstName,
-                LastName = childInfo.LastName
-            });
-        }
+                bookingRequest.AdultInfo.Add(new PassengerRequest
+                {
+                    Title = adultInfo.Title,
+                    FirstName = adultInfo.FirstName,
+                    LastName = adultInfo.LastName
+                });
+            }
 
-        foreach (var infantInfo in InfantPassengers)
-        {
-            bookingRequest.AdultInfo.Add(new PassengerRequest
+            foreach (var childInfo in AdultPassengers?.Where(x => x.Type == PassengerType.Child))
             {
-                Title = infantInfo.Title,
-                FirstName = infantInfo.FirstName,
-                LastName = infantInfo.LastName
-            });
+                bookingRequest.ChildInfo.Add(new PassengerRequest
+                {
+                    Title = childInfo.Title,
+                    FirstName = childInfo.FirstName,
+                    LastName = childInfo.LastName
+                });
+            }
+
+            foreach (var infantInfo in InfantPassengers)
+            {
+                bookingRequest.AdultInfo.Add(new PassengerRequest
+                {
+                    Title = infantInfo.Title,
+                    FirstName = infantInfo.FirstName,
+                    LastName = infantInfo.LastName
+                });
+            }
+            
+            await flightService.ConfirmBookingAsync(bookingRequest);
+
         }
+        // var navigationParams = new Dictionary<string, object?>
+        // {
+        //     { NavigationParamConstants.SelectedFlight, SelectedAirline },
+        //     { NavigationParamConstants.SelectedFlight, SelectedAirline }
+        // };
 
-        var navigationParams = new Dictionary<string, object?>
-        {
-            { NavigationParamConstants.SelectedFlight, SelectedAirline },
-            { NavigationParamConstants.SelectedFlight, SelectedAirline }
-        };
-
-        await ShellNavigationService.Navigate<SummaryPage>();
+        // await ShellNavigationService.Navigate<SummaryPage>();
     }
 
     [RelayCommand(CanExecute = nameof(CanAddInfant))]
@@ -202,7 +210,7 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
 
         var newInfant = new Infant
         {
-            Id = 1,
+            Id = infantId++,
             Header = $"{nameof(PassengerType.Infant)} {InfantPassengers.Count}",
             Type = PassengerType.Infant,
         };

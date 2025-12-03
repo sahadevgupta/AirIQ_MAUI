@@ -44,20 +44,17 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
     {
         try
         {
-            //LoadingService.ShowLoading();
-
-
-            SelectedTravelDate = DateTime.Parse(FlightSearchRequest!.DepartureDate!);
-            SourceAirport = FlightSearchRequest.SourceAirport?.OriginRoute;
-            DestinationAirport = FlightSearchRequest.DestinationAirport?.DestinationRoute;
-            var response = await flightService.GetFlightAvailabilityAsync(FlightSearchRequest!);
-            //LoadingService.HideLoading();
-            AvailableFlights = new ObservableCollection<Flight>(BackendToAppModelMapper.GetFlights(response));
-
+            using (LoadingService.Show())
+            {
+                SelectedTravelDate = DateTime.Parse(FlightSearchRequest!.DepartureDate!);
+                SourceAirport = FlightSearchRequest.SourceAirport?.OriginRoute;
+                DestinationAirport = FlightSearchRequest.DestinationAirport?.DestinationRoute;
+                var response = await flightService.GetFlightAvailabilityAsync(FlightSearchRequest!);
+                AvailableFlights = new ObservableCollection<Flight>(BackendToAppModelMapper.GetFlights(response));
+            }
         }
         catch (Exception ex)
         {
-            // Handle exceptions
         }
     }
 

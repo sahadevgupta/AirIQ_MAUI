@@ -21,5 +21,8 @@ namespace AirIQ.Services.Interfaces
 
         [Post(UrlConstants.Search)]
         Task<ServiceResponse<IEnumerable<FlightSearchResultDto>>> SearchFlights([Body(BodySerializationMethod.Serialized)] FlightSearchRequest request, [HeaderCollection] IDictionary<string, string> headers);
+
+        [Post(UrlConstants.Book)]
+        Task<ServiceResponse<object>> TicketBooking([Body(BodySerializationMethod.Serialized)] TicketBookingRequest request, [HeaderCollection] IDictionary<string, string> headers);
     }
 }

@@ -275,5 +275,14 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("Confirm", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Booking.
+        /// </summary>
+        internal static string ConfirmBooking {
+            get {
+                return ResourceManager.GetString("ConfirmBooking", resourceCulture);
+            }
+        }
     }
 }

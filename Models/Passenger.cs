@@ -20,9 +20,6 @@ public partial class Passenger : ObservableObject
     public PassengerType Type { get; set; }
 
     [ObservableProperty]
-    private bool _isExpanded;
-
-    [ObservableProperty]
     private string? _selectedPassengerType = nameof(PassengerType.Adult);
 
     [ObservableProperty]
@@ -32,5 +29,20 @@ public partial class Passenger : ObservableObject
     private string? _travelWith;
 
     public Infant? AssignedInfant { get; set; }
+
+    private bool _isSectionOpen;
+
+    public bool IsSectionOpen
+    {
+        get => _isSectionOpen;
+        set
+        {
+            if (_isSectionOpen == value)
+                return;
+
+            _isSectionOpen = value;
+            OnPropertyChanged();
+        }
+    }
 
 }

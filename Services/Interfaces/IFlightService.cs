@@ -10,4 +10,5 @@ public interface IFlightService
     Task<IEnumerable<DateTime>> GetAvailableBookingDatesAsync(string origin, string destination);
 
     Task<IEnumerable<FlightSearchResultDto>> GetFlightAvailabilityAsync(FlightSearchRequest request);
+    Task ConfirmBookingAsync(TicketBookingRequest ticketBookingRequest);
 }

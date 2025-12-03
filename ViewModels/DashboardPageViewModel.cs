@@ -69,18 +69,18 @@ namespace AirIQ.ViewModels
         {
             try
             {
-                //LoadingService.ShowLoading();
 
-                 var result = await flightService.GetAvailableRoutesAsync();
+                using (LoadingService.Show())
+                {
+                    var result = await flightService.GetAvailableRoutesAsync();
 
-                Airports = BackendToAppModelMapper.GetAvailableRoutes(result);
-                SourceAirports = new ObservableCollection<FlightRoute>(Airports.Where(x => !string.IsNullOrEmpty(x.Origin))
-                                                                                .GroupBy(x => x.Origin)
-                                                                                .Select(g => g.First()));
+                    Airports = BackendToAppModelMapper.GetAvailableRoutes(result);
+                    SourceAirports = new ObservableCollection<FlightRoute>(Airports.Where(x => !string.IsNullOrEmpty(x.Origin))
+                                                                                    .GroupBy(x => x.Origin)
+                                                                                    .Select(g => g.First()));
 
-                sourceTemp = new List<FlightRoute>(SourceAirports);
-
-                //LoadingService.HideLoading();
+                    sourceTemp = new List<FlightRoute>(SourceAirports);
+                }
 
             }
             catch (Exception exception)
@@ -145,7 +145,7 @@ namespace AirIQ.ViewModels
         [RelayCommand]
         private async Task SearchFlights()
         {
-           
+
             var request = new Models.Request.FlightSearchRequest
             {
                 Origin = SelectedSourceAirport?.Origin,
@@ -165,7 +165,7 @@ namespace AirIQ.ViewModels
                 { NavigationParamConstants.TravelAllowedDates, AllowedDates },
             });
 
-            
+
         }
 
         #endregion

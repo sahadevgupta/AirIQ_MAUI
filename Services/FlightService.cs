@@ -87,4 +87,19 @@ public class FlightService(IApiServiceBaseParams apiServiceBaseParams) : ApiServ
         }
         return flightAvailabilityResponse;
     }
+
+    public async Task ConfirmBookingAsync(TicketBookingRequest ticketBookingRequest)
+    {
+        try
+        {
+            await Connectivity.CheckConnected();
+            var headers = await GetHeader();
+
+            var response = await BackendService.TicketBooking(ticketBookingRequest, headers).ConfigureAwait(false);
+        }
+        catch(Exception exception)
+        {
+            HandleException(exception);
+        }
+    }
 }

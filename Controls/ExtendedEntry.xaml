@@ -11,6 +11,7 @@
         <Label x:Name="TitleLabel"
                Grid.Row="0"
                Style="{StaticResource TitleStyleBlackBold}"
+               FontFamily="PoppinsRegular"
                Text="{Binding Title, Source={x:Reference customEntryControlWithTitle}}"
                IsVisible="{Binding Title, Source={x:Reference customEntryControlWithTitle}, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"/>
 
