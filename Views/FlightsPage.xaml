@@ -73,8 +73,9 @@
                     <DataTemplate x:DataType="models:Flight">
 
                         <Border
-                            Padding="15"
+                            Padding="15,10"
                             BackgroundColor="White"
+                            Stroke="{StaticResource BorderColor}"
                             StrokeShape="RoundRectangle 10">
                             <Grid
                                 ColumnDefinitions="60,*,Auto"
@@ -83,13 +84,13 @@
 
                                 <!--  Logo  -->
                                 <VerticalStackLayout Grid.RowSpan="2">
-                                    <!-- <Image
+                                     <Image
                                     Grid.RowSpan="2"
                                     Aspect="AspectFit"
                                     HeightRequest="60"
                                     Source="{Binding AirlineLogoUrl}"
                                     VerticalOptions="Start"
-                                    WidthRequest="60" />-->
+                                    WidthRequest="60" />
 
 <Label Text="{Binding FlightRoute}"
     Style="{StaticResource Label14StyleBlack}"/>

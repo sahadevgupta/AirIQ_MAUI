@@ -194,7 +194,7 @@
                                         <Label
                                             FontSize="16"
                                             Style="{StaticResource Label18StyleBold}"
-                                            Text="{Binding Id}"
+                                            Text="{Binding Header}"
                                             TextColor="Black"
                                             VerticalOptions="Center" />
 

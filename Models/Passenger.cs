@@ -7,7 +7,8 @@ namespace AirIQ.Models;
 
 public partial class Passenger : ObservableObject
 {
-    public string? Id { get; set; }
+    public int Id { get; set; }
+    public string? Header { get; set; }
     public string? Title { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
@@ -16,7 +17,7 @@ public partial class Passenger : ObservableObject
     public string? PassportExpirydate { get; set; }
     public string? PassportIssuingCountryCode { get; set; }
     public string? Nationality { get; set; }
-    public PassengerType PassengerType { get; set; }
+    public PassengerType Type { get; set; }
 
     [ObservableProperty]
     private bool _isExpanded;
@@ -29,5 +30,7 @@ public partial class Passenger : ObservableObject
 
     [ObservableProperty]
     private string? _travelWith;
+
+    public Infant? AssignedInfant { get; set; }
 
 }
