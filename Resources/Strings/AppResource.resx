@@ -192,4 +192,34 @@
   <data name="ConfirmBooking" xml:space="preserve">
     <value>Confirm Booking</value>
   </data>
+  <data name="UserName" xml:space="preserve">
+    <value>User Name</value>
+  </data>
+  <data name="EnterUsername" xml:space="preserve">
+    <value>Enter your username</value>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>Enter your password</value>
+  </data>
+  <data name="AgentLogin" xml:space="preserve">
+    <value>AGENT LOGIN</value>
+  </data>
+  <data name="DontHaveAccount" xml:space="preserve">
+    <value>Don’t have an account? </value>
+  </data>
+  <data name="SignUp" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Contact Us</value>
+  </data>
+  <data name="TermsAndConditions" xml:space="preserve">
+    <value>Terms &amp; Conditions</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
+  <data name="LoginToYourAccount" xml:space="preserve">
+    <value>Login to your account</value>
+  </data>
 </root>

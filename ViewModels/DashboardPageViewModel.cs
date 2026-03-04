@@ -50,13 +50,13 @@ namespace AirIQ.ViewModels
 
         partial void OnSelectedSourceAirportChanged(FlightRoute? oldValue, FlightRoute? newValue)
         {
-            SelectedDestinationAirport = null;
-            GetDestinationAirports();
+            //SelectedDestinationAirport = null;
+            //GetDestinationAirports();
         }
 
         partial void OnSelectedDestinationAirportChanged(FlightRoute? oldValue, FlightRoute? newValue)
         {
-            _ = GetAvailableBookingDatesAsync();
+            //_ = GetAvailableBookingDatesAsync();
         }
 
         private async Task GetAvailableBookingDatesAsync()
@@ -70,17 +70,43 @@ namespace AirIQ.ViewModels
             try
             {
 
-                using (LoadingService.Show())
+                // using (LoadingService.Show())
+                // {
+                //     var result = await flightService.GetAvailableRoutesAsync();
+
+                //     Airports = BackendToAppModelMapper.GetAvailableRoutes(result);
+                //     SourceAirports = new ObservableCollection<FlightRoute>(Airports.Where(x => !string.IsNullOrEmpty(x.Origin))
+                //                                                                     .GroupBy(x => x.Origin)
+                //                                                                     .Select(g => g.First()));
+
+                //     sourceTemp = new List<FlightRoute>(SourceAirports);
+                // }
+
+                SourceAirports = new ObservableCollection<FlightRoute>(new List<FlightRoute>
                 {
-                    var result = await flightService.GetAvailableRoutesAsync();
+                    new FlightRoute { Origin = "New York", Destination = "London" , Sector = "JFK // LHR" },
+                    new FlightRoute { Origin = "New York", Destination = "Paris", Sector = "JFK // CDG" },
+                    new FlightRoute { Origin = "Los Angeles", Destination = "Tokyo", Sector = "LAX // HND" },
+                    new FlightRoute { Origin = "Los Angeles", Destination = "Sydney" , Sector = "LAX // SYD" },
+                    new FlightRoute { Origin = "Chicago", Destination = "Toronto", Sector = "ORD // YYZ" },
+                    new FlightRoute { Origin = "Chicago", Destination = "Vancouver", Sector = "ORD // YVR" },
+                    new FlightRoute { Origin = "Miami", Destination = "Mexico City", Sector = "MIA // MEX" },
+                    new FlightRoute { Origin = "Miami", Destination = "Buenos Aires", Sector = "MIA // EZE" },
+                    new FlightRoute { Origin = "San Francisco", Destination = "Hong Kong", Sector = "SFO // HKG" },
+                });
 
-                    Airports = BackendToAppModelMapper.GetAvailableRoutes(result);
-                    SourceAirports = new ObservableCollection<FlightRoute>(Airports.Where(x => !string.IsNullOrEmpty(x.Origin))
-                                                                                    .GroupBy(x => x.Origin)
-                                                                                    .Select(g => g.First()));
-
-                    sourceTemp = new List<FlightRoute>(SourceAirports);
-                }
+                DestinationAirports = new ObservableCollection<FlightRoute>(new List<FlightRoute>
+                {
+                    new FlightRoute { Origin = "New York", Destination = "London" , Sector = "JFK // LHR" },
+                    new FlightRoute { Origin = "New York", Destination = "Paris", Sector = "JFK // CDG" },
+                    new FlightRoute { Origin = "Los Angeles", Destination = "Tokyo", Sector = "LAX // HND" },
+                    new FlightRoute { Origin = "Los Angeles", Destination = "Sydney" , Sector = "LAX // SYD" },
+                    new FlightRoute { Origin = "Chicago", Destination = "Toronto", Sector = "ORD // YYZ" },
+                    new FlightRoute { Origin = "Chicago", Destination = "Vancouver", Sector = "ORD // YVR" },
+                    new FlightRoute { Origin = "Miami", Destination = "Mexico City", Sector = "MIA // MEX" },
+                    new FlightRoute { Origin = "Miami", Destination = "Buenos Aires", Sector = "MIA // EZE" },
+                    new FlightRoute { Origin = "San Francisco", Destination = "Hong Kong", Sector = "SFO // HKG" },
+                });
 
             }
             catch (Exception exception)
@@ -130,6 +156,12 @@ namespace AirIQ.ViewModels
         #region [ Commands ]
 
         [RelayCommand]
+        private void OpenMenu()
+        {
+            Shell.Current.FlyoutIsPresented = true;
+        }
+
+        [RelayCommand]
         private void SearchSourceAirports(string searchKey)
         {
             FilterListByQuery(searchKey, "source");
@@ -166,6 +198,14 @@ namespace AirIQ.ViewModels
             });
 
 
+        }
+
+        [RelayCommand]
+        private void SwapSourceDestination()
+        {
+            var temp = SelectedSourceAirport;
+            SelectedSourceAirport = SelectedDestinationAirport;
+            SelectedDestinationAirport = temp;
         }
 
         #endregion

@@ -47,7 +47,7 @@ namespace AirIQ.ViewModels
                     AppConfiguration.IsLoggedInUser = true;
                     AppConfiguration.UserDetails = JsonConvert.SerializeObject(userDto);
 
-                    Application.Current!.Windows[0].Page = new AppShell();
+                    await Shell.Current.GoToAsync("//app/home");
                 }
             }
             catch (Exception ex)

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirIQ.Controls.EntryWithTitleImage"
+             xmlns:local="clr-namespace:AirIQ.Controls"
+             x:Name="thisControl">
+
+    <Border Padding="16,15"
+            BackgroundColor="White"
+            StrokeShape="RoundRectangle 8"
+            StrokeThickness="1"
+            Stroke="#E5E5E5">
+        <Grid ColumnDefinitions="Auto, *"
+              ColumnSpacing="16"
+              RowDefinitions="Auto, Auto">
+            <Image Source="{Binding Icon,Source={x:Reference thisControl}}"
+                   Grid.RowSpan="2"
+                   VerticalOptions="Center"/>
+
+            <Label Text="{Binding Title,Source={x:Reference thisControl}}"
+                   Grid.Column="1"
+                   Style="{StaticResource Label14RegularGray50Style}"
+                   VerticalOptions="Center"/>
+
+            <!--Custom Dropdown-->
+            <local:CustomDropdown x:Name="dropdown"
+                                  AutomationId="dropdownview"
+                                  CanEdit="{Binding CanEdit,Source={x:Reference thisControl}}"
+                                  ItemSource="{Binding ItemsSource,Source={x:Reference thisControl}}"
+                                  InputViewStyle="{Binding InputViewStyle,Source={x:Reference thisControl}}"
+                                  PlaceholderText="{Binding PlaceholderText,Source={x:Reference thisControl}}"
+                                  SelectedItem="{Binding SelectedItem,Source={x:Reference thisControl}}"
+                                  DisplayMemberPath="{Binding DisplayMemberPath,Source={x:Reference thisControl}}"
+                                  TextChanged="DropdownTextChanged"
+                                  Grid.Row="1"
+                                  Grid.Column="1"/>
+        </Grid>
+
+    </Border>
+
+</ContentView>

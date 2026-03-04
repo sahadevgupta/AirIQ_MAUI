@@ -49,18 +49,32 @@ public partial class ExtendedEntry : ContentView
     }
 
     // Bindable Property for Icon
-    public static readonly BindableProperty IconProperty =
-                            BindableProperty.Create(nameof(Icon),
+    public static readonly BindableProperty LeftIconProperty =
+                            BindableProperty.Create(nameof(LeftIcon),
                             typeof(string),
                             typeof(ExtendedEntry),
                             null,
                             BindingMode.TwoWay);
 
-    public string Icon
+    public string LeftIcon
     {
-        get => (string)GetValue(IconProperty);
-        set => SetValue(IconProperty, value);
+        get => (string)GetValue(LeftIconProperty);
+        set => SetValue(LeftIconProperty, value);
     }
+
+    public static readonly BindableProperty RightIconProperty =
+                            BindableProperty.Create(nameof(RightIcon),
+                            typeof(string),
+                            typeof(ExtendedEntry),
+                            null,
+                            BindingMode.TwoWay);
+
+    public string RightIcon
+    {
+        get => (string)GetValue(RightIconProperty);
+        set => SetValue(RightIconProperty, value);
+    }
+
 
     // Bindable Property for Icon Tap Command
     public static readonly BindableProperty IconTapCommandProperty =

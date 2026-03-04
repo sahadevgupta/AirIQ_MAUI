@@ -284,5 +284,95 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("ConfirmBooking", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Name.
+        /// </summary>
+        internal static string UserName {
+            get {
+                return ResourceManager.GetString("UserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your username.
+        /// </summary>
+        internal static string EnterUsername {
+            get {
+                return ResourceManager.GetString("EnterUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your password.
+        /// </summary>
+        internal static string EnterPassword {
+            get {
+                return ResourceManager.GetString("EnterPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AGENT LOGIN.
+        /// </summary>
+        internal static string AgentLogin {
+            get {
+                return ResourceManager.GetString("AgentLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don’t have an account? .
+        /// </summary>
+        internal static string DontHaveAccount {
+            get {
+                return ResourceManager.GetString("DontHaveAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign Up.
+        /// </summary>
+        internal static string SignUp {
+            get {
+                return ResourceManager.GetString("SignUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact Us.
+        /// </summary>
+        internal static string ContactUs {
+            get {
+                return ResourceManager.GetString("ContactUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terms & Conditions.
+        /// </summary>
+        internal static string TermsAndConditions {
+            get {
+                return ResourceManager.GetString("TermsAndConditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy Policy.
+        /// </summary>
+        internal static string PrivacyPolicy {
+            get {
+                return ResourceManager.GetString("PrivacyPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login to your account.
+        /// </summary>
+        internal static string LoginToYourAccount {
+            get {
+                return ResourceManager.GetString("LoginToYourAccount", resourceCulture);
+            }
+        }
     }
 }

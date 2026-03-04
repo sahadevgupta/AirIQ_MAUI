@@ -103,7 +103,7 @@ public abstract class BasePage : ContentPage
 	{
 		this.Behaviors.Add(new StatusBarBehavior
 		{
-			StatusBarColor = Color.FromArgb("#2E6FB6"),
+			StatusBarColor = Color.FromArgb("#C6DAFC"),
 			StatusBarStyle = StatusBarStyle.LightContent
 		});
 
@@ -133,14 +133,14 @@ public abstract class BasePage : ContentPage
 		}
 	}
 
-    protected override void OnBindingContextChanged()
-    {
-        base.OnBindingContextChanged();
-		if(_navBar != null)
-        {
-            _navBar.IsVisible = IsNavBarVisible;
-        }
-    }
+	protected override void OnBindingContextChanged()
+	{
+		base.OnBindingContextChanged();
+		if (_navBar != null)
+		{
+			_navBar.IsVisible = IsNavBarVisible;
+		}
+	}
 
 	#endregion
 }
