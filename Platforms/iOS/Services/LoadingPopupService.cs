@@ -35,7 +35,8 @@ namespace AirIQ.Platforms.Services
                 view = null;
                 view = InitDialog();
             });
-            return new DisposableAction(() => DispatchQueue.MainQueue.DispatchAsync(() => {
+            return new DisposableAction(() => DispatchQueue.MainQueue.DispatchAsync(() =>
+            {
                 ReleaseAll(view);
             }));
         }
@@ -44,9 +45,19 @@ namespace AirIQ.Platforms.Services
         {
             try
             {
+
                 var dialogView = GifLoaderImageView();
 
-                UIApplication.SharedApplication!.KeyWindow!.AddSubview(dialogView);
+                var window = UIApplication.SharedApplication
+            .ConnectedScenes
+            .OfType<UIWindowScene>()
+            .SelectMany(x => x.Windows)
+            .FirstOrDefault(x => x.IsKeyWindow);
+
+                var rootVC = window?.RootViewController;
+
+                // IMPORTANT: Do NOT traverse to PresentedViewController
+                rootVC?.View?.AddSubview(dialogView);
                 return dialogView;
             }
             catch (Exception exception)
@@ -66,17 +77,17 @@ namespace AirIQ.Platforms.Services
             loadingView.Frame = new CGRect(0, 0, UIScreen.MainScreen.Bounds.Width, UIScreen.MainScreen.Bounds.Height);
             loadingView.BackgroundColor = ((Color)Application.Current.Resources["PopupBackground"]).ToPlatform();
 
-            if (imageView==null)
+            if (imageView == null)
             {
                 imageView = ImageExtension.LoadGifImageWithName("loader");
 
                 imageView.Frame = loadingView.ConvertRectFromView(loadingView.Frame, loadingView);
             }
 
-            
+
             loadingView.Add(imageView);
 
-            
+
             return loadingView;
         }
 
@@ -104,14 +115,14 @@ namespace AirIQ.Platforms.Services
         // Protected implementation of Dispose pattern.
         protected virtual void Dispose(bool disposing)
         {
-           
+
             if (disposing)
             {
                 _disposeAction?.Dispose();
                 _disposeAction = null;
             }
 
-            
+
         }
 
         /// <summary>

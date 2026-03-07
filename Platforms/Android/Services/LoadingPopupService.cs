@@ -28,8 +28,7 @@ namespace AirIQ.Platforms.Services
             {
                 try
                 {
-                    _dialog?.Hide();
-                    _dialog?.Dismiss();
+                    Hide();
                 }
                 catch (Exception)
                 {
@@ -40,7 +39,7 @@ namespace AirIQ.Platforms.Services
 
         private void InitLoaderView()
         {
-            if (!isInitialized)
+            //if (!isInitialized)
             {
                 var loadingIndicatorView = new LoadingIndicatorView();
                 var mainPage = Application.Current?.Windows[0].Page;
@@ -52,14 +51,19 @@ namespace AirIQ.Platforms.Services
 
                 _nativeView = loadingIndicatorView.ToHandler(mainPage.Handler?.MauiContext!)?.PlatformView!;
 
-                _dialog = new Dialog(Platform.CurrentActivity!);
-                _dialog.RequestWindowFeature((int)WindowFeatures.NoTitle);
-                _dialog.SetCancelable(false);
-                _dialog.SetContentView(_nativeView);
-                Window? window = _dialog.Window;
-                window?.SetLayout(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
-                window?.ClearFlags(WindowManagerFlags.DimBehind);
-                window?.SetBackgroundDrawable(new ColorDrawable(Colors.Transparent.ToPlatform()));
+                var activity = Platform.CurrentActivity;
+                var rootView = activity?.Window?.DecorView as ViewGroup;
+
+                rootView?.AddView(_nativeView);
+
+                // _dialog = new Dialog(Platform.CurrentActivity!);
+                // _dialog.RequestWindowFeature((int)WindowFeatures.NoTitle);
+                // _dialog.SetCancelable(false);
+                // _dialog.SetContentView(_nativeView);
+                // Window? window = _dialog.Window;
+                // window?.SetLayout(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
+                // window?.ClearFlags(WindowManagerFlags.DimBehind);
+                // window?.SetBackgroundDrawable(new ColorDrawable(Colors.Transparent.ToPlatform()));
 
                 isInitialized = true;
             }
@@ -67,8 +71,17 @@ namespace AirIQ.Platforms.Services
 
         public void Hide()
         {
-            _dialog?.Hide();
-            _dialog?.Dismiss();
+            try
+            {
+                // _dialog?.Hide();
+                // _dialog?.Dismiss();
+
+                if (_nativeView?.Parent is ViewGroup parent)
+                {
+                    parent.RemoveView(_nativeView);
+                }
+            }
+            catch { }
         }
 
         /// <summary>

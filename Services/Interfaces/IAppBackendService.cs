@@ -19,6 +19,10 @@ namespace AirIQ.Services.Interfaces
         [Post(UrlConstants.Login)]
         Task<LoginDto> Login([Body(BodySerializationMethod.Serialized)] LoginRequest request, [HeaderCollection] IDictionary<string, string> headers);
 
+        [Post(UrlConstants.LoginWithoutApiKey)]
+        Task<LoginDto> LoginAsync([Body(BodySerializationMethod.Serialized)] LoginRequest request);
+
+
         [Post(UrlConstants.Search)]
         Task<ServiceResponse<IEnumerable<FlightSearchResultDto>>> SearchFlights([Body(BodySerializationMethod.Serialized)] FlightSearchRequest request, [HeaderCollection] IDictionary<string, string> headers);
 

@@ -6,12 +6,18 @@
 
     <Grid ColumnDefinitions="2*,6*,2*">
 
-        <Image Source="loader.gif" 
+        <ActivityIndicator Color="{StaticResource PrimaryColor}"
+                           MaximumHeightRequest="150"
+                           Grid.Column="1"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
+
+        <!-- <Image Source="loader.gif" 
             MaximumHeightRequest="150"
             Grid.Column="1"
             VerticalOptions="Center"
             HorizontalOptions="Center"
-            IsAnimationPlaying="True"/>
+            IsAnimationPlaying="True"/> -->
     </Grid>
 
 </ContentPage>

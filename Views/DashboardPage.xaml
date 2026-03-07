@@ -4,6 +4,7 @@
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:controls="clr-namespace:AirIQ.Controls"
+  xmlns:helpers="clr-namespace:AirIQ.Constants"
   xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
   xmlns:template="clr-namespace:AirIQ.Views.ContentViews"
   xmlns:viewmodel="clr-namespace:AirIQ.ViewModels"
@@ -41,9 +42,11 @@
                       Style="{StaticResource Label16Bold}"
                       TextColor="Black"/>
                 <Span Text=" "/>
-                <Span Text="Sahadev!"
+                <Span Text="{Binding CurrentUser.ContactPerson}"
                       Style="{StaticResource Label16Bold}"
-                      FontAttributes="Bold"
+                      TextColor="Black"/>
+                <Span Text="! "
+                      Style="{StaticResource Label16Bold}"
                       TextColor="Black"/>
               </FormattedString.Spans>
             </FormattedString>
@@ -94,7 +97,8 @@
                                       PlaceholderText="{x:Static resx:AppResource.SearchDepartureAirport}"
                                       SelectedItem="{Binding SelectedSourceAirport}"
                                       TextChangeCommand="{Binding SearchSourceAirportsCommand}"
-                                      DisplayMemberPath="OriginRoute"/>
+                                      DisplayMemberPath="OriginRoute"
+                                      CanEdit="True"/>
 
         <controls:EntryWithTitleImage MaximumHeightRequest="100"
                                       Grid.Row="1"

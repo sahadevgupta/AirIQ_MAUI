@@ -34,7 +34,7 @@ public partial class SessionExpiryPopupViewModel : ObservableObject
     private async Task Confirm(PopupPage popup)
     {
         var userDto = await _loginService.LoginAsync(AppConfiguration.CurrentUser?.MobileNumber!, Password!);
-        if(userDto != default)
+        if (userDto != default)
         {
             _sessionResponsTcs.TrySetResult(true);
             await MopupService.Instance.PopAsync(true);

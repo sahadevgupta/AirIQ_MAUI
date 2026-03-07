@@ -6,6 +6,9 @@ namespace AirIQ.Models.Response;
 
 public record UserDto
 {
+    [JsonPropertyName("apikey")]
+    public string? ApiKey { get; set; }
+
     [JsonPropertyName("agency_id")]
     public int AgencyId { get; set; }
 

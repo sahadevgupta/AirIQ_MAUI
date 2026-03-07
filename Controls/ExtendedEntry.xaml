@@ -11,7 +11,7 @@
         <Label x:Name="TitleLabel"
                Grid.Row="0"
                Style="{StaticResource TitleStyleBlackBold}"
-               FontFamily="PoppinsRegular"
+               FontFamily="RobotoRegular"
                Text="{Binding Title, Source={x:Reference customEntryControlWithTitle}}"
                IsVisible="{Binding Title, Source={x:Reference customEntryControlWithTitle}, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"/>
 
@@ -41,7 +41,10 @@
                   ColumnSpacing="10">
 
 
-                <HorizontalStackLayout Spacing="12">
+                <Grid ColumnSpacing="12"
+                      ColumnDefinitions="Auto,*"
+                      BackgroundColor="Transparent"
+                      HorizontalOptions="Fill">
 
                     <Image Source="{Binding LeftIcon,Source={x:Reference customEntryControlWithTitle}}"
                            IsVisible="{Binding LeftIcon,Source={x:Reference customEntryControlWithTitle}, Converter={toolkit:IsStringNotNullOrEmptyConverter}}"
@@ -49,6 +52,8 @@
                            Margin="12,4,0,4"/>
 
                     <controls:BorderlessEntry x:Name="InputEntry"
+                                              Grid.Column="1"
+                                              HorizontalOptions="Fill"
                                               BackgroundColor="Transparent"
                                               VerticalTextAlignment="Center"
                                               Placeholder="{Binding PlaceholderText,Source={x:Reference customEntryControlWithTitle}}"
@@ -71,11 +76,11 @@
                                          Binding="{Binding Source={x:Reference leftimg}, Path=IsVisible}"
                                          Value="False">
                                 <Setter Property="Margin"
-                                        Value="12,4,0,4"/>
+                                        Value="12,0"/>
                             </DataTrigger>
                         </controls:BorderlessEntry.Triggers>
                     </controls:BorderlessEntry>
-                </HorizontalStackLayout>
+                </Grid>
 
                 <Image Source="{Binding RightIcon,Source={x:Reference customEntryControlWithTitle}}"
                        IsVisible="{Binding RightIcon,Source={x:Reference customEntryControlWithTitle}, Converter={toolkit:IsStringNotNullOrEmptyConverter}}"

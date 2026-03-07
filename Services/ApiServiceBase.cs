@@ -54,7 +54,7 @@ public abstract class ApiServiceBase
                 }
             }
 
-            header.Add("api-key", AppConfiguration.ApiKey);
+            header.Add("api-key", AppConfiguration.CurrentUser?.ApiKey ?? string.Empty);
         }
         catch (Exception exception)
         {

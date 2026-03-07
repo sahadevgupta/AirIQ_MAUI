@@ -22,7 +22,7 @@ IAppBackendService appBackendService) : ApiServiceBase(apiServiceBaseParams), IL
                 Password = password,
             };
             var headers = await GetHeader(false);
-            var loginResponse = await appBackendService.Login(request, headers).ConfigureAwait(false);
+            var loginResponse = await appBackendService.LoginAsync(request).ConfigureAwait(false);
             if (!string.IsNullOrWhiteSpace(loginResponse.Token))
             {
                 await apiServiceBaseParams.SecureStorageService.SetAsync(PreferenceKeyConstants.AuthKey, loginResponse.Token!);

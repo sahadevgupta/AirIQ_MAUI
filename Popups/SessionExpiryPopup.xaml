@@ -29,7 +29,7 @@
             BackgroundColor="White"
             Padding="24">
         <Grid RowDefinitions="Auto,Auto,Auto,Auto"
-                RowSpacing="10">
+              RowSpacing="10">
             <Label
                 FontSize="24"
                 Style="{StaticResource Label18StyleBold}"

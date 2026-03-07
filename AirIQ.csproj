@@ -61,21 +61,7 @@
 		<PackageReference Include="Refit.Newtonsoft.Json" Version="8.0.0" />
 		<PackageReference Include="Sentry.Maui" Version="5.16.2" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
-		<PackageReference Include="Microsoft.Maui.Essentials" value="10.0.10">
-		  <Version>10.0.10</Version>
-		  <Version>10.0.10</Version>
-		</PackageReference>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Compile Update="Popups/SessionExpiryPopup.xaml.cs">
-	    <DependentUpon>SessionExpiryPopup.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Resources\Strings\AppResource.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>AppResource.resx</DependentUpon>
-	  </Compile>
+		<PackageReference Include="Microsoft.Maui.Essentials" Version="10.0.10"/>
 	</ItemGroup>
 
 	<ItemGroup>

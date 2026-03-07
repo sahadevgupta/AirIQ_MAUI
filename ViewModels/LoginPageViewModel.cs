@@ -46,6 +46,7 @@ namespace AirIQ.ViewModels
                 {
                     AppConfiguration.IsLoggedInUser = true;
                     AppConfiguration.UserDetails = JsonConvert.SerializeObject(userDto);
+                    AppConfiguration.CurrentUser = userDto;
 
                     await Shell.Current.GoToAsync("//app/home");
                 }

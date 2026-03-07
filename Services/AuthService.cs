@@ -37,7 +37,7 @@ IPopupNavigation popupNavigation) : IAuthService
                     BindingContext = vm
                 };
 
-               await MainThread.InvokeOnMainThreadAsync(async() =>
+                await MainThread.InvokeOnMainThreadAsync(async () =>
                 {
                     await popupNavigation.PushAsync(sessionExpiryPopup);
                     bool result = await vm.SessionResponseTask;
