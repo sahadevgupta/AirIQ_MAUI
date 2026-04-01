@@ -33,9 +33,15 @@ public abstract class BasePage : ContentPage
 		_navBar.SetBinding(Controls.NavigationBarControl.BackCommandProperty, new Binding("BackCommand", source: this.BindingContext));
 
 		_content = new ContentView();
-		_content.BackgroundColor = Colors.WhiteSmoke;
+		_content.BackgroundColor = Colors.White;
 
-		_navBar.BackgroundColor = (Color)Application.Current?.Resources["PrimaryColor"]!;
+#if ANDROID
+
+		this.BackgroundColor = (Color)Application.Current?.Resources["StatusBarColor"]!;
+#endif
+
+		_navBar.BackgroundColor = (Color)Application.Current?.Resources["StatusBarColor"]!;
+		//_navBar.BackButtonTintColor = Color.FromArgb("#1C1C1C");
 
 		layout.Add(_navBar);
 		Grid.SetRow(_navBar, 0);
@@ -103,7 +109,7 @@ public abstract class BasePage : ContentPage
 	{
 		this.Behaviors.Add(new StatusBarBehavior
 		{
-			StatusBarColor = Color.FromArgb("#C6DAFC"),
+			StatusBarColor = (Color)Application.Current?.Resources["StatusBarColor"]!,
 			StatusBarStyle = StatusBarStyle.LightContent
 		});
 

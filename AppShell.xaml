@@ -6,8 +6,7 @@
        xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
        xmlns:controls="clr-namespace:AirIQ.Controls"
        x:Class="AirIQ.AppShell"
-       FlyoutBehavior="Disabled"
-       BackgroundColor="red">
+       FlyoutBehavior="Disabled">
 
     <Shell.FlyoutBackdrop>
         <SolidColorBrush Color="#66000000"/>

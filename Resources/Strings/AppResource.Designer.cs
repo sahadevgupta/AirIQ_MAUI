@@ -374,5 +374,23 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("LoginToYourAccount", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Powered by.
+        /// </summary>
+        internal static string PoweredBy {
+            get {
+                return ResourceManager.GetString("PoweredBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UDAANHOTELS.COM.
+        /// </summary>
+        internal static string UdaanHotels {
+            get {
+                return ResourceManager.GetString("UdaanHotels", resourceCulture);
+            }
+        }
     }
 }

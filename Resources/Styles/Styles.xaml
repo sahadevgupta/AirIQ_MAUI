@@ -253,6 +253,10 @@
                BasedOn="{StaticResource Label16Regular}">
                 <Setter Property="TextColor"
                         Value="{StaticResource Gray90}"/>
+                <Setter Property="LineHeight"
+                        Value="1.2"/>
+                <Setter Property="CharacterSpacing"
+                        Value="0.5"/>
         </Style>
 
         <Style x:Key="Label14StyleBlack"
@@ -356,24 +360,24 @@
         </Style>
 
         <Style TargetType="Span"
-               x:Key="Span14RegularGray50Style">
+               x:Key="Span16RegularGray50Style">
 
                 <Setter Property="TextColor"
                         Value="{AppThemeBinding Light={StaticResource Gray50}, Dark={StaticResource LightGray}}"/>
                 <Setter Property="FontSize"
-                        Value="{ext:ScaleFontSize Size='14'}"/>
+                        Value="{ext:ScaleFontSize Size='16'}"/>
                 <Setter Property="FontFamily"
                         Value="RobotoRegular"/>
 
         </Style>
 
         <Style TargetType="Span"
-               x:Key="Span14BoldPrimaryStyle">
+               x:Key="Span16BoldPrimaryStyle">
 
                 <Setter Property="TextColor"
                         Value="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource LightGray}}"/>
                 <Setter Property="FontSize"
-                        Value="{ext:ScaleFontSize Size='14'}"/>
+                        Value="{ext:ScaleFontSize Size='16'}"/>
                 <Setter Property="FontFamily"
                         Value="RobotoBold"/>
 

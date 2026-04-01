@@ -24,6 +24,7 @@
 
                 <Image
                     Source="logo"
+                    Scale="{OnPlatform Android=0.5}"
                     HeightRequest="120"
                     HorizontalOptions="Center"/>
 
@@ -66,9 +67,13 @@
                     <Label.FormattedText>
                         <FormattedString>
                             <Span Text="{x:Static resx:AppResource.DontHaveAccount}"
-                                  Style="{StaticResource Span14RegularGray50Style}"/>
+                                  Style="{StaticResource Span16RegularGray50Style}"/>
                             <Span Text="{x:Static resx:AppResource.SignUp}"
-                                  Style="{StaticResource Span14BoldPrimaryStyle}"/>
+                                  Style="{StaticResource Span16BoldPrimaryStyle}">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SignupCommand}"/>
+                                </Span.GestureRecognizers>
+                            </Span>
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
@@ -108,9 +113,11 @@
                        HorizontalTextAlignment="Center">
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="Powered by : "
+                            <Span Text="{x:Static resx:AppResource.PoweredBy}"
                                   Style="{StaticResource Span12RegularGray50Style}"/>
-                            <Span Text="UDAANHOTELS.COM"
+                            <Span Text=" : "
+                                  Style="{StaticResource Span12RegularGray50Style}"/>
+                            <Span Text="{x:Static resx:AppResource.UdaanHotels}"
                                   TextColor="{StaticResource Link}"
                                   Style="{StaticResource Span12RegularGray50Style}"/>
                         </FormattedString>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                x:Class="AirIQ.Views.SignupPage"
+                xmlns:controls="clr-namespace:AirIQ.Controls"
+                xmlns:views="clr-namespace:AirIQ.Views"
+                IsNavBarVisible="True">
+    <views:BasePage.PageContent>
+        <ScrollView>
+            <VerticalStackLayout Padding="20"
+                                 BackgroundColor="White"
+                                 Spacing="20">
+                <Image Source="logo"/>
+                <Label Text="Agency sign up form"
+                       Style="{StaticResource Label24Medium}"
+                       Margin="0,-10,0,0"
+                       HorizontalTextAlignment="Center"/>
+
+                <Label Text="Personal Information"
+                       Style="{StaticResource Label18Medium}"
+                       TextColor="{StaticResource PrimaryColor}"
+                       LineHeight="1.2"
+                       TextTransform="Uppercase"
+                       CharacterSpacing="1.2"
+                       Margin="0,8,0,0"/>
+
+                <controls:ExtendedEntry Title="Company Name"/>
+                <controls:ExtendedEntry Title="Full Name"/>
+                <controls:ExtendedEntry Title="Phone Number"/>
+                <controls:ExtendedEntry Title="WhatsApp Number"/>
+                <controls:ExtendedEntry Title="Email Address"/>
+                <controls:ExtendedEntry Title="Referred By"/>
+                <controls:ExtendedEntry Title="Password"/>
+                <controls:ExtendedEntry Title="Confirmed Password"/>
+
+                <Button Text="Submit"
+                        Style="{StaticResource ButtonCorneredStyle}"/>
+
+                <Image Source="iata_logo"
+                       HorizontalOptions="Center"/>
+
+                <Border BackgroundColor="#F1F9FF"
+                        Margin="0,0,0,20"
+                        HorizontalOptions="Center"
+                        StrokeShape="RoundRectangle 20"
+                        StrokeThickness="1"
+                        Padding="16,8"
+                        Stroke="{StaticResource PrimaryColor}">
+                    <Label Text="+91 9555 722 722"
+                           CharacterSpacing="0.4"/>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+    </views:BasePage.PageContent>
+</views:BasePage>

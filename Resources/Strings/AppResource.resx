@@ -222,4 +222,10 @@
   <data name="LoginToYourAccount" xml:space="preserve">
     <value>Login to your account</value>
   </data>
+  <data name="PoweredBy" xml:space="preserve">
+    <value>Powered by</value>
+  </data>
+  <data name="UdaanHotels" xml:space="preserve">
+    <value>UDAANHOTELS.COM</value>
+  </data>
 </root>

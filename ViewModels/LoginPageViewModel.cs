@@ -3,6 +3,7 @@ using AirIQ.Constants;
 using AirIQ.Models.Response;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
+using AirIQ.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
@@ -59,6 +60,12 @@ namespace AirIQ.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        [RelayCommand]
+        private async Task Signup()
+        {
+            await ShellNavigationService.Navigate<SignupPage>();
         }
 
         #endregion
