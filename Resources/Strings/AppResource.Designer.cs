@@ -392,5 +392,113 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("UdaanHotels", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Book your flight with.
+        /// </summary>
+        internal static string BookYourFlightWith {
+            get {
+                return ResourceManager.GetString("BookYourFlightWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Air.
+        /// </summary>
+        internal static string Air {
+            get {
+                return ResourceManager.GetString("Air", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IQ.
+        /// </summary>
+        internal static string IQ {
+            get {
+                return ResourceManager.GetString("IQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Departure.
+        /// </summary>
+        internal static string Departure {
+            get {
+                return ResourceManager.GetString("Departure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Travelers.
+        /// </summary>
+        internal static string Travelers {
+            get {
+                return ResourceManager.GetString("Travelers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Book Ticket.
+        /// </summary>
+        internal static string BookTicket {
+            get {
+                return ResourceManager.GetString("BookTicket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tour Code.
+        /// </summary>
+        internal static string TourCode {
+            get {
+                return ResourceManager.GetString("TourCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details Provided.
+        /// </summary>
+        internal static string DetailsProvided {
+            get {
+                return ResourceManager.GetString("DetailsProvided", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adult.
+        /// </summary>
+        internal static string Adult {
+            get {
+                return ResourceManager.GetString("Adult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        internal static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First Name.
+        /// </summary>
+        internal static string FirstName {
+            get {
+                return ResourceManager.GetString("FirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Name.
+        /// </summary>
+        internal static string LastName {
+            get {
+                return ResourceManager.GetString("LastName", resourceCulture);
+            }
+        }
     }
 }

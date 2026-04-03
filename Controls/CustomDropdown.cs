@@ -83,6 +83,12 @@ public class CustomDropdown : View
             default(Style), BindingMode.TwoWay);
 
     /// <summary>
+    ///     Identifies the <see cref="CanEdit" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty HasPaddingProperty =
+        BindableProperty.Create(nameof(HasPadding), typeof(bool), typeof(CustomDropdown), false);
+
+    /// <summary>
     ///     Gets or sets the dropdown itemsource of the property that is displayed
     /// </summary>
     /// <value>
@@ -170,6 +176,12 @@ public class CustomDropdown : View
     {
         get => (bool)GetValue(ShowDropdownProperty);
         set => SetValue(ShowDropdownProperty, value);
+    }
+
+    public bool HasPadding
+    {
+        get => (bool)GetValue(HasPaddingProperty);
+        set => SetValue(HasPaddingProperty, value);
     }
 
     #endregion

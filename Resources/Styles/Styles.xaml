@@ -206,6 +206,13 @@
         <!--  ====================  -->
 
         <Style TargetType="Label"
+               x:Key="Label14MediumGray90Style"
+               BasedOn="{StaticResource Label14Medium}">
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource Gray90}, Dark={StaticResource LightGray}}"/>
+        </Style>
+
+        <Style TargetType="Label"
                x:Key="Label20MediumOnyxStyle"
                BasedOn="{StaticResource Label20Medium}">
                 <Setter Property="TextColor"
@@ -442,6 +449,22 @@
                         </VisualStateGroupList>
                 </Setter>
 
+        </Style>
+
+        <!--  ====================  -->
+        <!--  BORDER STYLES  -->
+        <!--  ====================  -->
+
+        <Style TargetType="Border"
+               x:Key="DefaultBorderStyle">
+                <Setter Property="Padding"
+                        Value="16"/>
+                <Setter Property="BackgroundColor"
+                        Value="White"/>
+                <Setter Property="StrokeShape"
+                        Value="RoundRectangle 10"/>
+                <Setter Property="StrokeThickness"
+                        Value="0"/>
         </Style>
 
         <!--  Accent Button  -->

@@ -1,7 +1,6 @@
 ﻿using AirIQ.Configurations.Mapper;
 using AirIQ.Constants;
 using AirIQ.Models;
-using AirIQ.Models.Response;
 using AirIQ.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;

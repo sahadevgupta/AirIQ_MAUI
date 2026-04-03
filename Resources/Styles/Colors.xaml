@@ -25,6 +25,8 @@
     <Color x:Key="Link">#0078E0</Color>
     <Color x:Key="Onyx">#373737</Color>
 
+    <Color x:Key="Gray10">#E8E8E8</Color>
+    <Color x:Key="Gray30">#B9B9B9</Color>
     <Color x:Key="Gray50">#8A8A8A</Color>
     <Color x:Key="Gray90">#1C1C1C</Color>
     <Color x:Key="Gray100">#E1E1E1</Color>
@@ -68,8 +70,17 @@
     <Color x:Key="AccentColor">#F26B6C</Color>
     <Color x:Key="DarkGray">#555555</Color>
     <Color x:Key="LightGray">#E0E0E0</Color>
-    <Color x:Key="BackgroundColor">#F5F5F5</Color>
+    <Color x:Key="BackgroundColor">#F4F4F4</Color>
     <Color x:Key="AshtonSkies">#7b8eb0</Color>
+
+    <LinearGradientBrush StartPoint="0,0"
+                         x:Key="BrandGradient"
+                         EndPoint="0,1">
+        <GradientStop Color="#BFD4FC"
+                      Offset="0.0"/>
+        <GradientStop Color="#D0E1FD"
+                      Offset="1.0"/>
+    </LinearGradientBrush>
 
     <!-- ==================== -->
     <!--   DARK THEME COLORS  -->

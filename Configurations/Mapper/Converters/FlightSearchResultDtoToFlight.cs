@@ -13,7 +13,10 @@ public class FlightSearchResultDtoToFlight : ConverterBase<FlightSearchResultDto
             Airline = source.Airline,
             ArrivalDate = source.ArrivalDate,
             ArrivalTime = source.ArrivalTime,
-            CabinBaggage = source.CabinBaggage,
+            CabinBaggage = source.CabinBaggage != null &&
+                           source.CabinBaggage.EndsWith("kg", StringComparison.OrdinalIgnoreCase) ?
+                           source.CabinBaggage :
+                           source.CabinBaggage += "KG",
             DepartureDate = source.DepartureDate,
             DepartureTime = source.DepartureTime,
             Destination = source.Destination,
@@ -25,7 +28,10 @@ public class FlightSearchResultDtoToFlight : ConverterBase<FlightSearchResultDto
             Pax = source.Pax,
             Price = source.Price,
             TicketId = source.TicketId,
-            HandLuggage = source.HandLuggage,
+            HandLuggage = source.HandLuggage != null &&
+                          source.HandLuggage.EndsWith("kg", StringComparison.OrdinalIgnoreCase) ?
+                          source.HandLuggage :
+                          source.HandLuggage += "KG",
             Isinternational = source.Isinternational
         };
     }

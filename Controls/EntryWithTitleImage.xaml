@@ -3,39 +3,60 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirIQ.Controls.EntryWithTitleImage"
              xmlns:local="clr-namespace:AirIQ.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Name="thisControl">
 
-    <Border Padding="16,15"
-            BackgroundColor="White"
-            StrokeShape="RoundRectangle 8"
-            StrokeThickness="1"
-            Stroke="#E5E5E5">
-        <Grid ColumnDefinitions="Auto, *"
-              ColumnSpacing="16"
-              RowDefinitions="Auto, Auto">
-            <Image Source="{Binding Icon,Source={x:Reference thisControl}}"
-                   Grid.RowSpan="2"
-                   VerticalOptions="Center"/>
+       <Border Padding="16,15"
+               BackgroundColor="White"
+               StrokeShape="RoundRectangle 8"
+               StrokeThickness="1"
+               Stroke="#E5E5E5">
 
-            <Label Text="{Binding Title,Source={x:Reference thisControl}}"
-                   Grid.Column="1"
-                   Style="{StaticResource Label14RegularGray50Style}"
-                   VerticalOptions="Center"/>
+              <Border.GestureRecognizers>
+                     <TapGestureRecognizer Tapped="TapGestureRecognizerTapped"/>
+              </Border.GestureRecognizers>
+              <Grid ColumnDefinitions="Auto, *"
+                    ColumnSpacing="16"
+                    RowSpacing="6"
+                    RowDefinitions="Auto, Auto">
+                     <Image Source="{Binding Icon,Source={x:Reference thisControl}}"
+                            Grid.RowSpan="2"
+                            VerticalOptions="Center"/>
 
-            <!--Custom Dropdown-->
-            <local:CustomDropdown x:Name="dropdown"
-                                  AutomationId="dropdownview"
-                                  CanEdit="{Binding CanEdit,Source={x:Reference thisControl}}"
-                                  ItemSource="{Binding ItemsSource,Source={x:Reference thisControl}}"
-                                  InputViewStyle="{Binding InputViewStyle,Source={x:Reference thisControl}}"
-                                  PlaceholderText="{Binding PlaceholderText,Source={x:Reference thisControl}}"
-                                  SelectedItem="{Binding SelectedItem,Source={x:Reference thisControl}}"
-                                  DisplayMemberPath="{Binding DisplayMemberPath,Source={x:Reference thisControl}}"
-                                  TextChanged="DropdownTextChanged"
-                                  Grid.Row="1"
-                                  Grid.Column="1"/>
-        </Grid>
+                     <Label Text="{Binding Title,Source={x:Reference thisControl}}"
+                            Grid.Column="1"
+                            Style="{StaticResource Label14RegularGray50Style}"
+                            VerticalOptions="Center"/>
 
-    </Border>
+                     <!--Custom Dropdown-->
+                     <local:CustomDropdown x:Name="dropdown"
+                                           IsVisible="{Binding IsDateViewVisible,Source={x:Reference thisControl},Converter={toolkit:InvertedBoolConverter}}"
+                                           AutomationId="dropdownview"
+                                           CanEdit="{Binding CanEdit,Source={x:Reference thisControl}}"
+                                           ItemSource="{Binding ItemsSource,Source={x:Reference thisControl}}"
+                                           InputViewStyle="{Binding InputViewStyle,Source={x:Reference thisControl}}"
+                                           PlaceholderText="{Binding PlaceholderText,Source={x:Reference thisControl}}"
+                                           SelectedItem="{Binding SelectedItem,Source={x:Reference thisControl}}"
+                                           DisplayMemberPath="{Binding DisplayMemberPath,Source={x:Reference thisControl}}"
+                                           TextChanged="DropdownTextChanged"
+                                           Grid.Row="1"
+                                           BackgroundColor="Transparent"
+                                           Grid.Column="1"/>
+
+                     <Label Text="DD/MM/YYYY"
+                            x:Name="datelbl"
+                            IsVisible="{Binding IsDateViewVisible,Source={x:Reference thisControl}}"
+                            VerticalTextAlignment="Center"
+                            Style="{StaticResource Label20MediumOnyxStyle}"
+                            TextColor="{StaticResource Gray90}"
+                            Grid.Row="1"
+                            Grid.Column="1"/>
+
+
+                     <!-- <DatePicker Grid.Row="1"
+                                 Grid.Column="1"/> -->
+              </Grid>
+
+       </Border>
 
 </ContentView>

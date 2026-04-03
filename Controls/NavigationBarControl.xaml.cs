@@ -19,7 +19,7 @@ public partial class NavigationBarControl : ContentView
 		BindableProperty.Create(nameof(IsEndIconVisible), typeof(bool), typeof(NavigationBarControl), true);
 
 	public static readonly BindableProperty BackButtonTintColorProperty =
-			BindableProperty.Create(nameof(BackButtonTintColor), typeof(Color), typeof(NavigationBarControl), Colors.White);
+			BindableProperty.Create(nameof(BackButtonTintColor), typeof(Color), typeof(NavigationBarControl), Colors.Black);
 
 	// public static readonly BindableProperty BackgroundColorProperty =
 	//    BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(NavigationBarControl), Colors.Black);

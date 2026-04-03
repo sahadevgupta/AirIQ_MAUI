@@ -1,15 +1,10 @@
 ﻿using AirIQ.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AirIQ.ViewModels.Common
 {
     public class ViewModelParameters : IViewModelParameters
     {
-        public ViewModelParameters(ILoadingPopUpService loadingPopUpService, 
+        public ViewModelParameters(ILoadingPopUpService loadingPopUpService,
             INavigationService navigationService,
             IShellNavigationService shellNavigationService)
         {

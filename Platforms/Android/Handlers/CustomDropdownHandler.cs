@@ -2,7 +2,9 @@
 using AirIQ.Controls;
 using AirIQ.Platforms.Android.Handlers;
 using Android.Content;
+using Android.Graphics;
 using Android.Text;
+using Android.Text.Style;
 using Android.Util;
 using Android.Views;
 using Android.Views.InputMethods;
@@ -10,6 +12,7 @@ using Android.Widget;
 using AndroidX.Core.Content;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
+using Color = Microsoft.Maui.Graphics.Color;
 using View = Android.Views.View;
 
 namespace AirIQ.Platforms.Handlers
@@ -66,6 +69,10 @@ namespace AirIQ.Platforms.Handlers
 
             var drawable = ContextCompat.GetDrawable(Context, Resource.Drawable.background_single_line);
             autoCompleteTextView.SetDropDownBackgroundDrawable(drawable);
+
+            UpdateStyle();
+            UpdatePlaceholder();
+
             return autoCompleteTextView;
         }
 
@@ -76,7 +83,16 @@ namespace AirIQ.Platforms.Handlers
             {
                 int leftPadding = (int)(12 * platformView.Context.Resources.DisplayMetrics.Density);
                 int rightPadding = 100;
-                platformView.SetPadding(leftPadding, platformView.PaddingTop, rightPadding, platformView.PaddingBottom);
+
+                if (customDropdown.HasPadding)
+                {
+                    platformView.SetPadding(leftPadding, platformView.PaddingTop, rightPadding, platformView.PaddingBottom);
+                }
+                else
+                {
+                    platformView.SetPadding(0, 0, 0, 0);
+                }
+
                 platformView.DropDownVerticalOffset = leftPadding;
 
                 this.VirtualView.PropertyChanged += VirtualView_PropertyChanged;
@@ -214,7 +230,35 @@ namespace AirIQ.Platforms.Handlers
             {
                 string value = FormatType(customDropdown.SelectedItem, customDropdown.DisplayMemberPath);
                 autoCompleteTextView.SetText(value, true);
-                autoCompleteTextView.SetTextColor(((Color)Application.Current.Resources["DarkGray"]).ToPlatform());
+
+            }
+        }
+
+        private void UpdateStyle()
+        {
+            if (autoCompleteTextView != null)
+            {
+                autoCompleteTextView.TextSize = 20;
+                autoCompleteTextView.SetTextColor(((Color)(Application.Current?.Resources["Gray90"] ?? Colors.Black)).ToPlatform());
+
+                var font = Typeface.CreateFromAsset(Context.Assets, "Roboto-Medium.ttf");
+                autoCompleteTextView.Typeface = font;
+
+            }
+        }
+
+        void UpdatePlaceholder()
+        {
+            if (autoCompleteTextView != null && !string.IsNullOrWhiteSpace(customDropdown.PlaceholderText))
+            {
+                var hint = new SpannableString(customDropdown.PlaceholderText);
+                hint.SetSpan(new AbsoluteSizeSpan(16, true), 0, hint.Length(), SpanTypes.InclusiveInclusive);
+
+                autoCompleteTextView.HintFormatted = hint;
+                //autoCompleteTextView.Hint = customDropdown.PlaceholderText;             // <-- Placeholder / Hint
+                //autoCompleteTextView.hint
+                autoCompleteTextView.SetHintTextColor(Colors.Gray.ToPlatform());
+
             }
         }
 

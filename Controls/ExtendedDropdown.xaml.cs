@@ -62,6 +62,12 @@ public partial class ExtendedDropdown : ContentView
         BindableProperty.Create(nameof(CanEdit), typeof(bool), typeof(ExtendedDropdown), false);
 
     /// <summary>
+    ///     Identifies the <see cref="CanEdit" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty HasPaddingProperty =
+        BindableProperty.Create(nameof(HasPadding), typeof(bool), typeof(ExtendedDropdown), false);
+
+    /// <summary>
     ///     Identifies the <see cref="OnLoadShowDropdown" /> bindable property.
     /// </summary>
     public static readonly BindableProperty OnLoadShowDropdownProperty =
@@ -92,8 +98,8 @@ public partial class ExtendedDropdown : ContentView
     public static readonly BindableProperty InputViewStyleProperty =
         BindableProperty.Create(nameof(InputViewStyle), typeof(Style), typeof(ExtendedDropdown));
 
-        public static readonly BindableProperty TextChangeCommandProperty =
-        BindableProperty.Create(nameof(TextChangeCommand), typeof(ICommand), typeof(ExtendedDropdown));
+    public static readonly BindableProperty TextChangeCommandProperty =
+    BindableProperty.Create(nameof(TextChangeCommand), typeof(ICommand), typeof(ExtendedDropdown));
 
     public string Title
     {
@@ -163,6 +169,12 @@ public partial class ExtendedDropdown : ContentView
         set => SetValue(CanEditProperty, value);
     }
 
+    public bool HasPadding
+    {
+        get => (bool)GetValue(HasPaddingProperty);
+        set => SetValue(HasPaddingProperty, value);
+    }
+
     public bool OnLoadShowDropdown
     {
         get => (bool)GetValue(OnLoadShowDropdownProperty);
@@ -177,7 +189,7 @@ public partial class ExtendedDropdown : ContentView
 
     #region Events
 
-   
+
 
     public event EventHandler SelectedIndexChanged;
 

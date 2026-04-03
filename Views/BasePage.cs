@@ -33,12 +33,9 @@ public abstract class BasePage : ContentPage
 		_navBar.SetBinding(Controls.NavigationBarControl.BackCommandProperty, new Binding("BackCommand", source: this.BindingContext));
 
 		_content = new ContentView();
-		_content.BackgroundColor = Colors.White;
+		_content.BackgroundColor = (Color)(Application.Current?.Resources["BackgroundColor"] ?? Colors.White);
 
-#if ANDROID
 
-		this.BackgroundColor = (Color)Application.Current?.Resources["StatusBarColor"]!;
-#endif
 
 		_navBar.BackgroundColor = (Color)Application.Current?.Resources["StatusBarColor"]!;
 		//_navBar.BackButtonTintColor = Color.FromArgb("#1C1C1C");
@@ -109,7 +106,7 @@ public abstract class BasePage : ContentPage
 	{
 		this.Behaviors.Add(new StatusBarBehavior
 		{
-			StatusBarColor = (Color)Application.Current?.Resources["StatusBarColor"]!,
+			StatusBarColor = Colors.White,
 			StatusBarStyle = StatusBarStyle.LightContent
 		});
 
@@ -145,6 +142,23 @@ public abstract class BasePage : ContentPage
 		if (_navBar != null)
 		{
 			_navBar.IsVisible = IsNavBarVisible;
+		}
+	}
+
+	protected override void OnAppearing()
+	{
+		base.OnAppearing();
+		if (this.GetType() == typeof(DashboardPage))
+		{
+#if ANDROID
+
+			this.Background = (Brush)Application.Current?.Resources["BrandGradient"]!;
+
+#endif
+		}
+		else
+		{
+			this.Background = Colors.White;
 		}
 	}
 

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Input;
+using AirIQ.Helpers;
+using Mopups.Interfaces;
 
 namespace AirIQ.Controls;
 
@@ -93,6 +95,39 @@ public partial class EntryWithTitleImage : ContentView
 	public static readonly BindableProperty TextChangeCommandProperty =
 	BindableProperty.Create(nameof(TextChangeCommand), typeof(ICommand), typeof(EntryWithTitleImage));
 
+	public static readonly BindableProperty IsDateViewVisibleProperty =
+			BindableProperty.Create(nameof(IsDateViewVisible), typeof(bool), typeof(EntryWithTitleImage), false,
+				BindingMode.TwoWay);
+	public static readonly BindableProperty DateProperty =
+	   BindableProperty.Create(propertyName: nameof(Date), returnType: typeof(DateTime), declaringType: typeof(EntryWithTitleImage), default(DateTime), defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
+	   {
+		   var control = (EntryWithTitleImage)bindable;
+		   if (newValue != null && (DateTime)newValue != default)
+		   {
+			   control.datelbl.Text = ((DateTime)newValue).ToString("dd/MM/yyyy");
+			   control.datelbl.TextColor = Colors.Black;
+		   }
+	   });
+
+	public static readonly BindableProperty AllowedDatesProperty =
+		BindableProperty.Create(nameof(AllowedDates), typeof(IList<DateTime>), typeof(EntryWithTitleImage), null, BindingMode.TwoWay);
+
+	public IList<DateTime> AllowedDates
+	{
+		get => (IList<DateTime>)GetValue(AllowedDatesProperty);
+		set => SetValue(AllowedDatesProperty, value);
+	}
+
+	public DateTime Date
+	{
+		get { return (DateTime)GetValue(DateProperty); }
+		set
+		{
+			SetValue(DateProperty, value);
+
+		}
+	}
+
 	public string Title
 	{
 		get => (string)GetValue(TitleProperty);
@@ -121,6 +156,12 @@ public partial class EntryWithTitleImage : ContentView
 	{
 		get => (bool)GetValue(IsErrorProperty);
 		set => SetValue(IsErrorProperty, value);
+	}
+
+	public bool IsDateViewVisible
+	{
+		get => (bool)GetValue(IsDateViewVisibleProperty);
+		set => SetValue(IsDateViewVisibleProperty, value);
 	}
 
 	public bool IsFontImage
@@ -204,8 +245,26 @@ public partial class EntryWithTitleImage : ContentView
 
 	void TapGestureRecognizerTapped(object sender, EventArgs e)
 	{
-		dropdown.ShowDropdown = !dropdown.ShowDropdown;
-		Icon = dropdown.ShowDropdown ? "arrow_up.png" : "arrow_down.png";
+		if (IsDateViewVisible)
+		{
+			var popupNavigation = ServiceHelper.GetService<IPopupNavigation>();
+			if (popupNavigation != null)
+			{
+				var popup = new CalendarView();
+				popup.SetBinding(CalendarView.AllowedDatesProperty,
+						new Binding(nameof(AllowedDates), BindingMode.TwoWay, source: this));
+				popup.DatePicked += (arg) =>
+				{
+					Date = arg;
+				};
+				popupNavigation?.PushAsync(popup);
+			}
+		}
+		else
+		{
+			dropdown.ShowDropdown = !dropdown.ShowDropdown;
+			Icon = dropdown.ShowDropdown ? "arrow_up.png" : "arrow_down.png";
+		}
 	}
 
 	private void PickerSelectedIndexChanged(object sender, EventArgs e)

@@ -123,11 +123,7 @@
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
-
-
             </Grid>
-
-
 
         </Grid>
     </ScrollView>

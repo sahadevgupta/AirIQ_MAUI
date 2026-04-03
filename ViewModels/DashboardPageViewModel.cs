@@ -170,7 +170,8 @@ namespace AirIQ.ViewModels
         [RelayCommand]
         private void SearchDestinationAirports(string searchKey)
         {
-            FilterListByQuery(searchKey, "destination");
+            if (destTemp != null && destTemp.Any())
+                FilterListByQuery(searchKey, "destination");
         }
 
         [RelayCommand]

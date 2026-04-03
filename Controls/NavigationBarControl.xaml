@@ -7,9 +7,9 @@
 
 
     <Grid ColumnDefinitions="2*,6*,2*"
-            HeightRequest="52"
-            Padding="10,0"
-          BackgroundColor="{Binding BackgroundColor, Source={x:Reference navigationBarControl}}">
+          HeightRequest="52"
+          Padding="10,0"
+          BackgroundColor="White">
 
         <Grid.Shadow>
             <Shadow Brush="Black"
