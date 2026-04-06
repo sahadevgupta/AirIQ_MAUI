@@ -8,12 +8,21 @@ public class FlightRoute
     public string? Origin { get; set; }
     public string? Destination { get; set; }
 
+    public string? OriginAiportName { get; set; }
+    public string? DestinationAiportName { get; set; }
+
     public string OriginRoute
     {
         get
         {
             var parts = Sector?.Split(new string[] { "//" }, StringSplitOptions.RemoveEmptyEntries);
-            return parts?.Length > 0 ? $"{Origin} - {parts[0].Trim()}" : string.Empty;
+            if (parts?.Length > 0)
+            {
+                OriginAiportName = parts[0].Trim();
+                return $"{Origin} - {parts[0].Trim()}";
+            }
+
+            return string.Empty;
         }
     }
 
@@ -22,7 +31,12 @@ public class FlightRoute
         get
         {
             var parts = Sector?.Split(new string[] { "//" }, StringSplitOptions.RemoveEmptyEntries);
-            return parts?.Length > 0 ? $"{Destination} - {parts[1].Trim()}" : string.Empty;
+            if (parts?.Length > 0)
+            {
+                DestinationAiportName = parts[1].Trim();
+                return $"{Destination} - {parts[1].Trim()}";
+            }
+            return string.Empty;
         }
     }
 }

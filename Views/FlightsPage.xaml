@@ -9,29 +9,35 @@
     xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
     xmlns:viewmodels="clr-namespace:AirIQ.ViewModels"
     xmlns:views="clr-namespace:AirIQ.Views"
-    Title="FlightsPage"
+    PageTitle="Select Flight"
     x:DataType="viewmodels:FlightsPageViewModel">
 
     <views:BasePage.PageContent>
 
         <Grid Padding="0"
+              RowSpacing="0"
               BackgroundColor="{StaticResource BackgroundColor}"
               RowDefinitions="Auto, *">
 
             <Border Padding="16"
+                    StrokeThickness="0"
                     BackgroundColor="White">
 
-                <Grid>
-                    <HorizontalStackLayout Spacing="16">
+                <Grid ColumnDefinitions="Auto,*,Auto"
+                      ColumnSpacing="10"
+                      RowSpacing="12"
+                      RowDefinitions="Auto,Auto">
+                    <HorizontalStackLayout Spacing="16"
+                                           Grid.ColumnSpan="3">
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="{Binding SourceAirport}"
+                                    <Span Text="{Binding FlightSearchRequest.Origin}"
                                           Style="{StaticResource Span16RegularGray50Style}"
                                           FontFamily="RobotoBold"
                                           TextColor="{StaticResource Gray90}"/>
                                     <Span Text="&#10;"/>
-                                    <Span Text="{Binding DestinationAirport}"
+                                    <Span Text="{Binding FlightSearchRequest.OriginAirportName}"
                                           Style="{StaticResource Span12RegularGray50Style}"/>
 
                                 </FormattedString>
@@ -49,22 +55,41 @@
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="{Binding DestinationAirport}"
+                                    <Span Text="{Binding FlightSearchRequest.Destination}"
                                           Style="{StaticResource Span16RegularGray50Style}"
                                           FontFamily="RobotoBold"
                                           TextColor="{StaticResource Gray90}"/>
                                     <Span Text="&#10;"/>
-                                    <Span Text="Bangkok"
+                                    <Span Text="{Binding FlightSearchRequest.DestinationAirportName}"
                                           Style="{StaticResource Span12RegularGray50Style}"/>
 
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
                     </HorizontalStackLayout>
+
+                    <Button Text="AIR IQ"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Style="{StaticResource SmallBorderButtonStyle}"/>
+
+                    <Button Text="MARKETPLACE"
+                            Grid.Row="1"
+                            HorizontalOptions="Start"
+                            Style="{StaticResource SmallBorderButtonStyle}"
+                            Grid.Column="1"/>
+
+
+                    <Label Text="{Binding AvailableFlights.Count,TargetNullValue=0,StringFormat='{0} Flights'}"
+                           Style="{StaticResource Label16Bold}"
+                           Grid.Row="1"
+                           Grid.Column="2"
+                           VerticalOptions="Center"
+                           HorizontalOptions="End"/>
+
                 </Grid>
 
             </Border>
-
 
             <CollectionView
                 Margin="0,10,0,10"

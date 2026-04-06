@@ -31,6 +31,12 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
     private DateTime _selectedTravelDate;
 
     [ObservableProperty]
+    private string? _originCode;
+
+    [ObservableProperty]
+    private string? _destinationCode;
+
+    [ObservableProperty]
     private string? _sourceAirport;
 
     [ObservableProperty]

@@ -80,33 +80,6 @@ namespace AirIQ.ViewModels
 
                     sourceTemp = new List<FlightRoute>(SourceAirports);
                 }
-
-                // SourceAirports = new ObservableCollection<FlightRoute>(new List<FlightRoute>
-                // {
-                //     new FlightRoute { Origin = "New York", Destination = "London" , Sector = "JFK // LHR" },
-                //     new FlightRoute { Origin = "New York", Destination = "Paris", Sector = "JFK // CDG" },
-                //     new FlightRoute { Origin = "Los Angeles", Destination = "Tokyo", Sector = "LAX // HND" },
-                //     new FlightRoute { Origin = "Los Angeles", Destination = "Sydney" , Sector = "LAX // SYD" },
-                //     new FlightRoute { Origin = "Chicago", Destination = "Toronto", Sector = "ORD // YYZ" },
-                //     new FlightRoute { Origin = "Chicago", Destination = "Vancouver", Sector = "ORD // YVR" },
-                //     new FlightRoute { Origin = "Miami", Destination = "Mexico City", Sector = "MIA // MEX" },
-                //     new FlightRoute { Origin = "Miami", Destination = "Buenos Aires", Sector = "MIA // EZE" },
-                //     new FlightRoute { Origin = "San Francisco", Destination = "Hong Kong", Sector = "SFO // HKG" },
-                // });
-
-                // DestinationAirports = new ObservableCollection<FlightRoute>(new List<FlightRoute>
-                // {
-                //     new FlightRoute { Origin = "New York", Destination = "London" , Sector = "JFK // LHR" },
-                //     new FlightRoute { Origin = "New York", Destination = "Paris", Sector = "JFK // CDG" },
-                //     new FlightRoute { Origin = "Los Angeles", Destination = "Tokyo", Sector = "LAX // HND" },
-                //     new FlightRoute { Origin = "Los Angeles", Destination = "Sydney" , Sector = "LAX // SYD" },
-                //     new FlightRoute { Origin = "Chicago", Destination = "Toronto", Sector = "ORD // YYZ" },
-                //     new FlightRoute { Origin = "Chicago", Destination = "Vancouver", Sector = "ORD // YVR" },
-                //     new FlightRoute { Origin = "Miami", Destination = "Mexico City", Sector = "MIA // MEX" },
-                //     new FlightRoute { Origin = "Miami", Destination = "Buenos Aires", Sector = "MIA // EZE" },
-                //     new FlightRoute { Origin = "San Francisco", Destination = "Hong Kong", Sector = "SFO // HKG" },
-                // });
-
             }
             catch (Exception exception)
             {
@@ -186,6 +159,8 @@ namespace AirIQ.ViewModels
                 Adult = int.Parse(SelectedPaxSize),
                 SourceAirport = SelectedSourceAirport,
                 DestinationAirport = SelectedDestinationAirport,
+                OriginAirportName = SelectedSourceAirport?.OriginAiportName,
+                DestinationAirportName = SelectedDestinationAirport?.DestinationAiportName,
                 Child = 0,
                 Infant = 0,
                 AirlineCode = null

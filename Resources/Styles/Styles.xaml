@@ -451,6 +451,31 @@
 
         </Style>
 
+        <Style x:Key="SmallBorderButtonStyle"
+               TargetType="Button">
+                <Setter Property="BorderColor"
+                        Value="{StaticResource Gray30}"/>
+                <Setter Property="BorderWidth"
+                        Value="1"/>
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource Gray10}"/>
+                <Setter Property="TextColor"
+                        Value="Black"/>
+                <Setter Property="FontSize"
+                        Value="12"/>
+                <Setter Property="TextTransform"
+                        Value="Uppercase"/>
+                <Setter Property="Padding"
+                        Value="12,8"/>
+                <Setter Property="MinimumHeightRequest"
+                        Value="0"/>
+                <Setter Property="MinimumWidthRequest"
+                        Value="0"/>
+                <Setter Property="CornerRadius"
+                        Value="8"/>
+                <!-- optional -->
+        </Style>
+
         <!--  ====================  -->
         <!--  BORDER STYLES  -->
         <!--  ====================  -->

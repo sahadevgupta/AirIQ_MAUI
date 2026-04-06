@@ -3,22 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirIQ.Controls.NavigationBarControl"
              x:Name="navigationBarControl"
+             xmlns:drawables="clr-namespace:AirIQ.Resources.Drawables"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
 
     <Grid ColumnDefinitions="2*,6*,2*"
-          HeightRequest="52"
+          RowDefinitions="Auto,1"
+          AbsoluteLayout.LayoutBounds="0,0,1,1"
+          AbsoluteLayout.LayoutFlags="All"
           Padding="10,0"
           BackgroundColor="White">
 
         <Grid.Shadow>
             <Shadow Brush="Black"
-                    Opacity="0.2"
                     Radius="10"
-                    Offset="5,5"/>
+                    Offset="15,15"/>
         </Grid.Shadow>
 
         <ImageButton
+            Margin="10,0,0,0"
             Aspect="AspectFit"
             BackgroundColor="transparent"
             Command="{Binding BackCommand, Source={x:Reference navigationBarControl}}"
@@ -50,6 +53,11 @@
             Command="{Binding MenuCommand, Source={x:Reference navigationBarControl}}"
             VerticalOptions="Center"/>
 
+        <BoxView Grid.Row="1"
+                 Grid.ColumnSpan="3"
+                 BackgroundColor="Silver"
+                 Margin="-10,0"
+                 HeightRequest="1"/>
     </Grid>
 
 </ContentView>

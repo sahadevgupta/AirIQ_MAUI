@@ -12,14 +12,16 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodels="clr-namespace:AirIQ.ViewModels"
     xmlns:views="clr-namespace:AirIQ.Views"
-    Title="FlightBookingPage"
+    PageTitle="Travel Details"
     x:DataType="viewmodels:FlightBookingPageViewModel">
 
     <views:BasePage.PageContent>
 
-        <CollectionView ItemsSource="{Binding AdultPassengers}">
+        <CollectionView ItemsSource="{Binding AdultPassengers}"
+                        BackgroundColor="White">
             <CollectionView.Header>
                 <VerticalStackLayout Margin="10"
+                                     MinimumHeightRequest="100"
                                      Spacing="20">
                     <Border BackgroundColor="#E8E8E8"
                             StrokeShape="RoundRectangle 8"
@@ -115,7 +117,7 @@
 
 
                     </Border>
-                    <Label Text="Travellers DEtails"
+                    <Label Text="Traveller Details"
                            Style="{StaticResource Label18StyleBold}"
                            TextColor="{StaticResource PrimaryColor}"
                            Grid.Row="2"/>
