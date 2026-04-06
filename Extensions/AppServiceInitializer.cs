@@ -12,7 +12,8 @@ public static class AppServiceInitializer
     {
         //Transient Services
         builder.Services.AddTransient<IViewModelParameters, ViewModelParameters>()
-                        .AddTransient<IApiServiceBaseParams, ApiServiceBaseParams>();
+                        .AddTransient<IApiServiceBaseParams, ApiServiceBaseParams>()
+                        .AddTransient<IDialogService, DialogService>();
 
 
         builder.Services.AddSingleton<ILoadingPopUpService, AirIQ.Platforms.Services.LoadingPopupService>();

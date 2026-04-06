@@ -18,7 +18,8 @@
     <views:BasePage.PageContent>
 
         <CollectionView ItemsSource="{Binding AdultPassengers}"
-                        BackgroundColor="White">
+                        BackgroundColor="White"
+                        x:Name="passengerList">
             <CollectionView.Header>
                 <VerticalStackLayout Margin="10"
                                      MinimumHeightRequest="100"

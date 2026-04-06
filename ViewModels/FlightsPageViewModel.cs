@@ -28,6 +28,9 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
     private ObservableCollection<DateTime> _allowedDates = new();
 
     [ObservableProperty]
+    private DateTime _currentDate = DateTime.Today;
+
+    [ObservableProperty]
     private DateTime _selectedTravelDate;
 
     [ObservableProperty]
@@ -44,7 +47,17 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
 
     #endregion
 
-    #region [ Methods & Service Calls ].    
+    #region [ Methods & Service Calls ]
+
+    partial void OnCurrentDateChanged(DateTime value)
+    {
+        if (FlightSearchRequest != null)
+        {
+            FlightSearchRequest.DepartureDate = value.ToString("yyyy/MM/dd");
+            _ = IniatializeDataAsync();
+
+        }
+    }
 
     private async Task IniatializeDataAsync()
     {
@@ -78,6 +91,14 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
         });
 
     }
+
+    [RelayCommand]
+    private void CopyFlightDetail(Flight selectedFlight)
+    {
+        DialogService.ShowToast("Details are copied");
+
+    }
+
     #endregion
 
     #region [ Overrides ]

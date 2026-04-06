@@ -26,7 +26,7 @@
                 <Grid ColumnDefinitions="Auto,*,Auto"
                       ColumnSpacing="10"
                       RowSpacing="12"
-                      RowDefinitions="Auto,Auto">
+                      RowDefinitions="Auto,Auto,Auto">
                     <HorizontalStackLayout Spacing="16"
                                            Grid.ColumnSpan="3">
                         <Label>
@@ -68,13 +68,17 @@
                         </Label>
                     </HorizontalStackLayout>
 
+                    <controls:DateSelector SelectedDate="{Binding CurrentDate}"
+                                           Grid.Row="1"
+                                           Grid.ColumnSpan="3"/>
+
                     <Button Text="AIR IQ"
-                            Grid.Row="1"
+                            Grid.Row="2"
                             Grid.Column="0"
                             Style="{StaticResource SmallBorderButtonStyle}"/>
 
                     <Button Text="MARKETPLACE"
-                            Grid.Row="1"
+                            Grid.Row="2"
                             HorizontalOptions="Start"
                             Style="{StaticResource SmallBorderButtonStyle}"
                             Grid.Column="1"/>
@@ -82,7 +86,7 @@
 
                     <Label Text="{Binding AvailableFlights.Count,TargetNullValue=0,StringFormat='{0} Flights'}"
                            Style="{StaticResource Label16Bold}"
-                           Grid.Row="1"
+                           Grid.Row="2"
                            Grid.Column="2"
                            VerticalOptions="Center"
                            HorizontalOptions="End"/>
@@ -240,6 +244,7 @@
                                 </Label>
 
                                 <Button Text="{Binding Pax, StringFormat='Copy {0} seats'}"
+                                        Command="{Binding BindingContext.CopyFlightDetailCommand,Source={x:Reference flightsCollectionView}}"
                                         Grid.Row="3"
                                         BorderColor="{StaticResource Gray30}"
                                         BorderWidth="1"
