@@ -50,10 +50,8 @@ namespace AirIQ.Extensions
             request.RequestUri = new Uri(newUri);
             var req = request;
             var id = Guid.NewGuid().ToString();
-            var msg = $"[{id} -   Request]";
+            var msg = $"[{id} -   ]";
             StringBuilder apiDetails = new();
-
-
 
             Debug.WriteLine($"{msg}========Start==========");
             Debug.WriteLine($"{msg} {req.Method} {req.RequestUri.PathAndQuery} {req.RequestUri.Scheme}/{req.Version}");

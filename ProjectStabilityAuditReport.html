@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Project Stability Audit Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2em;
+            background: #f9f9f9;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: #fff;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+        }
+
+        th {
+            background: #2c3e50;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        .p0 {
+            background: #ffcccc;
+        }
+
+        .p1 {
+            background: #fff3cd;
+        }
+
+        .p2 {
+            background: #d1ecf1;
+        }
+
+        .ok {
+            background: #d4edda;
+        }
+
+        .review {
+            background: #ffeeba;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Project Stability Audit Report</h1>
+    <table>
+        <tr>
+            <th>File</th>
+            <th>Line(s)</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Severity</th>
+        </tr>
+        <tr class="p0">
+            <td>ViewModels/FlightBookingPageViewModel.cs</td>
+            <td>56, 146, 227</td>
+            <td>Unhandled Exception</td>
+            <td>async Task methods, check for try/catch</td>
+            <td>P0</td>
+        </tr>
+        <tr class="p0">
+            <td>ViewModels/FlightsPageViewModel.cs</td>
+            <td>62, 85, 106</td>
+            <td>Unhandled Exception</td>
+            <td>async Task methods, check for try/catch</td>
+            <td>P0</td>
+        </tr>
+        <tr class="p0">
+            <td>ViewModels/DashboardPageViewModel.cs</td>
+            <td>64, 70, 153, 194</td>
+            <td>Unhandled Exception</td>
+            <td>async Task methods, check for try/catch</td>
+            <td>P0</td>
+        </tr>
+        <tr class="p0">
+            <td>ViewModels/LoginPageViewModel.cs</td>
+            <td>32, 66</td>
+            <td>Unhandled Exception</td>
+            <td>async Task methods, check for try/catch</td>
+            <td>P0</td>
+        </tr>
+        <tr class="p0">
+            <td>Services/SecureStorageService.cs</td>
+            <td>9, 11, 20, 22</td>
+            <td>Unhandled Exception</td>
+            <td>async/await on SecureStorage, check for exception handling</td>
+            <td>P0</td>
+        </tr>
+        <tr class="p0">
+            <td>Services/AuthService.cs</td>
+            <td>22, 50</td>
+            <td>Unhandled Exception</td>
+            <td>await on GetAsync, check for exception handling</td>
+            <td>P0</td>
+        </tr>
+        <tr class="p0">
+            <td>Extensions/RefitClientServiceInitializer.cs</td>
+            <td>46, 99</td>
+            <td>Unhandled Exception</td>
+            <td>async HTTP, check for try/catch and EnsureSuccessStatusCode</td>
+            <td>P0</td>
+        </tr>
+        <tr class="p0">
+            <td>Services/SecureStorageService.cs</td>
+            <td>14, 17</td>
+            <td>Force-unwrap</td>
+            <td>Use of ! on nullable API response</td>
+            <td>P0</td>
+        </tr>
+        <tr class="p0">
+            <td>Services/ApiServiceBase.cs</td>
+            <td>53</td>
+            <td>Force-unwrap</td>
+            <td>Use of ! on nullable API response</td>
+            <td>P0</td>
+        </tr>
+        <tr class="p0">
+            <td>ViewModels/DashboardPageViewModel.cs</td>
+            <td>95, 106, 110, 117</td>
+            <td>Force-unwrap</td>
+            <td>Use of ! on nullable API response</td>
+            <td>P0</td>
+        </tr>
+        <tr class="p1">
+            <td>ViewModels/FlightBookingPageViewModel.cs</td>
+            <td>29, 33, 36, 39, 68, 82, 102, 209</td>
+            <td>ObservableCollection</td>
+            <td>Nullable fields, ensure = new() initializer</td>
+            <td>P1</td>
+        </tr>
+        <tr class="p1">
+            <td>ViewModels/FlightsPageViewModel.cs</td>
+            <td>25, 28, 72</td>
+            <td>ObservableCollection</td>
+            <td>Nullable fields, ensure = new() initializer</td>
+            <td>P1</td>
+        </tr>
+        <tr class="p1">
+            <td>ViewModels/DashboardPageViewModel.cs</td>
+            <td>27, 30, 39, 67, 79, 95, 106, 110, 117</td>
+            <td>ObservableCollection</td>
+            <td>Nullable fields, ensure = new() initializer</td>
+            <td>P1</td>
+        </tr>
+        <tr class="p1">
+            <td>Controls/EntryWithTitleImage.xaml.cs</td>
+            <td>23, 29, 35, 42, 49, 56, 62, 68, 75, 82, 89, 93, 96, 99, 102, 113</td>
+            <td>BindableProperty</td>
+            <td>No default value/null safety</td>
+            <td>P1</td>
+        </tr>
+        <tr class="p1">
+            <td>Controls/DateChip.xaml.cs</td>
+            <td>20, 21, 28, 29, 36, 37, 44, 45, 52, 53</td>
+            <td>BindableProperty</td>
+            <td>No default value/null safety</td>
+            <td>P1</td>
+        </tr>
+        <tr class="p1">
+            <td>Views/BasePage.cs</td>
+            <td>55, 56, 58, 59, 61, 62, 64, 65</td>
+            <td>BindableProperty</td>
+            <td>No default value/null safety</td>
+            <td>P1</td>
+        </tr>
+        <tr class="p1">
+            <td>Popups/CustomDialogPopup.xaml.cs</td>
+            <td>9, 10, 15, 16, 21</td>
+            <td>BindableProperty</td>
+            <td>No default value/null safety</td>
+            <td>P1</td>
+        </tr>
+        <tr class="p0">
+            <td>Services/NavigationService.cs</td>
+            <td>344, 352, 361, 377</td>
+            <td>async void</td>
+            <td>async void method (not event handler)</td>
+            <td>P0</td>
+        </tr>
+        <tr class="p0">
+            <td>Services/DialogService.cs</td>
+            <td>75</td>
+            <td>async void</td>
+            <td>async void ShowToast</td>
+            <td>P0</td>
+        </tr>
+        <tr class="p0">
+            <td>Platforms/Android/Handlers/CustomDropdownHandler.cs</td>
+            <td>201</td>
+            <td>async void</td>
+            <td>async void UpdateItemsSource</td>
+            <td>P0</td>
+        </tr>
+        <tr class="p1">
+            <td>ViewModels/FlightsPageViewModel.cs</td>
+            <td>57</td>
+            <td>Fire-and-forget</td>
+            <td>_ = IniatializeDataAsync();</td>
+            <td>P1</td>
+        </tr>
+        <tr class="p1">
+            <td>ViewModels/DashboardPageViewModel.cs</td>
+            <td>61</td>
+            <td>Fire-and-forget</td>
+            <td>_ = GetAvailableBookingDatesAsync();</td>
+            <td>P1</td>
+        </tr>
+        <tr class="review">
+            <td>Services/ApiServiceBase.cs</td>
+            <td>31, 38</td>
+            <td>CancellationToken</td>
+            <td>Manual CancellationTokenSource</td>
+            <td>Review</td>
+        </tr>
+        <tr class="review">
+            <td>Services/DialogService.cs</td>
+            <td>79, 86</td>
+            <td>CancellationToken</td>
+            <td>Manual CancellationTokenSource</td>
+            <td>Review</td>
+        </tr>
+        <tr class="review">
+            <td>Extensions/RefitClientServiceInitializer.cs</td>
+            <td>46, 79, 99, 121</td>
+            <td>CancellationToken</td>
+            <td>CancellationToken in SendAsync</td>
+            <td>Review</td>
+        </tr>
+        <tr class="ok">
+            <td>Services/NavigationService.cs</td>
+            <td>177, 213</td>
+            <td>MainThread</td>
+            <td>MainThread.BeginInvokeOnMainThread used</td>
+            <td>OK</td>
+        </tr>
+        <tr class="ok">
+            <td>Services/DialogService.cs</td>
+            <td>77</td>
+            <td>MainThread</td>
+            <td>MainThread.BeginInvokeOnMainThread used</td>
+            <td>OK</td>
+        </tr>
+        <tr class="ok">
+            <td>App.xaml.cs</td>
+            <td>25</td>
+            <td>MainThread</td>
+            <td>MainThread.BeginInvokeOnMainThread used</td>
+            <td>OK</td>
+        </tr>
+        <tr class="review">
+            <td>App.xaml.cs</td>
+            <td>30</td>
+            <td>Navigation</td>
+            <td>await Shell.Current.GoToAsync, check try/catch</td>
+            <td>Review</td>
+        </tr>
+        <tr class="review">
+            <td>ViewModels/LoginPageViewModel.cs</td>
+            <td>52</td>
+            <td>Navigation</td>
+            <td>await Shell.Current.GoToAsync, check try/catch</td>
+            <td>Review</td>
+        </tr>
+        <tr class="review">
+            <td>Services/NavigationService.cs</td>
+            <td>215</td>
+            <td>Navigation</td>
+            <td>await Navigation.PushAsync, check try/catch</td>
+            <td>Review</td>
+        </tr>
+        <tr class="review">
+            <td>Services/DialogService.cs</td>
+            <td>43</td>
+            <td>Navigation</td>
+            <td>await popupNavigation.PushAsync, check try/catch</td>
+            <td>Review</td>
+        </tr>
+        <tr class="review">
+            <td>Services/AuthService.cs</td>
+            <td>42</td>
+            <td>Navigation</td>
+            <td>await popupNavigation.PushAsync, check try/catch</td>
+            <td>Review</td>
+        </tr>
+        <tr class="review">
+            <td>Services/ShellNavigationService.cs</td>
+            <td>13, 14, 25, 26</td>
+            <td>Navigation</td>
+            <td>Shell.Current.GoToAsync, check try/catch</td>
+            <td>Review</td>
+        </tr>
+        <tr class="p2">
+            <td>Extensions/RefitClientServiceInitializer.cs</td>
+            <td>80, 90</td>
+            <td>Serialization</td>
+            <td>JsonSerializer.Serialize without context</td>
+            <td>P2</td>
+        </tr>
+        <tr class="review">
+            <td>Controls/EntryWithTitleImage.xaml.cs</td>
+            <td>236</td>
+            <td>Reflection</td>
+            <td>GetProperty/GetValue, check trimming/AOT</td>
+            <td>Review</td>
+        </tr>
+        <tr class="review">
+            <td>Controls/ExtendedDropdown.xaml.cs</td>
+            <td>210</td>
+            <td>Reflection</td>
+            <td>GetProperty/GetValue, check trimming/AOT</td>
+            <td>Review</td>
+        </tr>
+        <tr class="review">
+            <td>Controls/AdvSegmentedControl.xaml.cs</td>
+            <td>280</td>
+            <td>Reflection</td>
+            <td>GetProperty/GetValue, check trimming/AOT</td>
+            <td>Review</td>
+        </tr>
+        <tr class="review">
+            <td>Platforms/Android/Handlers/CustomDropdownHandler.cs</td>
+            <td>140, 143, 269</td>
+            <td>Reflection</td>
+            <td>Activator.CreateInstance, GetProperty, check trimming/AOT</td>
+            <td>Review</td>
+        </tr>
+        <tr class="review">
+            <td>Platforms/iOS/Handlers/CustomDropdownHandler.cs</td>
+            <td>115, 174, 177</td>
+            <td>Reflection</td>
+            <td>Activator.CreateInstance, GetProperty, check trimming/AOT</td>
+            <td>Review</td>
+        </tr>
+        <tr class="p2">
+            <td><em>all files</em></td>
+            <td></td>
+            <td>Observability</td>
+            <td>No global exception handler found</td>
+            <td>P2</td>
+        </tr>
+    </table>
+</body>
+
+</html>

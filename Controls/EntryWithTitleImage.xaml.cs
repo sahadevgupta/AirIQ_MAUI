@@ -263,7 +263,6 @@ public partial class EntryWithTitleImage : ContentView
 		else
 		{
 			dropdown.ShowDropdown = !dropdown.ShowDropdown;
-			Icon = dropdown.ShowDropdown ? "arrow_up.png" : "arrow_down.png";
 		}
 	}
 

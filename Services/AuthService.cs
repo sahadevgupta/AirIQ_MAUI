@@ -24,7 +24,7 @@ IPopupNavigation popupNavigation) : IAuthService
 
             if (_authInfo == null)
             {
-                throw new Exception();  //AuthServiceInteractiveLogonRequiredException("No cached credentials available");
+                throw new Exception("No cached credentials available");
             }
 
             if (!IsAuthInfoValid(_authInfo))

@@ -28,6 +28,9 @@ public partial class Passenger : ObservableObject
     [ObservableProperty]
     private string? _travelWith;
 
+    [ObservableProperty]
+    private bool _isCompleted;
+
     public Infant? AssignedInfant { get; set; }
 
     private bool _isSectionOpen;

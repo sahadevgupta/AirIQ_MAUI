@@ -95,11 +95,11 @@
 
             </Border>
 
-            <CollectionView
-                Margin="0,10,0,10"
-                x:Name="flightsCollectionView"
-                Grid.Row="1"
-                ItemsSource="{Binding AvailableFlights}">
+            <CollectionView ItemSizingStrategy="MeasureFirstItem"
+                            Margin="0,10,0,10"
+                            x:Name="flightsCollectionView"
+                            Grid.Row="1"
+                            ItemsSource="{Binding AvailableFlights}">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout ItemSpacing="10"
                                        Orientation="Vertical"/>

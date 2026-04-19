@@ -1,10 +1,12 @@
-using System;
 using AirIQ.Extensions;
 using AirIQ.Popups;
 using AirIQ.Services.Interfaces;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using Mopups.Interfaces;
+using Application = Microsoft.Maui.Controls.Application;
+using Font = Microsoft.Maui.Font;
+using Color = Microsoft.Maui.Graphics.Color;
 
 namespace AirIQ.Services;
 
@@ -84,6 +86,35 @@ public class DialogService(IPopupNavigation popupNavigation) : IDialogService
             var toast = Toast.Make(message, duration, fontSize);
 
             await toast.Show(cancellationTokenSource.Token);
+        });
+    }
+
+    public async Task ShowSnackBarAync(string message,
+        bool isSuccess,
+        double fontSize,
+        double duration,
+        string? actionText,
+        Action? action)
+    {
+        await MainThread.InvokeOnMainThreadAsync(async () =>
+        {
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
+            var snackbarOptions = new SnackbarOptions
+            {
+                BackgroundColor = isSuccess ? Colors.Green : Colors.Red,
+                TextColor = Colors.White,
+                ActionButtonTextColor = Colors.Yellow,
+                CornerRadius = new CornerRadius(10),
+                Font = Font.SystemFontOfSize(fontSize),
+                ActionButtonFont = Font.SystemFontOfSize(fontSize),
+            };
+
+            TimeSpan timeDuration = TimeSpan.FromMilliseconds(duration);
+
+            var snackbar = Snackbar.Make(message, action, actionText, timeDuration, snackbarOptions);
+
+            await snackbar.Show(cancellationTokenSource.Token);
         });
     }
 }

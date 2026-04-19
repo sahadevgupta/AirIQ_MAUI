@@ -61,6 +61,7 @@
                                               MaxLength="{Binding MaxLength,Source={x:Reference customEntryControlWithTitle}}"
                                               IsReadOnly="{Binding IsReadOnly,Source={x:Reference customEntryControlWithTitle}}"
                                               Style="{StaticResource FieldEntryStyleGreyRegular}"
+                                              TextChanged="borderlessEntry_TextChanged"
                                               Focused="InputEntry_Focused"
                                               VerticalOptions="Center">
                         <controls:BorderlessEntry.Triggers>

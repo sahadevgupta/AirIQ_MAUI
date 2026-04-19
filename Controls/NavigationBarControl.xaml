@@ -12,7 +12,7 @@
           AbsoluteLayout.LayoutBounds="0,0,1,1"
           AbsoluteLayout.LayoutFlags="All"
           Padding="10,0"
-          BackgroundColor="White">
+          BackgroundColor="{StaticResource PrimaryColor}">
 
         <Grid.Shadow>
             <Shadow Brush="Black"
@@ -41,6 +41,7 @@
             FontSize="18"
             HorizontalOptions="Center"
             Style="{StaticResource Label12Medium}"
+            TextColor="White"
             Text="{Binding Title, Source={x:Reference navigationBarControl}}"
             VerticalTextAlignment="Center"/>
 

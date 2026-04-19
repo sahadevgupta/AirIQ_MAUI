@@ -20,7 +20,9 @@ namespace AirIQ.Services
                 }
                 else
                 {
-                    throw new ArgumentNullException("Failed to get the navigation service object");
+                    Debug.WriteLine("Failed to get the navigation service object");
+                    // Optionally show user feedback here
+                    return Application.Current?.MainPage.Navigation ?? throw new InvalidOperationException("Navigation service unavailable");
                 }
             }
         }
@@ -38,7 +40,8 @@ namespace AirIQ.Services
             }
             catch (Exception exception)
             {
-                throw new InvalidOperationException($"Failed during the navigation using nav name {exception.StackTrace}");
+                Debug.WriteLine($"Failed during the navigation: {exception}");
+                // Optionally show user feedback here
             }
         }
 
@@ -50,7 +53,8 @@ namespace AirIQ.Services
             }
             catch (Exception exception)
             {
-                throw new InvalidOperationException($"Failed during the navigation using nav name {exception.StackTrace}");
+                Debug.WriteLine($"Failed during the navigation: {exception}");
+                // Optionally show user feedback here
             }
         }
 
@@ -95,7 +99,8 @@ namespace AirIQ.Services
             }
             catch (Exception)
             {
-                throw new InvalidOperationException("No pages to naviagte back!");
+                Debug.WriteLine("No pages to navigate back!");
+                // Optionally show user feedback here
             }
         }
 

@@ -22,7 +22,7 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
     private FlightSearchRequest? _flightSearchRequest;
 
     [ObservableProperty]
-    private ObservableCollection<Flight>? _availableFlights;
+    private ObservableCollection<Flight> _availableFlights = new();
 
     [ObservableProperty]
     private ObservableCollection<DateTime> _allowedDates = new();
@@ -74,6 +74,7 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
         }
         catch (Exception ex)
         {
+            HandleException(ex);
         }
     }
 
@@ -93,10 +94,9 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
     }
 
     [RelayCommand]
-    private void CopyFlightDetail(Flight selectedFlight)
+    private async Task CopyFlightDetail(Flight selectedFlight)
     {
-        DialogService.ShowToast("Details are copied");
-
+        await ShowSnackBar("Details are copied");
     }
 
     #endregion

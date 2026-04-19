@@ -20,17 +20,13 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
     #region [ Properties ]
 
     [ObservableProperty]
-    private Flight _selectedAirline;
+    private Flight? _selectedAirline;
 
     [ObservableProperty]
     private FlightSearchRequest? _flightSearchRequest;
 
     [ObservableProperty]
-    private ObservableCollection<Passenger>? _adultPassengers;
-
-
-    [ObservableProperty]
-    private ObservableCollection<Infant>? _infantPassengers = new();
+    private ObservableCollection<Passenger>? _passengers;
 
     [ObservableProperty]
     private ObservableCollection<string>? _infantTravelPartners = new();
@@ -65,29 +61,33 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
 
                 if (SelectedAirline != null)
                 {
-                    AdultPassengers = new ObservableCollection<Passenger>();
+                    var tempPassengers = new List<Passenger>();
                     for (int i = 1; i <= adultCount; i++)
                     {
                         var passenger = new Passenger
                         {
                             Id = i,
-                            Header = $"Passenger {i}",
+                            Header = $"{PassengerType.Adult} #{i}",
                             Type = PassengerType.Adult,
                             IsSectionOpen = i == 1 ? true : false
                         };
                         passenger.PropertyChanged += OnPassengerPropertyChanged;
-                        AdultPassengers.Add(passenger);
+                        tempPassengers.Add(passenger);
                     }
 
-                    InfantTravelPartners = new ObservableCollection<string>(AdultPassengers.Where(p => p.Type == PassengerType.Adult)
-                                                                                            .Select(a => a.Header.Replace("Passenger", "Adult")));
+                    Passengers = new ObservableCollection<Passenger>(tempPassengers);
+
+                    InfantTravelPartners = new ObservableCollection<string>(tempPassengers.Where(p => p.Type == PassengerType.Adult)
+                                                                                          .Select(a => a.Header.Replace("Passenger", "Adult")));
+
+                    AddInfantPassengerCommand.NotifyCanExecuteChanged();
 
                 }
             }
         }
         catch (Exception ex)
         {
-            // Handle exceptions
+            HandleException(ex);
         }
 
     }
@@ -134,13 +134,33 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
 
     private bool CanAddInfant()
     {
-        return InfantPassengers?.Count < adultCount;
+        var infantPassengers = Passengers?.Where(p => p.Type == PassengerType.Infant);
+        return infantPassengers?.Count() < adultCount;
     }
 
 
     #endregion
 
     #region [ Commands ]
+
+    [RelayCommand]
+    private void CanSaveExecute(object arg)
+    {
+        try
+        {
+            var passenger = arg as Passenger;
+            passenger?.IsCompleted = !string.IsNullOrEmpty(passenger.SelectedPassengerType) &&
+                                     !string.IsNullOrEmpty(passenger.SelectedTitle) &&
+                                     !string.IsNullOrEmpty(passenger.FirstName) &&
+                                     !string.IsNullOrEmpty(passenger.LastName);
+
+        }
+        catch (Exception exception)
+        {
+            HandleException(exception);
+        }
+
+    }
 
     [RelayCommand]
     private async Task ConfirmBooking()
@@ -151,17 +171,17 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
 
             var bookingRequest = new TicketBookingRequest
             {
-                TicketId = SelectedAirline.TicketId,
-                TotalPax = (AdultPassengers?.Count + InfantPassengers?.Count)?.ToString(),
-                Adult = AdultPassengers?.Where(x => x.Type == PassengerType.Adult).Count().ToString(),
-                Child = AdultPassengers?.Where(x => x.Type == PassengerType.Child).Count().ToString(),
-                Infant = InfantPassengers?.Count.ToString(),
+                TicketId = SelectedAirline?.TicketId,
+                TotalPax = Passengers?.Count.ToString(),
+                Adult = Passengers?.Where(x => x.Type == PassengerType.Adult).Count().ToString(),
+                Child = Passengers?.Where(x => x.Type == PassengerType.Child).Count().ToString(),
+                Infant = Passengers?.Count.ToString(),
                 AdultInfo = new List<PassengerRequest>(),
                 ChildInfo = new List<PassengerRequest>(),
                 InfantInfo = new List<InfantInfoRequest>()
             };
 
-            foreach (var adultInfo in AdultPassengers?.Where(x => x.Type == PassengerType.Adult))
+            foreach (var adultInfo in Passengers?.Where(x => x.Type == PassengerType.Adult))
             {
                 bookingRequest.AdultInfo.Add(new PassengerRequest
                 {
@@ -171,7 +191,7 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
                 });
             }
 
-            foreach (var childInfo in AdultPassengers?.Where(x => x.Type == PassengerType.Child))
+            foreach (var childInfo in Passengers?.Where(x => x.Type == PassengerType.Child))
             {
                 bookingRequest.ChildInfo.Add(new PassengerRequest
                 {
@@ -181,7 +201,7 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
                 });
             }
 
-            foreach (var infantInfo in InfantPassengers)
+            foreach (var infantInfo in Passengers?.Where(x => x.Type == PassengerType.Infant))
             {
                 bookingRequest.AdultInfo.Add(new PassengerRequest
                 {
@@ -190,7 +210,7 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
                     LastName = infantInfo.LastName
                 });
             }
-            
+
             await flightService.ConfirmBookingAsync(bookingRequest);
 
         }
@@ -206,17 +226,16 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
     [RelayCommand(CanExecute = nameof(CanAddInfant))]
     private void AddInfantPassenger()
     {
-        InfantPassengers ??= new ObservableCollection<Infant>();
 
         var newInfant = new Infant
         {
             Id = infantId++,
-            Header = $"{nameof(PassengerType.Infant)} {InfantPassengers.Count}",
+            Header = $"{nameof(PassengerType.Infant)} #{Passengers.Count}",
             Type = PassengerType.Infant,
         };
 
-        newInfant.TravelWith = AssignInfantToAdult(newInfant, AdultPassengers[newInfant.Id - 1]);
-        InfantPassengers.Add(newInfant);
+        newInfant.TravelWith = AssignInfantToAdult(newInfant, Passengers[newInfant.Id - 1]);
+        Passengers?.Add(newInfant);
         AddInfantPassengerCommand.NotifyCanExecuteChanged();
     }
 
@@ -226,7 +245,7 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
 
     public override async Task LoadDataWhenNavigatedTo()
     {
-        await InitializeData();
+        _ = InitializeData();
     }
 
     #endregion

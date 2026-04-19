@@ -24,14 +24,21 @@ namespace AirIQ
             {
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {
-                    if (AppConfiguration.IsLoggedInUser)
+                    try
                     {
-                        AppConfiguration.CurrentUser = JsonConvert.DeserializeObject<UserDto>(AppConfiguration.UserDetails);
-                        await Shell.Current.GoToAsync("//app/home");
+                        if (AppConfiguration.IsLoggedInUser)
+                        {
+                            AppConfiguration.CurrentUser = JsonConvert.DeserializeObject<UserDto>(AppConfiguration.UserDetails);
+                            await Shell.Current.GoToAsync("//app/home");
+                        }
+                        else
+                        {
+                            await _navigationService.Navigate<LoginPage>(true);
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        await _navigationService.Navigate<LoginPage>(true);
+                        SentrySdk.CaptureException(ex);
                     }
                 });
             };

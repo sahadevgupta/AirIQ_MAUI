@@ -39,7 +39,7 @@ namespace AirIQ.ViewModels
         private ObservableCollection<DateTime> _allowedDates = new();
 
         [ObservableProperty]
-        private DateTime _selectedTravelDate;
+        private DateTime? _selectedTravelDate;
 
         [ObservableProperty]
         private string _selectedPaxSize = "1";
@@ -51,11 +51,13 @@ namespace AirIQ.ViewModels
         partial void OnSelectedSourceAirportChanged(FlightRoute? oldValue, FlightRoute? newValue)
         {
             SelectedDestinationAirport = null;
+            SelectedTravelDate = null;
             GetDestinationAirports();
         }
 
         partial void OnSelectedDestinationAirportChanged(FlightRoute? oldValue, FlightRoute? newValue)
         {
+            SelectedTravelDate = null;
             _ = GetAvailableBookingDatesAsync();
         }
 
@@ -83,7 +85,7 @@ namespace AirIQ.ViewModels
             }
             catch (Exception exception)
             {
-
+                HandleException(exception);
             }
 
         }
@@ -155,7 +157,9 @@ namespace AirIQ.ViewModels
             {
                 Origin = SelectedSourceAirport?.Origin,
                 Destination = SelectedDestinationAirport?.Destination,
-                DepartureDate = SelectedTravelDate.ToString("yyyy/MM/dd"),
+                DepartureDate = SelectedTravelDate != null ?
+                                SelectedTravelDate.Value.ToString("yyyy/MM/dd") :
+                                string.Empty,
                 Adult = int.Parse(SelectedPaxSize),
                 SourceAirport = SelectedSourceAirport,
                 DestinationAirport = SelectedDestinationAirport,

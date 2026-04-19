@@ -229,6 +229,8 @@ public partial class ExtendedEntry : ContentView
         set => SetValue(MaxLengthProperty, value);
     }
 
+    public event EventHandler<TextChangedEventArgs> TextChanged;
+
     private static void OnEntryBorderColorPropertyChanged(BindableObject bindable, object oldValue, object newValue)
     {
         if (bindable is ExtendedEntry control && newValue is Color newColor)
@@ -241,6 +243,11 @@ public partial class ExtendedEntry : ContentView
     {
         EntryBorderColor = (Application.Current?.Resources.TryGetValue("Black", out var value) == true
                      && value is Color color) ? color : Colors.Black;
+    }
+
+    void borderlessEntry_TextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
+    {
+        TextChanged?.Invoke(sender, e);
     }
 
 }

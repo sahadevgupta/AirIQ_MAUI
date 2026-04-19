@@ -11,6 +11,7 @@ namespace AirIQ.Views;
 
 public abstract class BasePage : ContentPage
 {
+	private Color StatusBarColor => (Color)(Application.Current?.Resources["PrimaryColor"] ?? Colors.Black);
 	private readonly ContentView _content;
 	private readonly NavigationBarControl _navBar;
 	protected BasePage()
@@ -37,7 +38,7 @@ public abstract class BasePage : ContentPage
 
 
 
-		_navBar.BackgroundColor = (Color)Application.Current?.Resources["StatusBarColor"]!;
+		_navBar.BackgroundColor = (Color)Application.Current?.Resources["PrimaryColor"]!;
 		//_navBar.BackButtonTintColor = Color.FromArgb("#1C1C1C");
 
 		layout.Add(_navBar);
@@ -104,11 +105,23 @@ public abstract class BasePage : ContentPage
 
 	private void ApplyStatusBarStyle()
 	{
-		this.Behaviors.Add(new StatusBarBehavior
+		if (this.GetType() == typeof(DashboardPage))
 		{
-			StatusBarColor = Colors.White,
-			StatusBarStyle = StatusBarStyle.LightContent
-		});
+			this.Behaviors.Add(new StatusBarBehavior
+			{
+				StatusBarColor = Color.FromArgb("#D0E1FD"),
+				StatusBarStyle = StatusBarStyle.LightContent
+			});
+		}
+		else
+		{
+			this.Behaviors.Add(new StatusBarBehavior
+			{
+				StatusBarColor = StatusBarColor,
+				StatusBarStyle = StatusBarStyle.LightContent
+			});
+		}
+
 
 		if (OperatingSystem.IsIOS())
 		{
@@ -132,7 +145,7 @@ public abstract class BasePage : ContentPage
 		base.OnNavigatedTo(args);
 		if (this.BindingContext is BaseViewModel vm)
 		{
-			vm.LoadDataWhenNavigatedTo();
+			_ = vm.LoadDataWhenNavigatedTo();
 		}
 	}
 
@@ -148,17 +161,28 @@ public abstract class BasePage : ContentPage
 	protected override void OnAppearing()
 	{
 		base.OnAppearing();
+		if (this.BindingContext is BaseViewModel vm)
+		{
+			_ = vm.LoadDataWhenOnAppearing();
+		}
+#if ANDROID
 		if (this.GetType() == typeof(DashboardPage))
 		{
-#if ANDROID
-
 			this.Background = (Brush)Application.Current?.Resources["BrandGradient"]!;
-
-#endif
 		}
 		else
 		{
-			this.Background = Colors.White;
+			this.Background = StatusBarColor;
+		}
+#endif
+	}
+
+	protected override void OnDisappearing()
+	{
+		base.OnDisappearing();
+		if (this.BindingContext is BaseViewModel vm)
+		{
+			_ = vm.LoadDataWhenOnDisappearing();
 		}
 	}
 

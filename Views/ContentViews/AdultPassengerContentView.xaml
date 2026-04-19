@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirIQ.Views.ContentViews.AdultPassengerContentView"
+             xmlns:controls="clr-namespace:AirIQ.Controls"
+             xmlns:helpers="clr-namespace:AirIQ.Extensions"
+             xmlns:models="clr-namespace:AirIQ.Models"
+             xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:AirIQ.ViewModels"
+             x:DataType="models:Passenger"
+             x:Name="adultView">
+
+    <Border Margin="10"
+            x:Name="border"
+            Stroke="{StaticResource BorderColor}"
+            BackgroundColor="{StaticResource Gray10}"
+            StrokeShape="RoundRectangle 8">
+        <toolkit:Expander IsExpanded="{Binding IsSectionOpen, Mode=TwoWay}">
+            <toolkit:Expander.Header>
+
+                <Grid>
+                    <HorizontalStackLayout>
+
+                        <Label VerticalTextAlignment="Center"
+                               Padding="16,8">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Header}"
+                                          Style="{StaticResource Label20MediumOnyxStyle}"
+                                          TextColor="Black"/>
+                                    <Span Text="&#10;"/>
+                                    <Span Text="{x:Static resx:AppResource.DetailsProvided}"
+                                          Style="{StaticResource Label14RegularGray50Style}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Image IsVisible="{Binding IsCompleted}"
+                               VerticalOptions="End"
+                               Margin="0,0,0,8">
+                            <Image.Source>
+                                <FontImageSource FontFamily="MyFont"
+                                                 Size="20"
+                                                 Glyph="{x:Static helpers:FontAwesomeIcons.CheckCircle}"
+                                                 Color="Green"/>
+                            </Image.Source>
+                        </Image>
+                    </HorizontalStackLayout>
+
+                    <Image HorizontalOptions="End"
+                           VerticalOptions="Center"
+                           Margin="0,0,16,0">
+                        <Image.Source>
+                            <FontImageSource FontFamily="MyFont"
+                                             Glyph="{x:Static helpers:FontAwesomeIcons.ChevronDown}"
+                                             Size="20"
+                                             Color="Black"/>
+                        </Image.Source>
+                        <Image.Triggers>
+                            <DataTrigger TargetType="Image"
+                                         Binding="{Binding IsSectionOpen}"
+                                         Value="False">
+                                <Setter Property="Rotation"
+                                        Value="270"/>
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </Image>
+
+                </Grid>
+            </toolkit:Expander.Header>
+
+            <Grid BackgroundColor="White"
+                  Padding="16"
+                  ColumnDefinitions="*,*"
+                  ColumnSpacing="10"
+                  RowDefinitions="Auto,Auto,Auto">
+
+                <controls:ExtendedDropdown Title="{x:Static resx:AppResource.Adult}"
+                                           HasPadding="True"
+                                           SelectedItem="{Binding SelectedPassengerType}">
+                    <controls:ExtendedDropdown.Behaviors>
+                        <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                        Command="{Binding BindingContext.CanSaveExecuteCommand, Source={x:Reference adultView}}"
+                                                        CommandParameter="{Binding Source={x:Reference border}, Path=BindingContext}"/>
+                    </controls:ExtendedDropdown.Behaviors>
+                    <controls:ExtendedDropdown.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Adult</x:String>
+                            <x:String>Child</x:String>
+                        </x:Array>
+                    </controls:ExtendedDropdown.ItemsSource>
+                </controls:ExtendedDropdown>
+
+                <controls:ExtendedDropdown
+                    Title="{x:Static resx:AppResource.Title}"
+                    Grid.Column="1"
+                    HasPadding="True"
+                    ItemsSource="{Binding BindingContext.PassengerTitles, Source={x:Reference adultView}}"
+                    PlaceholderText="{x:Static resx:AppResource.Title}"
+                    SelectedItem="{Binding SelectedTitle}">
+                    <controls:ExtendedDropdown.Behaviors>
+                        <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                        Command="{Binding BindingContext.CanSaveExecuteCommand, Source={x:Reference adultView}}"
+                                                        CommandParameter="{Binding Source={x:Reference border}, Path=BindingContext}"/>
+                    </controls:ExtendedDropdown.Behaviors>
+                </controls:ExtendedDropdown>
+
+                <controls:ExtendedEntry Title="{x:Static resx:AppResource.FirstName}"
+                                        Grid.Row="1"
+                                        Grid.ColumnSpan="2"
+                                        PlaceholderText="{x:Static resx:AppResource.FirstName}"
+                                        Text="{Binding FirstName}">
+                    <controls:ExtendedEntry.Behaviors>
+                        <toolkit:EventToCommandBehavior EventName="TextChanged"
+                                                        Command="{Binding BindingContext.CanSaveExecuteCommand, Source={x:Reference adultView}}"
+                                                        CommandParameter="{Binding Source={x:Reference border}, Path=BindingContext}"/>
+                    </controls:ExtendedEntry.Behaviors>
+                </controls:ExtendedEntry>
+                <controls:ExtendedEntry Title="{x:Static resx:AppResource.LastName}"
+                                        Grid.Row="2"
+                                        Grid.ColumnSpan="2"
+                                        PlaceholderText="{x:Static resx:AppResource.LastName}"
+                                        Text="{Binding LastName}">
+                    <controls:ExtendedEntry.Behaviors>
+                        <toolkit:EventToCommandBehavior EventName="TextChanged"
+                                                        Command="{Binding Source={x:Reference adultView}, Path=SaveCommand}"
+                                                        CommandParameter="{Binding Source={x:Reference border}, Path=BindingContext}"/>
+                    </controls:ExtendedEntry.Behaviors>
+                </controls:ExtendedEntry>
+            </Grid>
+        </toolkit:Expander>
+    </Border>
+
+</ContentView>

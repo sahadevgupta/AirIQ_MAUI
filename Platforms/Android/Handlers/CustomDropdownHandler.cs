@@ -64,7 +64,7 @@ namespace AirIQ.Platforms.Handlers
             autoCompleteTextView.FocusChange += AutoCompleteTextView_FocusChange;
             adapter = new SuggestCompleteAdapter(Context, Resource.Layout.autocomplete_list_row, Resource.Id.autocomplete_textview, customDropdown.DisplayMemberPath);
 
-            UpdateItemsSource(customDropdown?.ItemSource?.OfType<object>());
+            _ = UpdateItemsSource(customDropdown?.ItemSource?.OfType<object>());
             UpdateDropdownHeight(customDropdown?.ItemSource);
 
             var drawable = ContextCompat.GetDrawable(Context, Resource.Drawable.background_single_line);
@@ -153,7 +153,7 @@ namespace AirIQ.Platforms.Handlers
 
                 UpdateDropdownHeight(items);
 
-                UpdateItemsSource(items?.OfType<object>());
+                _ = UpdateItemsSource(items?.OfType<object>());
             }
             else if (e.PropertyName == CustomDropdown.SelectedItemProperty.PropertyName)
             {
@@ -198,7 +198,7 @@ namespace AirIQ.Platforms.Handlers
             customDropdown.ShowDropdown = autoCompleteTextView.IsPopupShowing;
         }
 
-        private async void UpdateItemsSource(IEnumerable<object>? items)
+        private async Task UpdateItemsSource(IEnumerable<object>? items)
         {
             adapter.UpdateList(items == null ? Enumerable.Empty<string>() : items.OfType<object>(),
                                    (o) => FormatType(o, customDropdown.DisplayMemberPath));
