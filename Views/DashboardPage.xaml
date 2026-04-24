@@ -37,7 +37,7 @@
           <Label.FormattedText>
             <FormattedString>
               <FormattedString.Spans>
-                <Span Text="Hello"
+                <Span Text="{x:Static resx:AppResource.Hello}"
                       Style="{StaticResource Label16Bold}"
                       TextColor="Black"/>
                 <Span Text=" "/>
@@ -124,7 +124,7 @@
                   BackgroundColor="White"
                   StrokeShape="RoundRectangle 8"
                   StrokeThickness="1"
-                  Stroke="#E5E5E5">
+                  Stroke="{StaticResource StrokeColor}">
             <Grid ColumnDefinitions="Auto, *"
                   ColumnSpacing="16"
                   RowDefinitions="Auto, Auto">
@@ -148,6 +148,7 @@
                                       Grid.RowSpan="2"
                                       x:Name="stepper"
                                       Grid.Column="1"
+                                      Value="{Binding PaxSize}"
                                       HorizontalOptions="End"/>
 
             </Grid>

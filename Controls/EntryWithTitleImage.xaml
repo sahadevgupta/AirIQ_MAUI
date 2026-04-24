@@ -41,7 +41,8 @@
                                            TextChanged="DropdownTextChanged"
                                            Grid.Row="1"
                                            BackgroundColor="Transparent"
-                                           Grid.Column="1"/>
+                                           Grid.Column="1"
+                                           FontSize="20"/>
 
                      <Label Text="DD/MM/YYYY"
                             x:Name="datelbl"

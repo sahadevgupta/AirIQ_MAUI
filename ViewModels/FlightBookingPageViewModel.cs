@@ -1,15 +1,13 @@
-﻿using AirIQ.Constants;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using AirIQ.Constants;
 using AirIQ.Enums;
 using AirIQ.Models;
 using AirIQ.Models.Request;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
-using AirIQ.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 
 namespace AirIQ.ViewModels;
 
@@ -144,11 +142,10 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
     #region [ Commands ]
 
     [RelayCommand]
-    private void CanSaveExecute(object arg)
+    private void CanSaveExecute(Passenger passenger)
     {
         try
         {
-            var passenger = arg as Passenger;
             passenger?.IsCompleted = !string.IsNullOrEmpty(passenger.SelectedPassengerType) &&
                                      !string.IsNullOrEmpty(passenger.SelectedTitle) &&
                                      !string.IsNullOrEmpty(passenger.FirstName) &&
@@ -165,10 +162,11 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
     [RelayCommand]
     private async Task ConfirmBooking()
     {
+        if (Passengers!.Any(x => !x.IsCompleted))
+            return;
+
         using (LoadingService.Show())
         {
-
-
             var bookingRequest = new TicketBookingRequest
             {
                 TicketId = SelectedAirline?.TicketId,
@@ -214,13 +212,6 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
             await flightService.ConfirmBookingAsync(bookingRequest);
 
         }
-        // var navigationParams = new Dictionary<string, object?>
-        // {
-        //     { NavigationParamConstants.SelectedFlight, SelectedAirline },
-        //     { NavigationParamConstants.SelectedFlight, SelectedAirline }
-        // };
-
-        // await ShellNavigationService.Navigate<SummaryPage>();
     }
 
     [RelayCommand(CanExecute = nameof(CanAddInfant))]

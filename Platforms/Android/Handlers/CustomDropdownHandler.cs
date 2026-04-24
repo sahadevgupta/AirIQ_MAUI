@@ -238,7 +238,7 @@ namespace AirIQ.Platforms.Handlers
         {
             if (autoCompleteTextView != null)
             {
-                autoCompleteTextView.TextSize = 20;
+                autoCompleteTextView.TextSize = customDropdown.FontSize;
                 autoCompleteTextView.SetTextColor(((Color)(Application.Current?.Resources["Gray90"] ?? Colors.Black)).ToPlatform());
 
                 var font = Typeface.CreateFromAsset(Context.Assets, "Roboto-Medium.ttf");

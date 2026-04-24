@@ -77,7 +77,7 @@
                                            SelectedItem="{Binding SelectedPassengerType}">
                     <controls:ExtendedDropdown.Behaviors>
                         <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged"
-                                                        Command="{Binding BindingContext.CanSaveExecuteCommand, Source={x:Reference infantview}}"
+                                                        Command="{Binding Source={x:Reference infantview}, Path=SaveCommand}"
                                                         CommandParameter="{Binding Source={x:Reference border}, Path=BindingContext}"/>
                     </controls:ExtendedDropdown.Behaviors>
                     <controls:ExtendedDropdown.ItemsSource>
@@ -103,7 +103,7 @@
                                         Text="{Binding FirstName}">
                     <controls:ExtendedEntry.Behaviors>
                         <toolkit:EventToCommandBehavior EventName="TextChanged"
-                                                        Command="{Binding BindingContext.CanSaveExecuteCommand, Source={x:Reference infantview}}"
+                                                        Command="{Binding Source={x:Reference infantview}, Path=SaveCommand}"
                                                         CommandParameter="{Binding Source={x:Reference border}, Path=BindingContext}"/>
                     </controls:ExtendedEntry.Behaviors>
                 </controls:ExtendedEntry>
@@ -115,7 +115,7 @@
                     <controls:ExtendedEntry.Behaviors>
                         <toolkit:EventToCommandBehavior EventName="TextChanged"
                                                         Command="{Binding Source={x:Reference infantview}, Path=SaveCommand}"
-                                                        CommandParameter="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=BindingContext}"/>
+                                                        CommandParameter="{Binding Source={x:Reference border}, Path=BindingContext}"/>
                     </controls:ExtendedEntry.Behaviors>
                 </controls:ExtendedEntry>
 
@@ -127,4 +127,3 @@
     </Border>
 
 </ContentView>
-7r

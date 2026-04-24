@@ -99,13 +99,17 @@ public partial class EntryWithTitleImage : ContentView
 			BindableProperty.Create(nameof(IsDateViewVisible), typeof(bool), typeof(EntryWithTitleImage), false,
 				BindingMode.TwoWay);
 	public static readonly BindableProperty DateProperty =
-	   BindableProperty.Create(propertyName: nameof(Date), returnType: typeof(DateTime), declaringType: typeof(EntryWithTitleImage), default(DateTime), defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
+	   BindableProperty.Create(propertyName: nameof(Date), returnType: typeof(DateTime?), declaringType: typeof(EntryWithTitleImage), null, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
 	   {
 		   var control = (EntryWithTitleImage)bindable;
 		   if (newValue != null && (DateTime)newValue != default)
 		   {
 			   control.datelbl.Text = ((DateTime)newValue).ToString("dd/MM/yyyy");
 			   control.datelbl.TextColor = Colors.Black;
+		   }
+		   else if (newValue == null)
+		   {
+			   control.datelbl.Text = "DD/MM/YYYY";
 		   }
 	   });
 
@@ -118,9 +122,9 @@ public partial class EntryWithTitleImage : ContentView
 		set => SetValue(AllowedDatesProperty, value);
 	}
 
-	public DateTime Date
+	public DateTime? Date
 	{
-		get { return (DateTime)GetValue(DateProperty); }
+		get { return (DateTime?)GetValue(DateProperty); }
 		set
 		{
 			SetValue(DateProperty, value);

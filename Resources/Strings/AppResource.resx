@@ -264,4 +264,31 @@
   <data name="LastName" xml:space="preserve">
     <value>Last Name</value>
   </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Hello</value>
+  </data>
+  <data name="AIRIQ" xml:space="preserve">
+    <value>AIR IQ</value>
+  </data>
+  <data name="MARKETPLACE" xml:space="preserve">
+    <value>MARKETPLACE</value>
+  </data>
+  <data name="TravellerDetails" xml:space="preserve">
+    <value>Traveller Details</value>
+  </data>
+  <data name="AddInfant" xml:space="preserve">
+    <value>Add Infant</value>
+  </data>
+  <data name="READAndAGREE" xml:space="preserve">
+    <value>I have READ and AGREE to the</value>
+  </data>
+  <data name="PersonalInformation" xml:space="preserve">
+    <value>PERSONAL INFORMATION</value>
+  </data>
+  <data name="ContactInformation" xml:space="preserve">
+    <value>CONTACT INFORMATION</value>
+  </data>
+  <data name="BusinessInformation" xml:space="preserve">
+    <value>BUSINESS INFORMATION</value>
+  </data>
 </root>

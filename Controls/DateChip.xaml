@@ -13,7 +13,7 @@
         BackgroundColor="{Binding Source={x:Reference Root}, Path=ChipBackground}">
 
         <Grid ColumnDefinitions="Auto,*"
-              ColumnSpacing="8"
+              ColumnSpacing="5"
               VerticalOptions="Center">
             <!-- Optional Icon -->
             <Image

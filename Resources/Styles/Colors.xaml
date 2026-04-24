@@ -13,6 +13,7 @@
     <Color x:Key="SecondaryDarkText">#9880e5</Color>
     <Color x:Key="Tertiary">#2B0B98</Color>
     <Color x:Key="BorderColor">#D0D0D0</Color>
+    <Color x:Key="StrokeColor">#E5E5E5</Color>
     <Color x:Key="StatusBarColor">#1E73B3</Color>
 
     <Color x:Key="White">White</Color>

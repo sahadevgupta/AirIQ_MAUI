@@ -28,7 +28,7 @@
 
             <DataTemplate x:DataType="models:Passenger"
                           x:Key="infantTemplate">
-                <local:InfantPassengerContentView/>
+                <local:InfantPassengerContentView SaveCommand="{Binding BindingContext.CanSaveExecuteCommand,Source={x:Reference passengerList}}"/>
             </DataTemplate>
 
             <dataTemplates:PassengerTemplateSelector AdultTemplate="{StaticResource adultTemplate}"
@@ -136,15 +136,12 @@
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
-
                                 </Grid>
-
-
                             </Grid>
 
-
                         </Border>
-                        <Label Text="Traveller Details"
+
+                        <Label Text="{x:Static resx:AppResource.TravellerDetails}"
                                Style="{StaticResource Label18StyleBold}"
                                TextColor="{StaticResource PrimaryColor}"
                                Grid.Row="1"/>
@@ -156,7 +153,7 @@
                             TextColor="White"
                             Command="{Binding AddInfantPassengerCommand}"
                             HorizontalOptions="End"
-                            Text="Add Infant"
+                            Text="{x:Static resx:AppResource.AddInfant}"
                             VerticalOptions="Center">
                             <Button.ImageSource>
                                 <FontImageSource
@@ -179,8 +176,9 @@
                 <Label VerticalOptions="Center">
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="I have READ and AGREE to the "/>
-                            <Span Text="Terms &amp; Conditions"
+                            <Span Text="{x:Static resx:AppResource.READAndAGREE}"/>
+                            <Span Text=" "/>
+                            <Span Text="{x:Static resx:AppResource.TermsAndConditions}"
                                   TextColor="{StaticResource PrimaryColor}"
                                   TextDecorations="Underline"/>
                         </FormattedString>
@@ -190,7 +188,7 @@
 
             <Button
                 Grid.Row="2"
-                Margin="10"
+                Margin="10,-10,10,10"
                 Text="{x:Static resx:AppResource.ConfirmBooking}"
                 Command="{Binding ConfirmBookingCommand}"
                 Style="{StaticResource ButtonCorneredStyle}"

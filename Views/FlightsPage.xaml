@@ -68,7 +68,7 @@
                         </Label>
                     </HorizontalStackLayout>
 
-                    <controls:DateSelector SelectedDate="{Binding CurrentDate}"
+                    <controls:DateSelector SelectedDate="{Binding SelectedTravelDate}"
                                            Grid.Row="1"
                                            Grid.ColumnSpan="3"/>
 
@@ -138,7 +138,8 @@
 
                                 </HorizontalStackLayout>
 
-                                <HorizontalStackLayout Grid.Column="2"
+                                <HorizontalStackLayout Grid.Column="1"
+                                                       Grid.ColumnSpan="2"
                                                        VerticalOptions="Center"
                                                        Spacing="4"
                                                        HorizontalOptions="End">
@@ -148,8 +149,8 @@
                                            MinimumHeightRequest="20"
                                            MinimumWidthRequest="20"/>
 
-                                    <Label
-                                        VerticalOptions="Center">
+                                    <Label LineBreakMode="WordWrap"
+                                           VerticalOptions="Center">
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <Span Text="{Binding HandLuggage}"

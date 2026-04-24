@@ -1,4 +1,5 @@
-﻿using AirIQ.Configurations.Mapper;
+﻿using System.Collections.ObjectModel;
+using AirIQ.Configurations.Mapper;
 using AirIQ.Constants;
 using AirIQ.Models;
 using AirIQ.Services.Interfaces;
@@ -6,17 +7,11 @@ using AirIQ.ViewModels.Common;
 using AirIQ.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AirIQ.ViewModels
 {
     public partial class DashboardPageViewModel(IViewModelParameters viewModelParameters,
-            IFlightService flightService) : BaseViewModel(viewModelParameters)
+        IFlightService flightService) : BaseViewModel(viewModelParameters)
     {
         #region [ Properties ]
         private IEnumerable<FlightRoute>? Airports;
@@ -42,7 +37,7 @@ namespace AirIQ.ViewModels
         private DateTime? _selectedTravelDate;
 
         [ObservableProperty]
-        private string _selectedPaxSize = "1";
+        private int _paxSize = 1;
 
         #endregion
 
@@ -58,7 +53,8 @@ namespace AirIQ.ViewModels
         partial void OnSelectedDestinationAirportChanged(FlightRoute? oldValue, FlightRoute? newValue)
         {
             SelectedTravelDate = null;
-            _ = GetAvailableBookingDatesAsync();
+            if (!string.IsNullOrWhiteSpace(SelectedSourceAirport?.Origin) && !string.IsNullOrWhiteSpace(SelectedDestinationAirport?.Destination))
+                _ = GetAvailableBookingDatesAsync();
         }
 
         private async Task GetAvailableBookingDatesAsync()
@@ -87,7 +83,6 @@ namespace AirIQ.ViewModels
             {
                 HandleException(exception);
             }
-
         }
 
         private void GetDestinationAirports()
@@ -121,8 +116,6 @@ namespace AirIQ.ViewModels
                     SourceAirports = new ObservableCollection<FlightRoute>(sourceTemp!);
                 }
             }
-
-
         }
 
         #endregion
@@ -139,7 +132,6 @@ namespace AirIQ.ViewModels
         private void SearchSourceAirports(string searchKey)
         {
             FilterListByQuery(searchKey, "source");
-
         }
 
         [RelayCommand]
@@ -152,31 +144,36 @@ namespace AirIQ.ViewModels
         [RelayCommand]
         private async Task SearchFlights()
         {
-
-            var request = new Models.Request.FlightSearchRequest
+            if (!string.IsNullOrWhiteSpace(SelectedSourceAirport?.Origin) &&
+                !string.IsNullOrWhiteSpace(SelectedDestinationAirport?.Destination) &&
+                SelectedTravelDate != null &&
+                PaxSize > 0)
             {
-                Origin = SelectedSourceAirport?.Origin,
-                Destination = SelectedDestinationAirport?.Destination,
-                DepartureDate = SelectedTravelDate != null ?
-                                SelectedTravelDate.Value.ToString("yyyy/MM/dd") :
-                                string.Empty,
-                Adult = int.Parse(SelectedPaxSize),
-                SourceAirport = SelectedSourceAirport,
-                DestinationAirport = SelectedDestinationAirport,
-                OriginAirportName = SelectedSourceAirport?.OriginAiportName,
-                DestinationAirportName = SelectedDestinationAirport?.DestinationAiportName,
-                Child = 0,
-                Infant = 0,
-                AirlineCode = null
-            };
 
-            await ShellNavigationService.Navigate<FlightsPage>(parameters: new Dictionary<string, object>
-            {
-                { NavigationParamConstants.FlightSearchRequest, request },
-                { NavigationParamConstants.TravelAllowedDates, AllowedDates },
-            });
+                var request = new Models.Request.FlightSearchRequest
+                {
+                    Origin = SelectedSourceAirport?.Origin,
+                    Destination = SelectedDestinationAirport?.Destination,
+                    DepartureDate = SelectedTravelDate != null ?
+                                    SelectedTravelDate.Value.ToString("yyyy/MM/dd") :
+                                    string.Empty,
+                    Adult = PaxSize,
+                    SourceAirport = SelectedSourceAirport,
+                    DestinationAirport = SelectedDestinationAirport,
+                    OriginAirportName = SelectedSourceAirport?.OriginAiportName,
+                    DestinationAirportName = SelectedDestinationAirport?.DestinationAiportName,
+                    Child = 0,
+                    Infant = 0,
+                    AirlineCode = null
+                };
 
+                await ShellNavigationService.Navigate<FlightsPage>(parameters: new Dictionary<string, object>
+                {
+                    { NavigationParamConstants.FlightSearchRequest, request },
+                    { NavigationParamConstants.TravelAllowedDates, AllowedDates },
+                });
 
+            }
         }
 
         [RelayCommand]

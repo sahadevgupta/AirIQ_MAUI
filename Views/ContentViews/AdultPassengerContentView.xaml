@@ -80,7 +80,7 @@
                                            SelectedItem="{Binding SelectedPassengerType}">
                     <controls:ExtendedDropdown.Behaviors>
                         <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged"
-                                                        Command="{Binding BindingContext.CanSaveExecuteCommand, Source={x:Reference adultView}}"
+                                                        Command="{Binding Source={x:Reference adultView}, Path=SaveCommand}"
                                                         CommandParameter="{Binding Source={x:Reference border}, Path=BindingContext}"/>
                     </controls:ExtendedDropdown.Behaviors>
                     <controls:ExtendedDropdown.ItemsSource>
@@ -100,7 +100,7 @@
                     SelectedItem="{Binding SelectedTitle}">
                     <controls:ExtendedDropdown.Behaviors>
                         <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged"
-                                                        Command="{Binding BindingContext.CanSaveExecuteCommand, Source={x:Reference adultView}}"
+                                                        Command="{Binding Source={x:Reference adultView}, Path=SaveCommand}"
                                                         CommandParameter="{Binding Source={x:Reference border}, Path=BindingContext}"/>
                     </controls:ExtendedDropdown.Behaviors>
                 </controls:ExtendedDropdown>
@@ -112,7 +112,7 @@
                                         Text="{Binding FirstName}">
                     <controls:ExtendedEntry.Behaviors>
                         <toolkit:EventToCommandBehavior EventName="TextChanged"
-                                                        Command="{Binding BindingContext.CanSaveExecuteCommand, Source={x:Reference adultView}}"
+                                                        Command="{Binding Source={x:Reference adultView}, Path=SaveCommand}"
                                                         CommandParameter="{Binding Source={x:Reference border}, Path=BindingContext}"/>
                     </controls:ExtendedEntry.Behaviors>
                 </controls:ExtendedEntry>

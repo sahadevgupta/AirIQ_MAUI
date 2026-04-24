@@ -500,5 +500,86 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("LastName", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hello.
+        /// </summary>
+        internal static string Hello {
+            get {
+                return ResourceManager.GetString("Hello", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AIR IQ.
+        /// </summary>
+        internal static string AIRIQ {
+            get {
+                return ResourceManager.GetString("AIRIQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MARKETPLACE.
+        /// </summary>
+        internal static string MARKETPLACE {
+            get {
+                return ResourceManager.GetString("MARKETPLACE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Traveller Details.
+        /// </summary>
+        internal static string TravellerDetails {
+            get {
+                return ResourceManager.GetString("TravellerDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Infant.
+        /// </summary>
+        internal static string AddInfant {
+            get {
+                return ResourceManager.GetString("AddInfant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I have READ and AGREE to the.
+        /// </summary>
+        internal static string READAndAGREE {
+            get {
+                return ResourceManager.GetString("READAndAGREE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PERSONAL INFORMATION.
+        /// </summary>
+        internal static string PersonalInformation {
+            get {
+                return ResourceManager.GetString("PersonalInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CONTACT INFORMATION.
+        /// </summary>
+        internal static string ContactInformation {
+            get {
+                return ResourceManager.GetString("ContactInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BUSINESS INFORMATION.
+        /// </summary>
+        internal static string BusinessInformation {
+            get {
+                return ResourceManager.GetString("BusinessInformation", resourceCulture);
+            }
+        }
     }
 }
