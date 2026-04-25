@@ -581,5 +581,95 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("BusinessInformation", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales Record.
+        /// </summary>
+        internal static string SalesRecord {
+            get {
+                return ResourceManager.GetString("SalesRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refunds Record.
+        /// </summary>
+        internal static string RefundsRecord {
+            get {
+                return ResourceManager.GetString("RefundsRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accounts Ledger.
+        /// </summary>
+        internal static string AccountsLedger {
+            get {
+                return ResourceManager.GetString("AccountsLedger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Request.
+        /// </summary>
+        internal static string UploadRequest {
+            get {
+                return ResourceManager.GetString("UploadRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temporary Credit.
+        /// </summary>
+        internal static string TemporaryCredit {
+            get {
+                return ResourceManager.GetString("TemporaryCredit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bank Details.
+        /// </summary>
+        internal static string BankDetails {
+            get {
+                return ResourceManager.GetString("BankDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group Query.
+        /// </summary>
+        internal static string GroupQuery {
+            get {
+                return ResourceManager.GetString("GroupQuery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pax Calendar.
+        /// </summary>
+        internal static string PaxCalendar {
+            get {
+                return ResourceManager.GetString("PaxCalendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Online Recharge.
+        /// </summary>
+        internal static string OnlineRecharge {
+            get {
+                return ResourceManager.GetString("OnlineRecharge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logout.
+        /// </summary>
+        internal static string Logout {
+            get {
+                return ResourceManager.GetString("Logout", resourceCulture);
+            }
+        }
     }
 }

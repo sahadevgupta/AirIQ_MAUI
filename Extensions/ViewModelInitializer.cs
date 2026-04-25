@@ -12,6 +12,7 @@ namespace AirIQ.Extensions
                             .AddTransient<DashboardPageViewModel>()
                             .AddTransient<FlightsPageViewModel>()
                             .AddTransient<FlightBookingPageViewModel>()
+                            .AddTransient<MenuPageViewModel>()
                             .AddTransient<HotelsPageViewModel>()
                             .AddTransient<SignupPageViewModel>()
                             .AddTransient<SessionExpiryPopupViewModel>();

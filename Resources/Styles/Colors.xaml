@@ -26,6 +26,8 @@
     <Color x:Key="Link">#0078E0</Color>
     <Color x:Key="Onyx">#373737</Color>
 
+    <Color x:Key="Secondary50">#F06367</Color>
+
     <Color x:Key="Gray10">#E8E8E8</Color>
     <Color x:Key="Gray30">#B9B9B9</Color>
     <Color x:Key="Gray50">#8A8A8A</Color>

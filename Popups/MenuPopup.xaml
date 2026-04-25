@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopup:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="AirIQ.Popups.MenuPopup"
+                 xmlns:drawable="clr-namespace:AirIQ.Resources.Drawables"
+                 xmlns:mopup="clr-namespace:Mopups.Pages;assembly=Mopups"
+                 xmlns:mopupsanim="clr-namespace:Mopups.Animations;assembly=Mopups"
+                 xmlns:models="clr-namespace:AirIQ.Models"
+                 xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                 xmlns:vm="clr-namespace:AirIQ.ViewModels.Common"
+                 x:DataType="vm:MenuPageViewModel"
+                 BackgroundColor="{StaticResource PopupBackground}">
+
+    <mopup:PopupPage.Animation>
+        <mopupsanim:MoveAnimation
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinIn"
+            EasingOut="SinOut"
+            PositionIn="Left"
+            PositionOut="Left"/>
+    </mopup:PopupPage.Animation>
+
+
+    <Grid ColumnDefinitions="7*,3*"
+          HorizontalOptions="Start">
+
+        <Grid RowDefinitions="Auto,*,Auto"
+              ColumnDefinitions="Auto, *"
+              BackgroundColor="{StaticResource PrimaryColor}"
+              RowSpacing="16">
+
+            <HorizontalStackLayout Spacing="12"
+                                   Padding="20">
+
+
+                <toolkit:AvatarView Text="JD"
+                                    HeightRequest="50"
+                                    WidthRequest="50"
+                                    CornerRadius="25"
+                                    Padding="10"
+                                    BackgroundColor="White"
+                                    FontSize="20"
+                                    FontFamily="RobotoMedium"
+                                    TextColor="{StaticResource Secondary50}"/>
+
+                <!-- Email -->
+                <Label Grid.Column="1"
+                       Text="john.doe@gmail.com"
+                       TextColor="White"
+                       VerticalOptions="Center"
+                       Style="{StaticResource Label16SemiBold}"/>
+
+            </HorizontalStackLayout>
+
+
+            <CollectionView ItemsSource="{Binding Menus}"
+                            Grid.Row="1"
+                            Grid.ColumnSpan="2">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="8"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:MenuOption">
+                        <HorizontalStackLayout Spacing="12"
+                                               Padding="20,10">
+                            <Image Source="{Binding IconSource, TargetNullValue='flight'}"
+                                   HeightRequest="30">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="White"/>
+                                </Image.Behaviors>
+                            </Image>
+                            <Label Text="{Binding Title}"
+                                   Style="{StaticResource Label16SemiBold}"
+                                   VerticalTextAlignment="Center"
+                                   TextColor="White"/>
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </Grid>
+        <Image Grid.Column="1"
+               TranslationX="-25"
+               Margin="0,17,0,0"
+               VerticalOptions="Start"
+               Source="temp">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ClosePopupCommand}"/>
+            </Image.GestureRecognizers>
+        </Image>
+
+
+    </Grid>
+
+</mopup:PopupPage>

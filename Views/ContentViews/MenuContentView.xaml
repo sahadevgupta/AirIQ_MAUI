@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirIQ.Views.ContentViews.MenuContentView"
+             xmlns:mopup="clr-namespace:Mopups.Pages;assembly=Mopups"
+             xmlns:models="clr-namespace:AirIQ.Models"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:AirIQ.ViewModels.Common"
+             x:DataType="vm:MenuPageViewModel">
+
+    <Grid RowDefinitions="Auto,*,Auto"
+          ColumnDefinitions="Auto, *, Auto"
+          Padding="20">
+
+        <toolkit:AvatarView Text="JD"
+                            HeightRequest="40"
+                            WidthRequest="40"
+                            CornerRadius="20"/>
+
+        <!-- Email -->
+        <Label Grid.Column="1"
+               Text="john.doe@gmail.com"
+               TextColor="White"
+               VerticalOptions="Center"
+               Margin="20,0,0,0"/>
+
+        <!-- Right Arrow inside a clipped container -->
+        <Border Grid.Column="2"
+                WidthRequest="90"
+                BackgroundColor="#0E75B5"
+                VerticalOptions="Center"
+                HorizontalOptions="End"
+                StrokeThickness="0">
+
+            <Border.Clip>
+                <!-- Creates angled right side like screenshot -->
+                <PathGeometry>
+                    <PathFigure StartPoint="0,0">
+                        <LineSegment Point="90,40"/>
+                        <LineSegment Point="90,140"/>
+                        <LineSegment Point="0,180"/>
+                        <LineSegment Point="0,0"/>
+                    </PathFigure>
+                </PathGeometry>
+            </Border.Clip>
+
+            <Grid HorizontalOptions="Center"
+                  VerticalOptions="Center">
+                <Label Text="❮"
+                       FontSize="44"
+                       RotationY="180"
+                       TextColor="White"/>
+            </Grid>
+        </Border>
+
+
+        <CollectionView ItemsSource="{Binding Menus}"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"
+                                   ItemSpacing="8"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:MenuOption">
+                    <HorizontalStackLayout Spacing="12"
+                                           Padding="16,10">
+                        <Image Source="flight.png"/>
+                        <Label Text="{Binding Title}"
+                               TextColor="White"/>
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
+</ContentView>

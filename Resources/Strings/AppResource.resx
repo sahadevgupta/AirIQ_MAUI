@@ -291,4 +291,34 @@
   <data name="BusinessInformation" xml:space="preserve">
     <value>BUSINESS INFORMATION</value>
   </data>
+  <data name="SalesRecord" xml:space="preserve">
+    <value>Sales Record</value>
+  </data>
+  <data name="RefundsRecord" xml:space="preserve">
+    <value>Refunds Record</value>
+  </data>
+  <data name="AccountsLedger" xml:space="preserve">
+    <value>Accounts Ledger</value>
+  </data>
+  <data name="UploadRequest" xml:space="preserve">
+    <value>Upload Request</value>
+  </data>
+  <data name="TemporaryCredit" xml:space="preserve">
+    <value>Temporary Credit</value>
+  </data>
+  <data name="BankDetails" xml:space="preserve">
+    <value>Bank Details</value>
+  </data>
+  <data name="GroupQuery" xml:space="preserve">
+    <value>Group Query</value>
+  </data>
+  <data name="PaxCalendar" xml:space="preserve">
+    <value>Pax Calendar</value>
+  </data>
+  <data name="OnlineRecharge" xml:space="preserve">
+    <value>Online Recharge</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
 </root>

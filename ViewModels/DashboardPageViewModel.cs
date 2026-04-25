@@ -1,12 +1,15 @@
 ﻿using System.Collections.ObjectModel;
 using AirIQ.Configurations.Mapper;
 using AirIQ.Constants;
+using AirIQ.Helpers;
 using AirIQ.Models;
+using AirIQ.Popups;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
 using AirIQ.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Mopups.Interfaces;
 
 namespace AirIQ.ViewModels
 {
@@ -125,7 +128,12 @@ namespace AirIQ.ViewModels
         [RelayCommand]
         private void OpenMenu()
         {
-            Shell.Current.FlyoutIsPresented = true;
+            //Shell.Current.FlyoutIsPresented = true;
+
+            var popup = new MenuPopup();
+
+            var popupservice = ServiceHelper.GetService<IPopupNavigation>();
+            popupservice.PushAsync(popup);
         }
 
         [RelayCommand]

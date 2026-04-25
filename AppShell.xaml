@@ -5,7 +5,13 @@
        xmlns:local="clr-namespace:AirIQ.Views"
        xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
        xmlns:controls="clr-namespace:AirIQ.Controls"
+       xmlns:views="clr-namespace:AirIQ.Views.ContentViews"
        x:Class="AirIQ.AppShell"
+       FlyoutBackgroundColor="{StaticResource PrimaryColor}"
+       BackgroundColor="{StaticResource PrimaryColor}"
+       ForegroundColor="{StaticResource White}"
+       TitleColor="{StaticResource White}"
+       FlyoutIsPresented="False"
        FlyoutBehavior="Disabled">
 
     <Shell.FlyoutBackdrop>
@@ -22,6 +28,13 @@
                     Value="{StaticResource Gray600}"/>
         </Style>
     </Shell.Resources>
+
+    <Shell.FlyoutContentTemplate>
+        <DataTemplate>
+            <views:MenuContentView/>
+            <!-- FULL SCREEN FLYOUT -->
+        </DataTemplate>
+    </Shell.FlyoutContentTemplate>
 
     <!-- ============================================ -->
     <!-- AUTHENTICATION ROUTES (No TabBar) -->

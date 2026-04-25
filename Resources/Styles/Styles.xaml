@@ -31,6 +31,14 @@
                         Value="RobotoBold"/>
         </Style>
 
+        <Style x:Key="Label12SemiBold"
+               TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="{ext:ScaleFontSize Size='12'}"/>
+                <Setter Property="FontFamily"
+                        Value="RobotoSemiBold"/>
+        </Style>
+
         <!--#endregion -->
 
         <!--#region Size 14 -->
@@ -57,6 +65,14 @@
                         Value="{ext:ScaleFontSize Size='14'}"/>
                 <Setter Property="FontFamily"
                         Value="RobotoBold"/>
+        </Style>
+
+        <Style x:Key="Label14SemiBold"
+               TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="{ext:ScaleFontSize Size='14'}"/>
+                <Setter Property="FontFamily"
+                        Value="RobotoSemiBold"/>
         </Style>
 
         <!--#endregion-->
@@ -87,6 +103,14 @@
                         Value="RobotoBold"/>
         </Style>
 
+        <Style x:Key="Label16SemiBold"
+               TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="{ext:ScaleFontSize Size='16'}"/>
+                <Setter Property="FontFamily"
+                        Value="RobotoSemiBold"/>
+        </Style>
+
         <!--#endregion-->
 
         <!--#region Size 18 -->
@@ -113,6 +137,14 @@
                         Value="{ext:ScaleFontSize Size='18'}"/>
                 <Setter Property="FontFamily"
                         Value="RobotoBold"/>
+        </Style>
+
+        <Style x:Key="Label18SemiBold"
+               TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="{ext:ScaleFontSize Size='18'}"/>
+                <Setter Property="FontFamily"
+                        Value="RobotoSemiBold"/>
         </Style>
 
         <!--#endregion-->
