@@ -168,11 +168,11 @@ public abstract class BasePage : ContentPage
 #if ANDROID
 		if (this.GetType() == typeof(DashboardPage))
 		{
+			if (Platform.CurrentActivity is MainActivity activity)
+			{
+				activity.ApplySystemBars(this);
+			}
 			this.Background = (Brush)Application.Current?.Resources["BrandGradient"]!;
-		}
-		else
-		{
-			this.Background = StatusBarColor;
 		}
 #endif
 	}
