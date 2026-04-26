@@ -143,7 +143,7 @@ public abstract class BasePage : ContentPage
 	protected override void OnNavigatedTo(NavigatedToEventArgs args)
 	{
 		base.OnNavigatedTo(args);
-		if (this.BindingContext is BaseViewModel vm)
+		if (this.BindingContext is BaseViewModel vm && args.NavigationType != NavigationType.Pop)
 		{
 			_ = vm.LoadDataWhenNavigatedTo();
 		}

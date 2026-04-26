@@ -34,9 +34,7 @@ namespace AirIQ.ViewModels.Common
         protected void HandleException(Exception exception, string? message = null)
         {
             SentrySdk.CaptureException(exception);
-#if DEBUG
             ShowToast(exception.Message);
-#endif
         }
 
         public void ShowToast(string message, double toastfontSize = 14, ToastDuration toastDuration = ToastDuration.Short)

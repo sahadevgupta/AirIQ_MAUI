@@ -15,7 +15,7 @@ namespace AirIQ.Platforms.Services
         private IDisposable _disposeAction;
         private UIView view;
 
-        static UIImageView imageView;
+
 
         public IDisposable Show()
         {
@@ -77,16 +77,25 @@ namespace AirIQ.Platforms.Services
             loadingView.Frame = new CGRect(0, 0, UIScreen.MainScreen.Bounds.Width, UIScreen.MainScreen.Bounds.Height);
             loadingView.BackgroundColor = ((Color)Application.Current.Resources["PopupBackground"]).ToPlatform();
 
+            var imageView = ImageExtension.LoadGifImageWithName("loader");
             if (imageView == null)
             {
-                imageView = ImageExtension.LoadGifImageWithName("loader");
+                imageView = ImageExtension.LoadGifImageWithName("loading_anim");
 
                 imageView.Frame = loadingView.ConvertRectFromView(loadingView.Frame, loadingView);
             }
-
-
+            // Ensure the view doesn't create constraints based on its frame
+            imageView.TranslatesAutoresizingMaskIntoConstraints = false;
             loadingView.Add(imageView);
 
+            // Add horizontal and vertical center constraints
+            NSLayoutConstraint.ActivateConstraints(new[] {
+    imageView.CenterXAnchor.ConstraintEqualTo(loadingView.CenterXAnchor),
+    imageView.CenterYAnchor.ConstraintEqualTo(loadingView.CenterYAnchor),
+    // You also need to define size
+    imageView.WidthAnchor.ConstraintEqualTo(200),
+    imageView.HeightAnchor.ConstraintEqualTo(200)
+});
 
             return loadingView;
         }

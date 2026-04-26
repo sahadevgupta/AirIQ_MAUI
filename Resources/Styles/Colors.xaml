@@ -25,6 +25,7 @@
     <Color x:Key="Azure">#0A84FF</Color>
     <Color x:Key="Link">#0078E0</Color>
     <Color x:Key="Onyx">#373737</Color>
+    <Color x:Key="Purple">#5A3795</Color>
 
     <Color x:Key="Secondary50">#F06367</Color>
 

@@ -1,3 +1,4 @@
+using Microsoft.Maui.Handlers;
 using Mopups.Interfaces;
 
 namespace AirIQ.Controls;
@@ -45,12 +46,14 @@ public partial class ExtendedDatePicker : ContentView
     public DateTime Date
     {
         get { return (DateTime)GetValue(DateProperty); }
-        set 
-        { 
-            SetValue(DateProperty, value); 
-            
+        set
+        {
+            SetValue(DateProperty, value);
+
         }
     }
+
+    public event EventHandler? DateSelected;
     public ExtendedDatePicker()
     {
         InitializeComponent();
@@ -58,16 +61,23 @@ public partial class ExtendedDatePicker : ContentView
 
     private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
     {
+#if ANDROID
+        var handler = datepicker.Handler as IDatePickerHandler;
+        handler.PlatformView.PerformClick();
+#else
+        datepicker.Focus();
+#endif
+    }
 
-        var popupNavigation = IPlatformApplication.Current?.Services.GetService<IPopupNavigation>();
-        var popup = new CalendarView();
-        popup.SetBinding(CalendarView.AllowedDatesProperty,
-                new Binding(nameof(AllowedDates), BindingMode.TwoWay, source: this));
-        popup.DatePicked += (arg) =>
+    private void datepicker_Closed(object sender, DatePickerClosedEventArgs e)
+    {
+        if (datepicker.Date != null)
         {
-            Date = arg;
-        };
-        popupNavigation?.PushAsync(popup);
+            Date = datepicker.Date.Value;
+            var selectedDate = datepicker.Date.Value.ToString("yyyy/MM/dd");
+            datelbl.Text = selectedDate;
+            DateSelected?.Invoke(this, e);
+        }
     }
 
 }

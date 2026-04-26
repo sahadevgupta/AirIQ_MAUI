@@ -3,28 +3,38 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirIQ.Controls.ExtendedDatePicker"
              xmlns:fonts="clr-namespace:AirIQ.Extensions"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Name="extendedDatepicker">
 
     <VerticalStackLayout>
-        <Label Text="{Binding Title,Source={x:Reference extendedDatepicker}}" 
+        <Label Text="{Binding Title,Source={x:Reference extendedDatepicker}}"
                Style="{Binding TitleStyle,Source={x:Reference extendedDatepicker}}"
                IsVisible="{Binding Title,Source={x:Reference extendedDatepicker},Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"/>
-        
-        <Border Padding="10" StrokeShape="RoundRectangle 8" 
-            BackgroundColor="White"
-            HeightRequest="52">
+
+        <Border Padding="10"
+                StrokeShape="RoundRectangle 8"
+                BackgroundColor="White"
+                HeightRequest="52">
             <Border.GestureRecognizers>
                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
             </Border.GestureRecognizers>
             <Grid ColumnDefinitions="*,Auto">
-                <Label Text="DD/MM/YYYY" x:Name="datelbl" VerticalTextAlignment="Center"/>
-                
-                <Image VerticalOptions="Center" HorizontalOptions="End" >
+                <Label Text="DD/MM/YYYY"
+                       x:Name="datelbl"
+                       VerticalTextAlignment="Center"/>
+
+                <DatePicker x:Name="datepicker"
+                            ios:DatePicker.UpdateMode="WhenFinished"
+                            Closed="datepicker_Closed"
+                            IsVisible="False"/>
+
+                <Image VerticalOptions="Center"
+                       HorizontalOptions="End">
                     <Image.Source>
                         <FontImageSource FontFamily="MyFont"
-                         Size="Body"
-                         Glyph="{x:Static fonts:FontAwesomeIcons.CalendarAlt}"
+                                         Size="Body"
+                                         Glyph="{x:Static fonts:FontAwesomeIcons.CalendarAlt}"
                                          Color="DimGray"/>
                     </Image.Source>
                 </Image>

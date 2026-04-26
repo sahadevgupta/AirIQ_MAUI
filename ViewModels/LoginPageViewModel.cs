@@ -15,10 +15,10 @@ namespace AirIQ.ViewModels
         readonly ILoginService _loginService;
 
         [ObservableProperty]
-        private string? _username = "9382915717";
+        private string? _username = string.Empty; //"9382915717";
 
         [ObservableProperty]
-        private string? _password = "123456789";
+        private string? _password = string.Empty; //"123456789";
 
         public LoginPageViewModel(IViewModelParameters viewModelParameters,
         ILoginService loginService) : base(viewModelParameters)
@@ -39,22 +39,25 @@ namespace AirIQ.ViewModels
                 UserDto? userDto = null;
                 using (LoadingService.Show())
                 {
+                    Console.WriteLine("Username : " + Username);
+                    Console.WriteLine("Password : " + Password);
                     IsBusy = true;
                     userDto = await _loginService.LoginAsync(Username!, Password!);
                 }
 
+                Console.WriteLine("Login Detsils : " + JsonConvert.SerializeObject(userDto));
                 if (userDto != default)
                 {
                     AppConfiguration.IsLoggedInUser = true;
                     AppConfiguration.UserDetails = JsonConvert.SerializeObject(userDto);
                     AppConfiguration.CurrentUser = userDto;
-
+                    Console.WriteLine("Navigate To Home : ");
                     await Shell.Current.GoToAsync("//app/home");
                 }
             }
             catch (Exception ex)
             {
-                // Handle exceptions (e.g., show an error message)
+                HandleException(ex);
             }
             finally
             {

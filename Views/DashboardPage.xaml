@@ -137,7 +137,7 @@
                      Style="{StaticResource Label14RegularGray50Style}"
                      VerticalOptions="Center"/>
 
-              <Label Text="{Binding Source={x:Reference stepper},Path=Value,StringFormat='{0} Person'}"
+              <Label Text="{Binding Source={x:Reference stepper},Path=Value,StringFormat='{0} Person(s)'}"
                      Grid.Row="1"
                      Style="{StaticResource Label20MediumOnyxStyle}"
                      TextColor="{StaticResource Gray90}"

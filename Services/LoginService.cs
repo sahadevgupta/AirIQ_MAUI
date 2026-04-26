@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using AirIQ.Configurations.CustomExceptions;
 using AirIQ.Constants;
 using AirIQ.Models.Request;
@@ -15,14 +16,16 @@ IAppBackendService appBackendService) : ApiServiceBase(apiServiceBaseParams), IL
         UserDto? userDto = new();
         try
         {
+            Console.WriteLine("LoginAsync invoked : ");
             await Connectivity.CheckConnected();
             var request = new LoginRequest
             {
                 UserName = username,
                 Password = password,
             };
-            var headers = await GetHeader(false);
+            Console.WriteLine("Login Without API invoked : ");
             var loginResponse = await appBackendService.LoginAsync(request).ConfigureAwait(false);
+            Console.WriteLine("Login Without API response : " + JsonSerializer.Serialize(loginResponse));
             if (!string.IsNullOrWhiteSpace(loginResponse.Token))
             {
                 await apiServiceBaseParams.SecureStorageService.SetAsync(PreferenceKeyConstants.AuthKey, loginResponse.Token!);

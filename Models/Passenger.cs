@@ -13,10 +13,14 @@ public partial class Passenger : ObservableObject
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public string? PassportNumber { get; set; }
-    public string? Dob { get; set; }
+    public string? Dob
+    {
+        get => BirthDate?.ToString("yyyy/MM/dd");
+    }
     public string? PassportExpirydate { get; set; }
     public string? PassportIssuingCountryCode { get; set; }
     public string? Nationality { get; set; }
+    public DateTime? BirthDate { get; set; }
     public PassengerType Type { get; set; }
 
     [ObservableProperty]

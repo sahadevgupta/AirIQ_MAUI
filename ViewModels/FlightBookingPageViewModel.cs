@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Text.Json;
 using AirIQ.Constants;
 using AirIQ.Enums;
 using AirIQ.Models;
@@ -38,6 +40,9 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
         StringConstants.Mstr,
         StringConstants.Miss
     };
+
+    [ObservableProperty]
+    private bool _isTermChecked;
 
     private int? adultCount;
 
@@ -149,7 +154,10 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
             passenger?.IsCompleted = !string.IsNullOrEmpty(passenger.SelectedPassengerType) &&
                                      !string.IsNullOrEmpty(passenger.SelectedTitle) &&
                                      !string.IsNullOrEmpty(passenger.FirstName) &&
-                                     !string.IsNullOrEmpty(passenger.LastName);
+                                     !string.IsNullOrEmpty(passenger.LastName) &&
+                                     (passenger.Type == PassengerType.Infant ?
+                                        !string.IsNullOrEmpty(passenger.Dob) :
+                                        true);
 
         }
         catch (Exception exception)
@@ -162,55 +170,74 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
     [RelayCommand]
     private async Task ConfirmBooking()
     {
-        if (Passengers!.Any(x => !x.IsCompleted))
+        bool hasIncompletePassenger = Passengers?.Any(p => !p.IsCompleted) == true;
+        bool termsNotAccepted = !IsTermChecked;
+
+        if (hasIncompletePassenger || termsNotAccepted)
             return;
 
-        using (LoadingService.Show())
+        var response = await DialogService.DisplayAlertAsync("AirIQ", "Do you want to confirm this booking ?", "OK", "Cancel");
+
+        if (response)
         {
-            var bookingRequest = new TicketBookingRequest
+            using (LoadingService.Show())
             {
-                TicketId = SelectedAirline?.TicketId,
-                TotalPax = Passengers?.Count.ToString(),
-                Adult = Passengers?.Where(x => x.Type == PassengerType.Adult).Count().ToString(),
-                Child = Passengers?.Where(x => x.Type == PassengerType.Child).Count().ToString(),
-                Infant = Passengers?.Count.ToString(),
-                AdultInfo = new List<PassengerRequest>(),
-                ChildInfo = new List<PassengerRequest>(),
-                InfantInfo = new List<InfantInfoRequest>()
-            };
-
-            foreach (var adultInfo in Passengers?.Where(x => x.Type == PassengerType.Adult))
-            {
-                bookingRequest.AdultInfo.Add(new PassengerRequest
+                var bookingRequest = new TicketBookingRequest
                 {
-                    Title = adultInfo.Title,
-                    FirstName = adultInfo.FirstName,
-                    LastName = adultInfo.LastName
-                });
-            }
+                    TicketId = SelectedAirline?.TicketId,
+                    TotalPax = Passengers?.Count.ToString(),
+                    Adult = Passengers?.Where(x => x.Type == PassengerType.Adult).Count().ToString(),
+                    Child = Passengers?.Where(x => x.Type == PassengerType.Child).Count().ToString(),
+                    Infant = Passengers?.Where(x => x.Type == PassengerType.Infant).Count().ToString(),
+                    AdultInfo = new List<PassengerRequest>(),
+                    ChildInfo = new List<PassengerRequest>(),
+                    InfantInfo = new List<InfantInfoRequest>()
+                };
 
-            foreach (var childInfo in Passengers?.Where(x => x.Type == PassengerType.Child))
-            {
-                bookingRequest.ChildInfo.Add(new PassengerRequest
+                foreach (var adultInfo in Passengers?.Where(x => x.Type == PassengerType.Adult))
                 {
-                    Title = childInfo.Title,
-                    FirstName = childInfo.FirstName,
-                    LastName = childInfo.LastName
-                });
-            }
+                    bookingRequest.AdultInfo.Add(new PassengerRequest
+                    {
+                        Title = adultInfo.SelectedTitle,
+                        FirstName = adultInfo.FirstName,
+                        LastName = adultInfo.LastName
+                    });
+                }
 
-            foreach (var infantInfo in Passengers?.Where(x => x.Type == PassengerType.Infant))
-            {
-                bookingRequest.AdultInfo.Add(new PassengerRequest
+                foreach (var childInfo in Passengers?.Where(x => x.Type == PassengerType.Child))
                 {
-                    Title = infantInfo.Title,
-                    FirstName = infantInfo.FirstName,
-                    LastName = infantInfo.LastName
-                });
+                    bookingRequest.ChildInfo.Add(new PassengerRequest
+                    {
+                        Title = childInfo.SelectedTitle,
+                        FirstName = childInfo.FirstName,
+                        LastName = childInfo.LastName
+                    });
+                }
+
+                foreach (var infantInfo in Passengers?.Where(x => x.Type == PassengerType.Infant))
+                {
+                    var details = infantInfo as Infant;
+                    if (details != null)
+                    {
+                        bookingRequest.InfantInfo.Add(new InfantInfoRequest
+                        {
+                            Title = "Mstr.",
+                            FirstName = infantInfo.FirstName,
+                            LastName = infantInfo.LastName,
+                            TravelWith = details.AssignedAdultId.ToString(),
+                            Dob = infantInfo.Dob
+                        });
+                    }
+                }
+
+                var a = JsonSerializer.Serialize(bookingRequest);
+
+                Debug.WriteLine("Flight booking json : " + a);
+
+                var result = await flightService.ConfirmBookingAsync(bookingRequest);
+                await DialogService.DisplayAlertAsync("AirIQ", result, "OK");
+
             }
-
-            await flightService.ConfirmBookingAsync(bookingRequest);
-
         }
     }
 

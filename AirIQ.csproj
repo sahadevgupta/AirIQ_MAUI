@@ -18,7 +18,7 @@
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationVersion>20260426</ApplicationVersion>
 
 		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
 		<WindowsPackageType>None</WindowsPackageType>
@@ -71,8 +71,60 @@
 	  </EmbeddedResource>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Resources/Drawables/" />
-	</ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
+		
+
+		<!-- <AndroidKeyStore>true</AndroidKeyStore>
+		<AndroidSigningKeyStore>Platforms/Android/KeyStore/Pulse.keystore</AndroidSigningKeyStore>
+		<AndroidSigningKeyAlias>Pulse</AndroidSigningKeyAlias>
+		<AndroidSigningKeyPass>1234567890</AndroidSigningKeyPass>
+		<AndroidSigningStorePass>1234567890</AndroidSigningStorePass> -->
+
+		<!-- Reduce size -->
+		<AndroidPackageFormat>aab</AndroidPackageFormat>
+
+		<!-- Reduce .NET runtime size -->
+		<MauiEnableILLink>false</MauiEnableILLink>
+		<PublishTrimmed>false</PublishTrimmed>
+
+		<!-- Remove debugging -->
+		<DebugSymbols>false</DebugSymbols>
+		<DebugType>none</DebugType>
+
+		<!-- Disable AOT to save 20–30MB -->
+		<RunAOTCompilation>false</RunAOTCompilation>
+		<AndroidLinkMode>SdkOnly</AndroidLinkMode>
+		<AndroidLinkTool>r8</AndroidLinkTool>
+		<AndroidUseAapt2>true</AndroidUseAapt2>
+
+		<AndroidPackageFormat>aab</AndroidPackageFormat>
+			
+		<!-- <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+		<MauiEnableTracing>false</MauiEnableTracing>
+		<EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+		<AndroidStripNativeDebugSymbols>true</AndroidStripNativeDebugSymbols>
+		
+
+		<AndroidLinkMode>SdkOnly</AndroidLinkMode>
+		<AndroidLinkTool>r8</AndroidLinkTool>
+		<RunAOTCompilation>false</RunAOTCompilation>
+		<AndroidUseAapt2>true</AndroidUseAapt2> -->
+
+		<!-- <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk> -->
+
+		<!-- SAFE TRIMMING -->
+		<!-- <PublishTrimmed>true</PublishTrimmed>
+		<TrimMode>link</TrimMode> -->
+
+		<!-- <InvariantGlobalization>false</InvariantGlobalization>  -->
+		<!-- Required for many cultures -->
+
+		<!-- LINKING -->
+		<!-- <AndroidLinkMode>SdkOnly</AndroidLinkMode>
+		<AndroidLinkTool>r8</AndroidLinkTool>
+
+		<RunAOTCompilation>false</RunAOTCompilation> -->
+
+	</PropertyGroup>
 
 </Project>

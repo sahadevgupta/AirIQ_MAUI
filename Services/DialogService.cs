@@ -117,5 +117,22 @@ public class DialogService(IPopupNavigation popupNavigation) : IDialogService
             await snackbar.Show(cancellationTokenSource.Token);
         });
     }
+
+    public async Task<bool> DisplayAlertAsync(string title, string message, string acceptText, string cancelText)
+    {
+        return await MainThread.InvokeOnMainThreadAsync(async () =>
+        {
+            return await Shell.Current.DisplayAlertAsync(title, message, acceptText, cancelText);
+        });
+    }
+
+    public async Task DisplayAlertAsync(string title, string message, string cancelText)
+    {
+        await MainThread.InvokeOnMainThreadAsync(async () =>
+        {
+            await Shell.Current.DisplayAlertAsync(title, message, cancelText);
+        });
+    }
+
 }
 

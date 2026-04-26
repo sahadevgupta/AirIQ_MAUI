@@ -13,7 +13,7 @@
                            HorizontalOptions="Center"/> -->
 
         <Image Source="loader.gif"
-               MaximumHeightRequest="150"
+               MaximumHeightRequest="100"
                Grid.Column="1"
                VerticalOptions="Center"
                HorizontalOptions="Center"

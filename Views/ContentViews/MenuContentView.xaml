@@ -12,14 +12,14 @@
           ColumnDefinitions="Auto, *, Auto"
           Padding="20">
 
-        <toolkit:AvatarView Text="JD"
+        <toolkit:AvatarView Text="{Binding CurrentUser.ContactPerson}"
                             HeightRequest="40"
                             WidthRequest="40"
                             CornerRadius="20"/>
 
         <!-- Email -->
         <Label Grid.Column="1"
-               Text="john.doe@gmail.com"
+               Text="{Binding CurrentUser.EmailId}"
                TextColor="White"
                VerticalOptions="Center"
                Margin="20,0,0,0"/>

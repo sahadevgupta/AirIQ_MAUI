@@ -34,7 +34,7 @@
                                    Padding="20">
 
 
-                <toolkit:AvatarView Text="JD"
+                <toolkit:AvatarView Text="{Binding CurrentUser.ContactPersonInitials}"
                                     HeightRequest="50"
                                     WidthRequest="50"
                                     CornerRadius="25"
@@ -46,13 +46,12 @@
 
                 <!-- Email -->
                 <Label Grid.Column="1"
-                       Text="john.doe@gmail.com"
+                       Text="{Binding CurrentUser.EmailId}"
                        TextColor="White"
                        VerticalOptions="Center"
                        Style="{StaticResource Label16SemiBold}"/>
 
             </HorizontalStackLayout>
-
 
             <CollectionView ItemsSource="{Binding Menus}"
                             Grid.Row="1"
@@ -82,17 +81,61 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-        </Grid>
-        <Image Grid.Column="1"
-               TranslationX="-25"
-               Margin="0,17,0,0"
-               VerticalOptions="Start"
-               Source="temp">
-            <Image.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding ClosePopupCommand}"/>
-            </Image.GestureRecognizers>
-        </Image>
+            <VerticalStackLayout x:Name="FixedFooterContainer"
+                                 Grid.Row="2"
+                                 Padding="20,12,20,20"
+                                 Spacing="10">
+                <Button Text="Logout"
+                        Command="{Binding LogoutCommand}"
+                        ImageSource="logout_icon.svg"
+                        IsEnabled="{Binding IsAuthenticated}"
+                        Style="{StaticResource FlyoutAccentButton}">
+                    <Button.Triggers>
+                        <Trigger TargetType="Button"
+                                 Property="IsEnabled"
+                                 Value="False">
+                            <Setter Property="TextColor"
+                                    Value="{StaticResource LightGray}"/>
+                            <Setter Property="Opacity"
+                                    Value="0.45"/>
+                        </Trigger>
+                        <Trigger TargetType="Button"
+                                 Property="IsEnabled"
+                                 Value="True">
+                            <Setter Property="TextColor"
+                                    Value="{StaticResource White}"/>
+                            <Setter Property="Opacity"
+                                    Value="1"/>
+                        </Trigger>
+                    </Button.Triggers>
+                </Button>
 
+                <Label Text="© 2026 AirIQ"
+                       Style="{StaticResource Label12Regular}"
+                       FontSize="10"
+                       TextColor="#CEE1EA"/>
+                <Label Text="{Binding BuildNumber}"
+                       Style="{StaticResource Label12Regular}"
+                       FontSize="10"
+                       TextColor="#CEE1EA"
+                       Margin="0,-6,0,0"/>
+
+            </VerticalStackLayout>
+
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ClosePopupCommand}"/>
+            </Grid.GestureRecognizers>
+
+            <Image Grid.Column="1"
+                   TranslationX="-25"
+                   Margin="0,17,0,0"
+                   VerticalOptions="Start"
+                   Source="temp"
+                   InputTransparent="True">
+            </Image>
+        </Grid>
 
     </Grid>
 

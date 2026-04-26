@@ -171,7 +171,7 @@
 
             <HorizontalStackLayout Grid.Row="1">
 
-                <CheckBox/>
+                <CheckBox IsChecked="{Binding IsTermChecked}"/>
 
                 <Label VerticalOptions="Center">
                     <Label.FormattedText>

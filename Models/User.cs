@@ -19,4 +19,18 @@ public class User
     public string? EmailId { get; set; }
 
     public string? MobileNumber { get; set; }
+
+    public string ContactPersonInitials
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(ContactPerson))
+                return string.Empty;
+
+            var words = ContactPerson
+                .Split(new[] { ' ', '-' }, StringSplitOptions.RemoveEmptyEntries);
+
+            return string.Concat(words.Select(w => char.ToUpperInvariant(w[0])));
+        }
+    }
 }

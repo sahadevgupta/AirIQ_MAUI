@@ -24,6 +24,7 @@ public abstract class ApiServiceBase
 
     protected void HandleException(Exception exception)
     {
+        SentrySdk.CaptureException(exception);
         //Handle the exception
         Debug.WriteLine("ApiServiceBase HandleException [{exceptionName}] \n{exceptionToString}", exception.GetType().Name, exception.ToString());
 

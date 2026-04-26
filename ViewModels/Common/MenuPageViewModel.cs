@@ -15,6 +15,10 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
 
     [ObservableProperty]
     private ObservableCollection<MenuOption> _menus = new ObservableCollection<MenuOption>();
+
+    [ObservableProperty]
+    private string _buildNumber = string.Empty;
+
     #endregion
 
     #region [ Methods & Service Calls ]
@@ -26,6 +30,7 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
 
     private void PopuplateMenuOptions()
     {
+        BuildNumber = $"App Version: {AppInfo.Current.VersionString}";
         Menus = new ObservableCollection<MenuOption>
         {
             new MenuOption{Title=AppResource.Flights, IconSource="flight"},
@@ -50,6 +55,18 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
     {
         MopupService.Instance.PopAsync();
     }
+
+    [RelayCommand]
+    private async Task Logout()
+    {
+        ClosePopup();
+        SecureStorage.RemoveAll();
+        Preferences.Clear();
+
+        if (Shell.Current != null)
+            await MainThread.InvokeOnMainThreadAsync(() => Shell.Current.GoToAsync("//LoginPage"));
+    }
+
     #endregion
 
     #region [ override Methods ]

@@ -29,9 +29,9 @@
 
 
     <Border StrokeShape="RoundRectangle 12"
-            StrokeThickness="1"
+            StrokeThickness="0"
             Stroke="{StaticResource AshtonSkies}"
-            BackgroundColor="White"
+            BackgroundColor="#F5F9FF"
             VerticalOptions="Center"
             Margin="10,0">
         <Grid Padding="0"
@@ -41,7 +41,7 @@
 
             <Grid ColumnDefinitions="Auto,*,Auto"
                   Padding="10"
-                  BackgroundColor="{StaticResource Secondary}">
+                  BackgroundColor="#BBDEFB">
                 <ImageButton Aspect="Center"
                              x:Name="leftArrow"
                              Clicked="leftArrow_Clicked">
@@ -54,7 +54,8 @@
                 </ImageButton>
                 <Label Text="Novmeber 2025"
                        Grid.Column="1"
-                       Style="{StaticResource TitleStyleBlackBold}"
+                       Style="{StaticResource Label18SemiBold}"
+                       TextColor="Black"
                        x:Name="monthLabel"/>
 
                 <ImageButton Grid.Column="2"
@@ -94,13 +95,13 @@
                        Style="{StaticResource Label14StyleBlack}"
                        Grid.Column="6"/>
             </Grid>
-            
+
             <!-- Calendar Grid: pooled cells created in code-behind -->
             <Grid x:Name="CalendarGrid"
-                Padding="0,0,0,10"
-                    Grid.Row="2"
-                    ColumnSpacing="5"
-                    RowSpacing="4">
+                  Padding="0,0,0,10"
+                  Grid.Row="2"
+                  ColumnSpacing="5"
+                  RowSpacing="4">
                 <!-- 6 rows x 7 cols will be added from code-behind at runtime -->
             </Grid>
 

@@ -169,7 +169,10 @@ namespace AirIQ.Platforms.Handlers
 
         private void UpdateDropdownHeight(System.Collections.IList? items)
         {
-            var rowHeight = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip, 40, Platform.AppContext.Resources.DisplayMetrics);
+            if (items is null || items.Count == 0)
+                return;
+
+            var rowHeight = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip, 50, Platform.AppContext.Resources.DisplayMetrics);
             int maxHeight = rowHeight * 3;
             var itemCount = items != null ? items.Count : 0;
             int dropdownHeight = Math.Min(itemCount * rowHeight, maxHeight);

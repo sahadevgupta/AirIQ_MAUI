@@ -301,7 +301,7 @@
         <Style x:Key="Label14StyleBlack"
                TargetType="Label">
                 <Setter Property="FontSize"
-                        Value="14"/>
+                        Value="{ext:ScaleFontSize Size=14}"/>
                 <Setter Property="TextColor"
                         Value="Black"/>
                 <Setter Property="FontFamily"
@@ -444,26 +444,15 @@
         <!--  ====================  -->
         <!--  BUTTON STYLES  -->
         <!--  ====================  -->
+
         <Style TargetType="Button"
-               x:Key="ButtonCorneredStyle">
-                <Setter Property="CornerRadius"
-                        Value="8"/>
+               x:Key="DefaultButtonStyle">
                 <Setter Property="FontSize"
                         Value="{ext:ScaleFontSize Size='18'}"/>
                 <Setter Property="FontFamily"
                         Value="RobotoRegular"/>
                 <Setter Property="TextTransform"
                         Value="Uppercase"/>
-                <Setter Property="HeightRequest"
-                        Value="50"/>
-                <Setter Property="TextColor"
-                        Value="White"/>
-                <Setter Property="BackgroundColor">
-                        <Setter.Value>
-                                <AppThemeBinding Dark="{StaticResource PrimaryDark}"
-                                                 Light="{StaticResource PrimaryColor}"/>
-                        </Setter.Value>
-                </Setter>
                 <Setter Property="VisualStateManager.VisualStateGroups">
                         <VisualStateGroupList>
                                 <VisualStateGroup x:Name="CommonStates">
@@ -480,11 +469,28 @@
                                 </VisualStateGroup>
                         </VisualStateGroupList>
                 </Setter>
+        </Style>
 
+        <Style TargetType="Button"
+               x:Key="ButtonCorneredStyle"
+               BasedOn="{StaticResource DefaultButtonStyle}">
+                <Setter Property="CornerRadius"
+                        Value="8"/>
+                <Setter Property="HeightRequest"
+                        Value="50"/>
+                <Setter Property="TextColor"
+                        Value="White"/>
+                <Setter Property="BackgroundColor">
+                        <Setter.Value>
+                                <AppThemeBinding Dark="{StaticResource PrimaryDark}"
+                                                 Light="{StaticResource PrimaryColor}"/>
+                        </Setter.Value>
+                </Setter>
         </Style>
 
         <Style x:Key="SmallBorderButtonStyle"
-               TargetType="Button">
+               TargetType="Button"
+               BasedOn="{StaticResource DefaultButtonStyle}">
                 <Setter Property="BorderColor"
                         Value="{StaticResource Gray30}"/>
                 <Setter Property="BorderWidth"
@@ -506,6 +512,15 @@
                 <Setter Property="CornerRadius"
                         Value="8"/>
                 <!-- optional -->
+        </Style>
+
+        <Style x:Key="FlyoutAccentButton"
+               TargetType="Button"
+               BasedOn="{StaticResource DefaultButtonStyle}">
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource Secondary50}"/>
+                <Setter Property="TextColor"
+                        Value="{StaticResource White}"/>
         </Style>
 
         <!--  ====================  -->
