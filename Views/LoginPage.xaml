@@ -45,6 +45,7 @@
 
                 <controls:ExtendedEntry PlaceholderText="{x:Static resx:AppResource.EnterPassword}"
                                         LeftIcon="password"
+                                        IsPassword="True"
                                         Title="{x:Static resx:AppResource.Password}"
                                         Text="{Binding Password}"/>
 

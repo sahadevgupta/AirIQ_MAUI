@@ -173,7 +173,7 @@ namespace AirIQ.Platforms.Handlers
                 return;
 
             var rowHeight = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip, 50, Platform.AppContext.Resources.DisplayMetrics);
-            int maxHeight = rowHeight * 3;
+            int maxHeight = rowHeight * 5;
             var itemCount = items != null ? items.Count : 0;
             int dropdownHeight = Math.Min(itemCount * rowHeight, maxHeight);
             autoCompleteTextView.DropDownHeight = dropdownHeight;

@@ -1,4 +1,5 @@
 using System.Windows.Input;
+using Android.Graphics.Drawables;
 
 namespace AirIQ.Controls;
 
@@ -228,6 +229,50 @@ public partial class ExtendedEntry : ContentView
         get => (int)GetValue(MaxLengthProperty);
         set => SetValue(MaxLengthProperty, value);
     }
+
+    #region [ Show/Hide Password ]
+
+    private bool _isPassword;
+    public bool IsPassword
+    {
+        get => _isPassword;
+        set
+        {
+            _isPassword = value;
+            if (_isPassword)
+            {
+                RightIcon = "visibility";
+                this.Dispatcher.Dispatch(async () =>
+                {
+                    await Task.Delay(50);
+                    InputEntry.IsPassword = true;
+                });
+
+                IconTapCommand = new Command(() =>
+                {
+                    bool hasFocus = InputEntry.IsFocused;
+                    if (InputEntry.IsPassword)
+                    {
+                        RightIcon = "visibility";
+                        InputEntry.IsPassword = false;
+                    }
+                    else
+                    {
+                        RightIcon = "visibility";
+                        InputEntry.IsPassword = true;
+                    }
+
+                    if (hasFocus)
+                        InputEntry.Focus();
+                });
+            }
+            else
+            {
+                InputEntry.Keyboard = this.EntryKeyboard;
+            }
+        }
+    }
+    #endregion
 
     public event EventHandler<TextChangedEventArgs> TextChanged;
 

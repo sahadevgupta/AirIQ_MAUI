@@ -321,4 +321,7 @@
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
   </data>
+  <data name="BookFlight" xml:space="preserve">
+    <value>Book Flight</value>
+  </data>
 </root>

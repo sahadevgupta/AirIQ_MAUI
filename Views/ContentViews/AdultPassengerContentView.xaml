@@ -73,6 +73,7 @@
                   Padding="16"
                   ColumnDefinitions="*,*"
                   ColumnSpacing="10"
+                  RowSpacing="6"
                   RowDefinitions="Auto,Auto,Auto">
 
                 <controls:ExtendedDropdown Title="{x:Static resx:AppResource.Adult}"

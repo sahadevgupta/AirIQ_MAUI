@@ -238,7 +238,7 @@
                                         <FormattedString>
                                             <Span Text="{x:Static resx:AppResource.TourCode}"/>
                                             <Span Text="  "/>
-                                            <Span Text="AQP1550"
+                                            <Span Text="{Binding Price,StringFormat='AQP{0:f2}'}"
                                                   Style="{StaticResource Span16BoldPrimaryStyle}"/>
                                         </FormattedString>
                                     </Label.FormattedText>
@@ -269,7 +269,7 @@
                                         TextTransform="Uppercase"
                                         CornerRadius="10"
                                         FontFamily="RobotoBold"
-                                        Text="{x:Static resx:AppResource.BookTicket}"
+                                        Text="{x:Static resx:AppResource.BookFlight}"
                                         TextColor="White"/>
 
                             </Grid>

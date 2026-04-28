@@ -127,8 +127,9 @@
                   Stroke="{StaticResource StrokeColor}">
             <Grid ColumnDefinitions="Auto, *"
                   ColumnSpacing="16"
-                  RowDefinitions="Auto, Auto">
-              <Image Source="calendar"
+                  RowDefinitions="Auto, Auto"
+                  RowSpacing="6">
+              <Image Source="person"
                      Grid.RowSpan="2"
                      VerticalOptions="Center"/>
 

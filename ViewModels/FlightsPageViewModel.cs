@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using AirIQ.Configurations.Mapper;
 using AirIQ.Constants;
+using AirIQ.Helpers;
 using AirIQ.Models;
 using AirIQ.Models.Request;
 using AirIQ.Services.Interfaces;
@@ -17,6 +18,8 @@ namespace AirIQ.ViewModels;
 public partial class FlightsPageViewModel(IViewModelParameters viewModelParameters, IFlightService flightService) : BaseViewModel(viewModelParameters)
 {
     #region [ Properties ]
+
+    private bool initialState = true;
 
     [ObservableProperty]
     private FlightSearchRequest? _flightSearchRequest;
@@ -59,17 +62,32 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
         }
     }
 
+    partial void OnSelectedTravelDateChanged(DateTime value)
+    {
+        if (!initialState)
+        {
+            if (FlightSearchRequest != null)
+            {
+                FlightSearchRequest.DepartureDate = value.ToString("yyyy/MM/dd");
+                _ = IniatializeDataAsync();
+
+            }
+        }
+    }
+
     private async Task IniatializeDataAsync()
     {
         try
         {
             using (LoadingService.Show())
             {
+                initialState = true;
                 SelectedTravelDate = DateTime.Parse(FlightSearchRequest!.DepartureDate!);
                 SourceAirport = FlightSearchRequest.SourceAirport?.OriginRoute;
                 DestinationAirport = FlightSearchRequest.DestinationAirport?.DestinationRoute;
                 var response = await flightService.GetFlightAvailabilityAsync(FlightSearchRequest!);
                 AvailableFlights = new ObservableCollection<Flight>(BackendToAppModelMapper.GetFlights(response));
+                initialState = false;
             }
         }
         catch (Exception ex)
@@ -96,7 +114,7 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
     [RelayCommand]
     private async Task CopyFlightDetail(Flight selectedFlight)
     {
-        await ShowSnackBar("Details are copied");
+        await ShowSnackBar("Details are copied", fontSize: ScalingHelper.ScaleFontSize(16));
     }
 
     #endregion

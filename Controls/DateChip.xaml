@@ -27,9 +27,20 @@
                                  Value="{x:Static enums:AlingmentType.Right}">
                         <Setter Property="Grid.Column"
                                 Value="1"/>
+                        <Setter Property="HorizontalOptions"
+                                Value="End"/>
                         <Setter TargetName="datechiplbl"
                                 Property="Grid.Column"
                                 Value="0"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="Image"
+                                 Binding="{Binding Source={x:Reference Root},Path=ImageAlingment}"
+                                 Value="{x:Static enums:AlingmentType.Left}">
+                        <Setter Property="Margin"
+                                Value="0,0,0,0"/>
+                        <Setter TargetName="datechiplbl"
+                                Property="HorizontalOptions"
+                                Value="End"/>
                     </DataTrigger>
                 </Image.Triggers>
             </Image>

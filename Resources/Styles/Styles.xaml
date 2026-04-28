@@ -241,21 +241,21 @@
                x:Key="Label14MediumGray90Style"
                BasedOn="{StaticResource Label14Medium}">
                 <Setter Property="TextColor"
-                        Value="{AppThemeBinding Light={StaticResource Gray90}, Dark={StaticResource LightGray}}"/>
+                        Value="{StaticResource Gray90}"/>
         </Style>
 
         <Style TargetType="Label"
                x:Key="Label20MediumOnyxStyle"
                BasedOn="{StaticResource Label20Medium}">
                 <Setter Property="TextColor"
-                        Value="{AppThemeBinding Light={StaticResource Onyx}, Dark={StaticResource LightGray}}"/>
+                        Value="{StaticResource Onyx}"/>
         </Style>
 
         <Style TargetType="Label"
                x:Key="Label14RegularGray50Style"
                BasedOn="{StaticResource Label14Regular}">
                 <Setter Property="TextColor"
-                        Value="{AppThemeBinding Light={StaticResource Gray50}, Dark={StaticResource LightGray}}"/>
+                        Value="{StaticResource Gray50}"/>
         </Style>
 
 
@@ -265,12 +265,8 @@
                         Value="RobotoBold"/>
                 <Setter Property="FontSize"
                         Value="28"/>
-                <Setter Property="TextColor">
-                        <Setter.Value>
-                                <AppThemeBinding Dark="{StaticResource PrimaryColorDark}"
-                                                 Light="{StaticResource PrimaryColor}"/>
-                        </Setter.Value>
-                </Setter>
+                <Setter Property="TextColor"
+                        Value="{StaticResource PrimaryColor}"/>
         </Style>
 
         <Style x:Key="BodyLabel"
@@ -279,12 +275,8 @@
                         Value="RobotoRegular"/>
                 <Setter Property="FontSize"
                         Value="16"/>
-                <Setter Property="TextColor">
-                        <Setter.Value>
-                                <AppThemeBinding Dark="{StaticResource LightGray}"
-                                                 Light="{StaticResource DarkGray}"/>
-                        </Setter.Value>
-                </Setter>
+                <Setter Property="TextColor"
+                        Value="{StaticResource DarkGray}"/>
         </Style>
 
         <Style x:Key="TitleStyleBlackBold"
@@ -314,12 +306,8 @@
                         Value="RobotoBold"/>
                 <Setter Property="FontSize"
                         Value="20"/>
-                <Setter Property="TextColor">
-                        <Setter.Value>
-                                <AppThemeBinding Dark="{StaticResource PrimaryColorDark}"
-                                                 Light="{StaticResource Black}"/>
-                        </Setter.Value>
-                </Setter>
+                <Setter Property="TextColor"
+                        Value="{StaticResource Black}"/>
         </Style>
 
         <Style x:Key="SupportLabelStyleBlackRegular"
@@ -328,12 +316,8 @@
                         Value="RobotoRegular"/>
                 <Setter Property="FontSize"
                         Value="12"/>
-                <Setter Property="TextColor">
-                        <Setter.Value>
-                                <AppThemeBinding Dark="{StaticResource PrimaryColorDark}"
-                                                 Light="{StaticResource Black}"/>
-                        </Setter.Value>
-                </Setter>
+                <Setter Property="TextColor"
+                        Value="{StaticResource Black}"/>
                 <Setter Property="VerticalTextAlignment"
                         Value="Center"/>
         </Style>
@@ -360,12 +344,8 @@
                         Value="RobotoBold"/>
                 <Setter Property="FontSize"
                         Value="18"/>
-                <Setter Property="TextColor">
-                        <Setter.Value>
-                                <AppThemeBinding Dark="{StaticResource LightGray}"
-                                                 Light="{StaticResource DarkGray}"/>
-                        </Setter.Value>
-                </Setter>
+                <Setter Property="TextColor"
+                        Value="{StaticResource DarkGray}"/>
                 <Setter Property="VerticalTextAlignment"
                         Value="Center"/>
         </Style>
@@ -376,12 +356,8 @@
                         Value="RobotoMedium"/>
                 <Setter Property="FontSize"
                         Value="12"/>
-                <Setter Property="TextColor">
-                        <Setter.Value>
-                                <AppThemeBinding Dark="{StaticResource LightGray}"
-                                                 Light="{StaticResource DarkGray}"/>
-                        </Setter.Value>
-                </Setter>
+                <Setter Property="TextColor"
+                        Value="{StaticResource DarkGray}"/>
                 <Setter Property="VerticalTextAlignment"
                         Value="Center"/>
         </Style>
@@ -393,7 +369,7 @@
                 <Setter Property="FontSize"
                         Value="{ext:ScaleFontSize Size='12'}"/>
                 <Setter Property="TextColor"
-                        Value="{AppThemeBinding Light={StaticResource Gray50}, Dark={StaticResource LightGray}}"/>
+                        Value="{StaticResource Gray50}"/>
                 <Setter Property="FontFamily"
                         Value="RobotoRegular"/>
         </Style>
@@ -402,7 +378,7 @@
                x:Key="Span16RegularGray50Style">
 
                 <Setter Property="TextColor"
-                        Value="{AppThemeBinding Light={StaticResource Gray50}, Dark={StaticResource LightGray}}"/>
+                        Value="{StaticResource Gray50}"/>
                 <Setter Property="FontSize"
                         Value="{ext:ScaleFontSize Size='16'}"/>
                 <Setter Property="FontFamily"
@@ -414,7 +390,7 @@
                x:Key="Span16BoldPrimaryStyle">
 
                 <Setter Property="TextColor"
-                        Value="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource LightGray}}"/>
+                        Value="{StaticResource PrimaryColor}"/>
                 <Setter Property="FontSize"
                         Value="{ext:ScaleFontSize Size='16'}"/>
                 <Setter Property="FontFamily"
@@ -431,14 +407,12 @@
                         Value="RobotoRegular"/>
                 <Setter Property="FontSize"
                         Value="{ext:ScaleFontSize Size='16'}"/>
-                <Setter Property="TextColor">
-                        <Setter.Value>
-                                <AppThemeBinding Dark="{StaticResource LightGray}"
-                                                 Light="{StaticResource DarkGray}"/>
-                        </Setter.Value>
-                </Setter>
+                <Setter Property="TextColor"
+                        Value="{StaticResource DarkGray}"/>
                 <Setter Property="VerticalTextAlignment"
                         Value="Center"/>
+                <Setter Property="PlaceholderColor"
+                        Value="{StaticResource Gray200}"/>
         </Style>
 
         <!--  ====================  -->
@@ -480,12 +454,10 @@
                         Value="50"/>
                 <Setter Property="TextColor"
                         Value="White"/>
-                <Setter Property="BackgroundColor">
-                        <Setter.Value>
-                                <AppThemeBinding Dark="{StaticResource PrimaryDark}"
-                                                 Light="{StaticResource PrimaryColor}"/>
-                        </Setter.Value>
-                </Setter>
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource PrimaryColor}"/>
+                <Setter Property="CharacterSpacing"
+                        Value="1.25"/>
         </Style>
 
         <Style x:Key="SmallBorderButtonStyle"
@@ -543,12 +515,8 @@
         <Style
                 x:Key="AccentButton"
                 TargetType="Button">
-                <Setter Property="BackgroundColor">
-                        <Setter.Value>
-                                <AppThemeBinding Dark="{StaticResource AccentColorDark}"
-                                                 Light="{StaticResource AccentColor}"/>
-                        </Setter.Value>
-                </Setter>
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource AccentColor}"/>
         </Style>
 
         <!--#region Default MAUI Styles-->
@@ -567,7 +535,7 @@
 
         <Style TargetType="Border">
                 <Setter Property="Stroke"
-                        Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"/>
+                        Value="{StaticResource Gray200}"/>
                 <Setter Property="StrokeShape"
                         Value="Rectangle"/>
                 <Setter Property="StrokeThickness"
@@ -576,14 +544,14 @@
 
         <Style TargetType="BoxView">
                 <Setter Property="BackgroundColor"
-                        Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}"/>
+                        Value="{StaticResource Gray950}"/>
         </Style>
 
         <Style TargetType="Button">
                 <Setter Property="TextColor"
-                        Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"/>
+                        Value="{StaticResource White}"/>
                 <Setter Property="BackgroundColor"
-                        Value="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource PrimaryDark}}"/>
+                        Value="{StaticResource PrimaryColor}"/>
                 <Setter Property="FontFamily"
                         Value="RobotoRegular"/>
                 <Setter Property="FontSize"
@@ -619,7 +587,7 @@
 
         <Style TargetType="CheckBox">
                 <Setter Property="Color"
-                        Value="{AppThemeBinding Light={StaticResource PrimaryColor}, Dark={StaticResource White}}"/>
+                        Value="{StaticResource PrimaryColor}"/>
                 <Setter Property="MinimumHeightRequest"
                         Value="44"/>
                 <Setter Property="MinimumWidthRequest"
@@ -641,7 +609,7 @@
 
         <Style TargetType="DatePicker">
                 <Setter Property="TextColor"
-                        Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}"/>
+                        Value="{StaticResource Gray900}"/>
                 <Setter Property="BackgroundColor"
                         Value="Transparent"/>
                 <Setter Property="FontFamily"
@@ -669,7 +637,7 @@
 
         <Style TargetType="Editor">
                 <Setter Property="TextColor"
-                        Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"/>
+                        Value="{StaticResource Black}"/>
                 <Setter Property="BackgroundColor"
                         Value="Transparent"/>
                 <Setter Property="FontFamily"
@@ -677,7 +645,7 @@
                 <Setter Property="FontSize"
                         Value="14"/>
                 <Setter Property="PlaceholderColor"
-                        Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"/>
+                        Value="{StaticResource Gray200}"/>
                 <Setter Property="MinimumHeightRequest"
                         Value="44"/>
                 <Setter Property="MinimumWidthRequest"
@@ -699,7 +667,7 @@
 
         <Style TargetType="Entry">
                 <Setter Property="TextColor"
-                        Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"/>
+                        Value="Black"/>
                 <Setter Property="BackgroundColor"
                         Value="Transparent"/>
                 <Setter Property="FontFamily"
@@ -707,7 +675,7 @@
                 <Setter Property="FontSize"
                         Value="14"/>
                 <Setter Property="PlaceholderColor"
-                        Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"/>
+                        Value="{StaticResource Gray200}"/>
                 <Setter Property="MinimumHeightRequest"
                         Value="44"/>
                 <Setter Property="MinimumWidthRequest"
@@ -758,7 +726,7 @@
 
         <Style TargetType="Label">
                 <Setter Property="TextColor"
-                        Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"/>
+                        Value="Black"/>
                 <Setter Property="BackgroundColor"
                         Value="Transparent"/>
                 <Setter Property="FontFamily"
@@ -782,7 +750,7 @@
 
         <Style TargetType="Span">
                 <Setter Property="TextColor"
-                        Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"/>
+                        Value="Black"/>
         </Style>
 
         <Style x:Key="Headline"

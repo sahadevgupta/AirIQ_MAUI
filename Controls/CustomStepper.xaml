@@ -13,6 +13,8 @@
                      Clicked="minus_Clicked"/>
 
         <local:BorderlessEntry Text="{Binding Value, Source={x:Reference stepperView}}"
+                               Style="{StaticResource FieldEntryStyleGreyRegular}"
+                               FontAttributes="Bold"
                                MinimumWidthRequest="25"
                                HorizontalTextAlignment="Center"
                                MaxLength="99"

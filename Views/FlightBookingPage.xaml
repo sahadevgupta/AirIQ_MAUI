@@ -142,8 +142,10 @@
                         </Border>
 
                         <Label Text="{x:Static resx:AppResource.TravellerDetails}"
-                               Style="{StaticResource Label18StyleBold}"
+                               Style="{StaticResource Label18Medium}"
+                               CharacterSpacing="1.2"
                                TextColor="{StaticResource PrimaryColor}"
+                               VerticalOptions="Center"
                                Grid.Row="1"/>
 
                         <Button

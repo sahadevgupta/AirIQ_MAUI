@@ -671,5 +671,14 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("Logout", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Book Flight.
+        /// </summary>
+        internal static string BookFlight {
+            get {
+                return ResourceManager.GetString("BookFlight", resourceCulture);
+            }
+        }
     }
 }
