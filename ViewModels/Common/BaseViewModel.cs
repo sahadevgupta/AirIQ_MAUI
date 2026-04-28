@@ -33,6 +33,8 @@ namespace AirIQ.ViewModels.Common
 
         protected void HandleException(Exception exception, string? message = null)
         {
+            Console.WriteLine("ERROR Message : " + message);
+            Console.WriteLine("Exception in VM " + exception);
             SentrySdk.CaptureException(exception);
             ShowToast(exception.Message);
         }

@@ -9,6 +9,10 @@
 	<!-- Custom theme that applies the dropdown style -->
 	<style name="MyTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 		<item name="android:dropDownListViewStyle">@style/DropDownListViewStyle</item>
+		
+		<!-- Recommended Material defaults -->
+        <item name="materialThemeOverlay">@style/ThemeOverlay.MaterialComponents</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
 	</style>
 
 </resources>

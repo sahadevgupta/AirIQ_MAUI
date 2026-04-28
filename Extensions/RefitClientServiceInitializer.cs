@@ -30,10 +30,7 @@ namespace AirIQ.Extensions
             {
                 j.BaseAddress = defaultUri;
             })
-#if DEBUG
-            .AddHttpMessageHandler<HttpMessageLogHandler>()
-#endif
-            ;
+            .AddHttpMessageHandler<HttpMessageLogHandler>();
 
             return builder;
         }

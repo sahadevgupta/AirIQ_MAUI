@@ -18,7 +18,7 @@
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-		<ApplicationVersion>20260426</ApplicationVersion>
+		<ApplicationVersion>202604260</ApplicationVersion>
 
 		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
 		<WindowsPackageType>None</WindowsPackageType>
@@ -62,6 +62,7 @@
 		<PackageReference Include="Sentry.Maui" Version="5.16.2" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
 		<PackageReference Include="Microsoft.Maui.Essentials" Version="10.0.10" />
+		<PackageReference Include="System.Text.Json" Version="10.0.7" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -84,8 +85,8 @@
 		<AndroidPackageFormat>aab</AndroidPackageFormat>
 
 		<!-- Reduce .NET runtime size -->
-		<MauiEnableILLink>false</MauiEnableILLink>
-		<PublishTrimmed>false</PublishTrimmed>
+		<MauiEnableILLink>true</MauiEnableILLink>
+		<PublishTrimmed>true</PublishTrimmed>
 
 		<!-- Remove debugging -->
 		<DebugSymbols>false</DebugSymbols>

@@ -166,12 +166,13 @@ public abstract class BasePage : ContentPage
 			_ = vm.LoadDataWhenOnAppearing();
 		}
 #if ANDROID
+		if (Platform.CurrentActivity is MainActivity activity)
+		{
+			activity.ApplySystemBars(this);
+		}
 		if (this.GetType() == typeof(DashboardPage))
 		{
-			if (Platform.CurrentActivity is MainActivity activity)
-			{
-				activity.ApplySystemBars(this);
-			}
+
 			this.Background = (Brush)Application.Current?.Resources["BrandGradient"]!;
 		}
 #endif
