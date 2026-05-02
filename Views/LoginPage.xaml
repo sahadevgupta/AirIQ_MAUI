@@ -54,7 +54,11 @@
                     Style="{StaticResource Label14RegularGray50Style}"
                     TextColor="{StaticResource Link}"
                     TextDecorations="Underline"
-                    HorizontalOptions="End"/>
+                    HorizontalOptions="End">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
 
 
                 <Button

@@ -187,5 +187,10 @@ public abstract class BasePage : ContentPage
 		}
 	}
 
+	protected override bool OnBackButtonPressed()
+	{
+		return base.OnBackButtonPressed();
+	}
+
 	#endregion
 }

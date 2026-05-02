@@ -71,6 +71,12 @@ namespace AirIQ.ViewModels
             await ShellNavigationService.Navigate<SignupPage>();
         }
 
+        [RelayCommand]
+        private async Task ForgotPassword()
+        {
+            await ShellNavigationService.Navigate<ForgotPasswordPage>();
+        }
+
         #endregion
     }
 }

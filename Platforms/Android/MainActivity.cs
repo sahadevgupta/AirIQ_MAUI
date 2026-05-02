@@ -6,6 +6,7 @@ using Android.Content.PM;
 using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Views;
+using AndroidX.Activity;
 using AndroidX.Core.View;
 using Microsoft.Maui.Controls.Platform;
 using Microsoft.Maui.Platform;
@@ -35,6 +36,8 @@ public class MainActivity : MauiAppCompatActivity
         base.OnCreate(savedInstanceState);
         EnsureWindowInsetsListener();
         ApplySystemBars();
+
+        OnBackPressedDispatcher.AddCallback(this, new BackPressedHandler(true, HandleBackPressed));
     }
 
     protected override void OnResume()
@@ -50,6 +53,20 @@ public class MainActivity : MauiAppCompatActivity
 
         if (hasFocus)
             ApplySystemBars();
+    }
+
+    private void HandleBackPressed()
+    {
+        // Let Shell try to handle it
+        if (Shell.Current?.SendBackButtonPressed() == true)
+            return;
+
+        // Prevent closing the app on LoginPage
+        if (Shell.Current?.CurrentPage is LoginPage)
+            return;
+
+        // default behavior (close app)
+        Finish();
     }
 
     private void EnsureWindowInsetsListener()
@@ -237,5 +254,21 @@ public class MainActivity : MauiAppCompatActivity
             _activity.OnWindowInsetsChanged();
             return insets;
         }
+    }
+}
+
+public class BackPressedHandler : OnBackPressedCallback
+{
+    private readonly Action _callback;
+
+    public BackPressedHandler(bool enabled, Action callback)
+        : base(enabled)
+    {
+        _callback = callback;
+    }
+
+    public override void HandleOnBackPressed()
+    {
+        _callback?.Invoke();
     }
 }

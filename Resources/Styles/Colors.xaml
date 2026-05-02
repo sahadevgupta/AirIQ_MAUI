@@ -77,6 +77,9 @@
     <Color x:Key="BackgroundColor">#F4F4F4</Color>
     <Color x:Key="AshtonSkies">#7b8eb0</Color>
 
+    <Color x:Key="Primary10">#C7E0F1</Color>
+    <Color x:Key="Primary0">#E5F3FE</Color>
+
     <LinearGradientBrush StartPoint="0,0"
                          x:Key="BrandGradient"
                          EndPoint="0,1">
