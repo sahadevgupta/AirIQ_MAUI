@@ -3,94 +3,16 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 x:Class="AirIQ.Views.SignupPage"
                 xmlns:controls="clr-namespace:AirIQ.Controls"
+                xmlns:stepBar="clr-namespace:AirIQ.Controls.StepBar"
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
                 IsNavBarVisible="True"
-                x:DataType="vm:SignupPageViewModel">
+                x:DataType="vm:SignupPageViewModel"
+                PageTitle="Sign Up"
+                BackgroundColor="White">
        <views:BasePage.PageContent>
 
-              <Grid RowDefinitions="*,Auto"
-                    RowSpacing="20"
-                    ColumnDefinitions="*,*"
-                    BackgroundColor="White">
-                     <ScrollView Grid.Row="0"
-                                 Grid.Column="0"
-                                 Grid.ColumnSpan="2"
-                                 Padding="20">
-                            <VerticalStackLayout
-                                   Spacing="20">
-                                   <Image Source="logo"/>
-                                   <Label Text="Agency sign up form"
-                                          Style="{StaticResource Label24Medium}"
-                                          Margin="0,-10,0,0"
-                                          HorizontalTextAlignment="Center"/>
+              <controls:StepBarComponentView Padding="10"/>
 
-
-                                   <controls:StepBarComponentView/>
-
-                                   <Label Text="Personal Information"
-                                          Style="{StaticResource Label18Medium}"
-                                          TextColor="{StaticResource PrimaryColor}"
-                                          LineHeight="1.2"
-                                          TextTransform="Uppercase"
-                                          CharacterSpacing="1.2"
-                                          Margin="0,8,0,0"/>
-
-                                   <controls:ExtendedEntry Title="Company Name"/>
-                                   <controls:ExtendedEntry Title="Full Name"/>
-                                   <controls:ExtendedEntry Title="Phone Number"/>
-                                   <controls:ExtendedEntry Title="WhatsApp Number"/>
-                                   <controls:ExtendedEntry Title="Email Address"/>
-                                   <controls:ExtendedEntry Title="Referred By"/>
-                                   <controls:ExtendedEntry Title="Password"/>
-                                   <controls:ExtendedEntry Title="Confirmed Password"/>
-
-                                   <Label Text="Contact Information"
-                                          Style="{StaticResource Label18Medium}"
-                                          TextColor="{StaticResource PrimaryColor}"
-                                          LineHeight="1.2"
-                                          TextTransform="Uppercase"
-                                          CharacterSpacing="1.2"
-                                          Margin="0,8,0,0"/>
-
-                                   <controls:ExtendedDropdown Title="Country"/>
-                                   <controls:ExtendedDropdown Title="State"/>
-                                   <controls:ExtendedDropdown Title="District"/>
-                                   <controls:ExtendedDropdown Title="City"/>
-                                   <controls:ExtendedEntry Title="Address"/>
-                                   <controls:ExtendedEntry Title="Specify your Locality"/>
-
-                                   <controls:ExtendedEntry Title="Nearest Airport"/>
-
-
-
-                                   <!-- <Image Source="iata_logo"
-                           HorizontalOptions="Center"/>
-
-                    <Border BackgroundColor="#F1F9FF"
-                            Margin="0,0,0,20"
-                            HorizontalOptions="Center"
-                            StrokeShape="RoundRectangle 20"
-                            StrokeThickness="1"
-                            Padding="16,8"
-                            Stroke="{StaticResource PrimaryColor}">
-                        <Label Text="+91 9555 722 722"
-                               CharacterSpacing="0.4"/>
-                    </Border> -->
-                            </VerticalStackLayout>
-                     </ScrollView>
-
-                     <Button Text="Cancel"
-                             Grid.Row="1"
-                             Margin="10"
-                             Style="{StaticResource ButtonCorneredStyle}"/>
-
-                     <Button Text="Submit"
-                             Grid.Row="1"
-                             Grid.Column="1"
-                             Margin="10"
-                             Style="{StaticResource ButtonCorneredStyle}"/>
-
-              </Grid>
        </views:BasePage.PageContent>
 </views:BasePage>

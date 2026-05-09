@@ -1,11 +1,77 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AirIQ.Views.ContentViews.BusinessInformationView">
-    <VerticalStackLayout>
-        <Label
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"/>
-    </VerticalStackLayout>
+             x:Class="AirIQ.Views.ContentViews.BusinessInformationView"
+             xmlns:controls="clr-namespace:AirIQ.Controls">
+        <Grid ColumnDefinitions="*,*"
+              ColumnSpacing="10"
+              RowSpacing="10"
+              RowDefinitions="Auto,Auto">
+
+                <VerticalStackLayout Padding="0,0,10,0"
+                                     Spacing="10"
+                                     Grid.ColumnSpan="2">
+
+                        <Label Text="Business Information"
+                               Style="{StaticResource Label18Medium}"
+                               TextColor="{StaticResource PrimaryColor}"
+                               LineHeight="1.2"
+                               TextTransform="Uppercase"
+                               CharacterSpacing="1.2"
+                               Margin="0,8,0,0"/>
+
+                        <controls:ExtendedDropdown Title="Primary Business"
+                                                   PlaceholderText="Select Primary Business Type"/>
+                        <controls:ExtendedDropdown Title="Monthly Business"
+                                                   PlaceholderText="Select Monthly Business Type"/>
+                        <controls:ExtendedDropdown Title="Secondary Business"
+                                                   PlaceholderText="Select Secondary Business Type"/>
+                        <controls:ExtendedEntry Title="PAN No"
+                                                PlaceholderText="Enter PAN No"/>
+
+                        <Button Text="Verify"
+                                HorizontalOptions="Start"
+                                TextColor="{StaticResource PrimaryColor}"
+                                BackgroundColor="White"
+                                Style="{StaticResource SmallBorderButtonStyle}"/>
+
+                        <controls:ExtendedEntry Title="Company GST No"
+                                                PlaceholderText="Enter Company GST No"/>
+
+                        <Button Text="Verify"
+                                HorizontalOptions="Start"
+                                TextColor="{StaticResource PrimaryColor}"
+                                BackgroundColor="White"
+                                Style="{StaticResource SmallBorderButtonStyle}"/>
+
+                        <controls:ExtendedEntry Title="Online OTAs you are working with ?"
+                                                PlaceholderText="Online OTA 1"/>
+                        <controls:ExtendedEntry PlaceholderText="Online OTA 1"/>
+                        <controls:ExtendedEntry Title="Series OTAs you are working with ?"
+                                                PlaceholderText="Series OTA 1"/>
+                        <controls:ExtendedEntry PlaceholderText="Series OTA 1"/>
+
+                </VerticalStackLayout>
+
+                <Button Text="Cancel"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="0,0,0,20"
+                        TextColor="{StaticResource PrimaryColor}"
+                        BackgroundColor="White"
+                        BorderWidth="1"
+                        BorderColor="{StaticResource PrimaryColor}"
+                        Command="{Binding BackStepCommand}"
+                        Style="{StaticResource ButtonCorneredStyle}"/>
+
+
+                <Button Text="Submit"
+                        Grid.Row="1"
+                        Margin="0,0,0,20"
+                        Grid.Column="1"
+                        TextColor="White"
+                        BackgroundColor="{StaticResource PrimaryColor}"
+                        Command="{Binding NextStepCommand}"
+                        Style="{StaticResource ButtonCorneredStyle}"/>
+        </Grid>
 </ContentView>

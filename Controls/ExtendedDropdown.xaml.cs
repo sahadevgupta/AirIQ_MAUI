@@ -65,7 +65,7 @@ public partial class ExtendedDropdown : ContentView
     ///     Identifies the <see cref="CanEdit" /> bindable property.
     /// </summary>
     public static readonly BindableProperty HasPaddingProperty =
-        BindableProperty.Create(nameof(HasPadding), typeof(bool), typeof(ExtendedDropdown), false);
+        BindableProperty.Create(nameof(HasPadding), typeof(bool), typeof(ExtendedDropdown), true);
 
     /// <summary>
     ///     Identifies the <see cref="OnLoadShowDropdown" /> bindable property.

@@ -1,11 +1,43 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AirIQ.Views.ContentViews.PersonalInformationView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+             x:Class="AirIQ.Views.ContentViews.PersonalInformationView"
+             xmlns:controls="clr-namespace:AirIQ.Controls"
+             BackgroundColor="White">
+    <VerticalStackLayout Spacing="10">
+        <Label Text="Personal Information"
+               Style="{StaticResource Label18Medium}"
+               TextColor="{StaticResource PrimaryColor}"
+               LineHeight="1.2"
+               TextTransform="Uppercase"
+               CharacterSpacing="1.2"
+               Margin="0,8,0,0"/>
+
+        <controls:ExtendedEntry Title="Company Name"
+                                PlaceholderText="Enter Company Name"/>
+        <controls:ExtendedEntry Title="Full Name"
+                                PlaceholderText="Enter Full Name"/>
+        <controls:ExtendedEntry Title="Phone Number"
+                                PlaceholderText="Enter Phone Number"/>
+        <controls:ExtendedEntry Title="WhatsApp Number"
+                                PlaceholderText="Enter WhatsApp Number"/>
+        <controls:ExtendedEntry Title="Email Address"
+                                PlaceholderText="Enter Email Address"/>
+        <controls:ExtendedEntry Title="Referred By"
+                                PlaceholderText="Enter Referred By"/>
+        <controls:ExtendedEntry Title="Password"
+                                PlaceholderText="Enter Password"/>
+
+        <controls:ExtendedEntry Title="Confirmed Password"
+                                PlaceholderText="Enter Confirm Password"/>
+
+        <Button Text="Next"
+                Margin="0,20,0,0"
+                TextColor="White"
+                BackgroundColor="{StaticResource PrimaryColor}"
+                Command="{Binding NextStepCommand}"
+                HorizontalOptions="End"
+                Style="{StaticResource SmallBorderButtonStyle}"/>
+
     </VerticalStackLayout>
 </ContentView>

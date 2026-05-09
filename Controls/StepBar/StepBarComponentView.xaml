@@ -13,23 +13,27 @@
     </ContentView.Resources>
 
 
-    <Grid x:Name="StepBarGrid"
-            ColumnSpacing="0"
-            RowSpacing="0"
-            VerticalOptions="Fill"
-            HorizontalOptions="Fill">
+    <Grid x:Name="Root"
+          Padding="0"
+          RowDefinitions="Auto,*"
+          BackgroundColor="White">
+
         <CollectionView
             x:Name="collectionView"
-            ItemsSource="{Binding Steps, Mode=TwoWay}"
-            VerticalOptions="Fill"
-            HorizontalOptions="Fill"
+            MaximumHeightRequest="60"
             HorizontalScrollBarVisibility="Never"
-            BackgroundColor="Transparent"
-            ItemSizingStrategy="MeasureFirstItem">
+            HorizontalOptions="Center"
+            ItemsSource="{Binding Steps, Mode=TwoWay}">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Horizontal"/>
             </CollectionView.ItemsLayout>
         </CollectionView>
+
+        <ScrollView Grid.Row="1"
+                    VerticalScrollBarVisibility="Never">
+            <ContentView x:Name="MainDynamicContent"/>
+        </ScrollView>
+
     </Grid>
 
 </ContentView>

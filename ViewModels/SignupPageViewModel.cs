@@ -8,6 +8,7 @@ using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
 using AirIQ.Views.ContentViews;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace AirIQ.ViewModels;
 
@@ -31,7 +32,7 @@ public partial class SignupPageViewModel(IViewModelParameters viewModelParameter
         {
             new StepBarModel()
             {
-                StepName=AppResource.PersonalInformation,
+                StepName="Personal",
                 Status=StepBarStatus.InProgress,
                 IsNotLast=true,
                 IsFirst=true,
@@ -40,7 +41,7 @@ public partial class SignupPageViewModel(IViewModelParameters viewModelParameter
             },
             new StepBarModel()
             {
-                StepName=AppResource.ContactInformation,
+                StepName="Contact",
                 Status=StepBarStatus.Pending,
                 IsNotLast=true,
                 IsFirst=false,
@@ -49,7 +50,7 @@ public partial class SignupPageViewModel(IViewModelParameters viewModelParameter
             },
             new StepBarModel()
             {
-                StepName=AppResource.BusinessInformation,
+                StepName="Business",
                 Status=StepBarStatus.Pending,
                 IsNotLast=false,
                 IsFirst=false,
@@ -166,6 +167,59 @@ public partial class SignupPageViewModel(IViewModelParameters viewModelParameter
             AddContentForSelectedStep();
         }
 
+    }
+
+    #endregion
+
+    #region [ Commands ]
+
+    [RelayCommand]
+    private async Task NextStep()
+    {
+        int index = Steps.IndexOf(Steps.LastOrDefault(x => x.IsCurrentContent)!);
+        if (index < Steps.Count)
+        {
+            StepBarModel step = Steps.ElementAt(index);
+            step.Status = StepBarStatus.Completed;
+            step.IsCurrentContent = false;
+
+            if ((index + 1) < Steps.Count)
+            {
+                StepBarModel stepnext = Steps.ElementAt(index + 1);
+                if (stepnext.Status == StepBarStatus.Pending)
+                {
+                    stepnext.Status = StepBarStatus.InProgress;
+                }
+                stepnext.IsCurrentContent = true;
+            }
+        }
+    }
+
+    [RelayCommand]
+    private async Task BackStep()
+    {
+        int index = Steps.IndexOf(Steps.LastOrDefault(x => x.IsCurrentContent));
+        if (index > 0)
+        {
+            StepBarModel step = Steps.ElementAt(index);
+            step.Status = StepBarStatus.Pending;
+            step.IsCurrentContent = false;
+            if ((index - 1) > 0)
+            {
+                StepBarModel stepnext = Steps.ElementAt(index - 1);
+                if (stepnext.Status == StepBarStatus.Completed)
+                {
+                    stepnext.Status = StepBarStatus.InProgress;
+                }
+                stepnext.IsCurrentContent = true;
+            }
+            else
+            {
+                StepBarModel stepnext = Steps.ElementAt(0);
+                stepnext.Status = StepBarStatus.InProgress;
+                stepnext.IsCurrentContent = true;
+            }
+        }
     }
 
     #endregion

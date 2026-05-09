@@ -6,7 +6,7 @@ namespace AirIQ.Models;
 
 public partial class StepBarModel : ObservableObject
 {
-    public int StepID { get; set; }
+    public int Index { get; set; }
     public bool IsNotLast { get; set; }
     public bool IsFirst { get; set; }
     public double ListWidth { get; set; }

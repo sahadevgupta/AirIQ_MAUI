@@ -41,6 +41,7 @@
                                            TextChanged="DropdownTextChanged"
                                            Grid.Row="1"
                                            BackgroundColor="Transparent"
+                                           HasPadding="False"
                                            Grid.Column="1"
                                            FontSize="20"/>
 

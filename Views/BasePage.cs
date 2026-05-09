@@ -34,7 +34,7 @@ public abstract class BasePage : ContentPage
 		_navBar.SetBinding(Controls.NavigationBarControl.BackCommandProperty, new Binding("BackCommand", source: this.BindingContext));
 
 		_content = new ContentView();
-		_content.BackgroundColor = (Color)(Application.Current?.Resources["BackgroundColor"] ?? Colors.White);
+		_content.BackgroundColor = Colors.White;
 
 
 

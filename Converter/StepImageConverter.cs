@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using AirIQ.Enums;
+using AirIQ.Extensions;
 
 namespace AirIQ.Converter;
 
@@ -10,7 +11,14 @@ public class StepImageConverter : IValueConverter
     {
         if (value != null && value.ToString() != "")
         {
-            return value.ToString() == StepBarStatus.Completed.ToString() ? ImageSource.FromFile("circle_plus.png") : (object)"";
+            var fontImage = new FontImageSource
+            {
+                Glyph = FontAwesomeIcons.Check,               // your icon unicode
+                FontFamily = "MyFont",   // or FontAwesome, etc.
+                Color = Colors.White,
+                Size = 24
+            };
+            return value.ToString() == StepBarStatus.Completed.ToString() ? fontImage : (object)"";
         }
         return "";
     }
