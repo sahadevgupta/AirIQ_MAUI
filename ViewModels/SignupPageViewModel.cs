@@ -26,6 +26,30 @@ public partial class SignupPageViewModel(IViewModelParameters viewModelParameter
 
     #region [ Methods & Service Calls ]
 
+    private static ContentView CreateStepContent(int index)
+    {
+        return index switch
+        {
+            0 => new PersonalInformationView(),
+            1 => new ContactInformationView(),
+            2 => new BusinessInformationView(),
+            _ => new ContentView()
+        };
+    }
+
+    private void EnsureStepContentLoaded(int index)
+    {
+        if (index < 0 || index >= Steps.Count)
+        {
+            return;
+        }
+
+        if (Steps[index].MainContent is null)
+        {
+            Steps[index].MainContent = CreateStepContent(index);
+        }
+    }
+
     private void InitializeData()
     {
         Steps = new ObservableCollection<StepBarModel>()
@@ -45,7 +69,6 @@ public partial class SignupPageViewModel(IViewModelParameters viewModelParameter
                 Status=StepBarStatus.Pending,
                 IsNotLast=true,
                 IsFirst=false,
-                MainContent=new ContactInformationView(),
                 IsCurrentContent=false
             },
             new StepBarModel()
@@ -54,7 +77,6 @@ public partial class SignupPageViewModel(IViewModelParameters viewModelParameter
                 Status=StepBarStatus.Pending,
                 IsNotLast=false,
                 IsFirst=false,
-                MainContent=new BusinessInformationView(),
                 IsCurrentContent=false
             }
         };
@@ -69,10 +91,19 @@ public partial class SignupPageViewModel(IViewModelParameters viewModelParameter
 
     public void AddContentForSelectedStep()
     {
-        if (Steps.FirstOrDefault(x => x.IsCurrentContent) != null)
+        StepBarModel? currentStep = Steps.FirstOrDefault(x => x.IsCurrentContent);
+        if (currentStep is null)
         {
-            ContentView content = Steps.FirstOrDefault(x => x.IsCurrentContent).MainContent;
-            bool isNotLast = Steps.FirstOrDefault(x => x.IsCurrentContent).IsNotLast;
+            return;
+        }
+
+        int index = Steps.IndexOf(currentStep);
+        if (index >= 0)
+        {
+            EnsureStepContentLoaded(index);
+
+            ContentView? content = Steps[index].MainContent;
+            bool isNotLast = Steps[index].IsNotLast;
             if (content != null)
             {
                 // if (SubGrid.Children.Count >= 1)
@@ -91,8 +122,13 @@ public partial class SignupPageViewModel(IViewModelParameters viewModelParameter
 
     public void NavigateToBackStep()
     {
+        StepBarModel? currentStep = Steps.LastOrDefault(x => x.IsCurrentContent);
+        if (currentStep is null)
+        {
+            return;
+        }
 
-        int index = Steps.IndexOf(Steps.LastOrDefault(x => x.IsCurrentContent));
+        int index = Steps.IndexOf(currentStep);
         if (index > 0)
         {
             StepBarModel step = Steps.ElementAt(index);
@@ -106,6 +142,7 @@ public partial class SignupPageViewModel(IViewModelParameters viewModelParameter
                 {
                     stepnext.Status = StepBarStatus.InProgress;
                 }
+                EnsureStepContentLoaded(index - 1);
                 stepnext.IsCurrentContent = true;
                 Steps[index - 1] = stepnext;
             }
@@ -115,11 +152,10 @@ public partial class SignupPageViewModel(IViewModelParameters viewModelParameter
 
                 stepnext.Status = StepBarStatus.InProgress;
 
+                EnsureStepContentLoaded(0);
                 stepnext.IsCurrentContent = true;
                 Steps[index - 1] = stepnext;
             }
-
-            StepBarComponentView stepbar = new StepBarComponentView();
             // int indexforstepper = MainGrid.Children.IndexOf(MainGrid.Children.LastOrDefault(x => x.GetType() == typeof(StepBarComponentView)));
             // MainGrid.Children.RemoveAt(indexforstepper);
             // MainGrid.Children.Add(stepbar, 0, 0);
@@ -140,8 +176,14 @@ public partial class SignupPageViewModel(IViewModelParameters viewModelParameter
             // ShippingAddressDesc = shippingAddress.FormatAddress;
             // BillingingAddressDesc = billingAddress?.FormatAddress;
 
-            int index = Steps.IndexOf(Steps.LastOrDefault(x => x.IsCurrentContent));
-            if (index < Steps.Count)
+            StepBarModel? currentStep = Steps.LastOrDefault(x => x.IsCurrentContent);
+            if (currentStep is null)
+            {
+                return;
+            }
+
+            int index = Steps.IndexOf(currentStep);
+            if (index >= 0 && index < Steps.Count)
             {
                 StepBarModel step = Steps.ElementAt(index);
                 step.Status = StepBarStatus.Completed;
@@ -154,11 +196,10 @@ public partial class SignupPageViewModel(IViewModelParameters viewModelParameter
                     {
                         stepnext.Status = StepBarStatus.InProgress;
                     }
+                    EnsureStepContentLoaded(index + 1);
                     stepnext.IsCurrentContent = true;
                     Steps[index + 1] = stepnext;
                 }
-
-                StepBarComponentView stepbar = new StepBarComponentView();
                 // int indexforstepper = MainGrid.Children.IndexOf(MainGrid.Children.FirstOrDefault(x => x.GetType() == typeof(StepBarComponentView)));
                 // MainGrid.Children.RemoveAt(indexforstepper);
 
@@ -176,8 +217,14 @@ public partial class SignupPageViewModel(IViewModelParameters viewModelParameter
     [RelayCommand]
     private async Task NextStep()
     {
-        int index = Steps.IndexOf(Steps.LastOrDefault(x => x.IsCurrentContent)!);
-        if (index < Steps.Count)
+        StepBarModel? currentStep = Steps.LastOrDefault(x => x.IsCurrentContent);
+        if (currentStep is null)
+        {
+            return;
+        }
+
+        int index = Steps.IndexOf(currentStep);
+        if (index >= 0 && index < Steps.Count)
         {
             StepBarModel step = Steps.ElementAt(index);
             step.Status = StepBarStatus.Completed;
@@ -190,6 +237,7 @@ public partial class SignupPageViewModel(IViewModelParameters viewModelParameter
                 {
                     stepnext.Status = StepBarStatus.InProgress;
                 }
+                EnsureStepContentLoaded(index + 1);
                 stepnext.IsCurrentContent = true;
             }
         }
@@ -198,7 +246,13 @@ public partial class SignupPageViewModel(IViewModelParameters viewModelParameter
     [RelayCommand]
     private async Task BackStep()
     {
-        int index = Steps.IndexOf(Steps.LastOrDefault(x => x.IsCurrentContent));
+        StepBarModel? currentStep = Steps.LastOrDefault(x => x.IsCurrentContent);
+        if (currentStep is null)
+        {
+            return;
+        }
+
+        int index = Steps.IndexOf(currentStep);
         if (index > 0)
         {
             StepBarModel step = Steps.ElementAt(index);
@@ -211,12 +265,14 @@ public partial class SignupPageViewModel(IViewModelParameters viewModelParameter
                 {
                     stepnext.Status = StepBarStatus.InProgress;
                 }
+                EnsureStepContentLoaded(index - 1);
                 stepnext.IsCurrentContent = true;
             }
             else
             {
                 StepBarModel stepnext = Steps.ElementAt(0);
                 stepnext.Status = StepBarStatus.InProgress;
+                EnsureStepContentLoaded(0);
                 stepnext.IsCurrentContent = true;
             }
         }
