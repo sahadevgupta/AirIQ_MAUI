@@ -46,7 +46,7 @@
                 <Border StrokeShape="Ellipse"
                         HeightRequest="20"
                         WidthRequest="20"
-                        Stroke="{StaticResource PrimaryColor}"
+                        Stroke="black"
                         BackgroundColor="{Binding Status,Converter={StaticResource StepColorConverter}}">
 
                     <Image Aspect="AspectFill"

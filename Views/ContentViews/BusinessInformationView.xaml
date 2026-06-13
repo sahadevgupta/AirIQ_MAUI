@@ -8,8 +8,7 @@
               RowSpacing="10"
               RowDefinitions="Auto,Auto">
 
-                <VerticalStackLayout Padding="0,0,10,0"
-                                     Spacing="10"
+                <VerticalStackLayout Spacing="10"
                                      Grid.ColumnSpan="2">
 
                         <Label Text="Business Information"
