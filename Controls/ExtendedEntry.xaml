@@ -2,16 +2,15 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirIQ.Controls.ExtendedEntry"
-             xmlns:controls="clr-namespace:AirIQ.Controls"     
+             xmlns:controls="clr-namespace:AirIQ.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Name="customEntryControlWithTitle">
     <Grid RowSpacing="4"
-          RowDefinitions="Auto,Auto,52, Auto">
+          RowDefinitions="Auto,Auto,48, Auto">
 
         <Label x:Name="TitleLabel"
                Grid.Row="0"
                Style="{StaticResource TitleStyleBlackBold}"
-               FontFamily="PoppinsRegular"
                Text="{Binding Title, Source={x:Reference customEntryControlWithTitle}}"
                IsVisible="{Binding Title, Source={x:Reference customEntryControlWithTitle}, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"/>
 
@@ -24,42 +23,67 @@
         <Border Grid.Row="2"
                 BackgroundColor="White"
                 Padding="0"
-                StrokeShape="RoundRectangle 8"
+                Stroke="{StaticResource BorderColor}"
+                StrokeShape="RoundRectangle 6"
                 x:Name="EntryBorder">
 
             <Border.Triggers>
-                <DataTrigger TargetType="Border" Binding="{Binding IsErrorViewVisible, Source={x:Reference customEntryControlWithTitle}}"
+                <DataTrigger TargetType="Border"
+                             Binding="{Binding IsErrorViewVisible, Source={x:Reference customEntryControlWithTitle}}"
                              Value="True">
-                    <Setter Property="Stroke" Value="Red"/>
+                    <Setter Property="Stroke"
+                            Value="Red"/>
                 </DataTrigger>
             </Border.Triggers>
 
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
-                <controls:BorderlessEntry x:Name="InputEntry"  
-                           BackgroundColor="Transparent"
-                           Margin="12,4,0,4"
-                           VerticalTextAlignment="Center"
-                           Placeholder="{Binding PlaceholderText,Source={x:Reference customEntryControlWithTitle}}"     
-                           Text="{Binding Text, Source={x:Reference customEntryControlWithTitle} }"                
-                           Keyboard="{Binding EntryKeyboard, Source={x:Reference customEntryControlWithTitle}}"
-                           ReturnCommand="{Binding ReturnCommand,Source={x:Reference customEntryControlWithTitle}}"
-                           MaxLength="{Binding MaxLength,Source={x:Reference customEntryControlWithTitle}}"
-                           IsReadOnly="{Binding IsReadOnly,Source={x:Reference customEntryControlWithTitle}}"
-                           Style="{StaticResource FieldEntryStyleGreyRegular}"
-                           Focused="InputEntry_Focused"
-                           VerticalOptions="Center">
-                    <controls:BorderlessEntry.Triggers>
-                        <DataTrigger TargetType="controls:BorderlessEntry"
-                                     Binding="{Binding Source={x:Reference img}, Path=IsVisible}"
-                                     Value="False">
-                            <Setter Property="Grid.ColumnSpan" Value="2"/>
-                        </DataTrigger>
-                    </controls:BorderlessEntry.Triggers>
-                </controls:BorderlessEntry>
+            <Grid ColumnDefinitions="*,Auto"
+                  ColumnSpacing="10">
 
-                <Image Source="{Binding Icon,Source={x:Reference customEntryControlWithTitle}}" 
-                       IsVisible="{Binding Icon,Source={x:Reference customEntryControlWithTitle}, Converter={toolkit:IsStringNotNullOrEmptyConverter}}"
-                       x:Name="img"
+
+                <Grid ColumnSpacing="12"
+                      ColumnDefinitions="Auto,*"
+                      BackgroundColor="Transparent"
+                      HorizontalOptions="Fill">
+
+                    <Image Source="{Binding LeftIcon,Source={x:Reference customEntryControlWithTitle}}"
+                           IsVisible="{Binding LeftIcon,Source={x:Reference customEntryControlWithTitle}, Converter={toolkit:IsStringNotNullOrEmptyConverter}}"
+                           x:Name="leftimg"
+                           Margin="12,4,0,4"/>
+
+                    <controls:BorderlessEntry x:Name="InputEntry"
+                                              Grid.Column="1"
+                                              HorizontalOptions="Fill"
+                                              VerticalTextAlignment="Center"
+                                              Placeholder="{Binding PlaceholderText,Source={x:Reference customEntryControlWithTitle}}"
+                                              Text="{Binding Text, Source={x:Reference customEntryControlWithTitle} }"
+                                              Keyboard="{Binding EntryKeyboard, Source={x:Reference customEntryControlWithTitle}}"
+                                              ReturnCommand="{Binding ReturnCommand,Source={x:Reference customEntryControlWithTitle}}"
+                                              MaxLength="{Binding MaxLength,Source={x:Reference customEntryControlWithTitle}}"
+                                              IsReadOnly="{Binding IsReadOnly,Source={x:Reference customEntryControlWithTitle}}"
+                                              Style="{StaticResource FieldEntryStyleGreyRegular}"
+                                              TextChanged="borderlessEntry_TextChanged"
+                                              Focused="InputEntry_Focused"
+                                              VerticalOptions="Center">
+                        <controls:BorderlessEntry.Triggers>
+                            <DataTrigger TargetType="controls:BorderlessEntry"
+                                         Binding="{Binding Source={x:Reference rightimg}, Path=IsVisible}"
+                                         Value="False">
+                                <Setter Property="Grid.ColumnSpan"
+                                        Value="2"/>
+                            </DataTrigger>
+                            <!-- <DataTrigger TargetType="controls:BorderlessEntry"
+                                         Binding="{Binding Source={x:Reference leftimg}, Path=IsVisible}"
+                                         Value="False">
+                                <Setter Property="Margin"
+                                        Value="12,0"/>
+                            </DataTrigger> -->
+                        </controls:BorderlessEntry.Triggers>
+                    </controls:BorderlessEntry>
+                </Grid>
+
+                <Image Source="{Binding RightIcon,Source={x:Reference customEntryControlWithTitle}}"
+                       IsVisible="{Binding RightIcon,Source={x:Reference customEntryControlWithTitle}, Converter={toolkit:IsStringNotNullOrEmptyConverter}}"
+                       x:Name="rightimg"
                        Grid.Column="1"
                        Margin="0,0,12,0">
                     <Image.GestureRecognizers>
@@ -69,7 +93,7 @@
                 </Image>
             </Grid>
         </Border>
-        <Grid Grid.Row="3" 
+        <Grid Grid.Row="3"
               ColumnSpacing="6"
               ColumnDefinitions="Auto,*"
               IsVisible="{Binding IsErrorViewVisible, Source={x:Reference customEntryControlWithTitle}}">

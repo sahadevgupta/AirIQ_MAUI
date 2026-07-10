@@ -11,17 +11,19 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>AirIQ</ApplicationTitle>
+		<ApplicationTitle>AirIQ New</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.airiq</ApplicationId>
+		<ApplicationId>com.companyname.airiq.newUI</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationVersion>202604260</ApplicationVersion>
 
 		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
 		<WindowsPackageType>None</WindowsPackageType>
+
+		<UseMaterial3>true</UseMaterial3>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
@@ -37,12 +39,11 @@
 		<MauiIcon Include="Resources\AppIcon\appicon.png" Color="#ffffff" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\appsplash.png" Color="White" BaseSize="256,256" Condition="$(TargetFramework.Contains('-ios'))" />
+		<MauiSplashScreen Include="Resources\Splash\splash_screen.svg" Condition="$(TargetFramework.Contains('-ios'))" />
 		<MauiSplashScreen Include="Resources\Splash\appsplash.png" Color="White" Condition="$(TargetFramework.Contains('-android'))" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
 		
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -61,22 +62,10 @@
 		<PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
 		<PackageReference Include="Refit.Newtonsoft.Json" Version="8.0.0" />
 		<PackageReference Include="Sentry.Maui" Version="5.16.2" />
+		<PackageReference Include="Syncfusion.Maui.Toolkit" Version="1.0.9" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
-		<PackageReference Include="Microsoft.Maui.Essentials" value="10.0.10">
-		  <Version>10.0.10</Version>
-		  <Version>10.0.10</Version>
-		</PackageReference>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Compile Update="Popups/SessionExpiryPopup.xaml.cs">
-	    <DependentUpon>SessionExpiryPopup.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Resources\Strings\AppResource.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>AppResource.resx</DependentUpon>
-	  </Compile>
+		<PackageReference Include="Microsoft.Maui.Essentials" Version="10.0.10" />
+		<PackageReference Include="System.Text.Json" Version="10.0.7" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -85,5 +74,61 @@
 	    <LastGenOutput>AppResource.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	</ItemGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
+		
+
+		<!-- <AndroidKeyStore>true</AndroidKeyStore>
+		<AndroidSigningKeyStore>Platforms/Android/KeyStore/Pulse.keystore</AndroidSigningKeyStore>
+		<AndroidSigningKeyAlias>Pulse</AndroidSigningKeyAlias>
+		<AndroidSigningKeyPass>1234567890</AndroidSigningKeyPass>
+		<AndroidSigningStorePass>1234567890</AndroidSigningStorePass> -->
+
+		<!-- Reduce size -->
+		<AndroidPackageFormat>aab</AndroidPackageFormat>
+
+		<!-- Reduce .NET runtime size -->
+		<MauiEnableILLink>true</MauiEnableILLink>
+		<PublishTrimmed>true</PublishTrimmed>
+
+		<!-- Remove debugging -->
+		<DebugSymbols>false</DebugSymbols>
+		<DebugType>none</DebugType>
+
+		<!-- Disable AOT to save 20–30MB -->
+		<RunAOTCompilation>false</RunAOTCompilation>
+		<AndroidLinkMode>SdkOnly</AndroidLinkMode>
+		<AndroidLinkTool>r8</AndroidLinkTool>
+		<AndroidUseAapt2>true</AndroidUseAapt2>
+
+		<AndroidPackageFormat>aab</AndroidPackageFormat>
+			
+		<!-- <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+		<MauiEnableTracing>false</MauiEnableTracing>
+		<EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+		<AndroidStripNativeDebugSymbols>true</AndroidStripNativeDebugSymbols>
+		
+
+		<AndroidLinkMode>SdkOnly</AndroidLinkMode>
+		<AndroidLinkTool>r8</AndroidLinkTool>
+		<RunAOTCompilation>false</RunAOTCompilation>
+		<AndroidUseAapt2>true</AndroidUseAapt2> -->
+
+		<!-- <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk> -->
+
+		<!-- SAFE TRIMMING -->
+		<!-- <PublishTrimmed>true</PublishTrimmed>
+		<TrimMode>link</TrimMode> -->
+
+		<!-- <InvariantGlobalization>false</InvariantGlobalization>  -->
+		<!-- Required for many cultures -->
+
+		<!-- LINKING -->
+		<!-- <AndroidLinkMode>SdkOnly</AndroidLinkMode>
+		<AndroidLinkTool>r8</AndroidLinkTool>
+
+		<RunAOTCompilation>false</RunAOTCompilation> -->
+
+	</PropertyGroup>
 
 </Project>

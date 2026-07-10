@@ -11,8 +11,8 @@ public partial class DashboardPage : BasePage
 		BindingContext = viewModel;
 	}
 
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-    }
+	protected override void OnAppearing()
+	{
+		base.OnAppearing();
+	}
 }

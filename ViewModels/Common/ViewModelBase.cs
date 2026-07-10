@@ -1,9 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AirIQ.ViewModels.Common
 {
@@ -26,12 +21,12 @@ namespace AirIQ.ViewModels.Common
 
         private async Task OnPageDisappearing()
         {
-            await LoadDataWhenDisAppearingTo();
+            await LoadDataWhenOnDisappearing();
         }
 
         private async Task OnPageAppearing()
         {
-            await LoadDataWhenAppearingTo();
+            await LoadDataWhenOnAppearing();
         }
 
         public virtual Task OnNavigatedTo(object parameter)
@@ -63,7 +58,7 @@ namespace AirIQ.ViewModels.Common
         {
             if (!IsLoaded)
             {
-                await LoadDataWhenAppearingTo();
+                await LoadDataWhenOnAppearing();
                 IsLoaded = true;
             }
         }
@@ -77,11 +72,11 @@ namespace AirIQ.ViewModels.Common
         {
             return Task.CompletedTask;
         }
-        public virtual Task LoadDataWhenAppearingTo()
+        public virtual Task LoadDataWhenOnAppearing()
         {
             return Task.CompletedTask;
         }
-        public virtual Task LoadDataWhenDisAppearingTo()
+        public virtual Task LoadDataWhenOnDisappearing()
         {
             return Task.CompletedTask;
         }

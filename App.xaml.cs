@@ -9,8 +9,8 @@ namespace AirIQ
 {
     public partial class App : Application
     {
-        readonly INavigationService _navigationService;
-        public App(INavigationService navigationService)
+        readonly IShellNavigationService _navigationService;
+        public App(IShellNavigationService navigationService)
         {
             InitializeComponent();
             _navigationService = navigationService;
@@ -18,20 +18,27 @@ namespace AirIQ
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            var window = new Window(new NavigationPage(new LoadingIndicatorView()));
+            var window = new Window(new AppShell());
 
             window.Created += (s, e) =>
             {
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {
-                    if (AppConfiguration.IsLoggedInUser)
+                    try
                     {
-                        AppConfiguration.CurrentUser = JsonConvert.DeserializeObject<UserDto>(AppConfiguration.UserDetails);
-                        window.Page = new AppShell();
+                        if (AppConfiguration.IsLoggedInUser)
+                        {
+                            AppConfiguration.CurrentUser = JsonConvert.DeserializeObject<UserDto>(AppConfiguration.UserDetails);
+                            await Shell.Current.GoToAsync("//app/home");
+                        }
+                        else
+                        {
+                            await _navigationService.Navigate<LoginPage>(true);
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        await _navigationService.Navigate(NavigationConstants.Login);
+                        SentrySdk.CaptureException(ex);
                     }
                 });
             };

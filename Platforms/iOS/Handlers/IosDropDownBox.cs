@@ -73,13 +73,13 @@ namespace AirIQ.Platforms.iOS.Handlers
                 AutocorrectionType = UITextAutocorrectionType.No,
                 BackgroundColor = Colors.Transparent.ToPlatform()
             };
-            var leftPaddingView = new UIView(new CGRect(0, 0, 16, InputTextField.Frame.Height));
-            var rightPaddingView = new UIView(new CGRect(0, 0, 38, InputTextField.Frame.Height));
+            // var leftPaddingView = new UIView(new CGRect(0, 0, 16, InputTextField.Frame.Height));
+            // var rightPaddingView = new UIView(new CGRect(0, 0, 38, InputTextField.Frame.Height));
 
-            InputTextField.LeftView = leftPaddingView;
-            InputTextField.LeftViewMode = UITextFieldViewMode.Always;
-            InputTextField.RightView = rightPaddingView;
-            InputTextField.RightViewMode = UITextFieldViewMode.Always;
+            // InputTextField.LeftView = leftPaddingView;
+            // InputTextField.LeftViewMode = UITextFieldViewMode.Always;
+            // InputTextField.RightView = rightPaddingView;
+            // InputTextField.RightViewMode = UITextFieldViewMode.Always;
 
             InputTextField.EditingDidBegin += InputTextField_EditingDidBegin;
             InputTextField.EditingDidEnd += InputTextField_EditingDidEnd;

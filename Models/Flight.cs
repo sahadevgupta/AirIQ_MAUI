@@ -42,9 +42,39 @@ public class Flight
     {
         get
         {
-            var airline = Airline?.Replace(" ", "");
+            var result = FlightNumber?.Split(" ");
 
-            return $"https://logo.clearbit.com/{airline}.com";
-        } 
+            return $"https://airiq.in/img/airlinelogos/{result[0]}.png";
+        }
+    }
+
+    public DateTime? DepartureDateTime
+    {
+        get
+        {
+            DateTime.TryParse(DepartureDate, out DateTime result);
+            return result;
+        }
+    }
+
+    public DateTime? ArrivalDateTime
+    {
+        get
+        {
+            DateTime.TryParse(DepartureDate, out DateTime result);
+            return result;
+        }
+    }
+
+    public string TotalDuration
+    {
+        get
+        {
+            DateTime departure = DateTime.Parse($"{DepartureDate} {DepartureTime}");
+            DateTime arrival = DateTime.Parse($"{ArrivalDate} {ArrivalTime}");
+
+            TimeSpan duration = arrival - departure;
+            return $"{duration.Hours}hr {duration.Minutes}min";
+        }
     }
 }

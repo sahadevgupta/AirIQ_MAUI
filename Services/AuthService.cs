@@ -24,7 +24,7 @@ IPopupNavigation popupNavigation) : IAuthService
 
             if (_authInfo == null)
             {
-                throw new Exception();  //AuthServiceInteractiveLogonRequiredException("No cached credentials available");
+                throw new Exception("No cached credentials available");
             }
 
             if (!IsAuthInfoValid(_authInfo))
@@ -37,7 +37,7 @@ IPopupNavigation popupNavigation) : IAuthService
                     BindingContext = vm
                 };
 
-               await MainThread.InvokeOnMainThreadAsync(async() =>
+                await MainThread.InvokeOnMainThreadAsync(async () =>
                 {
                     await popupNavigation.PushAsync(sessionExpiryPopup);
                     bool result = await vm.SessionResponseTask;

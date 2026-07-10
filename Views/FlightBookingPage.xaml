@@ -4,349 +4,197 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:AirIQ.Controls"
+    xmlns:dataTemplates="clr-namespace:AirIQ.Controls.TemplateSelector"
+    xmlns:ext="clr-namespace:AirIQ.Extensions"
     xmlns:enums="clr-namespace:AirIQ.Enums"
     xmlns:helpers="clr-namespace:AirIQ.Extensions"
+    xmlns:local="clr-namespace:AirIQ.Views.ContentViews"
     xmlns:models="clr-namespace:AirIQ.Models"
     xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodels="clr-namespace:AirIQ.ViewModels"
     xmlns:views="clr-namespace:AirIQ.Views"
-    Title="FlightBookingPage"
-    x:DataType="viewmodels:FlightBookingPageViewModel">
+    PageTitle="Travel Details"
+    x:DataType="viewmodels:FlightBookingPageViewModel"
+    Shell.TabBarIsVisible="False">
+
+    <views:BasePage.Resources>
+        <ResourceDictionary>
+
+            <DataTemplate x:DataType="models:Passenger"
+                          x:Key="adultTemplate">
+                <local:AdultPassengerContentView SaveCommand="{Binding BindingContext.CanSaveExecuteCommand,Source={x:Reference passengerList}}"/>
+            </DataTemplate>
+
+            <DataTemplate x:DataType="models:Passenger"
+                          x:Key="infantTemplate">
+                <local:InfantPassengerContentView SaveCommand="{Binding BindingContext.CanSaveExecuteCommand,Source={x:Reference passengerList}}"/>
+            </DataTemplate>
+
+            <dataTemplates:PassengerTemplateSelector AdultTemplate="{StaticResource adultTemplate}"
+                                                     InfantTemplate="{StaticResource infantTemplate}"
+                                                     x:Key="PassengerTemplateSelector"/>
+
+        </ResourceDictionary>
+    </views:BasePage.Resources>
 
     <views:BasePage.PageContent>
 
-        <Grid
-            ColumnDefinitions="*"
-            ColumnSpacing="20"
-            RowDefinitions="Auto,Auto,Auto,*,Auto"
-            RowSpacing="10">
+        <Grid RowDefinitions="*,Auto,Auto"
+              RowSpacing="10">
+            <CollectionView ItemsSource="{Binding Passengers}"
+                            ItemTemplate="{StaticResource PassengerTemplateSelector}"
+                            BackgroundColor="White"
+                            x:Name="passengerList">
+                <CollectionView.Header>
+                    <Grid Margin="10"
+                          RowDefinitions="Auto,Auto"
+                          RowSpacing="8">
+                        <Border BackgroundColor="#E8E8E8"
+                                StrokeShape="RoundRectangle 8"
+                                Stroke="{StaticResource BorderColor}">
 
+                            <Grid RowDefinitions="Auto,Auto">
 
-            <Border
-                Padding="20,0"
-                BackgroundColor="{StaticResource PrimaryColor}"
-                StrokeShape="RoundRectangle 0,0,20,20"
-                StrokeThickness="0">
+                                <HorizontalStackLayout HorizontalOptions="Start"
+                                                       Spacing="10"
+                                                       Padding="16,10">
+                                    <Image Source="{Binding SelectedAirline.AirlineLogoUrl}"
+                                           HeightRequest="30"/>
 
-                <!--  Title  -->
-                <Label
-                    Grid.Column="1"
-                    FontAttributes="Bold"
-                    FontSize="26"
-                    Text="Booking Details"
-                    TextColor="White"
-                    VerticalOptions="Start" />
+                                    <Label Text="{Binding SelectedAirline.Airline}"
+                                           VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
 
-            </Border>
+                                <HorizontalStackLayout HorizontalOptions="End"
+                                                       Padding="16,10"
+                                                       Spacing="0">
+                                    <Image Source="calendar"
+                                           VerticalOptions="Center"
+                                           HeightRequest="24"/>
 
-            <!--  Flight Card  -->
-            <Border
-                Grid.Row="0"
-                Grid.RowSpan="1"
-                Margin="20,0"
-                Padding="20"
-                BackgroundColor="White"
-                StrokeShape="RoundRectangle 20"
-                TranslationY="50"
-                VerticalOptions="End">
+                                    <Label Text="{Binding SelectedAirline.DepartureDateTime,StringFormat='{0: dd MMM, yyyy}'}"
+                                           VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
 
-                <Grid
-                    ColumnDefinitions="Auto,*,Auto"
-                    ColumnSpacing="15"
-                    RowDefinitions="Auto,Auto">
+                                <Grid Grid.Row="1"
+                                      Padding="16"
+                                      ColumnDefinitions="2*,6*,2*"
+                                      BackgroundColor="White">
 
-                    <!--  Airline Logo  -->
-                    <Image
-                        Grid.RowSpan="2"
-                        HeightRequest="50"
-                        Source="{Binding SelectedAirline.AirlineLogoUrl}"
-                        VerticalOptions="Start"
-                        WidthRequest="50" />
+                                    <Label Grid.Row="0"
+                                           VerticalTextAlignment="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding SelectedAirline.DepartureTime}"
+                                                      Style="{StaticResource Label20MediumOnyxStyle}"
+                                                      TextColor="Black"/>
+                                                <Span Text="&#10; "/>
+                                                <Span Text="{Binding SelectedAirline.Origin}"
+                                                      Style="{StaticResource Label14RegularGray50Style}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
 
-                    <!--  Airline Name  -->
-                    <Label Grid.Column="1">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span
-                                    Style="{StaticResource TitleStyleBlackBold}"
-                                    Text="{Binding SelectedAirline.Airline}"
-                                    TextColor="Black" />
-                                <Span Text=" | " />
-                                <Span
-                                    FontAttributes="None"
-                                    Style="{StaticResource TitleStyleBlackBold}"
-                                    Text="{Binding SelectedAirline.FlightNumber}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-
-                    <!--  Price  -->
-                    <Label
-                        Grid.Column="2"
-                        CharacterSpacing="1.1"
-                        FontSize="18"
-                        HorizontalTextAlignment="End"
-                        Style="{StaticResource TitleStyleBlackBold}"
-                        Text="{Binding SelectedAirline.Price, StringFormat='₹ {0}'}"
-                        TextColor="{StaticResource PrimaryColor}"
-                        VerticalOptions="Start" />
-
-                    <!--  Times  -->
-                    <Grid
-                        Grid.Row="1"
-                        Grid.ColumnSpan="3"
-                        Margin="0,10,0,0"
-                        ColumnDefinitions="*,*">
-
-                        <!--  Departure  -->
-                        <VerticalStackLayout>
-                            <Label
-                                FontSize="28"
-                                Style="{StaticResource HeaderTitleStyleBlackBold}"
-                                Text="{Binding SelectedAirline.DepartureTime}"
-                                TextColor="Black" />
-                            <Label
-                                FontSize="13"
-                                Text="{Binding SelectedAirline.Origin}"
-                                TextColor="#777" />
-                        </VerticalStackLayout>
-
-                        <Label
-                            Grid.ColumnSpan="2"
-                            HorizontalTextAlignment="Center"
-                            Style="{StaticResource SupportLabelStyleBlackRegular}"
-                            Text="{Binding SelectedAirline.FlightRoute}"
-                            TextColor="#777"
-                            VerticalTextAlignment="Center" />
-
-                        <!--  Arrival  -->
-                        <VerticalStackLayout Grid.Column="1">
-                            <Label
-                                FontSize="28"
-                                HorizontalTextAlignment="End"
-                                Style="{StaticResource Label18StyleBold}"
-                                Text="{Binding SelectedAirline.ArrivalTime}"
-                                TextColor="Black" />
-                            <Label
-                                FontSize="13"
-                                HorizontalTextAlignment="End"
-                                Text="{Binding SelectedAirline.Destination}"
-                                TextColor="#777" />
-                        </VerticalStackLayout>
-                    </Grid>
-                </Grid>
-            </Border>
-
-            <!--  Passenger Details  -->
-            <Label
-                Grid.Row="2"
-                Margin="0,20,0,0"
-                Padding="20"
-                FontSize="20"
-                Style="{StaticResource Label14StyleBlack}"
-                Text="Passenger Details"
-                TextColor="Black"
-                VerticalOptions="Center" />
-
-            <Button
-                Grid.Row="2"
-                Margin="0,25,10,0"
-                Command="{Binding AddInfantPassengerCommand}"
-                HorizontalOptions="End"
-                Text="Add Infant"
-                VerticalOptions="Center">
-                <Button.ImageSource>
-                    <FontImageSource
-                        FontFamily="MyFont"
-                        Glyph="{x:Static helpers:FontAwesomeIcons.Plus}"
-                        Size="14"
-                        Color="White" />
-                </Button.ImageSource>
-            </Button>
-
-            <CollectionView
-                x:Name="passengerList"
-                Grid.Row="3"
-                Margin="10,0"
-                ItemsSource="{Binding AdultPassengers}"
-                SelectionMode="None">
-
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
-                </CollectionView.ItemsLayout>
-
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Passenger">
-
-                        <toolkit:Expander IsExpanded="{Binding IsSectionOpen, Mode=TwoWay}">
-                            <toolkit:Expander.Header>
-
-                                <Border
-                                    BackgroundColor="#EDF2FA"
-                                    Stroke="{StaticResource BorderColor}"
-                                    StrokeShape="RoundRectangle 8"
-                                    StrokeThickness="1">
-                                    <Grid
-                                        Padding="10"
-                                        ColumnDefinitions="Auto,*,Auto"
-                                        ColumnSpacing="10">
-
-                                        <Label
-                                            FontSize="16"
-                                            Style="{StaticResource Label18StyleBold}"
-                                            Text="{Binding Header}"
-                                            TextColor="Black"
-                                            VerticalOptions="Center" />
-
-
-                                        <Image
-                                            Grid.Column="2"
-                                            Aspect="Center"
-                                            Source="arrow_down.png">
-                                            <Image.Triggers>
-                                                <DataTrigger
-                                                    Binding="{Binding IsExpanded}"
-                                                    TargetType="Image"
-                                                    Value="True">
-                                                    <Setter Property="Rotation" Value="180" />
-                                                </DataTrigger>
-                                            </Image.Triggers>
-                                        </Image>
-
-                                    </Grid>
-                                </Border>
-                            </toolkit:Expander.Header>
-                            <Border
-                                Margin="0,10,0,0"
-                                Padding="10"
-                                BackgroundColor="White"
-                                Stroke="{StaticResource BorderColor}"
-                                StrokeShape="RoundRectangle 8">
-                                <Grid
-                                    ColumnDefinitions="*,*"
-                                    ColumnSpacing="10"
-                                    RowDefinitions="Auto,Auto">
-                                    <controls:ExtendedDropdown PlaceholderText="Type" SelectedItem="{Binding SelectedPassengerType}">
-                                        <controls:ExtendedDropdown.ItemsSource>
-                                            <x:Array Type="{x:Type x:String}">
-                                                <x:String>Adult</x:String>
-                                                <x:String>Child</x:String>
-                                            </x:Array>
-                                        </controls:ExtendedDropdown.ItemsSource>
-                                    </controls:ExtendedDropdown>
-                                    <controls:ExtendedDropdown
+                                    <VerticalStackLayout
                                         Grid.Column="1"
-                                        ItemsSource="{Binding BindingContext.PassengerTitles, Source={x:Reference passengerList}}"
-                                        PlaceholderText="Title"
-                                        SelectedItem="{Binding SelectedTitle}" />
+                                        Grid.Row="1">
 
-                                    <controls:ExtendedEntry
-                                        Grid.Row="1"
-                                        Grid.Column="0"
-                                        PlaceholderText="First Name"
-                                        Text="{Binding FirstName}" />
-                                    <controls:ExtendedEntry
-                                        Grid.Row="1"
-                                        Grid.Column="1"
-                                        PlaceholderText="Last Name"
-                                        Text="{Binding LastName}" />
+                                        <Image Source="flight_route"/>
+
+                                        <Label HorizontalOptions="Center"
+                                               VerticalTextAlignment="Center">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding SelectedAirline.TotalDuration}"
+                                                          Style="{StaticResource Span12RegularGray50Style}"
+                                                          FontSize="14"/>
+                                                    <Span Text=" | "
+                                                          Style="{StaticResource Span12RegularGray50Style}"
+                                                          FontSize="14"/>
+                                                    <Span Text="{Binding SelectedAirline.FlightRoute}"
+                                                          Style="{StaticResource Span12RegularGray50Style}"
+                                                          FontSize="14"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+
+                                    </VerticalStackLayout>
+
+                                    <Label Grid.Row="0"
+                                           Grid.Column="2"
+                                           HorizontalOptions="End"
+                                           VerticalTextAlignment="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding SelectedAirline.ArrivalTime}"
+                                                      Style="{StaticResource Label20MediumOnyxStyle}"
+                                                      TextColor="Black"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="{Binding SelectedAirline.Destination}"
+                                                      Style="{StaticResource Label14RegularGray50Style}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
                                 </Grid>
-                            </Border>
-                        </toolkit:Expander>
+                            </Grid>
 
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
+                        </Border>
 
-                <CollectionView.Footer>
+                        <Label Text="{x:Static resx:AppResource.TravellerDetails}"
+                               Style="{StaticResource Label18Medium}"
+                               CharacterSpacing="1.2"
+                               TextColor="{StaticResource PrimaryColor}"
+                               VerticalOptions="Center"
+                               Grid.Row="1"/>
 
-                    <Grid Margin="0,10" RowDefinitions="Auto,Auto">
-
-                        <Label
-                            Padding="10"
-                            FontSize="16"
-                            Style="{StaticResource Label18StyleBold}"
-                            Text="Infant Passenger"
-                            TextColor="Black"
-                            VerticalOptions="Center" />
-
-                        <!--  Infant Passenger List View  -->
-
-
-                        <VerticalStackLayout
+                        <Button
                             Grid.Row="1"
-                            Padding="10,0,10,10"
-                            BindableLayout.ItemsSource="{Binding InfantPassengers}"
-                            Spacing="10">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="models:Passenger">
-                                    <Border
-                                        Padding="10"
-                                        BackgroundColor="White"
-                                        Stroke="{StaticResource BorderColor}"
-                                        StrokeShape="RoundRectangle 8">
-                                        <Grid
-                                            BackgroundColor="White"
-                                            ColumnDefinitions="*,*"
-                                            ColumnSpacing="10"
-                                            RowDefinitions="Auto,Auto">
-
-                                            <controls:ExtendedDropdown
-                                                Grid.Column="0"
-                                                PlaceholderText="Title"
-                                                SelectedItem="{Binding Title}">
-                                                <controls:ExtendedDropdown.ItemsSource>
-                                                    <x:Array Type="{x:Type x:String}">
-                                                        <x:String>Mstr.</x:String>
-                                                        <x:String>Miss.</x:String>
-                                                    </x:Array>
-                                                </controls:ExtendedDropdown.ItemsSource>
-                                            </controls:ExtendedDropdown>
-
-                                            <controls:ExtendedDropdown
-                                                Grid.Column="1"
-                                                ItemsSource="{Binding BindingContext.InfantTravelPartners, Source={x:Reference passengerList}}"
-                                                PlaceholderText="Title"
-                                                SelectedItem="{Binding TravelWith}" />
-
-                                            <controls:ExtendedEntry
-                                                Title="First Name"
-                                                Grid.Row="1"
-                                                Grid.Column="0"
-                                                Text="{Binding FirstName, Mode=TwoWay}" />
-
-                                            <controls:ExtendedEntry
-                                                Title="Last Name"
-                                                Grid.Row="1"
-                                                Grid.Column="1"
-                                                Text="{Binding LastName, Mode=TwoWay}" />
-                                        </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </VerticalStackLayout>
-
-                        <Grid.Triggers>
-                            <DataTrigger
-                                Binding="{Binding InfantPassengers.Count}"
-                                TargetType="Grid"
-                                Value="0">
-                                <Setter Property="IsVisible" Value="false" />
-                            </DataTrigger>
-                        </Grid.Triggers>
+                            Style="{StaticResource SmallBorderButtonStyle}"
+                            BackgroundColor="{StaticResource PrimaryColor}"
+                            TextColor="White"
+                            Command="{Binding AddInfantPassengerCommand}"
+                            HorizontalOptions="End"
+                            Text="{x:Static resx:AppResource.AddInfant}"
+                            VerticalOptions="Center">
+                            <Button.ImageSource>
+                                <FontImageSource
+                                    FontFamily="MyFont"
+                                    Glyph="{x:Static helpers:FontAwesomeIcons.Plus}"
+                                    Size="14"
+                                    Color="White"/>
+                            </Button.ImageSource>
+                        </Button>
 
                     </Grid>
-
-                </CollectionView.Footer>
+                </CollectionView.Header>
 
             </CollectionView>
 
+            <HorizontalStackLayout Grid.Row="1">
+
+                <CheckBox IsChecked="{Binding IsTermChecked}"/>
+
+                <Label VerticalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{x:Static resx:AppResource.READAndAGREE}"/>
+                            <Span Text=" "/>
+                            <Span Text="{x:Static resx:AppResource.TermsAndConditions}"
+                                  TextColor="{StaticResource PrimaryColor}"
+                                  TextDecorations="Underline"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </HorizontalStackLayout >
+
             <Button
-                Grid.Row="4"
-                Margin="0,5,0,10"
+                Grid.Row="2"
+                Margin="10,-10,10,10"
                 Text="{x:Static resx:AppResource.ConfirmBooking}"
                 Command="{Binding ConfirmBookingCommand}"
-                VerticalOptions="End" />
+                Style="{StaticResource ButtonCorneredStyle}"
+                VerticalOptions="End"/>
         </Grid>
     </views:BasePage.PageContent>
 

@@ -1,15 +1,15 @@
-﻿using AirIQ.Constants;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Text.Json;
+using AirIQ.Constants;
 using AirIQ.Enums;
 using AirIQ.Models;
 using AirIQ.Models.Request;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
-using AirIQ.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 
 namespace AirIQ.ViewModels;
 
@@ -20,17 +20,13 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
     #region [ Properties ]
 
     [ObservableProperty]
-    private Flight _selectedAirline;
+    private Flight? _selectedAirline;
 
     [ObservableProperty]
     private FlightSearchRequest? _flightSearchRequest;
 
     [ObservableProperty]
-    private ObservableCollection<Passenger>? _adultPassengers;
-
-
-    [ObservableProperty]
-    private ObservableCollection<Infant>? _infantPassengers = new();
+    private ObservableCollection<Passenger>? _passengers;
 
     [ObservableProperty]
     private ObservableCollection<string>? _infantTravelPartners = new();
@@ -44,6 +40,9 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
         StringConstants.Mstr,
         StringConstants.Miss
     };
+
+    [ObservableProperty]
+    private bool _isTermChecked;
 
     private int? adultCount;
 
@@ -65,29 +64,33 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
 
                 if (SelectedAirline != null)
                 {
-                    AdultPassengers = new ObservableCollection<Passenger>();
+                    var tempPassengers = new List<Passenger>();
                     for (int i = 1; i <= adultCount; i++)
                     {
                         var passenger = new Passenger
                         {
                             Id = i,
-                            Header = $"Passenger {i}",
+                            Header = $"{PassengerType.Adult} #{i}",
                             Type = PassengerType.Adult,
                             IsSectionOpen = i == 1 ? true : false
                         };
                         passenger.PropertyChanged += OnPassengerPropertyChanged;
-                        AdultPassengers.Add(passenger);
+                        tempPassengers.Add(passenger);
                     }
 
-                    InfantTravelPartners = new ObservableCollection<string>(AdultPassengers.Where(p => p.Type == PassengerType.Adult)
-                                                                                            .Select(a => a.Header.Replace("Passenger", "Adult")));
+                    Passengers = new ObservableCollection<Passenger>(tempPassengers);
+
+                    InfantTravelPartners = new ObservableCollection<string>(tempPassengers.Where(p => p.Type == PassengerType.Adult)
+                                                                                          .Select(a => a.Header.Replace("Passenger", "Adult")));
+
+                    AddInfantPassengerCommand.NotifyCanExecuteChanged();
 
                 }
             }
         }
         catch (Exception ex)
         {
-            // Handle exceptions
+            HandleException(ex);
         }
 
     }
@@ -134,7 +137,8 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
 
     private bool CanAddInfant()
     {
-        return InfantPassengers?.Count < adultCount;
+        var infantPassengers = Passengers?.Where(p => p.Type == PassengerType.Infant);
+        return infantPassengers?.Count() < adultCount;
     }
 
 
@@ -143,80 +147,113 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
     #region [ Commands ]
 
     [RelayCommand]
-    private async Task ConfirmBooking()
+    private void CanSaveExecute(Passenger passenger)
     {
-        using (LoadingService.Show())
+        try
         {
-
-
-            var bookingRequest = new TicketBookingRequest
-            {
-                TicketId = SelectedAirline.TicketId,
-                TotalPax = (AdultPassengers?.Count + InfantPassengers?.Count)?.ToString(),
-                Adult = AdultPassengers?.Where(x => x.Type == PassengerType.Adult).Count().ToString(),
-                Child = AdultPassengers?.Where(x => x.Type == PassengerType.Child).Count().ToString(),
-                Infant = InfantPassengers?.Count.ToString(),
-                AdultInfo = new List<PassengerRequest>(),
-                ChildInfo = new List<PassengerRequest>(),
-                InfantInfo = new List<InfantInfoRequest>()
-            };
-
-            foreach (var adultInfo in AdultPassengers?.Where(x => x.Type == PassengerType.Adult))
-            {
-                bookingRequest.AdultInfo.Add(new PassengerRequest
-                {
-                    Title = adultInfo.Title,
-                    FirstName = adultInfo.FirstName,
-                    LastName = adultInfo.LastName
-                });
-            }
-
-            foreach (var childInfo in AdultPassengers?.Where(x => x.Type == PassengerType.Child))
-            {
-                bookingRequest.ChildInfo.Add(new PassengerRequest
-                {
-                    Title = childInfo.Title,
-                    FirstName = childInfo.FirstName,
-                    LastName = childInfo.LastName
-                });
-            }
-
-            foreach (var infantInfo in InfantPassengers)
-            {
-                bookingRequest.AdultInfo.Add(new PassengerRequest
-                {
-                    Title = infantInfo.Title,
-                    FirstName = infantInfo.FirstName,
-                    LastName = infantInfo.LastName
-                });
-            }
-            
-            await flightService.ConfirmBookingAsync(bookingRequest);
+            passenger?.IsCompleted = !string.IsNullOrEmpty(passenger.SelectedPassengerType) &&
+                                     !string.IsNullOrEmpty(passenger.SelectedTitle) &&
+                                     !string.IsNullOrEmpty(passenger.FirstName) &&
+                                     !string.IsNullOrEmpty(passenger.LastName) &&
+                                     (passenger.Type == PassengerType.Infant ?
+                                        !string.IsNullOrEmpty(passenger.Dob) :
+                                        true);
 
         }
-        // var navigationParams = new Dictionary<string, object?>
-        // {
-        //     { NavigationParamConstants.SelectedFlight, SelectedAirline },
-        //     { NavigationParamConstants.SelectedFlight, SelectedAirline }
-        // };
+        catch (Exception exception)
+        {
+            HandleException(exception);
+        }
 
-        // await ShellNavigationService.Navigate<SummaryPage>();
+    }
+
+    [RelayCommand]
+    private async Task ConfirmBooking()
+    {
+        bool hasIncompletePassenger = Passengers?.Any(p => !p.IsCompleted) == true;
+        bool termsNotAccepted = !IsTermChecked;
+
+        if (hasIncompletePassenger || termsNotAccepted)
+            return;
+
+        var response = await DialogService.DisplayAlertAsync("AirIQ", "Do you want to confirm this booking ?", "OK", "Cancel");
+
+        if (response)
+        {
+            using (LoadingService.Show())
+            {
+                var bookingRequest = new TicketBookingRequest
+                {
+                    TicketId = SelectedAirline?.TicketId,
+                    TotalPax = Passengers?.Count.ToString(),
+                    Adult = Passengers?.Where(x => x.Type == PassengerType.Adult).Count().ToString(),
+                    Child = Passengers?.Where(x => x.Type == PassengerType.Child).Count().ToString(),
+                    Infant = Passengers?.Where(x => x.Type == PassengerType.Infant).Count().ToString(),
+                    AdultInfo = new List<PassengerRequest>(),
+                    ChildInfo = new List<PassengerRequest>(),
+                    InfantInfo = new List<InfantInfoRequest>()
+                };
+
+                foreach (var adultInfo in Passengers?.Where(x => x.Type == PassengerType.Adult))
+                {
+                    bookingRequest.AdultInfo.Add(new PassengerRequest
+                    {
+                        Title = adultInfo.SelectedTitle,
+                        FirstName = adultInfo.FirstName,
+                        LastName = adultInfo.LastName
+                    });
+                }
+
+                foreach (var childInfo in Passengers?.Where(x => x.Type == PassengerType.Child))
+                {
+                    bookingRequest.ChildInfo.Add(new PassengerRequest
+                    {
+                        Title = childInfo.SelectedTitle,
+                        FirstName = childInfo.FirstName,
+                        LastName = childInfo.LastName
+                    });
+                }
+
+                foreach (var infantInfo in Passengers?.Where(x => x.Type == PassengerType.Infant))
+                {
+                    var details = infantInfo as Infant;
+                    if (details != null)
+                    {
+                        bookingRequest.InfantInfo.Add(new InfantInfoRequest
+                        {
+                            Title = "Mstr.",
+                            FirstName = infantInfo.FirstName,
+                            LastName = infantInfo.LastName,
+                            TravelWith = details.AssignedAdultId.ToString(),
+                            Dob = infantInfo.Dob
+                        });
+                    }
+                }
+
+                var a = JsonSerializer.Serialize(bookingRequest);
+
+                Debug.WriteLine("Flight booking json : " + a);
+
+                var result = await flightService.ConfirmBookingAsync(bookingRequest);
+                await DialogService.DisplayAlertAsync("AirIQ", result, "OK");
+
+            }
+        }
     }
 
     [RelayCommand(CanExecute = nameof(CanAddInfant))]
     private void AddInfantPassenger()
     {
-        InfantPassengers ??= new ObservableCollection<Infant>();
 
         var newInfant = new Infant
         {
             Id = infantId++,
-            Header = $"{nameof(PassengerType.Infant)} {InfantPassengers.Count}",
+            Header = $"{nameof(PassengerType.Infant)} #{Passengers.Count}",
             Type = PassengerType.Infant,
         };
 
-        newInfant.TravelWith = AssignInfantToAdult(newInfant, AdultPassengers[newInfant.Id - 1]);
-        InfantPassengers.Add(newInfant);
+        newInfant.TravelWith = AssignInfantToAdult(newInfant, Passengers[newInfant.Id - 1]);
+        Passengers?.Add(newInfant);
         AddInfantPassengerCommand.NotifyCanExecuteChanged();
     }
 
@@ -226,7 +263,7 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
 
     public override async Task LoadDataWhenNavigatedTo()
     {
-        await InitializeData();
+        _ = InitializeData();
     }
 
     #endregion

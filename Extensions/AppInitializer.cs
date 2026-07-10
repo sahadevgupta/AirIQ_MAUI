@@ -1,4 +1,5 @@
 ﻿using AirIQ.Controls;
+using AirIQ.Extensions;
 using AirIQ.Services;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels;
@@ -31,35 +32,17 @@ namespace AirIQ.Extensions
             return builder;
         }
 
-        private static MauiAppBuilder RegisterAppServices(this MauiAppBuilder builder)
-        {
-            //Transient Services
-            builder.Services.AddTransient<IViewModelParameters, ViewModelParameters>()
-                            .AddTransient<IApiServiceBaseParams, ApiServiceBaseParams>();
 
-
-            builder.Services.AddSingleton<ILoadingPopUpService, AirIQ.Platforms.Services.LoadingPopupService>();
-            builder.Services.AddSingleton<INavigationService, NavigationService>();
-            builder.Services.AddSingleton<IShellNavigationService, ShellNavigationService>()
-                            .AddSingleton<IConnectivityService, ConnectivityService>()
-                            .AddSingleton<ISecureStorageService, SecureStorageService>()
-                            .AddSingleton<ILoginService, LoginService>()
-                            .AddSingleton<IFlightService,FlightService>()
-                            .AddSingleton<IPopupNavigation>(MopupService.Instance)
-                            .AddSingleton<IAuthService,AuthService>();
-
-
-            return builder;
-        }
         private static MauiAppBuilder ConfigureAppFonts(this MauiAppBuilder builder)
         {
             return builder.ConfigureFonts(fonts =>
             {
-                fonts.AddFont("Poppins-Bold.otf", "PoppinsBold");
-                fonts.AddFont("Poppins-ExtraLight.otf", "PoppinsExtraLight");
-                fonts.AddFont("Poppins-Medium.otf", "PoppinsMedium");
-                fonts.AddFont("Poppins-Regular.otf", "PoppinsRegular");
-                fonts.AddFont("Poppins-SemiBold.ttf", "PoppinsSemiBold");
+                fonts.AddFont("Roboto-Bold.ttf", "RobotoBold");
+                fonts.AddFont("Roboto-ExtraBold.ttf", "RobotoExtraBold");
+                fonts.AddFont("Roboto-Italic.ttf", "RobotoItalic");
+                fonts.AddFont("Roboto-Medium.ttf", "RobotoMedium");
+                fonts.AddFont("Roboto-Regular.ttf", "RobotoRegular");
+                fonts.AddFont("Roboto-SemiBold.ttf", "RobotoSemiBold");
                 fonts.AddFont("fa-solid-900.ttf", "MyFont");
             });
         }

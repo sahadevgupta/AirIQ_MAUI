@@ -24,18 +24,25 @@ public abstract class ApiServiceBase
 
     protected void HandleException(Exception exception)
     {
-        //Handle the exception
-        Debug.WriteLine("ApiServiceBase HandleException [{exceptionName}] \n{exceptionToString}", exception.GetType().Name, exception.ToString());
+        SentrySdk.CaptureException(exception);
+
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            //Handle the exception
+            Debug.WriteLine("ApiServiceBase HandleException [{exceptionName}] \n{exceptionToString}", exception.GetType().Name, exception.ToString());
 
 
-        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
-        ToastDuration duration = ToastDuration.Short;
-        double fontSize = 14;
+            ToastDuration duration = ToastDuration.Short;
+            double fontSize = 14;
 
-        var toast = Toast.Make(exception.Message, duration, fontSize);
+            var toast = Toast.Make(exception.Message, duration, fontSize);
 
-        toast.Show(cancellationTokenSource.Token);
+            toast.Show(cancellationTokenSource.Token);
+        });
+
+
     }
 
     protected async Task<Dictionary<string, string>> GetHeader(bool istokenRequired = true)
@@ -54,7 +61,7 @@ public abstract class ApiServiceBase
                 }
             }
 
-            header.Add("api-key", AppConfiguration.ApiKey);
+            header.Add("api-key", AppConfiguration.CurrentUser?.ApiKey ?? string.Empty);
         }
         catch (Exception exception)
         {

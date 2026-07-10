@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirIQ.Controls.DateChip"
+             xmlns:enums="clr-namespace:AirIQ.Enums"
+             x:Name="Root">
+
+
+    <Border
+        Padding="8,6"
+        StrokeShape="RoundRectangle 25"
+        Stroke="{Binding Source={x:Reference Root}, Path=BorderColor}"
+        BackgroundColor="{Binding Source={x:Reference Root}, Path=ChipBackground}">
+
+        <Grid ColumnDefinitions="Auto,*"
+              ColumnSpacing="5"
+              VerticalOptions="Center">
+            <!-- Optional Icon -->
+            <Image
+                IsVisible="{Binding Source={x:Reference Root},Path=ShowIcon}"
+                Source="{Binding Source={x:Reference Root},Path=Icon}"
+                HeightRequest="16"
+                Grid.Column="0">
+                <Image.Triggers>
+                    <DataTrigger TargetType="Image"
+                                 Binding="{Binding Source={x:Reference Root},Path=ImageAlingment}"
+                                 Value="{x:Static enums:AlingmentType.Right}">
+                        <Setter Property="Grid.Column"
+                                Value="1"/>
+                        <Setter Property="HorizontalOptions"
+                                Value="End"/>
+                        <Setter TargetName="datechiplbl"
+                                Property="Grid.Column"
+                                Value="0"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="Image"
+                                 Binding="{Binding Source={x:Reference Root},Path=ImageAlingment}"
+                                 Value="{x:Static enums:AlingmentType.Left}">
+                        <Setter Property="Margin"
+                                Value="0,0,0,0"/>
+                        <Setter TargetName="datechiplbl"
+                                Property="HorizontalOptions"
+                                Value="End"/>
+                    </DataTrigger>
+                </Image.Triggers>
+            </Image>
+
+            <Label
+                Text="{Binding Source={x:Reference Root}, Path=Text}"
+                TextColor="{Binding Source={x:Reference Root}, Path=TextColor}"
+                Style="{StaticResource Label14Regular}"
+                VerticalOptions="Center"
+                Grid.Column="1"
+                x:Name="datechiplbl"/>
+        </Grid>
+    </Border>
+
+</ContentView>

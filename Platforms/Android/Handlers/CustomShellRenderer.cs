@@ -99,7 +99,7 @@ namespace AirIQ.Platforms.Handlers
             int tabWidth = navWidth / itemCount;
 
             tabIndicatorView?.Animate()?
-                .TranslationX(tabWidth*position)
+                .TranslationX(tabWidth * position)
                 .SetDuration(300)
                 .SetInterpolator(new Animation.DecelerateInterpolator())
                 .Start();

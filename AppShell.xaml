@@ -4,26 +4,77 @@
        xmlns:helpers="clr-namespace:AirIQ.Extensions"
        xmlns:local="clr-namespace:AirIQ.Views"
        xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
-       x:Class="AirIQ.AppShell">
+       xmlns:controls="clr-namespace:AirIQ.Controls"
+       xmlns:views="clr-namespace:AirIQ.Views.ContentViews"
+       x:Class="AirIQ.AppShell"
+       FlyoutBackgroundColor="{StaticResource PrimaryColor}"
+       BackgroundColor="{StaticResource PrimaryColor}"
+       ForegroundColor="{StaticResource White}"
+       TitleColor="{StaticResource White}"
+       FlyoutIsPresented="False"
+       FlyoutBehavior="Disabled">
+
+    <Shell.FlyoutBackdrop>
+        <SolidColorBrush Color="#66000000"/>
+    </Shell.FlyoutBackdrop>
 
     <Shell.Resources>
         <Style TargetType="TabBar">
-            <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource PrimaryColor}" />
-            <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource PrimaryColor}" />
-            <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource Gray600}"/>
+            <Setter Property="Shell.TabBarForegroundColor"
+                    Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="Shell.TabBarTitleColor"
+                    Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="Shell.TabBarUnselectedColor"
+                    Value="{StaticResource Gray600}"/>
         </Style>
     </Shell.Resources>
 
-    <TabBar>
-        <ShellContent
-            Title="{x:Static resx:AppResource.Flights}"
-            ContentTemplate="{DataTemplate local:DashboardPage}">
-            <ShellContent.Icon>
+    <Shell.FlyoutContentTemplate>
+        <DataTemplate>
+            <views:MenuContentView/>
+            <!-- FULL SCREEN FLYOUT -->
+        </DataTemplate>
+    </Shell.FlyoutContentTemplate>
+
+    <!-- ============================================ -->
+    <!-- AUTHENTICATION ROUTES (No TabBar) -->
+    <!-- ============================================ -->
+
+    <!-- ROUTE: loading - Initial loading/splash screen -->
+    <ShellContent
+        Title="Loading"
+        ContentTemplate="{DataTemplate controls:LoadingIndicatorView}"
+        Route="loading"
+        Shell.TabBarIsVisible="False"
+        Shell.FlyoutItemIsVisible="False"/>
+
+    <!-- ROUTE: login - User authentication -->
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate local:LoginPage}"
+        Route="LoginPage"
+        Shell.TabBarIsVisible="False"
+        Shell.FlyoutItemIsVisible="False"/>
+
+    <!-- ============================================ -->
+    <!-- MAIN APPLICATION ROUTES (With TabBar) -->
+    <!-- ============================================ -->
+
+    <FlyoutItem>
+        <ShellContent Title="Search"/>
+    </FlyoutItem>
+
+    <TabBar Route="app">
+        <ShellContent Route="home"
+                      Title="{x:Static resx:AppResource.Flights}"
+                      ContentTemplate="{DataTemplate local:DashboardPage}"
+                      Icon="flight">
+            <!-- <ShellContent.Icon>
                 <FontImageSource
                     FontFamily="MyFont"
                     Glyph="{x:Static helpers:FontAwesomeIcons.Plane}"
-                    Size="24" />
-            </ShellContent.Icon>
+                    Size="24"/>
+            </ShellContent.Icon> -->
         </ShellContent>
 
         <ShellContent
@@ -33,19 +84,19 @@
                 <FontImageSource
                     FontFamily="MyFont"
                     Glyph="{x:Static helpers:FontAwesomeIcons.Hotel}"
-                    Size="24" />
+                    Size="24"/>
             </ShellContent.Icon>
         </ShellContent>
 
 
         <ShellContent
             Title="{x:Static resx:AppResource.Account}"
-            ContentTemplate="{DataTemplate local:AccountsPage}" >
+            ContentTemplate="{DataTemplate local:AccountsPage}">
             <ShellContent.Icon>
                 <FontImageSource
                     FontFamily="MyFont"
                     Glyph="{x:Static helpers:FontAwesomeIcons.UserCircle}"
-                    Size="24" />
+                    Size="24"/>
             </ShellContent.Icon>
         </ShellContent>
 
@@ -56,10 +107,10 @@
                 <FontImageSource
                     FontFamily="MyFont"
                     Glyph="{x:Static helpers:FontAwesomeIcons.Cog}"
-                    Size="24" />
+                    Size="24"/>
             </ShellContent.Icon>
         </ShellContent>
 
     </TabBar>
-    
+
 </Shell>

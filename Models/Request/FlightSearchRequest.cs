@@ -1,5 +1,6 @@
 using System;
 using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 using JsonIgnoreAttribute = System.Text.Json.Serialization.JsonIgnoreAttribute;
 
 namespace AirIQ.Models.Request;
@@ -32,4 +33,10 @@ public class FlightSearchRequest
 
     [JsonIgnore]
     public FlightRoute? DestinationAirport;
+
+    [JsonIgnore]
+    public string? OriginAirportName { get; set; }
+
+    [JsonIgnore]
+    public string? DestinationAirportName { get; set; }
 }

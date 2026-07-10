@@ -23,37 +23,39 @@
             PositionOut="Bottom"/>
     </mopup:PopupPage.Animation> -->
 
- <Border StrokeShape="RoundRectangle 8" VerticalOptions="Center" 
-    Margin="10,0"
-     BackgroundColor="White"
-    Padding="24"> 
-    <Grid RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="10" >
-        <Label
-            FontSize="24"
-            Style="{StaticResource Label18StyleBold}"
-            Text="{x:Static resx:AppResource.InformationRequired}" />
+    <Border StrokeShape="RoundRectangle 8"
+            VerticalOptions="Center"
+            Margin="10,0"
+            BackgroundColor="White"
+            Padding="24">
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto"
+              RowSpacing="10">
+            <Label
+                FontSize="24"
+                Style="{StaticResource Label18StyleBold}"
+                Text="{x:Static resx:AppResource.InformationRequired}"/>
 
-        <Label
-            Grid.Row="1"
-            FontSize="16"
-            LineHeight="1.2"
-            Style="{StaticResource Label12BlackPoppinsMedium}"
-            Text="{x:Static resx:AppResource.SessionExpired}" />
+            <Label
+                Grid.Row="1"
+                FontSize="16"
+                LineHeight="1.2"
+                Style="{StaticResource Label12Medium}"
+                Text="{x:Static resx:AppResource.SessionExpired}"/>
 
-        <controls:ExtendedEntry
-            Title="{x:Static resx:AppResource.Password}"
-            Grid.Row="2"
-            EntryKeyboard="Password"
-            IsErrorViewVisible="{Binding IsPasswordErrorVisible}"
-            Text="{Binding Password}" />
+            <controls:ExtendedEntry
+                Title="{x:Static resx:AppResource.Password}"
+                Grid.Row="2"
+                EntryKeyboard="Password"
+                IsErrorViewVisible="{Binding IsPasswordErrorVisible}"
+                Text="{Binding Password}"/>
 
-        <Button
-            Grid.Row="3"
-            Margin="0,16"
-            Command="{Binding ConfirmCommand}"
-            Text="{x:Static resx:AppResource.Confirm}" 
-            IsEnabled="{Binding Password,Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"/>
+            <Button
+                Grid.Row="3"
+                Margin="0,16"
+                Command="{Binding ConfirmCommand}"
+                Text="{x:Static resx:AppResource.Confirm}"
+                IsEnabled="{Binding Password,Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"/>
 
-    </Grid>
-</Border>
+        </Grid>
+    </Border>
 </mopup:PopupPage>

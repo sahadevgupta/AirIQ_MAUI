@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using AirIQ.Configurations.Mapper;
 using AirIQ.Constants;
+using AirIQ.Helpers;
 using AirIQ.Models;
 using AirIQ.Models.Request;
 using AirIQ.Services.Interfaces;
@@ -18,17 +19,28 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
 {
     #region [ Properties ]
 
+    private bool initialState = true;
+
     [ObservableProperty]
     private FlightSearchRequest? _flightSearchRequest;
 
     [ObservableProperty]
-    private ObservableCollection<Flight>? _availableFlights;
+    private ObservableCollection<Flight> _availableFlights = new();
 
     [ObservableProperty]
     private ObservableCollection<DateTime> _allowedDates = new();
 
     [ObservableProperty]
+    private DateTime _currentDate = DateTime.Today;
+
+    [ObservableProperty]
     private DateTime _selectedTravelDate;
+
+    [ObservableProperty]
+    private string? _originCode;
+
+    [ObservableProperty]
+    private string? _destinationCode;
 
     [ObservableProperty]
     private string? _sourceAirport;
@@ -38,7 +50,30 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
 
     #endregion
 
-    #region [ Methods & Service Calls ].    
+    #region [ Methods & Service Calls ]
+
+    partial void OnCurrentDateChanged(DateTime value)
+    {
+        if (FlightSearchRequest != null)
+        {
+            FlightSearchRequest.DepartureDate = value.ToString("yyyy/MM/dd");
+            _ = IniatializeDataAsync();
+
+        }
+    }
+
+    partial void OnSelectedTravelDateChanged(DateTime value)
+    {
+        if (!initialState)
+        {
+            if (FlightSearchRequest != null)
+            {
+                FlightSearchRequest.DepartureDate = value.ToString("yyyy/MM/dd");
+                _ = IniatializeDataAsync();
+
+            }
+        }
+    }
 
     private async Task IniatializeDataAsync()
     {
@@ -46,15 +81,18 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
         {
             using (LoadingService.Show())
             {
+                initialState = true;
                 SelectedTravelDate = DateTime.Parse(FlightSearchRequest!.DepartureDate!);
                 SourceAirport = FlightSearchRequest.SourceAirport?.OriginRoute;
                 DestinationAirport = FlightSearchRequest.DestinationAirport?.DestinationRoute;
                 var response = await flightService.GetFlightAvailabilityAsync(FlightSearchRequest!);
                 AvailableFlights = new ObservableCollection<Flight>(BackendToAppModelMapper.GetFlights(response));
+                initialState = false;
             }
         }
         catch (Exception ex)
         {
+            HandleException(ex);
         }
     }
 
@@ -72,6 +110,13 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
         });
 
     }
+
+    [RelayCommand]
+    private async Task CopyFlightDetail(Flight selectedFlight)
+    {
+        await ShowSnackBar("Details are copied", fontSize: ScalingHelper.ScaleFontSize(16));
+    }
+
     #endregion
 
     #region [ Overrides ]

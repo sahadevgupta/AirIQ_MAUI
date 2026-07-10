@@ -6,83 +6,130 @@
                 xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:viewModels="clr-namespace:AirIQ.ViewModels"
-                x:DataType="viewModels:LoginPageViewModel">
+                x:DataType="viewModels:LoginPageViewModel"
+                Shell.NavBarIsVisible="False"
+                BackgroundColor="White">
 
     <ScrollView>
-        <VerticalStackLayout
-            Padding="30"
-            Spacing="16"
-            VerticalOptions="Fill"
-            HorizontalOptions="Fill">
+        <Grid>
 
-            <Image 
-                Source="airiq_logo.png" 
-                HeightRequest="120"
-                HorizontalOptions="Center" />
+            <Image Source="header.png"
+                   VerticalOptions="Start"/>
 
-            <Label 
-                Text="{x:Static resx:AppResource.WelcomeToAIRiQ}"
-                Style="{StaticResource TitleLabel}"
-                HorizontalOptions="Center" />
+            <VerticalStackLayout
+                Padding="30"
+                Spacing="16"
+                VerticalOptions="Fill"
+                HorizontalOptions="Fill">
 
-            <Label 
-                Text="{x:Static resx:AppResource.SignInToContinue}"
-                FontSize="16"
-                TextColor="{StaticResource DarkGray}"
-                HorizontalOptions="Center" />
+                <Image
+                    Source="logo"
+                    Scale="{OnPlatform Android=0.5}"
+                    HeightRequest="120"
+                    HorizontalOptions="Center"/>
 
-            <controls:ExtendedEntry PlaceholderText="{x:Static resx:AppResource.Email}"
-                                    Title="{x:Static resx:AppResource.Email}"
-                                    Text="{Binding Username}"/>
+                <Label
+                    Text="{x:Static resx:AppResource.WelcomeToAIRiQ}"
+                    Style="{StaticResource Label20MediumOnyxStyle}"
+                    HorizontalOptions="Center"/>
 
-            <controls:ExtendedEntry PlaceholderText="{x:Static resx:AppResource.Password}"
-                                    Title="{x:Static resx:AppResource.Password}"
-                                    Text="{Binding Password}"/>
+                <Label
+                    Text="{x:Static resx:AppResource.LoginToYourAccount}"
+                    Style="{StaticResource Label14RegularGray50Style}"
+                    HorizontalOptions="Center"/>
 
-            <Label 
-                Text="{x:Static resx:AppResource.ForgotPassword}"
-                FontAttributes="Bold"
-                TextColor="{StaticResource AccentColor}"
-                FontSize="14"
-                HorizontalOptions="End" />
+                <controls:ExtendedEntry PlaceholderText="{x:Static resx:AppResource.EnterUsername}"
+                                        Title="{x:Static resx:AppResource.UserName}"
+                                        LeftIcon="person"
+                                        Text="{Binding Username}"/>
 
-            
-            <Button 
-                Text="{x:Static resx:AppResource.Login}"
-                BackgroundColor="{StaticResource PrimaryColor}"
-                TextColor="White"
-                CornerRadius="12"
-                FontAttributes="Bold"
-                HeightRequest="50"
-                Margin="0,10,0,0"
-                Command="{Binding LoginCommand}"/>
+                <controls:ExtendedEntry PlaceholderText="{x:Static resx:AppResource.EnterPassword}"
+                                        LeftIcon="password"
+                                        IsPassword="True"
+                                        Title="{x:Static resx:AppResource.Password}"
+                                        Text="{Binding Password}"/>
 
-            
-            <HorizontalStackLayout 
-                Spacing="10"
-                VerticalOptions="Center"
-                HorizontalOptions="Center">
-                <BoxView Color="#E0E0E0" HeightRequest="1" WidthRequest="80"/>
-                <Label Text="{x:Static resx:AppResource.OR}" TextColor="#9E9E9E" FontSize="14"/>
-                <BoxView Color="#E0E0E0" HeightRequest="1" WidthRequest="80"/>
-            </HorizontalStackLayout>
+                <Label
+                    Text="{x:Static resx:AppResource.ForgotPassword}"
+                    Style="{StaticResource Label14RegularGray50Style}"
+                    TextColor="{StaticResource Link}"
+                    TextDecorations="Underline"
+                    HorizontalOptions="End">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
 
-            
-            <Button 
-                Text="{x:Static resx:AppResource.CreateAnAccount}"
-                BackgroundColor="{StaticResource AccentColor}"
-                TextColor="White"
-                CornerRadius="12"
-                FontAttributes="Bold"
-                HeightRequest="50"/>
 
-            
-            <Label 
-                Text="{x:Static resx:AppResource.AIRIQGroupsSeries}"
-                FontSize="12"
-                TextColor="#9E9E9E"
-                HorizontalOptions="Center"
-                Margin="0,20,0,0"/>
-        </VerticalStackLayout>
+                <Button
+                    Text="{x:Static resx:AppResource.AgentLogin}"
+                    Style="{StaticResource ButtonCorneredStyle}"
+                    Margin="0,10,0,0"
+                    Command="{Binding LoginCommand}"/>
+
+                <Label HorizontalTextAlignment="Center"
+                       Margin="0,20,0,0">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{x:Static resx:AppResource.DontHaveAccount}"
+                                  Style="{StaticResource Span16RegularGray50Style}"/>
+                            <Span Text="{x:Static resx:AppResource.SignUp}"
+                                  Style="{StaticResource Span16BoldPrimaryStyle}">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SignupCommand}"/>
+                                </Span.GestureRecognizers>
+                            </Span>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+            </VerticalStackLayout>
+
+            <Grid Grid.Row="1"
+                  RowSpacing="16"
+                  HorizontalOptions="Center"
+                  VerticalOptions="End"
+                  RowDefinitions="Auto,Auto,Auto">
+
+                <Image Source="iata_logo"/>
+
+                <Label Grid.Row="1"
+                       HorizontalTextAlignment="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{x:Static resx:AppResource.ContactUs}"
+                                  TextDecorations="Underline"
+                                  Style="{StaticResource Span12RegularGray50Style}"/>
+                            <Span Text=" &#x2022; "
+                                  Style="{StaticResource Span12RegularGray50Style}"/>
+                            <Span Text="{x:Static resx:AppResource.TermsAndConditions}"
+                                  TextDecorations="Underline"
+                                  Style="{StaticResource Span12RegularGray50Style}"/>
+                            <Span Text=" &#x2022; "
+                                  Style="{StaticResource Span12RegularGray50Style}"/>
+                            <Span Text="{x:Static resx:AppResource.PrivacyPolicy}"
+                                  TextDecorations="Underline"
+                                  Style="{StaticResource Span12RegularGray50Style}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label Grid.Row="2"
+                       HorizontalTextAlignment="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{x:Static resx:AppResource.PoweredBy}"
+                                  Style="{StaticResource Span12RegularGray50Style}"/>
+                            <Span Text=" : "
+                                  Style="{StaticResource Span12RegularGray50Style}"/>
+                            <Span Text="{x:Static resx:AppResource.UdaanHotels}"
+                                  TextColor="{StaticResource Link}"
+                                  Style="{StaticResource Span12RegularGray50Style}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </Grid>
+
+        </Grid>
     </ScrollView>
 </views:BasePage>

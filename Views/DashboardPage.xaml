@@ -4,6 +4,8 @@
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:controls="clr-namespace:AirIQ.Controls"
+  xmlns:helpers="clr-namespace:AirIQ.Constants"
+  xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
   xmlns:template="clr-namespace:AirIQ.Views.ContentViews"
   xmlns:viewmodel="clr-namespace:AirIQ.ViewModels"
   xmlns:views="clr-namespace:AirIQ.Views"
@@ -13,23 +15,164 @@
 
   <views:BasePage.PageContent>
 
-    <Grid RowDefinitions="Auto,*,Auto">
+    <Grid RowDefinitions="Auto,*">
+      <Image Source="navigation"
+             Aspect="AspectFill"/>
 
-      <Border Grid.Row="0" BackgroundColor="White">
-        <Label
-          Grid.Row="0"
-          Margin="0,10,0,10"
-          FontSize="22"
-          HorizontalOptions="Center"
-          Text="Book Flights"
-          TextColor="Black"
-          VerticalOptions="Center" />
-      </Border>
+      <Grid ColumnDefinitions="Auto,Auto"
+            RowDefinitions="Auto,Auto"
+            Margin="16"
+            ColumnSpacing="16"
+            RowSpacing="9">
+        <Image Source="menu"
+               HorizontalOptions="Start"
+               VerticalOptions="Center">
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding OpenMenuCommand}"/>
+          </Image.GestureRecognizers>
+        </Image>
 
-      <template:OneWayTripContentView Grid.Row="1"
-        BackgroundColor="AliceBlue"
-         BindingContext="{Binding Source={x:Reference thisPage}, Path=BindingContext}" />
+        <Label VerticalOptions="Center"
+               Grid.Column="1">
+          <Label.FormattedText>
+            <FormattedString>
+              <FormattedString.Spans>
+                <Span Text="{x:Static resx:AppResource.Hello}"
+                      Style="{StaticResource Label16Bold}"
+                      TextColor="Black"/>
+                <Span Text=" "/>
+                <Span Text="{Binding CurrentUser.ContactPerson}"
+                      Style="{StaticResource Label16Bold}"
+                      TextColor="Black"/>
+                <Span Text="! "
+                      Style="{StaticResource Label16Bold}"
+                      TextColor="Black"/>
+              </FormattedString.Spans>
+            </FormattedString>
+          </Label.FormattedText>
+        </Label>
 
+        <Label LineBreakMode="WordWrap"
+               Grid.Row="1"
+               Grid.Column="1"
+               VerticalOptions="Center">
+          <Label.FormattedText>
+            <FormattedString>
+              <Span Text="{x:Static resx:AppResource.BookYourFlightWith}"
+                    Style="{StaticResource Label32Bold}"/>
+              <Span Text=" &#10;"/>
+              <Span Text="{x:Static resx:AppResource.Air}"
+                    TextColor="{StaticResource PrimaryColor}"
+                    Style="{StaticResource Label32Bold}"/>
+              <Span Text="{x:Static resx:AppResource.IQ}"
+                    TextColor="red"
+                    Style="{StaticResource Label32Bold}"/>
+            </FormattedString>
+          </Label.FormattedText>
+        </Label>
+
+      </Grid>
+
+      <Image Source="notifications"
+             AbsoluteLayout.LayoutBounds="1, 0, AutoSize, AutoSize"
+             AbsoluteLayout.LayoutFlags="PositionProportional"
+             Margin="16"
+             HorizontalOptions="End"
+             VerticalOptions="Start">
+        <Image.GestureRecognizers>
+          <TapGestureRecognizer Command="{Binding OpenMenuCommand}"/>
+        </Image.GestureRecognizers>
+      </Image>
+
+      <ScrollView Grid.Row="1"
+                  Margin="0,-125,0,0">
+        <Grid Padding="16,0"
+              RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+          <controls:EntryWithTitleImage MaximumHeightRequest="100"
+                                        Icon="flight_departure"
+                                        Title="{x:Static resx:AppResource.From}"
+                                        ItemsSource="{Binding SourceAirports}"
+                                        PlaceholderText="{x:Static resx:AppResource.SearchDepartureAirport}"
+                                        SelectedItem="{Binding SelectedSourceAirport}"
+                                        TextChangeCommand="{Binding SearchSourceAirportsCommand}"
+                                        DisplayMemberPath="OriginRoute"
+                                        CanEdit="True"/>
+
+          <controls:EntryWithTitleImage MaximumHeightRequest="100"
+                                        Grid.Row="1"
+                                        Icon="flight_arrival"
+                                        Title="{x:Static resx:AppResource.To}"
+                                        ItemsSource="{Binding DestinationAirports}"
+                                        PlaceholderText="{x:Static resx:AppResource.SearchDestinationAirport}"
+                                        SelectedItem="{Binding SelectedDestinationAirport}"
+                                        TextChangeCommand="{Binding SearchDestinationAirportsCommand}"
+                                        DisplayMemberPath="DestinationRoute"
+                                        CanEdit="True"/>
+
+          <controls:EntryWithTitleImage Grid.Row="2"
+                                        IsDateViewVisible="True"
+                                        Date="{Binding SelectedTravelDate}"
+                                        AllowedDates="{Binding AllowedDates}"
+                                        Title="{x:Static resx:AppResource.Departure}"
+                                        Margin="0,12,0,0"
+                                        Icon="calendar"
+                                        MaximumHeightRequest="100"/>
+
+          <Border Padding="16"
+                  Margin="0,12,0,0"
+                  Grid.Row="3"
+                  BackgroundColor="White"
+                  StrokeShape="RoundRectangle 8"
+                  StrokeThickness="1"
+                  Stroke="{StaticResource StrokeColor}">
+            <Grid ColumnDefinitions="Auto, *"
+                  ColumnSpacing="16"
+                  RowDefinitions="Auto, Auto"
+                  RowSpacing="6">
+              <Image Source="person"
+                     Grid.RowSpan="2"
+                     VerticalOptions="Center"/>
+
+              <Label Text="{x:Static resx:AppResource.Travelers}"
+                     Grid.Column="1"
+                     Style="{StaticResource Label14RegularGray50Style}"
+                     VerticalOptions="Center"/>
+
+              <Label Text="{Binding Source={x:Reference stepper},Path=Value,StringFormat='{0} Person(s)'}"
+                     Grid.Row="1"
+                     Style="{StaticResource Label20MediumOnyxStyle}"
+                     TextColor="{StaticResource Gray90}"
+                     VerticalOptions="Center"
+                     Grid.Column="1"/>
+
+              <controls:CustomStepper Grid.Row="0"
+                                      Grid.RowSpan="2"
+                                      x:Name="stepper"
+                                      Grid.Column="1"
+                                      Value="{Binding PaxSize}"
+                                      HorizontalOptions="End"/>
+
+            </Grid>
+
+          </Border>
+
+          <Button Style="{StaticResource ButtonCorneredStyle}"
+                  Grid.Row="4"
+                  Margin="0,24,0,0"
+                  VerticalOptions="End"
+                  Text="{x:Static resx:AppResource.SearchFlights}"
+                  Command="{Binding SearchFlightsCommand}"/>
+
+          <ImageButton Source="swap"
+                       HorizontalOptions="End"
+                       Grid.RowSpan="2"
+                       Margin="0,0,20,0"
+                       BackgroundColor="Transparent"
+                       Command="{Binding SwapSourceDestinationCommand}"/>
+
+        </Grid>
+      </ScrollView>
     </Grid>
+
   </views:BasePage.PageContent>
 </views:BasePage>

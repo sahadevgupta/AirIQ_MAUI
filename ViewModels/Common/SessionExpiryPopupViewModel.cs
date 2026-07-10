@@ -1,10 +1,8 @@
-using System;
 using AirIQ.Constants;
 using AirIQ.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Mopups.Pages;
-using Mopups.PreBaked.Interfaces;
 using Mopups.Services;
 
 namespace AirIQ.ViewModels.Common;
@@ -34,7 +32,7 @@ public partial class SessionExpiryPopupViewModel : ObservableObject
     private async Task Confirm(PopupPage popup)
     {
         var userDto = await _loginService.LoginAsync(AppConfiguration.CurrentUser?.MobileNumber!, Password!);
-        if(userDto != default)
+        if (userDto != default)
         {
             _sessionResponsTcs.TrySetResult(true);
             await MopupService.Instance.PopAsync(true);

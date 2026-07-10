@@ -8,12 +8,21 @@ public class FlightRoute
     public string? Origin { get; set; }
     public string? Destination { get; set; }
 
+    public string? OriginAiportName { get; set; }
+    public string? DestinationAiportName { get; set; }
+
     public string OriginRoute
     {
         get
         {
             var parts = Sector?.Split(new string[] { "//" }, StringSplitOptions.RemoveEmptyEntries);
-            return parts?.Length > 0 ? $"{Origin} - {parts[0].Trim()}" : string.Empty;
+            if (parts?.Length > 0)
+            {
+                OriginAiportName = parts[0].Trim();
+                return $"{ConvertToFlagEmoji(Origin)} {Origin} - {parts[0].Trim()}";
+            }
+
+            return string.Empty;
         }
     }
 
@@ -22,7 +31,24 @@ public class FlightRoute
         get
         {
             var parts = Sector?.Split(new string[] { "//" }, StringSplitOptions.RemoveEmptyEntries);
-            return parts?.Length > 0 ? $"{Destination} - {parts[1].Trim()}" : string.Empty;
+            if (parts?.Length > 0)
+            {
+                DestinationAiportName = parts[1].Trim();
+                return $"{ConvertToFlagEmoji(Destination)} {Destination} - {parts[1].Trim()}";
+            }
+            return string.Empty;
         }
+    }
+
+    private string ConvertToFlagEmoji(string? countryCode)
+    {
+        if (string.IsNullOrWhiteSpace(countryCode))
+            return string.Empty;
+
+        var a = string.Concat(countryCode
+            .ToUpper()
+            .Select(c => char.ConvertFromUtf32(0x1F1E6 - 'A' + c)));
+
+        return string.Empty;
     }
 }

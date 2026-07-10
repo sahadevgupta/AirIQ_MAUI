@@ -49,18 +49,32 @@ public partial class ExtendedEntry : ContentView
     }
 
     // Bindable Property for Icon
-    public static readonly BindableProperty IconProperty =
-                            BindableProperty.Create(nameof(Icon),
+    public static readonly BindableProperty LeftIconProperty =
+                            BindableProperty.Create(nameof(LeftIcon),
                             typeof(string),
                             typeof(ExtendedEntry),
                             null,
                             BindingMode.TwoWay);
 
-    public string Icon
+    public string LeftIcon
     {
-        get => (string)GetValue(IconProperty);
-        set => SetValue(IconProperty, value);
+        get => (string)GetValue(LeftIconProperty);
+        set => SetValue(LeftIconProperty, value);
     }
+
+    public static readonly BindableProperty RightIconProperty =
+                            BindableProperty.Create(nameof(RightIcon),
+                            typeof(string),
+                            typeof(ExtendedEntry),
+                            null,
+                            BindingMode.TwoWay);
+
+    public string RightIcon
+    {
+        get => (string)GetValue(RightIconProperty);
+        set => SetValue(RightIconProperty, value);
+    }
+
 
     // Bindable Property for Icon Tap Command
     public static readonly BindableProperty IconTapCommandProperty =
@@ -215,6 +229,52 @@ public partial class ExtendedEntry : ContentView
         set => SetValue(MaxLengthProperty, value);
     }
 
+    #region [ Show/Hide Password ]
+
+    private bool _isPassword;
+    public bool IsPassword
+    {
+        get => _isPassword;
+        set
+        {
+            _isPassword = value;
+            if (_isPassword)
+            {
+                RightIcon = "visibility";
+                this.Dispatcher.Dispatch(async () =>
+                {
+                    await Task.Delay(50);
+                    InputEntry.IsPassword = true;
+                });
+
+                IconTapCommand = new Command(() =>
+                {
+                    bool hasFocus = InputEntry.IsFocused;
+                    if (InputEntry.IsPassword)
+                    {
+                        RightIcon = "visibility";
+                        InputEntry.IsPassword = false;
+                    }
+                    else
+                    {
+                        RightIcon = "visibility";
+                        InputEntry.IsPassword = true;
+                    }
+
+                    if (hasFocus)
+                        InputEntry.Focus();
+                });
+            }
+            else
+            {
+                InputEntry.Keyboard = this.EntryKeyboard;
+            }
+        }
+    }
+    #endregion
+
+    public event EventHandler<TextChangedEventArgs> TextChanged;
+
     private static void OnEntryBorderColorPropertyChanged(BindableObject bindable, object oldValue, object newValue)
     {
         if (bindable is ExtendedEntry control && newValue is Color newColor)
@@ -227,6 +287,11 @@ public partial class ExtendedEntry : ContentView
     {
         EntryBorderColor = (Application.Current?.Resources.TryGetValue("Black", out var value) == true
                      && value is Color color) ? color : Colors.Black;
+    }
+
+    void borderlessEntry_TextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
+    {
+        TextChanged?.Invoke(sender, e);
     }
 
 }

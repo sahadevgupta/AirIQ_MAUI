@@ -120,6 +120,11 @@ public partial class CalendarView : PopupPage
         int startOffset = (int)firstOfMonth.DayOfWeek; // 0=Sun
         var gridStart = firstOfMonth.AddDays(-startOffset);
 
+        if (month.Month <= DateTime.UtcNow.Month)
+            leftArrow.IsVisible = false;
+        else
+            leftArrow.IsVisible = true;
+
 
         monthLabel.Text = month.ToString("MMMM yyyy");
 

@@ -192,4 +192,136 @@
   <data name="ConfirmBooking" xml:space="preserve">
     <value>Confirm Booking</value>
   </data>
+  <data name="UserName" xml:space="preserve">
+    <value>User Name</value>
+  </data>
+  <data name="EnterUsername" xml:space="preserve">
+    <value>Enter your username</value>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>Enter your password</value>
+  </data>
+  <data name="AgentLogin" xml:space="preserve">
+    <value>AGENT LOGIN</value>
+  </data>
+  <data name="DontHaveAccount" xml:space="preserve">
+    <value>Don’t have an account? </value>
+  </data>
+  <data name="SignUp" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Contact Us</value>
+  </data>
+  <data name="TermsAndConditions" xml:space="preserve">
+    <value>Terms &amp; Conditions</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
+  <data name="LoginToYourAccount" xml:space="preserve">
+    <value>Login to your account</value>
+  </data>
+  <data name="PoweredBy" xml:space="preserve">
+    <value>Powered by</value>
+  </data>
+  <data name="UdaanHotels" xml:space="preserve">
+    <value>UDAANHOTELS.COM</value>
+  </data>
+  <data name="BookYourFlightWith" xml:space="preserve">
+    <value>Book your flight with</value>
+  </data>
+  <data name="Air" xml:space="preserve">
+    <value>Air</value>
+  </data>
+  <data name="IQ" xml:space="preserve">
+    <value>IQ</value>
+  </data>
+  <data name="Departure" xml:space="preserve">
+    <value>Departure</value>
+  </data>
+  <data name="Travelers" xml:space="preserve">
+    <value>Travelers</value>
+  </data>
+  <data name="BookTicket" xml:space="preserve">
+    <value>Book Ticket</value>
+  </data>
+  <data name="TourCode" xml:space="preserve">
+    <value>Tour Code</value>
+  </data>
+  <data name="DetailsProvided" xml:space="preserve">
+    <value>Details Provided</value>
+  </data>
+  <data name="Adult" xml:space="preserve">
+    <value>Adult</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Hello</value>
+  </data>
+  <data name="AIRIQ" xml:space="preserve">
+    <value>AIR IQ</value>
+  </data>
+  <data name="MARKETPLACE" xml:space="preserve">
+    <value>MARKETPLACE</value>
+  </data>
+  <data name="TravellerDetails" xml:space="preserve">
+    <value>Traveller Details</value>
+  </data>
+  <data name="AddInfant" xml:space="preserve">
+    <value>Add Infant</value>
+  </data>
+  <data name="READAndAGREE" xml:space="preserve">
+    <value>I have READ and AGREE to the</value>
+  </data>
+  <data name="PersonalInformation" xml:space="preserve">
+    <value>PERSONAL INFORMATION</value>
+  </data>
+  <data name="ContactInformation" xml:space="preserve">
+    <value>CONTACT INFORMATION</value>
+  </data>
+  <data name="BusinessInformation" xml:space="preserve">
+    <value>BUSINESS INFORMATION</value>
+  </data>
+  <data name="SalesRecord" xml:space="preserve">
+    <value>Sales Record</value>
+  </data>
+  <data name="RefundsRecord" xml:space="preserve">
+    <value>Refunds Record</value>
+  </data>
+  <data name="AccountsLedger" xml:space="preserve">
+    <value>Accounts Ledger</value>
+  </data>
+  <data name="UploadRequest" xml:space="preserve">
+    <value>Upload Request</value>
+  </data>
+  <data name="TemporaryCredit" xml:space="preserve">
+    <value>Temporary Credit</value>
+  </data>
+  <data name="BankDetails" xml:space="preserve">
+    <value>Bank Details</value>
+  </data>
+  <data name="GroupQuery" xml:space="preserve">
+    <value>Group Query</value>
+  </data>
+  <data name="PaxCalendar" xml:space="preserve">
+    <value>Pax Calendar</value>
+  </data>
+  <data name="OnlineRecharge" xml:space="preserve">
+    <value>Online Recharge</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="BookFlight" xml:space="preserve">
+    <value>Book Flight</value>
+  </data>
 </root>

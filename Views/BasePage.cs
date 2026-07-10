@@ -11,6 +11,7 @@ namespace AirIQ.Views;
 
 public abstract class BasePage : ContentPage
 {
+	private Color StatusBarColor => (Color)(Application.Current?.Resources["PrimaryColor"] ?? Colors.Black);
 	private readonly ContentView _content;
 	private readonly NavigationBarControl _navBar;
 	protected BasePage()
@@ -33,9 +34,12 @@ public abstract class BasePage : ContentPage
 		_navBar.SetBinding(Controls.NavigationBarControl.BackCommandProperty, new Binding("BackCommand", source: this.BindingContext));
 
 		_content = new ContentView();
-		_content.BackgroundColor = Colors.WhiteSmoke;
+		_content.BackgroundColor = Colors.White;
+
+
 
 		_navBar.BackgroundColor = (Color)Application.Current?.Resources["PrimaryColor"]!;
+		//_navBar.BackButtonTintColor = Color.FromArgb("#1C1C1C");
 
 		layout.Add(_navBar);
 		Grid.SetRow(_navBar, 0);
@@ -101,11 +105,23 @@ public abstract class BasePage : ContentPage
 
 	private void ApplyStatusBarStyle()
 	{
-		this.Behaviors.Add(new StatusBarBehavior
+		if (this.GetType() == typeof(DashboardPage))
 		{
-			StatusBarColor = Color.FromArgb("#2E6FB6"),
-			StatusBarStyle = StatusBarStyle.LightContent
-		});
+			this.Behaviors.Add(new StatusBarBehavior
+			{
+				StatusBarColor = Color.FromArgb("#D0E1FD"),
+				StatusBarStyle = StatusBarStyle.LightContent
+			});
+		}
+		else
+		{
+			this.Behaviors.Add(new StatusBarBehavior
+			{
+				StatusBarColor = StatusBarColor,
+				StatusBarStyle = StatusBarStyle.LightContent
+			});
+		}
+
 
 		if (OperatingSystem.IsIOS())
 		{
@@ -127,20 +143,54 @@ public abstract class BasePage : ContentPage
 	protected override void OnNavigatedTo(NavigatedToEventArgs args)
 	{
 		base.OnNavigatedTo(args);
-		if (this.BindingContext is BaseViewModel vm)
+		if (this.BindingContext is BaseViewModel vm && args.NavigationType != NavigationType.Pop)
 		{
-			vm.LoadDataWhenNavigatedTo();
+			_ = vm.LoadDataWhenNavigatedTo();
 		}
 	}
 
-    protected override void OnBindingContextChanged()
-    {
-        base.OnBindingContextChanged();
-		if(_navBar != null)
-        {
-            _navBar.IsVisible = IsNavBarVisible;
-        }
-    }
+	protected override void OnBindingContextChanged()
+	{
+		base.OnBindingContextChanged();
+		if (_navBar != null)
+		{
+			_navBar.IsVisible = IsNavBarVisible;
+		}
+	}
+
+	protected override void OnAppearing()
+	{
+		base.OnAppearing();
+		if (this.BindingContext is BaseViewModel vm)
+		{
+			_ = vm.LoadDataWhenOnAppearing();
+		}
+#if ANDROID
+		if (Platform.CurrentActivity is MainActivity activity)
+		{
+			activity.ApplySystemBars(this);
+		}
+		if (this.GetType() == typeof(DashboardPage))
+		{
+
+			this.Background = (Brush)Application.Current?.Resources["BrandGradient"]!;
+		}
+#endif
+	}
+
+	protected override void OnDisappearing()
+	{
+		base.OnDisappearing();
+		if (this.BindingContext is BaseViewModel vm)
+		{
+			_ = vm.LoadDataWhenOnDisappearing();
+		}
+	}
+
+	protected override bool OnBackButtonPressed()
+	{
+		return base.OnBackButtonPressed();
+	}
 
 	#endregion
 }

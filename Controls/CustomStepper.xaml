@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirIQ.Controls.CustomStepper"
+             xmlns:local="clr-namespace:AirIQ.Controls"
+             x:Name="stepperView">
+
+    <HorizontalStackLayout Spacing="12">
+
+        <ImageButton Source="circle_minus"
+                     x:Name="minus"
+                     BorderWidth="1"
+                     Clicked="minus_Clicked"/>
+
+        <local:BorderlessEntry Text="{Binding Value, Source={x:Reference stepperView}}"
+                               Style="{StaticResource FieldEntryStyleGreyRegular}"
+                               FontAttributes="Bold"
+                               MinimumWidthRequest="25"
+                               HorizontalTextAlignment="Center"
+                               MaxLength="99"
+                               VerticalOptions="Center"/>
+
+        <ImageButton Source="circle_plus"
+                     BorderWidth="1"
+                     x:Name="plus"
+                     Clicked="plus_Clicked"/>
+
+    </HorizontalStackLayout>
+
+</ContentView>

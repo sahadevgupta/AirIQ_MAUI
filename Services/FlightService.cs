@@ -24,7 +24,7 @@ public class FlightService(IApiServiceBaseParams apiServiceBaseParams) : ApiServ
         {
             HandleException(notConntectedException);
         }
-        catch(UnauthorizedAccessException unauthorizedAccessException)
+        catch (UnauthorizedAccessException unauthorizedAccessException)
         {
             HandleException(unauthorizedAccessException);
         }
@@ -88,18 +88,21 @@ public class FlightService(IApiServiceBaseParams apiServiceBaseParams) : ApiServ
         return flightAvailabilityResponse;
     }
 
-    public async Task ConfirmBookingAsync(TicketBookingRequest ticketBookingRequest)
+    public async Task<string?> ConfirmBookingAsync(TicketBookingRequest ticketBookingRequest)
     {
+        string? msg = string.Empty;
         try
         {
             await Connectivity.CheckConnected();
             var headers = await GetHeader();
 
             var response = await BackendService.TicketBooking(ticketBookingRequest, headers).ConfigureAwait(false);
+            msg = response?.Message;
         }
-        catch(Exception exception)
+        catch (Exception exception)
         {
             HandleException(exception);
         }
+        return msg;
     }
 }
