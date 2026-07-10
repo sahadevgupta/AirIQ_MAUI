@@ -75,6 +75,7 @@
     <Color x:Key="DarkGray">#555555</Color>
     <Color x:Key="LightGray">#E0E0E0</Color>
     <Color x:Key="BackgroundColor">#F4F4F4</Color>
+    <Color x:Key="SecondaryBackgroundColor">#E8E8E8</Color>
     <Color x:Key="AshtonSkies">#7b8eb0</Color>
 
     <Color x:Key="Primary10">#C7E0F1</Color>

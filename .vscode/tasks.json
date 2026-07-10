@@ -1,0 +1,40 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Create MAUI Content Page",
+			"type": "shell",
+			// "command": "dotnet new maui-page-xaml -n ${input:pageName} -o ${input:folderName} && sed -i 's/^namespace.*/namespace AirIQ.${input:folderName};/' ${input:folderName}/${input:pageName}.xaml.cs",
+			"command": "dotnet new maui-page-xaml -n ${input:pageName} -o ${input:folderName} && sed -i '' 's/^namespace.*/namespace AirIQ.${input:folderName};/' ${input:folderName}/${input:pageName}.xaml.cs && sed -i '' 's/x:Class=\".*\"/x:Class=\"AirIQ.${input:folderName}.${input:pageName}\"/' ${input:folderName}/${input:pageName}.xaml",
+			"problemMatcher": []
+		},
+		{
+			"label": "Create MAUI Content View",
+			"type": "shell",
+			// "command": "dotnet new maui-page-xaml -n ${input:pageName} -o ${input:folderName} && sed -i 's/^namespace.*/namespace AirIQ.${input:folderName};/' ${input:folderName}/${input:pageName}.xaml.cs",
+			"command": "dotnet new maui-view-xaml -n ${input:pageName} -o ${input:folderName} && sed -i '' 's/^namespace.*/namespace AirIQ.${input:folderName};/' ${input:folderName}/${input:pageName}.xaml.cs && sed -i '' 's/x:Class=\".*\"/x:Class=\"AirIQ.${input:folderName}.${input:pageName}\"/' ${input:folderName}/${input:pageName}.xaml",
+			"problemMatcher": []
+		}
+	],
+	"inputs": [
+		// {
+		// 	"id": "itemType",
+		// 	"type": "pickString",
+		// 	"description": "Select the MAUI item type to create",
+		// 	"options": [
+		// 		"maui-page-xaml (Content Page)",
+		// 		"maui-view-xaml (Content View)"
+		// 	]
+		// },
+		{
+			"id": "pageName",
+			"type": "promptString",
+			"description": "Enter Page Name (e.g. LoginPage)"
+		},
+		{
+			"id": "folderName",
+			"type": "promptString",
+			"description": "Enter Folder Name (e.g. Views)"
+		}
+	]
+}

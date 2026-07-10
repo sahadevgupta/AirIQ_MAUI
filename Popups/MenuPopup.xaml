@@ -55,7 +55,8 @@
 
             <CollectionView ItemsSource="{Binding Menus}"
                             Grid.Row="1"
-                            Grid.ColumnSpan="2">
+                            Grid.ColumnSpan="2"
+                            x:Name="menulist">
 
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical"
@@ -76,6 +77,11 @@
                                    Style="{StaticResource Label16SemiBold}"
                                    VerticalTextAlignment="Center"
                                    TextColor="White"/>
+
+                            <HorizontalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BindingContext.MenuCommand,Source={x:Reference menulist}}"
+                                                      CommandParameter="{Binding }"/>
+                            </HorizontalStackLayout.GestureRecognizers>
                         </HorizontalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

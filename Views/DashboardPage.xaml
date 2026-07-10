@@ -163,7 +163,6 @@
                   Text="{x:Static resx:AppResource.SearchFlights}"
                   Command="{Binding SearchFlightsCommand}"/>
 
-
           <ImageButton Source="swap"
                        HorizontalOptions="End"
                        Grid.RowSpan="2"
