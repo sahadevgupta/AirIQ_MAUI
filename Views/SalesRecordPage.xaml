@@ -3,164 +3,185 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 x:Class="AirIQ.Views.SalesRecordPage"
                 xmlns:controls="clr-namespace:AirIQ.Controls"
+                xmlns:models="clr-namespace:AirIQ.Models"
                 xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                 xmlns:views="clr-namespace:AirIQ.Views"
+                xmlns:vm="clr-namespace:AirIQ.ViewModels"
+                x:DataType="vm:SalesRecordPageViewModel"
                 Title="Sales Record">
 
-       <views:BasePage.PageContent>
-              <Grid Padding="16"
-                    RowDefinitions="Auto,*"
-                    RowSpacing="10"
-                    BackgroundColor="{StaticResource SecondaryBackgroundColor}">
-                     <controls:SearchView VerticalOptions="Start"/>
+    <views:BasePage.PageContent>
+        <Grid Padding="16"
+              RowDefinitions="Auto,*"
+              RowSpacing="10"
+              BackgroundColor="{StaticResource SecondaryBackgroundColor}">
+            <controls:SearchView VerticalOptions="Start"/>
 
-                     <Border Grid.Row="1"
-                             Stroke="{StaticResource BorderColor}"
-                             StrokeShape="RoundRectangle 6"
-                             BackgroundColor="White"
-                             VerticalOptions="Start">
+            <CollectionView Grid.Row="1"
+                            ItemsSource="{Binding SalesRecords}"
+                            RemainingItemsThreshold="5"
+                            RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:SalesRecord">
+                        <Border Grid.Row="1"
+                                Stroke="{StaticResource BorderColor}"
+                                StrokeShape="RoundRectangle 6"
+                                BackgroundColor="White"
+                                VerticalOptions="Start">
                             <toolkit:Expander x:Name="expander">
-                                   <toolkit:Expander.Header>
-                                          <Border StrokeThickness="0">
-                                                 <Grid Padding="12,0"
-                                                       ColumnDefinitions="*,Auto"
-                                                       RowDefinitions="Auto,1">
-                                                        <Label Text="AQ4388859"
-                                                               Style="{StaticResource Label18Medium}"
-                                                               VerticalOptions="Center"/>
-                                                        <HorizontalStackLayout Grid.Column="1"
-                                                                               Spacing="0"
-                                                                               BackgroundColor="Transparent"
-                                                                               HorizontalOptions="End">
-                                                               <ImageButton Source="print"
-                                                                            Scale="0.6"/>
-                                                               <ImageButton Source="airplane_ticket"
-                                                                            Scale="0.6"/>
-                                                               <ImageButton Source="arrow_down"
-                                                                            Rotation="270"
-                                                                            Scale="0.4">
-                                                                      <ImageButton.Triggers>
-                                                                             <DataTrigger TargetType="ImageButton"
-                                                                                          Binding="{Binding Source={x:Reference expander},Path=IsExpanded}"
-                                                                                          Value="True">
-                                                                                    <Setter Property="Rotation"
-                                                                                            Value="180"/>
-                                                                                    <Setter TargetName="bottomLine"
-                                                                                            Property="IsVisible"
-                                                                                            Value="True"/>
-                                                                             </DataTrigger>
-                                                                      </ImageButton.Triggers>
-                                                               </ImageButton>
-                                                        </HorizontalStackLayout>
+                                <toolkit:Expander.Header>
+                                    <Border StrokeThickness="0">
+                                        <Grid Padding="12,0"
+                                              ColumnDefinitions="*,Auto"
+                                              RowDefinitions="Auto,1">
+                                            <Label Text="AQ4388859"
+                                                   Style="{StaticResource Label18Medium}"
+                                                   VerticalOptions="Center"/>
+                                            <HorizontalStackLayout Grid.Column="1"
+                                                                   Spacing="0"
+                                                                   BackgroundColor="Transparent"
+                                                                   HorizontalOptions="End">
+                                                <ImageButton Source="print"
+                                                             Scale="0.6"/>
+                                                <ImageButton Source="airplane_ticket"
+                                                             Scale="0.6"/>
+                                                <ImageButton Source="arrow_down"
+                                                             VerticalOptions="Center"
+                                                             Scale="0.5"
+                                                             Rotation="270"
+                                                             InputTransparent="True">
+                                                    <ImageButton.Triggers>
+                                                        <DataTrigger TargetType="ImageButton"
+                                                                     Binding="{Binding Source={x:Reference expander},Path=IsExpanded}"
+                                                                     Value="True">
+                                                            <Setter Property="Rotation"
+                                                                    Value="180"/>
+                                                            <Setter TargetName="bottomLine"
+                                                                    Property="IsVisible"
+                                                                    Value="True"/>
+                                                        </DataTrigger>
+                                                    </ImageButton.Triggers>
+                                                </ImageButton>
+                                            </HorizontalStackLayout>
 
-                                                        <BoxView Grid.Row="1"
-                                                                 Grid.ColumnSpan="2"
-                                                                 x:Name="bottomLine"
-                                                                 IsVisible="False"
-                                                                 Color="{StaticResource BorderColor}"/>
-                                                 </Grid>
-                                          </Border>
-                                   </toolkit:Expander.Header>
+                                            <BoxView Grid.Row="1"
+                                                     Grid.ColumnSpan="2"
+                                                     x:Name="bottomLine"
+                                                     IsVisible="False"
+                                                     Color="{StaticResource BorderColor}"/>
+                                        </Grid>
+                                    </Border>
+                                </toolkit:Expander.Header>
 
-                                   <Grid ColumnDefinitions="4*,6*"
-                                         RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
-                                         Padding="12"
-                                         RowSpacing="20"
-                                         ColumnSpacing="20">
-                                          <Label Text="Passenger"
-                                                 Grid.Row="0"
-                                                 Style="{StaticResource Label16Medium}"/>
+                                <Grid ColumnDefinitions="4*,6*"
+                                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                                      Padding="12"
+                                      RowSpacing="20"
+                                      ColumnSpacing="20">
+                                    <Label Text="Passenger"
+                                           Grid.Row="0"
+                                           Style="{StaticResource Label16Medium}"/>
 
-                                          <Label Text="Ms. MUNNI DEVI"
-                                                 Grid.Row="0"
-                                                 Grid.Column="1"
-                                                 Style="{StaticResource Label16Medium}"
-                                                 TextColor="Black"/>
+                                    <Label Text="Ms. MUNNI DEVI"
+                                           Grid.Row="0"
+                                           Grid.Column="1"
+                                           Style="{StaticResource Label16Medium}"
+                                           TextColor="Black"/>
 
-                                          <Label Text="Entry Date"
-                                                 Grid.Row="1"
-                                                 Style="{StaticResource Label16Medium}"/>
+                                    <Label Text="Entry Date"
+                                           Grid.Row="1"
+                                           Style="{StaticResource Label16Medium}"/>
 
-                                          <Label Text="Ms. MUNNI DEVI"
-                                                 Grid.Row="1"
-                                                 Grid.Column="1"
-                                                 Style="{StaticResource Label16Medium}"
-                                                 TextColor="Black"/>
+                                    <Label Text="{Binding EntryDate}"
+                                           Grid.Row="1"
+                                           Grid.Column="1"
+                                           Style="{StaticResource Label16Medium}"
+                                           TextColor="Black"/>
 
-                                          <Label Text="Destination"
-                                                 Grid.Row="2"
-                                                 Style="{StaticResource Label16Medium}"/>
+                                    <Label Text="Destination"
+                                           Grid.Row="2"
+                                           Style="{StaticResource Label16Medium}"/>
 
-                                          <Label Text="Ms. MUNNI DEVI"
-                                                 Grid.Row="2"
-                                                 Grid.Column="1"
-                                                 Style="{StaticResource Label16Medium}"
-                                                 TextColor="Black"/>
+                                    <Label Text="{Binding FDestName}"
+                                           Grid.Row="2"
+                                           Grid.Column="1"
+                                           Style="{StaticResource Label16Medium}"
+                                           TextColor="Black"/>
 
-                                          <Label Text="Passenger"
-                                                 Grid.Row="3"
-                                                 Style="{StaticResource Label16Medium}"/>
+                                    <Label Text="Passenger"
+                                           Grid.Row="3"
+                                           Style="{StaticResource Label16Medium}"/>
 
-                                          <Label Text="Ms. MUNNI DEVI"
-                                                 Grid.Row="3"
-                                                 Grid.Column="1"
-                                                 Style="{StaticResource Label16Medium}"
-                                                 TextColor="Black"/>
+                                    <Label Text="Ms. MUNNI DEVI"
+                                           Grid.Row="3"
+                                           Grid.Column="1"
+                                           Style="{StaticResource Label16Medium}"
+                                           TextColor="Black"/>
 
-                                          <Label Text="Travel DateTime"
-                                                 Grid.Row="4"
-                                                 Style="{StaticResource Label16Medium}"/>
+                                    <Label Text="Travel DateTime"
+                                           Grid.Row="4"
+                                           Style="{StaticResource Label16Medium}"/>
 
-                                          <Label Text="Ms. MUNNI DEVI"
-                                                 Grid.Row="4"
-                                                 Grid.Column="1"
-                                                 Style="{StaticResource Label16Medium}"
-                                                 TextColor="Black"/>
+                                    <Label Text="{Binding TravelDateTime}"
+                                           Grid.Row="4"
+                                           Grid.Column="1"
+                                           Style="{StaticResource Label16Medium}"
+                                           TextColor="Black"/>
 
-                                          <Label Text="Airline"
-                                                 Grid.Row="5"
-                                                 Style="{StaticResource Label16Medium}"/>
+                                    <Label Text="Airline"
+                                           Grid.Row="5"
+                                           Style="{StaticResource Label16Medium}"/>
 
-                                          <Label Text="Ms. MUNNI DEVI"
-                                                 Grid.Row="5"
-                                                 Grid.Column="1"
-                                                 Style="{StaticResource Label16Medium}"
-                                                 TextColor="Black"/>
+                                    <Label Text="{Binding AirlineName}"
+                                           Grid.Row="5"
+                                           Grid.Column="1"
+                                           Style="{StaticResource Label16Medium}"
+                                           TextColor="Black"/>
 
-                                          <Label Text="Qty"
-                                                 Grid.Row="6"
-                                                 Style="{StaticResource Label16Medium}"/>
+                                    <Label Text="Qty"
+                                           Grid.Row="6"
+                                           Style="{StaticResource Label16Medium}"/>
 
-                                          <Label Text="Ms. MUNNI DEVI"
-                                                 Grid.Row="6"
-                                                 Grid.Column="1"
-                                                 Style="{StaticResource Label16Medium}"
-                                                 TextColor="Black"/>
+                                    <Label Text="{Binding PAX_Qty}"
+                                           Grid.Row="6"
+                                           Grid.Column="1"
+                                           Style="{StaticResource Label16Medium}"
+                                           TextColor="Black"/>
 
-                                          <Label Text="Price"
-                                                 Grid.Row="7"
-                                                 Style="{StaticResource Label16Medium}"/>
+                                    <Label Text="Price"
+                                           Grid.Row="7"
+                                           Style="{StaticResource Label16Medium}"/>
 
-                                          <Label Text="Ms. MUNNI DEVI"
-                                                 Grid.Row="7"
-                                                 Grid.Column="1"
-                                                 Style="{StaticResource Label16Medium}"
-                                                 TextColor="Black"/>
+                                    <Label Text="Ms. MUNNI DEVI"
+                                           Grid.Row="7"
+                                           Grid.Column="1"
+                                           Style="{StaticResource Label16Medium}"
+                                           TextColor="Black"/>
 
-                                          <Label Text="Amount"
-                                                 Grid.Row="8"
-                                                 Style="{StaticResource Label16Medium}"/>
+                                    <Label Text="Amount"
+                                           Grid.Row="8"
+                                           Style="{StaticResource Label16Medium}"/>
 
-                                          <Label Text="Ms. MUNNI DEVI"
-                                                 Grid.Row="8"
-                                                 Grid.Column="1"
-                                                 Style="{StaticResource Label16Medium}"
-                                                 TextColor="Black"/>
+                                    <Label Text="{Binding Amount}"
+                                           Grid.Row="8"
+                                           Grid.Column="1"
+                                           Style="{StaticResource Label16Medium}"
+                                           TextColor="Black"/>
 
-                                   </Grid>
+                                </Grid>
 
                             </toolkit:Expander>
-                     </Border>
-              </Grid>
-       </views:BasePage.PageContent>
+                        </Border>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+        </Grid>
+    </views:BasePage.PageContent>
 </views:BasePage>

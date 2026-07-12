@@ -1,4 +1,3 @@
-using System;
 using AirIQ.Configurations.Mapper.Converters;
 using AirIQ.Models;
 using AirIQ.Models.Response;
@@ -35,5 +34,105 @@ public static class BackendToAppModelMapper
         }
         var converter = new FlightSearchResultDtoToFlight();
         return flightSearchResultDtos.Select(converter.Convert);
+    }
+
+    public static IEnumerable<Country> GetCountries(IEnumerable<CountryDto> countryDtos)
+    {
+        if (countryDtos == null)
+        {
+            return new List<Country>();
+        }
+        var converter = new CountryDtoToCountryConverter();
+        return countryDtos.Select(converter.Convert);
+    }
+
+    public static IEnumerable<State> GetStates(IEnumerable<StateDto> stateDtos)
+    {
+        if (stateDtos == null)
+        {
+            return new List<State>();
+        }
+        var converter = new StateDtoToStateConverter();
+        return stateDtos.Select(converter.Convert);
+    }
+
+    public static IEnumerable<City> GetCities(IEnumerable<CityDto> cityDtos)
+    {
+        if (cityDtos == null)
+        {
+            return new List<City>();
+        }
+        var converter = new CityDtoToCityConverter();
+        return cityDtos.Select(converter.Convert);
+    }
+
+    public static IEnumerable<MainCity> GetMainCities(IEnumerable<MainCityDto> mainCityDtos)
+    {
+        if (mainCityDtos == null)
+        {
+            return new List<MainCity>();
+        }
+        var converter = new MainCityDtoToMainCityConverter();
+        return mainCityDtos.Select(converter.Convert);
+    }
+
+    public static IEnumerable<District> GetDistricts(IEnumerable<DistrictDto> districtDtos)
+    {
+        if (districtDtos == null)
+        {
+            return new List<District>();
+        }
+        var converter = new DistrictDtoToDisctrictConverter();
+        return districtDtos.Select(converter.Convert);
+    }
+
+    public static IEnumerable<LookupItem> GetLookupItems(IEnumerable<LookupItemDto> lookupItemDtos)
+    {
+        if (lookupItemDtos == null)
+        {
+            return new List<LookupItem>();
+        }
+        var converter = new LookupItemDtoToLookupItemConverter();
+        return lookupItemDtos.Select(converter.Convert);
+    }
+
+    public static IEnumerable<SalesRecord> GetSalesRecords(IEnumerable<SalesRecordDto> salesRecordDtos)
+    {
+        if (salesRecordDtos == null)
+        {
+            return new List<SalesRecord>();
+        }
+        var converter = new SalesRecordDtoToSalesRecordConverter();
+        return salesRecordDtos.Select(converter.Convert);
+    }
+
+    public static IEnumerable<SalesRecordPassenger> GetSalesRecordPassengers(IEnumerable<SalesRecordPassengerDto> salesRecordPassengerDtos)
+    {
+        if (salesRecordPassengerDtos == null)
+        {
+            return new List<SalesRecordPassenger>();
+        }
+        var converter = new SalesRecordPassengerDtoToSalesRecordPassengerConverter();
+        return salesRecordPassengerDtos.Select(converter.Convert);
+    }
+
+    public static District GetDistrict(DistrictDto? districtDto)
+    {
+        if (districtDto == null)
+        {
+            return new District();
+        }
+        var converter = new DistrictDtoToDisctrictConverter();
+        return converter.Convert(districtDto);
+    }
+
+    public static Country GetCountry(CountryDto? countryDto)
+    {
+        if (countryDto == null)
+        {
+            return new Country();
+        }
+        var converter = new CountryDtoToCountryConverter();
+        return converter.Convert(countryDto);
     }
 }

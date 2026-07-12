@@ -1,5 +1,5 @@
-using System;
 using System.Text.Json;
+
 using AirIQ.Configurations.CustomExceptions;
 using AirIQ.Constants;
 using AirIQ.Models.Request;
@@ -9,7 +9,7 @@ using AirIQ.Services.Interfaces;
 namespace AirIQ.Services;
 
 public class LoginService(IApiServiceBaseParams apiServiceBaseParams,
-IAppBackendService appBackendService) : ApiServiceBase(apiServiceBaseParams), ILoginService
+    IAppBackendService appBackendService) : ApiServiceBase(apiServiceBaseParams), ILoginService
 {
     public async Task<UserDto?> LoginAsync(string username, string password)
     {
