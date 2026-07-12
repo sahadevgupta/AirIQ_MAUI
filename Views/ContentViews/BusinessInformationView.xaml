@@ -2,7 +2,8 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirIQ.Views.ContentViews.BusinessInformationView"
-             xmlns:controls="clr-namespace:AirIQ.Controls">
+             xmlns:controls="clr-namespace:AirIQ.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
         <Grid ColumnDefinitions="*,*"
               ColumnSpacing="10"
               RowSpacing="10"
@@ -20,11 +21,21 @@
                                Margin="0,8,0,0"/>
 
                         <controls:ExtendedDropdown Title="Primary Business"
-                                                   PlaceholderText="Select Primary Business Type"/>
+                                                   PlaceholderText="Select Primary Business Type"
+                                                   ItemsSource="{Binding PrimaryBusinessTypes}"
+                                                   SelectedItem="{Binding SelectedPrimaryBusinessType}"
+                                                   DisplayMemberPath="Name"/>
+
                         <controls:ExtendedDropdown Title="Monthly Business"
                                                    PlaceholderText="Select Monthly Business Type"/>
+
                         <controls:ExtendedDropdown Title="Secondary Business"
-                                                   PlaceholderText="Select Secondary Business Type"/>
+                                                   PlaceholderText="Select Secondary Business Type"
+                                                   ItemsSource="{Binding SecondaryBusinessTypes}"
+                                                   SelectedItem="{Binding SelectedSecondaryBusinessType}"
+                                                   DisplayMemberPath="Name"
+                                                   IsEnabled="{Binding SelectedPrimaryBusinessType, Converter={toolkit:IsNotNullConverter}}"/>
+
                         <controls:ExtendedEntry Title="PAN No"
                                                 PlaceholderText="Enter PAN No"/>
 

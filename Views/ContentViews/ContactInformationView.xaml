@@ -2,58 +2,74 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirIQ.Views.ContentViews.ContactInformationView"
-             xmlns:controls="clr-namespace:AirIQ.Controls">
+             xmlns:controls="clr-namespace:AirIQ.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
-    <Grid RowDefinitions="Auto,*"
-          RowSpacing="10">
+        <Grid RowDefinitions="Auto,*"
+              RowSpacing="10">
 
-        <VerticalStackLayout Spacing="10">
-            <Label Text="Contact Information"
-                   Style="{StaticResource Label18Medium}"
-                   TextColor="{StaticResource PrimaryColor}"
-                   LineHeight="1.2"
-                   TextTransform="Uppercase"
-                   CharacterSpacing="1.2"
-                   Margin="0,8,0,0"/>
+                <VerticalStackLayout Spacing="10">
+                        <Label Text="Contact Information"
+                               Style="{StaticResource Label18Medium}"
+                               TextColor="{StaticResource PrimaryColor}"
+                               LineHeight="1.2"
+                               TextTransform="Uppercase"
+                               CharacterSpacing="1.2"
+                               Margin="0,8,0,0"/>
 
-            <controls:ExtendedDropdown Title="Country"
-                                       PlaceholderText="Select Country"/>
-            <controls:ExtendedDropdown Title="State"
-                                       PlaceholderText="Select State"/>
-            <controls:ExtendedDropdown Title="District"
-                                       PlaceholderText="Select District"/>
-            <controls:ExtendedDropdown Title="City"
-                                       PlaceholderText="Select City"/>
-            <controls:ExtendedEntry Title="Address"
-                                    PlaceholderText="Enter Address"/>
-            <controls:ExtendedEntry Title="Specify your Locality"
-                                    PlaceholderText="Enter Locality"/>
+                        <controls:ExtendedDropdown Title="Country"
+                                                   PlaceholderText="Select Country"
+                                                   ItemsSource="{Binding Countries}"
+                                                   SelectedItem="{Binding SelectedCountry}"
+                                                   DisplayMemberPath="Name"/>
+                        <controls:ExtendedDropdown Title="State"
+                                                   PlaceholderText="Select State"
+                                                   ItemsSource="{Binding States}"
+                                                   SelectedItem="{Binding SelectedState}"
+                                                   DisplayMemberPath="Name"
+                                                   IsEnabled="{Binding SelectedCountry, Converter={toolkit:IsNotNullConverter}}"/>
+                        <controls:ExtendedDropdown Title="District"
+                                                   PlaceholderText="Select District"
+                                                   ItemsSource="{Binding Districts}"
+                                                   SelectedItem="{Binding SelectedDistrict}"
+                                                   DisplayMemberPath="Name"
+                                                   IsEnabled="{Binding SelectedState, Converter={toolkit:IsNotNullConverter}}"/>
+                        <controls:ExtendedDropdown Title="City"
+                                                   PlaceholderText="Select City"
+                                                   ItemsSource="{Binding Cities}"
+                                                   SelectedItem="{Binding SelectedCity}"
+                                                   DisplayMemberPath="CityName"
+                                                   IsEnabled="{Binding SelectedDistrict, Converter={toolkit:IsNotNullConverter}}"/>
+                        <controls:ExtendedEntry Title="Address"
+                                                PlaceholderText="Enter Address"/>
+                        <controls:ExtendedEntry Title="Specify your Locality"
+                                                PlaceholderText="Enter Locality"/>
 
-            <controls:ExtendedEntry Title="Nearest Airport"
-                                    PlaceholderText="Enter Nearest Airport"/>
+                        <controls:ExtendedEntry Title="Nearest Airport"
+                                                PlaceholderText="Enter Nearest Airport"/>
 
 
-        </VerticalStackLayout>
+                </VerticalStackLayout>
 
-        <Button Text="Back"
-                Grid.Row="1"
-                Margin="0,0,0,20"
-                TextColor="{StaticResource PrimaryColor}"
-                BackgroundColor="White"
-                Command="{Binding BackStepCommand}"
-                HorizontalOptions="Start"
-                VerticalOptions="End"
-                Style="{StaticResource SmallBorderButtonStyle}"/>
+                <Button Text="Back"
+                        Grid.Row="1"
+                        Margin="0,0,0,20"
+                        TextColor="{StaticResource PrimaryColor}"
+                        BackgroundColor="White"
+                        Command="{Binding BackStepCommand}"
+                        HorizontalOptions="Start"
+                        VerticalOptions="End"
+                        Style="{StaticResource SmallBorderButtonStyle}"/>
 
 
-        <Button Text="Next"
-                Grid.Row="1"
-                Margin="0,0,0,20"
-                TextColor="White"
-                BackgroundColor="{StaticResource PrimaryColor}"
-                Command="{Binding NextStepCommand}"
-                HorizontalOptions="End"
-                VerticalOptions="End"
-                Style="{StaticResource SmallBorderButtonStyle}"/>
-    </Grid>
+                <Button Text="Next"
+                        Grid.Row="1"
+                        Margin="0,0,0,20"
+                        TextColor="White"
+                        BackgroundColor="{StaticResource PrimaryColor}"
+                        Command="{Binding NextStepCommand}"
+                        HorizontalOptions="End"
+                        VerticalOptions="End"
+                        Style="{StaticResource SmallBorderButtonStyle}"/>
+        </Grid>
 </ContentView>

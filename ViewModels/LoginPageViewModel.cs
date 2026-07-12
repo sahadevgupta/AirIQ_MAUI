@@ -1,11 +1,12 @@
-﻿using AirIQ.Configurations.Mapper;
-using AirIQ.Constants;
+﻿using AirIQ.Constants;
 using AirIQ.Models.Response;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
 using AirIQ.Views;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+
 using Newtonsoft.Json;
 
 namespace AirIQ.ViewModels
@@ -15,10 +16,10 @@ namespace AirIQ.ViewModels
         readonly ILoginService _loginService;
 
         [ObservableProperty]
-        private string? _username = string.Empty; //"9382915717";
+        private string? _username = "9380715388"; //string.Empty; //"9382915717";
 
         [ObservableProperty]
-        private string? _password = string.Empty; //"123456789";
+        private string? _password = "9380715388"; //"123456789";
 
         public LoginPageViewModel(IViewModelParameters viewModelParameters,
         ILoginService loginService) : base(viewModelParameters)

@@ -1,6 +1,9 @@
 using AirIQ.Services;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
+
+using CommunityToolkit.Maui;
+
 using Mopups.Interfaces;
 using Mopups.Services;
 
@@ -13,7 +16,12 @@ public static class AppServiceInitializer
         //Transient Services
         builder.Services.AddTransient<IViewModelParameters, ViewModelParameters>()
                         .AddTransient<IApiServiceBaseParams, ApiServiceBaseParams>()
-                        .AddTransient<IDialogService, DialogService>();
+                        .AddTransient<IDialogService, DialogService>()
+                        .AddTransient<ILookupService, LookupService>()
+                        .AddTransient<ILoginService, LoginService>()
+                        .AddTransient<IFlightService, FlightService>()
+                        .AddTransient<IAuthService, AuthService>()
+                        .AddTransient<IOperationsService, OperationsService>();
 
 
         builder.Services.AddSingleton<ILoadingPopUpService, AirIQ.Platforms.Services.LoadingPopupService>();
@@ -21,10 +29,7 @@ public static class AppServiceInitializer
         builder.Services.AddSingleton<IShellNavigationService, ShellNavigationService>()
                         .AddSingleton<IConnectivityService, ConnectivityService>()
                         .AddSingleton<ISecureStorageService, SecureStorageService>()
-                        .AddSingleton<ILoginService, LoginService>()
-                        .AddSingleton<IFlightService, FlightService>()
-                        .AddSingleton<IPopupNavigation>(MopupService.Instance)
-                        .AddSingleton<IAuthService, AuthService>();
+                        .AddSingleton<IPopupNavigation>(MopupService.Instance);
 
 
         return builder;

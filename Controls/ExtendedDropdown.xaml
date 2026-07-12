@@ -20,7 +20,9 @@
         <Border x:Name="frameDropdown"
                 StrokeShape="RoundRectangle 8"
                 Grid.Row="1"
-                HeightRequest="50">
+                HeightRequest="50"
+                Opacity="1"
+                BackgroundColor="White">
             <Border.Triggers>
 
                 <DataTrigger Binding="{Binding Source={x:Reference errorView},Path=IsVisible}"
@@ -39,7 +41,7 @@
                              TargetType="Border"
                              Value="False">
                     <Setter Property="BackgroundColor"
-                            Value="Gray"/>
+                            Value="{StaticResource LightGray}"/>
                     <Setter Property="Opacity"
                             Value="0.8"/>
                 </DataTrigger>
