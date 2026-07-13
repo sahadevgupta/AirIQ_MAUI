@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace AirIQ.Models.Response
 {
-    public abstract record RecordServiceResponse<T>
+    public sealed record RecordServiceResponse<T>
     {
         [JsonPropertyName("TotalRecords")]
         public int TotalRecords { get; set; }

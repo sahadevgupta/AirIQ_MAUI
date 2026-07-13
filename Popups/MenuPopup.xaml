@@ -68,7 +68,8 @@
                         <HorizontalStackLayout Spacing="12"
                                                Padding="20,10">
                             <Image Source="{Binding IconSource, TargetNullValue='flight'}"
-                                   HeightRequest="30">
+                                   HeightRequest="30"
+                                   WidthRequest="25">
                                 <Image.Behaviors>
                                     <toolkit:IconTintColorBehavior TintColor="White"/>
                                 </Image.Behaviors>

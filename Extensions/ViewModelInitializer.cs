@@ -1,6 +1,5 @@
 ﻿using AirIQ.ViewModels;
 using AirIQ.ViewModels.Common;
-using CommunityToolkit.Maui;
 
 namespace AirIQ.Extensions
 {
@@ -18,7 +17,15 @@ namespace AirIQ.Extensions
                             .AddTransient<HotelsPageViewModel>()
                             .AddTransient<SalesRecordPageViewModel>()
                             .AddTransient<SignupPageViewModel>()
-                            .AddTransient<SessionExpiryPopupViewModel>();
+                            .AddTransient<SessionExpiryPopupViewModel>()
+                            .AddTransient<RefundsRecordPageViewModel>()
+                            .AddTransient<TempCreditPageViewModel>()
+                            .AddTransient<GroupQueryPageViewModel>()
+                            .AddTransient<AccountLedgerRecordPageViewModel>()
+                            .AddTransient<UploadRequestPageViewModel>()
+                            .AddTransient<OnlineRechargePageViewModel>()
+                            .AddTransient<PaxCalendarPageViewModel>()
+                            .AddTransient<BankDetailsPageViewModel>();
 
             return builder;
         }

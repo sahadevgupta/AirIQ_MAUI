@@ -17,5 +17,15 @@ namespace AirIQ.Models
         public double Amount { get; set; }
         public List<SalesRecordPassenger>? Passengers { get; set; }
         public List<SalesRecordPassenger>? Infants { get; set; }
+
+        public string PassengersName
+        {
+            get
+            {
+                return string.Join(
+                        Environment.NewLine,
+                        Passengers?.Select(x => $"{x.PassengerName}") ?? Enumerable.Empty<string>());
+            }
+        }
     }
 }

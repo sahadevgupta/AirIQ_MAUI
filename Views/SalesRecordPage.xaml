@@ -20,7 +20,9 @@
             <CollectionView Grid.Row="1"
                             ItemsSource="{Binding SalesRecords}"
                             RemainingItemsThreshold="5"
-                            RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
+                            RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}"
+                            VerticalScrollBarVisibility="Never"
+                            HorizontalScrollBarVisibility="Never">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical"
                                        ItemSpacing="10"/>
@@ -38,9 +40,16 @@
                                         <Grid Padding="12,0"
                                               ColumnDefinitions="*,Auto"
                                               RowDefinitions="Auto,1">
-                                            <Label Text="AQ4388859"
-                                                   Style="{StaticResource Label18Medium}"
-                                                   VerticalOptions="Center"/>
+                                            <Label
+                                                Style="{StaticResource Label18Medium}"
+                                                VerticalOptions="Center">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Prefix}"/>
+                                                        <Span Text="{Binding SaleID}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
                                             <HorizontalStackLayout Grid.Column="1"
                                                                    Spacing="0"
                                                                    BackgroundColor="Transparent"
@@ -49,17 +58,16 @@
                                                              Scale="0.6"/>
                                                 <ImageButton Source="airplane_ticket"
                                                              Scale="0.6"/>
-                                                <ImageButton Source="arrow_down"
-                                                             VerticalOptions="Center"
-                                                             Scale="0.5"
-                                                             Rotation="270"
+                                                <ImageButton Source="arrow_right"
+                                                             MinimumHeightRequest="30"
+                                                             MinimumWidthRequest="30"
                                                              InputTransparent="True">
                                                     <ImageButton.Triggers>
                                                         <DataTrigger TargetType="ImageButton"
                                                                      Binding="{Binding Source={x:Reference expander},Path=IsExpanded}"
                                                                      Value="True">
                                                             <Setter Property="Rotation"
-                                                                    Value="180"/>
+                                                                    Value="270"/>
                                                             <Setter TargetName="bottomLine"
                                                                     Property="IsVisible"
                                                                     Value="True"/>
@@ -81,12 +89,12 @@
                                       RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
                                       Padding="12"
                                       RowSpacing="20"
-                                      ColumnSpacing="20">
+                                      ColumnSpacing="0">
                                     <Label Text="Passenger"
                                            Grid.Row="0"
                                            Style="{StaticResource Label16Medium}"/>
 
-                                    <Label Text="Ms. MUNNI DEVI"
+                                    <Label Text="{Binding PassengersName}"
                                            Grid.Row="0"
                                            Grid.Column="1"
                                            Style="{StaticResource Label16Medium}"
@@ -96,7 +104,7 @@
                                            Grid.Row="1"
                                            Style="{StaticResource Label16Medium}"/>
 
-                                    <Label Text="{Binding EntryDate}"
+                                    <Label Text="{Binding EntryDate,StringFormat='{0: dd MMM yyyy HH:mm tt}'}"
                                            Grid.Row="1"
                                            Grid.Column="1"
                                            Style="{StaticResource Label16Medium}"
@@ -112,11 +120,11 @@
                                            Style="{StaticResource Label16Medium}"
                                            TextColor="Black"/>
 
-                                    <Label Text="Passenger"
+                                    <Label Text="PNR:"
                                            Grid.Row="3"
                                            Style="{StaticResource Label16Medium}"/>
 
-                                    <Label Text="Ms. MUNNI DEVI"
+                                    <Label Text="{Binding PNR}"
                                            Grid.Row="3"
                                            Grid.Column="1"
                                            Style="{StaticResource Label16Medium}"
@@ -126,7 +134,7 @@
                                            Grid.Row="4"
                                            Style="{StaticResource Label16Medium}"/>
 
-                                    <Label Text="{Binding TravelDateTime}"
+                                    <Label Text="{Binding TravelDateTime,StringFormat='{0: dd MMM yyyy HH:mm tt}'}"
                                            Grid.Row="4"
                                            Grid.Column="1"
                                            Style="{StaticResource Label16Medium}"
@@ -156,7 +164,7 @@
                                            Grid.Row="7"
                                            Style="{StaticResource Label16Medium}"/>
 
-                                    <Label Text="Ms. MUNNI DEVI"
+                                    <Label Text="{Binding FinalRate}"
                                            Grid.Row="7"
                                            Grid.Column="1"
                                            Style="{StaticResource Label16Medium}"
