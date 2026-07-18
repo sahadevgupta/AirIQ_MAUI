@@ -1,7 +1,9 @@
 using AirIQ.Controls;
 using AirIQ.ViewModels.Common;
+
 using CommunityToolkit.Maui.Behaviors;
 using CommunityToolkit.Maui.Core;
+
 using Microsoft.Maui.Controls.PlatformConfiguration;
 using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
 using Application = Microsoft.Maui.Controls.Application;
@@ -143,7 +145,7 @@ public abstract class BasePage : ContentPage
 	protected override void OnNavigatedTo(NavigatedToEventArgs args)
 	{
 		base.OnNavigatedTo(args);
-		if (this.BindingContext is BaseViewModel vm && args.NavigationType != NavigationType.Pop)
+		if (this.BindingContext is BaseViewModel vm && args.NavigationType == NavigationType.Push)
 		{
 			_ = vm.LoadDataWhenNavigatedTo();
 		}

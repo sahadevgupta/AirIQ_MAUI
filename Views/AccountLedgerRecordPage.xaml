@@ -2,11 +2,230 @@
 <views:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 x:Class="AirIQ_MAUI.Views.AccountLedgerRecordPage"
-                xmlns:views="clr-namespace:AirIQ.Views">
-    <VerticalStackLayout>
-        <Label
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"/>
-    </VerticalStackLayout>
+                xmlns:controls="clr-namespace:AirIQ.Controls"
+                xmlns:models="clr-namespace:AirIQ.Models"
+                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                xmlns:views="clr-namespace:AirIQ.Views"
+                xmlns:vm="clr-namespace:AirIQ.ViewModels"
+                x:DataType="vm:AccountLedgerRecordPageViewModel">
+    <views:BasePage.PageContent>
+        <Grid Padding="16"
+              RowDefinitions="Auto,Auto,*"
+              ColumnDefinitions="*,*,*"
+              ColumnSpacing="10"
+              RowSpacing="10"
+              BackgroundColor="{StaticResource SecondaryBackgroundColor}">
+
+            <Border Stroke="{StaticResource BorderColor}"
+                    StrokeShape="RoundRectangle 10"
+                    BackgroundColor="White">
+                <VerticalStackLayout>
+
+                    <Label Text="23.8L"
+                            HorizontalOptions="Center"
+                           Padding="12,8"
+                           FontSize="24"/>
+                    <BoxView Color="#E8E8E8"
+                            HeightRequest="1"/>
+                    <Label Text="Balance"
+                           FontSize="13"
+                           VerticalOptions="End"
+                           HorizontalOptions="Center"
+                           Padding="12,8"/>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Stroke="{StaticResource BorderColor}"
+                    StrokeShape="RoundRectangle 10"
+                    BackgroundColor="White"
+                    VerticalOptions="Start"
+                    Grid.Column="1">
+                <VerticalStackLayout>
+
+                    <Label Text="-23.8L"
+                            HorizontalOptions="Center"
+                           Padding="12,8"
+                           FontSize="24"/>
+                    <BoxView Color="#E8E8E8"
+                            HeightRequest="1"/>
+                    <Label Text="Ledger Balance"
+                           HorizontalTextAlignment="Center"
+                           Padding="12,8"
+                           FontSize="13"/>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Stroke="{StaticResource BorderColor}"
+                    StrokeShape="RoundRectangle 10"
+                    BackgroundColor="{StaticResource PrimaryColor}"
+                    Grid.Column="2">
+                <VerticalStackLayout>
+
+                    <Label Text="-23.8L"
+                            HorizontalOptions="Center"
+                           Padding="12,8"
+                           FontSize="24"
+                           TextColor="White"/>
+                    <BoxView Color="{StaticResource Primary10}"
+                            HeightRequest="1"/>
+                    <Label Text="Credit Due"
+                           FontSize="13"
+                           HorizontalOptions="Center"
+                           TextColor="White"
+                           Padding="12,8"/>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <controls:SearchView VerticalOptions="Start"
+                                 Grid.ColumnSpan="3"
+                                 Grid.Row="1"/>
+
+            <CollectionView Grid.Row="2"
+                            Grid.ColumnSpan="3"
+                            ItemsSource="{Binding AccountLedgerRecords}"
+                            RemainingItemsThreshold="5"
+                            RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}"
+                            VerticalScrollBarVisibility="Never"
+                            HorizontalScrollBarVisibility="Never">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:AccountLedgerRecord">
+                        <Border Grid.Row="1"
+                                Stroke="{StaticResource BorderColor}"
+                                StrokeShape="RoundRectangle 6"
+                                BackgroundColor="White"
+                                VerticalOptions="Start">
+                            <toolkit:Expander x:Name="expander">
+                                <toolkit:Expander.Header>
+                                    <Border StrokeThickness="0">
+                                        <Grid Padding="12,0"
+                                              ColumnDefinitions="*,Auto"
+                                              RowDefinitions="Auto,1">
+                                            <Label
+                                                Style="{StaticResource Label18Medium}"
+                                                VerticalOptions="Center">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding RefNo,StringFormat='#{0}'}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <HorizontalStackLayout Grid.Column="1"
+                                                                   Spacing="0"
+                                                                   BackgroundColor="Transparent"
+                                                                   HorizontalOptions="End">
+                                                <ImageButton Source="invoice"
+                                                             Scale="0.4"/>
+
+                                                <ImageButton Source="arrow_right"
+                                                             MinimumHeightRequest="30"
+                                                             MinimumWidthRequest="30"
+                                                             InputTransparent="True">
+                                                    <ImageButton.Triggers>
+                                                        <DataTrigger TargetType="ImageButton"
+                                                                     Binding="{Binding Source={x:Reference expander},Path=IsExpanded}"
+                                                                     Value="True">
+                                                            <Setter Property="Rotation"
+                                                                    Value="270"/>
+                                                            <!-- <Setter TargetName="bottomLine"
+                                                                    Property="IsVisible"
+                                                                    Value="True"/> -->
+                                                        </DataTrigger>
+                                                    </ImageButton.Triggers>
+                                                </ImageButton>
+                                            </HorizontalStackLayout>
+
+                                            <BoxView Grid.Row="1"
+                                                     Grid.ColumnSpan="2"
+                                                     x:Name="bottomLine"
+                                                     IsVisible="False"
+                                                     Color="{StaticResource BorderColor}"/>
+                                        </Grid>
+                                    </Border>
+                                </toolkit:Expander.Header>
+
+                                <Grid ColumnDefinitions="4*,6*"
+                                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
+                                      Padding="12"
+                                      RowSpacing="20"
+                                      ColumnSpacing="0">
+
+                                    <Label Text="Entry Date"
+                                           Grid.Row="0"
+                                           Style="{StaticResource Label16Medium}"/>
+
+                                    <Label Text="{Binding Date,StringFormat='{0: dd MMM yyyy HH:mm tt}'}"
+                                           Grid.Row="0"
+                                           Grid.Column="1"
+                                           Style="{StaticResource Label16Medium}"
+                                           TextColor="Black"/>
+
+                                    <Label Text="Particular"
+                                           Grid.Row="1"
+                                           Style="{StaticResource Label16Medium}"/>
+
+                                    <Label Text="{Binding Particulars}"
+                                           Grid.Row="1"
+                                           Grid.Column="1"
+                                           Style="{StaticResource Label16Medium}"
+                                           TextColor="Black"/>
+
+                                    <Label Text="Destination"
+                                           Grid.Row="2"
+                                           Style="{StaticResource Label16Medium}"/>
+
+                                    <Label Text="{Binding Destination}"
+                                           Grid.Row="2"
+                                           Grid.Column="1"
+                                           Style="{StaticResource Label16Medium}"
+                                           TextColor="Black"/>
+
+                                    <Label Text="Travel DateTime"
+                                           Grid.Row="3"
+                                           Style="{StaticResource Label16Medium}"/>
+
+                                    <Label Text="{Binding TravelDate,StringFormat='{0: dd MMM yyyy HH:mm tt}'}"
+                                           Grid.Row="3"
+                                           Grid.Column="1"
+                                           Style="{StaticResource Label16Medium}"
+                                           TextColor="Black"/>
+
+                                    <Label Text="Amount"
+                                           Grid.Row="4"
+                                           Style="{StaticResource Label16Medium}"/>
+
+                                    <Label Text="{Binding Amount}"
+                                           Grid.Row="4"
+                                           Grid.Column="1"
+                                           Style="{StaticResource Label16Medium}"
+                                           TextColor="Black"/>
+
+                                    <Label Text="Ledger Balance"
+                                           Grid.Row="5"
+                                           Style="{StaticResource Label16Medium}"/>
+
+                                    <Label Text="{Binding Balance}"
+                                           Grid.Row="5"
+                                           Grid.Column="1"
+                                           Style="{StaticResource Label16Medium}"
+                                           TextColor="Black"/>
+
+                                </Grid>
+
+                            </toolkit:Expander>
+                        </Border>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+        </Grid>
+    </views:BasePage.PageContent>
 </views:BasePage>

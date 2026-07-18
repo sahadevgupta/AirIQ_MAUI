@@ -2,11 +2,332 @@
 <views:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 x:Class="AirIQ_MAUI.Views.BankDetailsPage"
-                xmlns:views="clr-namespace:AirIQ.Views">
-    <VerticalStackLayout>
-        <Label
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"/>
-    </VerticalStackLayout>
+                xmlns:views="clr-namespace:AirIQ.Views"
+                xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls">
+
+    <views:BasePage.PageContent>
+        <ScrollView>
+            <Grid Padding="16"
+                  RowDefinitions="Auto,Auto,Auto"
+                  RowSpacing="10">
+                <Border>
+                    <Grid ColumnDefinitions="Auto,*"
+                          RowDefinitions="Auto,1,Auto,1,Auto,1,Auto,1,Auto,1,Auto,Auto">
+                        <Image Source="account_assured"
+                               Margin="16,12"/>
+
+                        <VerticalStackLayout Grid.Column="1"
+                                             Padding="0,16">
+
+                            <Button Text="ICICI Bank Limited"
+                                    Style="{StaticResource BorderlessButton}"
+                                    TextColor="Black"
+                                    HorizontalOptions="Start"
+                                    ImageSource="icici_logo"
+                                    ContentLayout="Left,10"
+                                    Padding="0"
+                                    MinimumHeightRequest="0"
+                                    BackgroundColor="Transparent"/>
+                            <Label Text="IMPS / NEFT / RTGS"/>
+                        </VerticalStackLayout>
+
+                        <BoxView Color="#E8E8E8"
+                                 HeightRequest="1"
+                                 Grid.Row="1"
+                                 Grid.ColumnSpan="2"/>
+
+                        <Image Source="account_circle"
+                               Margin="16,12"
+                               Grid.Row="2"/>
+                        <Label Grid.Column="1"
+                               Grid.Row="2"
+                               Padding="0,12">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Account Name"/>
+                                    <Span Text="&#10;AIR IQ Savings"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <BoxView Color="#E8E8E8"
+                                 HeightRequest="1"
+                                 Grid.Row="3"
+                                 Grid.ColumnSpan="2"/>
+
+                        <Image Source="credit_card_circle"
+                               Grid.Row="4"
+                               Margin="16,12"/>
+                        <Label Grid.Column="1"
+                               Padding="0,12"
+                               Grid.Row="4">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Account Number"/>
+                                    <Span Text="&#10;AIR IQ Savings"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <BoxView Color="#E8E8E8"
+                                 HeightRequest="1"
+                                 Grid.Row="5"
+                                 Grid.ColumnSpan="2"/>
+
+                        <Image Source="credit_card_circle"
+                               Grid.Row="6"
+                               Margin="16,12"/>
+                        <Label Grid.Column="1"
+                               Padding="0,12"
+                               Grid.Row="6">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Account Name"/>
+                                    <Span Text="&#10;AIR IQ Savings"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <BoxView Color="#E8E8E8"
+                                 HeightRequest="1"
+                                 Grid.Row="7"
+                                 Grid.ColumnSpan="2"/>
+
+                        <Image Source="wallet"
+                               Grid.Row="8"
+                               Margin="16,12"/>
+                        <Label Grid.Column="1"
+                               Padding="0,12"
+                               Grid.Row="8">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Account Type"/>
+                                    <Span Text="&#10;AIR IQ Savings"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <BoxView Color="#E8E8E8"
+                                 HeightRequest="1"
+                                 Grid.Row="9"
+                                 Grid.ColumnSpan="2"/>
+
+                        <Image Source="account_bank"
+                               Grid.Row="10"
+                               Margin="16,12"/>
+                        <Label Grid.Column="1"
+                               Padding="0,12"
+                               Grid.Row="10">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="IFSC Code"/>
+                                    <Span Text="&#10;AIR IQ Savings"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <VerticalStackLayout Grid.Row="11"
+                                             Grid.ColumnSpan="2">
+
+
+                            <Border BackgroundColor="#E5F3FE"
+                                    Margin="16,12"
+                                    StrokeThickness="0"
+                                    Padding="10,8">
+                                <Label Text="Note: If using ICICI Bank, Please use “Other Bank” option to add AIR IQ as beneficiary"/>
+                            </Border>
+
+                            <BoxView Color="#E8E8E8"
+                                     HeightRequest="1"/>
+                            <Label Padding="16,12">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Scan QR code"/>
+                                        <Span Text="&#10;"/>
+                                        <Span Text="scan the Qr code to pay"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Border Padding="0"
+                                    HorizontalOptions="Center">
+                                <Grid RowDefinitions="150,Auto">
+                                    <zxing:BarcodeGeneratorView
+                                        HeightRequest="150"
+                                        WidthRequest="150"
+                                        ForegroundColor="black"
+                                        Value="https://dotnet.microsoft.com"
+                                        Format="QrCode"
+                                        Margin="3"/>
+
+                                    <Label Text="ID: airiq@icici"
+                                           VerticalOptions="Center"
+                                           Margin="10,0,0,5"
+                                           Grid.Row="1"/>
+
+                                    <Button Text="Copy"
+                                            Grid.Row="1"
+                                            HorizontalOptions="End"
+                                            VerticalOptions="Center"
+                                            Style="{StaticResource BorderlessButton}"
+                                            MinimumHeightRequest="0"
+                                            Padding="0"
+                                            Margin="0,0,0,5"/>
+                                </Grid>
+
+                            </Border>
+
+
+                            <BoxView Color="#E8E8E8"
+                                     HeightRequest="1"/>
+                            <Label Padding="16,12">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="UPI Apps"/>
+                                        <Span Text="&#10;"/>
+                                        <Span Text="Pay using UPI app"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="1">
+                    <Grid ColumnDefinitions="Auto,*"
+                          RowDefinitions="Auto,1,Auto,1,Auto,1,Auto,1,Auto,1,Auto">
+                        <Image Source="account_assured"
+                               Margin="16,12"/>
+
+                        <VerticalStackLayout Grid.Column="1"
+                                             Padding="0,16">
+
+                            <Button Text="ICICI Bank Limited"
+                                    Style="{StaticResource BorderlessButton}"
+                                    TextColor="Black"
+                                    HorizontalOptions="Start"
+                                    ImageSource="icici_logo"
+                                    ContentLayout="Left,10"
+                                    Padding="0"
+                                    MinimumHeightRequest="0"
+                                    BackgroundColor="Transparent"/>
+                            <Label Text="IMPS / NEFT / RTGS"/>
+                        </VerticalStackLayout>
+
+                        <BoxView Color="#E8E8E8"
+                                 HeightRequest="1"
+                                 Grid.Row="1"
+                                 Grid.ColumnSpan="2"/>
+                        <Image Source="account_circle"
+                               Margin="16,12"
+                               Grid.Row="2"/>
+                        <Label Grid.Column="1"
+                               Grid.Row="2"
+                               Padding="0,12">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Account Name"/>
+                                    <Span Text="&#10;AIR IQ Savings"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <BoxView Color="#E8E8E8"
+                                 HeightRequest="1"
+                                 Grid.Row="3"
+                                 Grid.ColumnSpan="2"/>
+
+                        <Image Source="credit_card_circle"
+                               Grid.Row="4"
+                               Margin="16,12"/>
+                        <Label Grid.Column="1"
+                               Padding="0,12"
+                               Grid.Row="4">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Account Number"/>
+                                    <Span Text="&#10;AIR IQ Savings"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <BoxView Color="#E8E8E8"
+                                 HeightRequest="1"
+                                 Grid.Row="5"
+                                 Grid.ColumnSpan="2"/>
+
+                        <Image Source="credit_card_circle"
+                               Grid.Row="6"
+                               Margin="16,12"/>
+                        <Label Grid.Column="1"
+                               Padding="0,12"
+                               Grid.Row="6">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Account Name"/>
+                                    <Span Text="&#10;AIR IQ Savings"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <BoxView Color="#E8E8E8"
+                                 HeightRequest="1"
+                                 Grid.Row="7"
+                                 Grid.ColumnSpan="2"/>
+
+                        <Image Source="wallet"
+                               Grid.Row="8"
+                               Margin="16,12"/>
+                        <Label Grid.Column="1"
+                               Padding="0,12"
+                               Grid.Row="8">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Account Type"/>
+                                    <Span Text="&#10;AIR IQ Savings"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <BoxView Color="#E8E8E8"
+                                 HeightRequest="1"
+                                 Grid.Row="9"
+                                 Grid.ColumnSpan="2"/>
+
+                        <Image Source="account_bank"
+                               Grid.Row="10"
+                               Margin="16,12"/>
+                        <Label Grid.Column="1"
+                               Padding="0,12"
+                               Grid.Row="10">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="IFSC Code"/>
+                                    <Span Text="&#10;AIR IQ Savings"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                    </Grid>
+
+                </Border>
+
+                <Border Grid.Row="2"
+                        Padding="30,25">
+                    <VerticalStackLayout HorizontalOptions="Center"
+                                         Spacing="10">
+                        <Image Source="info_fill"
+                                HeightRequest="30"/>
+                        <Label HorizontalTextAlignment="Center"
+                               HorizontalOptions="Center">
+                            <Label.Text>
+                                We don't accept cash deposit over Rs. 1,90,000 in one day. If you deposit more than this, the extra amount will be lost and won't be added to your account.
+                            </Label.Text>
+                        </Label>
+                    </VerticalStackLayout>
+
+                </Border>
+
+            </Grid>
+        </ScrollView>
+    </views:BasePage.PageContent>
+
 </views:BasePage>

@@ -1,7 +1,7 @@
 using AirIQ.Configurations.Mapper;
 using AirIQ.Constants;
 using AirIQ.Helpers;
-using AirIQ.Models.Response;
+using AirIQ.Models;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
 
@@ -19,7 +19,7 @@ namespace AirIQ.ViewModels
         int page = 1;
 
         [ObservableProperty]
-        private ObservableRangeCollection<SalesRecordDto> _salesRecords = new();
+        private ObservableRangeCollection<RefundRecord> _refundRecords = new();
         #endregion
 
         #region [ Methods & Service Calls ]
@@ -33,11 +33,11 @@ namespace AirIQ.ViewModels
         {
             using (LoadingService.Show())
             {
-                var records = await operationsService.GetSalesRecordsAsync(AppConfiguration.CurrentUser?.AgencyId ?? 0, page, pageSize);
+                var records = await operationsService.GetRefundRecordsAsync(AppConfiguration.CurrentUser?.AgencyId ?? 0, page, pageSize);
                 if (records.Any())
                 {
-                    var item = BackendToAppModelMapper.GetSalesRecords(records).ToList();
-                    //SalesRecords?.AddRange(item);
+                    var item = BackendToAppModelMapper.GetRefundRecords(records).ToList();
+                    RefundRecords?.AddRange(item);
                 }
                 page++;
             }

@@ -495,6 +495,14 @@
                         Value="{StaticResource White}"/>
         </Style>
 
+        <Style x:Key="BorderlessButton"
+               TargetType="Button">
+                <Setter Property="BackgroundColor"
+                        Value="Transparent"/>
+                <Setter Property="TextColor"
+                        Value="{StaticResource PrimaryColor}"/>
+        </Style>
+
         <!--  ====================  -->
         <!--  BORDER STYLES  -->
         <!--  ====================  -->

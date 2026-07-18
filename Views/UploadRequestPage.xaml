@@ -2,11 +2,83 @@
 <views:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 x:Class="AirIQ_MAUI.Views.UploadRequestPage"
-                xmlns:views="clr-namespace:AirIQ.Views">
-    <VerticalStackLayout>
-        <Label
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"/>
-    </VerticalStackLayout>
+                xmlns:controls="clr-namespace:AirIQ.Controls"
+                xmlns:views="clr-namespace:AirIQ.Views"
+                xmlns:vm="clr-namespace:AirIQ.ViewModels"
+                x:DataType="vm:UploadRequestPageViewModel">
+    <views:BasePage.PageContent>
+        <ScrollView>
+
+
+            <VerticalStackLayout Padding="16"
+                                 Spacing="0">
+                <controls:ExtendedEntry Title="Amount"
+                                        Text="{Binding Amount}"/>
+                <controls:ExtendedEntry Title="Reference Number"
+                                        Margin="0,20,0,0"
+                                        Text="{Binding ReferenceNumber}"/>
+                <controls:ExtendedDropdown Title="Select Payment Mode"
+                                           SelectedItem="{Binding SelectedPaymentMode}"
+                                           Margin="0,20,0,0">
+                    <controls:ExtendedDropdown.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Bank Transfer</x:String>
+                            <x:String>IMPS</x:String>
+                            <x:String>NEFT</x:String>
+                            <x:String>RTGS</x:String>
+                            <x:String>Cash Deposit</x:String>
+                            <x:String>Credit Request</x:String>
+                        </x:Array>
+                    </controls:ExtendedDropdown.ItemsSource>
+                </controls:ExtendedDropdown>
+                <Label Text="Upload File"
+                       Margin="0,20,0,0"/>
+                <Border StrokeShape="RoundRectangle 8"
+                        Grid.Row="1"
+                        HeightRequest="50"
+                        Opacity="1"
+                        BackgroundColor="White"
+                        Padding="10,0"
+                        Margin="0,5,0,0">
+
+                    <Grid ColumnDefinitions="*,Auto"
+                          ColumnSpacing="10">
+                        <Label Text="{Binding FileName}"
+                               VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding PickFileCommand}"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Button ImageSource="file_link"
+                                Style="{StaticResource SmallBorderButtonStyle}"
+                                HeightRequest="30"
+                                Padding="5"
+                                TextTransform="None"
+                                Grid.Column="1"
+                                Command="{Binding PickFileCommand}"/>
+                    </Grid>
+                </Border>
+
+                <Label Text="Message"
+                       Margin="0,20,0,0"/>
+                <Border StrokeShape="RoundRectangle 8"
+                        Grid.Row="1"
+                        Opacity="1"
+                        BackgroundColor="White"
+                        Padding="10,0"
+                        Margin="0,5,0,0">
+                    <Editor HeightRequest="150"
+                            AutoSize="Disabled"
+                            Text="{Binding Message}"
+                            VerticalOptions="Start"/>
+                </Border>
+
+                <Button Text="Submit"
+                        Margin="0,20,0,0"
+                        Style="{StaticResource DefaultButtonStyle}"
+                        Command="{Binding SubmitCommand}"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </views:BasePage.PageContent>
 </views:BasePage>

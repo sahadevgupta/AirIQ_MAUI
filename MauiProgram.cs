@@ -1,8 +1,14 @@
 ﻿using AirIQ.Extensions;
+
 using CommunityToolkit.Maui;
+
 using Microsoft.Extensions.Logging;
+
 using Mopups.Hosting;
+
 using Syncfusion.Maui.Toolkit.Hosting;
+
+using ZXing.Net.Maui.Controls;
 
 namespace AirIQ
 {
@@ -14,6 +20,7 @@ namespace AirIQ
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseBarcodeReader()
                 .ConfigureMopups()
                 .InitializeApp()
                 .ConfigureSyncfusionToolkit()

@@ -106,6 +106,26 @@ public static class BackendToAppModelMapper
         return salesRecordDtos.Select(converter.Convert);
     }
 
+    public static IEnumerable<RefundRecord> GetRefundRecords(IEnumerable<RefundRecordDto> refundRecordDtos)
+    {
+        if (refundRecordDtos == null)
+        {
+            return new List<RefundRecord>();
+        }
+        var converter = new RefundRecordDtoToRefundRecordConverter();
+        return refundRecordDtos.Select(converter.Convert);
+    }
+
+    public static IEnumerable<AccountLedgerRecord> GetAccountLedgerRecords(IEnumerable<AccountLedgerRecordDto> accountLedgerRecordDtos)
+    {
+        if (accountLedgerRecordDtos == null)
+        {
+            return new List<AccountLedgerRecord>();
+        }
+        var converter = new AccountLedgerRecordDtoToAccountLedgerRecordConverter();
+        return accountLedgerRecordDtos.Select(converter.Convert);
+    }
+
     public static IEnumerable<SalesRecordPassenger> GetSalesRecordPassengers(IEnumerable<SalesRecordPassengerDto> salesRecordPassengerDtos)
     {
         if (salesRecordPassengerDtos == null)

@@ -69,6 +69,11 @@ namespace AirIQ.Services.Interfaces
             [AliasAs("page")] int page,
             [AliasAs("pageSize")] int pageSize);
 
+        [Get($"{UrlConstants.PaxCalendarFlight}/{{agentId}}")]
+        Task<PaxCalendarResponseDto> GetPaxCalendarFlightAsync(int agentId,
+            [HeaderCollection] IDictionary<string, string> headers,
+            [AliasAs("date")] string date);
+
         #endregion
 
 
@@ -95,7 +100,7 @@ namespace AirIQ.Services.Interfaces
 
         [Multipart]
         [Post(UrlConstants.UploadRequest)]
-        Task<ApiResponse<string>> SubmitUploadRequestAsync(
+        Task<ApiResponse<string>> SubmitUploadRequestAsync([HeaderCollection] IDictionary<string, string> headers,
             [AliasAs("AccountName")] string accountName,
             [AliasAs("PhoneNo")] string phoneNo,
             [AliasAs("Reference")] string reference,

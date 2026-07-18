@@ -2,11 +2,221 @@
 <views:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 x:Class="AirIQ_MAUI.Views.RefundsRecordPage"
-                xmlns:views="clr-namespace:AirIQ.Views">
-    <VerticalStackLayout>
-        <Label
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"/>
-    </VerticalStackLayout>
+                xmlns:controls="clr-namespace:AirIQ.Controls"
+                xmlns:models="clr-namespace:AirIQ.Models"
+                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                xmlns:views="clr-namespace:AirIQ.Views"
+                xmlns:vm="clr-namespace:AirIQ.ViewModels"
+                x:DataType="vm:RefundsRecordPageViewModel">
+       <views:BasePage.PageContent>
+              <Grid Padding="16"
+                    RowDefinitions="Auto,*"
+                    RowSpacing="10"
+                    BackgroundColor="{StaticResource SecondaryBackgroundColor}">
+                     <controls:SearchView VerticalOptions="Start"/>
+
+                     <CollectionView Grid.Row="1"
+                                     ItemsSource="{Binding RefundRecords}"
+                                     RemainingItemsThreshold="5"
+                                     RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}"
+                                     VerticalScrollBarVisibility="Never"
+                                     HorizontalScrollBarVisibility="Never">
+                            <CollectionView.ItemsLayout>
+                                   <LinearItemsLayout Orientation="Vertical"
+                                                      ItemSpacing="10"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                   <DataTemplate x:DataType="models:RefundRecord">
+                                          <Border Grid.Row="1"
+                                                  Stroke="{StaticResource BorderColor}"
+                                                  StrokeShape="RoundRectangle 6"
+                                                  BackgroundColor="White"
+                                                  VerticalOptions="Start">
+                                                 <toolkit:Expander x:Name="expander">
+                                                        <toolkit:Expander.Header>
+                                                               <Border StrokeThickness="0">
+                                                                      <Grid Padding="12,0"
+                                                                            ColumnDefinitions="*,Auto"
+                                                                            RowDefinitions="Auto,1">
+                                                                             <Label
+                                                                                    Style="{StaticResource Label18Medium}"
+                                                                                    VerticalOptions="Center">
+                                                                                    <Label.FormattedText>
+                                                                                           <FormattedString>
+                                                                                                  <Span Text="{Binding ReturnId,StringFormat='#{0}'}"/>
+                                                                                                  <Span Text="{Binding Prefix,StringFormat='{} ({0})'}"
+                                                                                                        TextColor="{StaticResource PrimaryColor}"/>
+                                                                                           </FormattedString>
+                                                                                    </Label.FormattedText>
+                                                                             </Label>
+                                                                             <HorizontalStackLayout Grid.Column="1"
+                                                                                                    Spacing="0"
+                                                                                                    BackgroundColor="Transparent"
+                                                                                                    HorizontalOptions="End">
+                                                                                    <ImageButton Source="invoice"
+                                                                                                 Scale="0.4"/>
+
+                                                                                    <ImageButton Source="arrow_right"
+                                                                                                 MinimumHeightRequest="30"
+                                                                                                 MinimumWidthRequest="30"
+                                                                                                 InputTransparent="True">
+                                                                                           <ImageButton.Triggers>
+                                                                                                  <DataTrigger TargetType="ImageButton"
+                                                                                                               Binding="{Binding Source={x:Reference expander},Path=IsExpanded}"
+                                                                                                               Value="True">
+                                                                                                         <Setter Property="Rotation"
+                                                                                                                 Value="270"/>
+                                                                                                         <Setter TargetName="bottomLine"
+                                                                                                                 Property="IsVisible"
+                                                                                                                 Value="True"/>
+                                                                                                  </DataTrigger>
+                                                                                           </ImageButton.Triggers>
+                                                                                    </ImageButton>
+                                                                             </HorizontalStackLayout>
+
+                                                                             <BoxView Grid.Row="1"
+                                                                                      Grid.ColumnSpan="2"
+                                                                                      x:Name="bottomLine"
+                                                                                      IsVisible="False"
+                                                                                      Color="{StaticResource BorderColor}"/>
+                                                                      </Grid>
+                                                               </Border>
+                                                        </toolkit:Expander.Header>
+
+                                                        <Grid ColumnDefinitions="4*,6*"
+                                                              RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                                                              Padding="12"
+                                                              RowSpacing="20"
+                                                              ColumnSpacing="0">
+                                                               <Label Text="Ticket ID"
+                                                                      Grid.Row="0"
+                                                                      Style="{StaticResource Label16Medium}"/>
+
+                                                               <Label Text="{Binding Prefix}"
+                                                                      Grid.Row="0"
+                                                                      Grid.Column="1"
+                                                                      Style="{StaticResource Label16Medium}"
+                                                                      TextColor="Black"/>
+
+                                                               <Label Text="Entry Date"
+                                                                      Grid.Row="1"
+                                                                      Style="{StaticResource Label16Medium}"/>
+
+                                                               <Label Text="{Binding EntryDate,StringFormat='{0: dd MMM yyyy HH:mm tt}'}"
+                                                                      Grid.Row="1"
+                                                                      Grid.Column="1"
+                                                                      Style="{StaticResource Label16Medium}"
+                                                                      TextColor="Black"/>
+
+                                                               <Label Text="Destination"
+                                                                      Grid.Row="2"
+                                                                      Style="{StaticResource Label16Medium}"/>
+
+                                                               <Label Text="{Binding FDestName}"
+                                                                      Grid.Row="2"
+                                                                      Grid.Column="1"
+                                                                      Style="{StaticResource Label16Medium}"
+                                                                      TextColor="Black"/>
+
+                                                               <Label Text="PNR:"
+                                                                      Grid.Row="3"
+                                                                      Style="{StaticResource Label16Medium}"/>
+
+                                                               <Label Text="{Binding PNR}"
+                                                                      Grid.Row="3"
+                                                                      Grid.Column="1"
+                                                                      Style="{StaticResource Label16Medium}"
+                                                                      TextColor="Black"/>
+
+                                                               <Label Text="Travel DateTime"
+                                                                      Grid.Row="4"
+                                                                      Style="{StaticResource Label16Medium}"/>
+
+                                                               <Label Text="{Binding TravelDateTime,StringFormat='{0: dd MMM yyyy HH:mm tt}'}"
+                                                                      Grid.Row="4"
+                                                                      Grid.Column="1"
+                                                                      Style="{StaticResource Label16Medium}"
+                                                                      TextColor="Black"/>
+
+                                                               <Label Text="Qty"
+                                                                      Grid.Row="5"
+                                                                      Style="{StaticResource Label16Medium}"/>
+
+                                                               <Label Text="{Binding Qty}"
+                                                                      Grid.Row="5"
+                                                                      Grid.Column="1"
+                                                                      Style="{StaticResource Label16Medium}"
+                                                                      TextColor="Black"/>
+
+                                                               <Label Text="XXLN"
+                                                                      Grid.Row="6"
+                                                                      Style="{StaticResource Label16Medium}"/>
+
+                                                               <Label Text="{Binding CancelChrg}"
+                                                                      Grid.Row="6"
+                                                                      Grid.Column="1"
+                                                                      Style="{StaticResource Label16Medium}"
+                                                                      TextColor="Black"/>
+
+                                                               <Label Text="Refund Amount"
+                                                                      Grid.Row="7"
+                                                                      Style="{StaticResource Label16Medium}"/>
+
+                                                               <Label Text="{Binding RefundAmount}"
+                                                                      Grid.Row="7"
+                                                                      Grid.Column="1"
+                                                                      Style="{StaticResource Label16Medium}"
+                                                                      TextColor="Black"/>
+
+                                                               <Label Text="Action"
+                                                                      Grid.Row="8"
+                                                                      Style="{StaticResource Label16Medium}"
+                                                                      VerticalOptions="Center"/>
+
+                                                               <Image Grid.Row="8"
+                                                                      Grid.Column="1"
+                                                                      HorizontalOptions="Start"
+                                                                      Source="invoice">
+                                                                      <Image.Behaviors>
+                                                                             <toolkit:IconTintColorBehavior TintColor="{StaticResource PrimaryColor}"/>
+                                                                      </Image.Behaviors>
+                                                               </Image>
+
+                                                               <Label Text="Download Invoice"
+                                                                      Style="{StaticResource Label16Medium}"
+                                                                      TextColor="{StaticResource PrimaryColor}"
+                                                                      Grid.Row="8"
+                                                                      Grid.Column="1"
+                                                                      Margin="30,0,0,0"/>
+
+
+                                                               <!-- <Button Grid.Row="8"
+                                            Grid.Column="1"
+                                            Text="Download Invoice"
+                                            Style="{StaticResource BorderlessButton}"
+                                            HorizontalOptions="Start"
+                                            ImageSource="invoice"
+                                            ContentLayout="Left,10"
+                                            Padding="0"
+                                            MinimumHeightRequest="0"
+                                            BackgroundColor="Transparent"/> -->
+
+                                                               <!-- <Label Text="{Binding Amount}"
+                                           Grid.Row="8"
+                                           Grid.Column="1"
+                                           Style="{StaticResource Label16Medium}"
+                                           TextColor="Black"/> -->
+
+                                                        </Grid>
+
+                                                 </toolkit:Expander>
+                                          </Border>
+
+                                   </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                     </CollectionView>
+
+
+              </Grid>
+       </views:BasePage.PageContent>
 </views:BasePage>
