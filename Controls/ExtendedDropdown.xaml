@@ -10,11 +10,20 @@
           RowSpacing="5">
 
         <!--Title Label-->
-        <Label Style="{StaticResource TitleStyleBlackBold}"
-               x:Name="titlelbl"
-               IsVisible="{Binding Title,Source={x:Reference dropdownview},Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"
-               VerticalOptions="Center"
-               Text="{Binding Title,Source={x:Reference dropdownview}}"/>
+        <HorizontalStackLayout Spacing="6">
+            <Label Style="{StaticResource TitleStyleBlackBold}"
+                   x:Name="titlelbl"
+                   IsVisible="{Binding Title,Source={x:Reference dropdownview},Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"
+                   VerticalOptions="Center"
+                   Text="{Binding Title,Source={x:Reference dropdownview}}"/>
+
+            <Label x:Name="SuffixLabel"
+                   Grid.Row="0"
+                   Style="{StaticResource TitleStyleBlackBold}"
+                   TextColor="Red"
+                   Text="{Binding SuffixText, Source={x:Reference dropdownview}}"
+                   IsVisible="{Binding SuffixText, Source={x:Reference dropdownview}, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"/>
+        </HorizontalStackLayout>
 
         <!--Dropdown with Frame-->
         <Border x:Name="frameDropdown"

@@ -21,20 +21,62 @@
                                Margin="0,8,0,0"/>
 
                         <controls:ExtendedDropdown Title="Primary Business"
+                                                   SuffixText="*"
                                                    PlaceholderText="Select Primary Business Type"
                                                    ItemsSource="{Binding PrimaryBusinessTypes}"
                                                    SelectedItem="{Binding SelectedPrimaryBusinessType}"
+                                                   IsError="{Binding IsPrimaryBusinessTypeErrorVisible}"
+                                                   ErrorText="Primary business type is required"
                                                    DisplayMemberPath="Name"/>
 
                         <controls:ExtendedDropdown Title="Monthly Business"
-                                                   PlaceholderText="Select Monthly Business Type"/>
+                                                   PlaceholderText="Select Monthly Business Type"
+                                                   IsError="{Binding IsPrimaryMonthlyIncomeErrorVisible}"
+                                                   ErrorText="Primary monthly business is required"
+                                                   SelectedItem="{Binding PrimaryMonthlyIncome}">
+                                <controls:ExtendedDropdown.ItemsSource>
+                                        <x:Array x:Type="{x:Type x:String}">
+                                                <x:String>Below 5 Lacs</x:String>
+                                                <x:String>5 - 10 Lacs</x:String>
+                                                <x:String>10 - 20 Lacs</x:String>
+                                                <x:String>20 - 30 Lacs</x:String>
+                                                <x:String>30 - 40 Lacs</x:String>
+                                                <x:String>40 - 50 Lacs</x:String>
+                                                <x:String>50 - 75 Lacs</x:String>
+                                                <x:String>75 - 1 Crore</x:String>
+                                                <x:String>Above 1 Crore</x:String>
+                                        </x:Array>
+                                </controls:ExtendedDropdown.ItemsSource>
+                        </controls:ExtendedDropdown>
 
                         <controls:ExtendedDropdown Title="Secondary Business"
                                                    PlaceholderText="Select Secondary Business Type"
                                                    ItemsSource="{Binding SecondaryBusinessTypes}"
                                                    SelectedItem="{Binding SelectedSecondaryBusinessType}"
+                                                   IsError="{Binding IsSecondaryBusinessTypeErrorVisible}"
+                                                   ErrorText="Select secondary business type"
                                                    DisplayMemberPath="Name"
                                                    IsEnabled="{Binding SelectedPrimaryBusinessType, Converter={toolkit:IsNotNullConverter}}"/>
+
+                        <controls:ExtendedDropdown Title="Monthly Business"
+                                                   PlaceholderText="Select Monthly Business Type"
+                                                   IsError="{Binding IsSecondaryMonthlyIncomeErrorVisible}"
+                                                   ErrorText="Select secondary monthly business"
+                                                   SelectedItem="{Binding SecondaryMonthlyIncome}">
+                                <controls:ExtendedDropdown.ItemsSource>
+                                        <x:Array x:Type="{x:Type x:String}">
+                                                <x:String>Below 5 Lacs</x:String>
+                                                <x:String>5 - 10 Lacs</x:String>
+                                                <x:String>10 - 20 Lacs</x:String>
+                                                <x:String>20 - 30 Lacs</x:String>
+                                                <x:String>30 - 40 Lacs</x:String>
+                                                <x:String>40 - 50 Lacs</x:String>
+                                                <x:String>50 - 75 Lacs</x:String>
+                                                <x:String>75 - 1 Crore</x:String>
+                                                <x:String>Above 1 Crore</x:String>
+                                        </x:Array>
+                                </controls:ExtendedDropdown.ItemsSource>
+                        </controls:ExtendedDropdown>
 
                         <controls:ExtendedEntry Title="PAN No"
                                                 PlaceholderText="Enter PAN No"/>

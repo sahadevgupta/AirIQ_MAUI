@@ -1,8 +1,9 @@
 ﻿using AirIQ.Constants;
-using AirIQ.Controls;
+using AirIQ.Extensions;
 using AirIQ.Models.Response;
 using AirIQ.Services.Interfaces;
 using AirIQ.Views;
+
 using Newtonsoft.Json;
 
 namespace AirIQ
@@ -13,6 +14,10 @@ namespace AirIQ
         public App(IShellNavigationService navigationService)
         {
             InitializeComponent();
+            Task.Run(async () =>
+            {
+                await AirportExtensions.InitializeAsync();
+            });
             _navigationService = navigationService;
         }
 

@@ -12,7 +12,26 @@
                 BackgroundColor="White">
        <views:BasePage.PageContent>
 
-              <controls:StepBarComponentView Padding="10"/>
+              <Grid RowDefinitions="Auto,*">
+                     <Label Padding="10,5,0,0">
+                            <Label.FormattedText>
+                                   <FormattedString>
+                                          <Span Text="Note: "
+                                                FontAttributes="Bold"/>
+                                          <Span Text="Fields marked with an asterisk "
+                                                FontAttributes="Italic"/>
+                                          <Span Text="(*) "
+                                                        TextColor="Red"
+                                                        FontAttributes="Italic"/>
+                                          <Span Text="are mandatory."
+                                                        FontAttributes="Italic"/>
+                                   </FormattedString>
+                            </Label.FormattedText>
+                     </Label>
+                     <controls:StepBarComponentView Padding="10"
+                                                    Grid.Row="1"/>
+
+              </Grid>
 
        </views:BasePage.PageContent>
 </views:BasePage>

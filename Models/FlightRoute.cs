@@ -1,4 +1,4 @@
-using System;
+using AirIQ.Extensions;
 
 namespace AirIQ.Models;
 
@@ -19,7 +19,7 @@ public class FlightRoute
             if (parts?.Length > 0)
             {
                 OriginAiportName = parts[0].Trim();
-                return $"{ConvertToFlagEmoji(Origin)} {Origin} - {parts[0].Trim()}";
+                return $"{parts[0].Trim()} ({Origin})";
             }
 
             return string.Empty;
@@ -34,21 +34,18 @@ public class FlightRoute
             if (parts?.Length > 0)
             {
                 DestinationAiportName = parts[1].Trim();
-                return $"{ConvertToFlagEmoji(Destination)} {Destination} - {parts[1].Trim()}";
+                return $"{parts[1].Trim()} ({Destination})";
             }
             return string.Empty;
         }
     }
 
-    private string ConvertToFlagEmoji(string? countryCode)
+    private string ConvertToFlagEmoji(string? iataCode)
     {
-        if (string.IsNullOrWhiteSpace(countryCode))
+        if (string.IsNullOrWhiteSpace(iataCode))
             return string.Empty;
 
-        var a = string.Concat(countryCode
-            .ToUpper()
-            .Select(c => char.ConvertFromUtf32(0x1F1E6 - 'A' + c)));
-
-        return string.Empty;
+        var country = iataCode.GetCountry();
+        return country!.GetFlagEmoji() ?? string.Empty;
     }
 }

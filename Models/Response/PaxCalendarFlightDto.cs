@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 
+using AirIQ.Extensions;
+
 namespace AirIQ.Models.Response
 {
     public record PaxCalendarFlightDto
@@ -44,7 +46,56 @@ namespace AirIQ.Models.Response
         public int StatusCode { get; set; }
 
         [JsonPropertyName("PassengerInformation")]
-        public List<PassengerInformationDto> PassengerInformation { get; set; }
+        public List<PassengerInformationDto>? PassengerInformation { get; set; }
+
+        [JsonIgnore]
+        public string? SourceCity
+        {
+            get
+            {
+                var parts = Sector?.Split(new string[] { "//" }, StringSplitOptions.RemoveEmptyEntries);
+                if (parts?.Length > 0)
+                {
+                    return parts[0].Trim();
+                }
+                return string.Empty;
+            }
+        }
+
+        [JsonIgnore]
+        public string? DestinationCity
+        {
+            get
+            {
+                var parts = Sector?.Split(new string[] { "//" }, StringSplitOptions.RemoveEmptyEntries);
+                if (parts?.Length > 0)
+                {
+                    return parts[1].Trim();
+                }
+                return string.Empty;
+            }
+        }
+
+        [JsonIgnore]
+        public string SourceAirportCode
+        {
+            get
+            {
+                var code = SourceCity?.GetAirportCode() ?? string.Empty;
+                return code;
+            }
+        }
+
+        [JsonIgnore]
+        public string DestinationAirportCode
+        {
+            get
+            {
+                var code = DestinationCity?.GetAirportCode() ?? string.Empty;
+                return code;
+            }
+        }
+
     }
 
     public record PaxCalendarResponseDto

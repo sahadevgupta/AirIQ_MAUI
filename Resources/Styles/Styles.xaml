@@ -1119,6 +1119,13 @@
                         Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}"/>
         </Style>
 
+        <Style TargetType="CollectionView">
+                <Setter Property="VerticalScrollBarVisibility"
+                                Value="Never"/>
+                <Setter Property="HorizontalScrollBarVisibility"
+                                Value="Never"/>
+        </Style>
+
         <!--#endregion-->
 
 </ResourceDictionary>
