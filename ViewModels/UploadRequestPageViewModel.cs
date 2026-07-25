@@ -29,6 +29,30 @@ namespace AirIQ.ViewModels
 
         [ObservableProperty]
         private string? _message;
+
+        [ObservableProperty]
+        private bool _isAmountErrorVisible;
+
+        [ObservableProperty]
+        private bool _isReferenceNumberErrorVisible;
+
+        [ObservableProperty]
+        private bool _isPaymentModeErrorVisible;
+        #endregion
+
+        #region [ Methods & Service Calls ]
+
+        private bool ValidateRequest()
+        {
+            IsAmountErrorVisible = Amount <= 0;
+            IsReferenceNumberErrorVisible = string.IsNullOrWhiteSpace(ReferenceNumber);
+            IsPaymentModeErrorVisible = string.IsNullOrWhiteSpace(SelectedPaymentMode);
+
+            return !IsAmountErrorVisible &&
+                !IsReferenceNumberErrorVisible &&
+                !IsPaymentModeErrorVisible;
+        }
+
         #endregion
 
         #region [ Commands ]
@@ -51,16 +75,33 @@ namespace AirIQ.ViewModels
         [RelayCommand]
         private async Task SubmitAsync()
         {
-            var request = new UploadRequest
-            {
-                Amount = Amount.GetValueOrDefault(),
-                FilePath = FilePath,
-                Message = Message,
-                PaymentMode = SelectedPaymentMode,
-                RefNumber = ReferenceNumber
-            };
+            if (!ValidateRequest())
+                return;
 
-            await operationsService.UploadRequestAsync(request);
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+
+            bool response = false;
+            using (LoadingService.Show())
+            {
+
+
+                var request = new UploadRequest
+                {
+                    Amount = Amount.GetValueOrDefault(),
+                    FilePath = FilePath,
+                    Message = Message,
+                    PaymentMode = SelectedPaymentMode,
+                    RefNumber = ReferenceNumber
+                };
+
+                response = await operationsService.UploadRequestAsync(request);
+            }
+
+            if (response)
+                await ShellNavigationService.NavigateBack();
         }
 
         #endregion

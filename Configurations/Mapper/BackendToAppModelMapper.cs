@@ -136,6 +136,16 @@ public static class BackendToAppModelMapper
         return salesRecordPassengerDtos.Select(converter.Convert);
     }
 
+    public static IEnumerable<TempCreditRecord> GetTempCreditRecords(IEnumerable<TempCreditRecordDto> tempCreditRecordDtos)
+    {
+        if (tempCreditRecordDtos == null)
+        {
+            return new List<TempCreditRecord>();
+        }
+        var converter = new TempCreditRecordDtoToTempCreditRecordConverter();
+        return tempCreditRecordDtos.Select(converter.Convert);
+    }
+
     public static District GetDistrict(DistrictDto? districtDto)
     {
         if (districtDto == null)

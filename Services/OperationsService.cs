@@ -73,7 +73,7 @@ namespace AirIQ.Services
             return accountLedgerRecordDtos;
         }
 
-        public async Task<IEnumerable<TempCreditRecordDto>> GetTeempCreditRecordsAsync(int agentId, int page, int pageSize)
+        public async Task<IEnumerable<TempCreditRecordDto>> GetTempCreditRecordsAsync(int agentId, int page, int pageSize)
         {
             IEnumerable<TempCreditRecordDto> tempCreditRecordDtos = Enumerable.Empty<TempCreditRecordDto>();
             try

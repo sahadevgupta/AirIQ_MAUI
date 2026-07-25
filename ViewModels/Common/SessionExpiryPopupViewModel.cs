@@ -31,11 +31,12 @@ public partial class SessionExpiryPopupViewModel : ObservableObject
     [RelayCommand]
     private async Task Confirm(PopupPage popup)
     {
+        await MopupService.Instance.PopAsync(true);
         var userDto = await _loginService.LoginAsync(AppConfiguration.CurrentUser?.MobileNumber!, Password!);
         if (userDto != default)
         {
             _sessionResponsTcs.TrySetResult(true);
-            await MopupService.Instance.PopAsync(true);
+
         }
     }
 

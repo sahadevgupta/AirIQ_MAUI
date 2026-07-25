@@ -21,7 +21,8 @@ public static class AppServiceInitializer
                         .AddTransient<ILoginService, LoginService>()
                         .AddTransient<IFlightService, FlightService>()
                         .AddTransient<IAuthService, AuthService>()
-                        .AddTransient<IOperationsService, OperationsService>();
+                        .AddTransient<IOperationsService, OperationsService>()
+                        .AddTransient<IZoopVerificationService, ZoopVerificationService>();
 
 
         builder.Services.AddSingleton<ILoadingPopUpService, AirIQ.Platforms.Services.LoadingPopupService>();

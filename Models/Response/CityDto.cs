@@ -7,7 +7,7 @@ namespace AirIQ.Models.Response
         [JsonPropertyName("CityID")]
         public int CityId { get; set; }
 
-        [JsonPropertyName("CityName")]
+        [JsonPropertyName("City")]
         public string CityName { get; set; } = string.Empty;
 
         [JsonPropertyName("State")]

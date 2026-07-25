@@ -7,7 +7,8 @@
                 xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
-                x:DataType="vm:AccountLedgerRecordPageViewModel">
+                x:DataType="vm:AccountLedgerRecordPageViewModel"
+                PageTitle="Account Ledger">
     <views:BasePage.PageContent>
         <Grid Padding="16"
               RowDefinitions="Auto,Auto,*"
@@ -22,11 +23,11 @@
                 <VerticalStackLayout>
 
                     <Label Text="23.8L"
-                            HorizontalOptions="Center"
+                           HorizontalOptions="Center"
                            Padding="12,8"
                            FontSize="24"/>
                     <BoxView Color="#E8E8E8"
-                            HeightRequest="1"/>
+                             HeightRequest="1"/>
                     <Label Text="Balance"
                            FontSize="13"
                            VerticalOptions="End"
@@ -44,11 +45,11 @@
                 <VerticalStackLayout>
 
                     <Label Text="-23.8L"
-                            HorizontalOptions="Center"
+                           HorizontalOptions="Center"
                            Padding="12,8"
                            FontSize="24"/>
                     <BoxView Color="#E8E8E8"
-                            HeightRequest="1"/>
+                             HeightRequest="1"/>
                     <Label Text="Ledger Balance"
                            HorizontalTextAlignment="Center"
                            Padding="12,8"
@@ -64,12 +65,12 @@
                 <VerticalStackLayout>
 
                     <Label Text="-23.8L"
-                            HorizontalOptions="Center"
+                           HorizontalOptions="Center"
                            Padding="12,8"
                            FontSize="24"
                            TextColor="White"/>
                     <BoxView Color="{StaticResource Primary10}"
-                            HeightRequest="1"/>
+                             HeightRequest="1"/>
                     <Label Text="Credit Due"
                            FontSize="13"
                            HorizontalOptions="Center"
@@ -107,12 +108,11 @@
                                         <Grid Padding="12,0"
                                               ColumnDefinitions="*,Auto"
                                               RowDefinitions="Auto,1">
-                                            <Label
-                                                Style="{StaticResource Label18Medium}"
-                                                VerticalOptions="Center">
+                                            <Label VerticalOptions="Center">
                                                 <Label.FormattedText>
                                                     <FormattedString>
-                                                        <Span Text="{Binding RefNo,StringFormat='#{0}'}"/>
+                                                        <Span Text="{Binding RefNo,StringFormat='#{0}'}"
+                                                              Style="{StaticResource Span16MediumBlacStyle}"/>
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
@@ -133,9 +133,9 @@
                                                                      Value="True">
                                                             <Setter Property="Rotation"
                                                                     Value="270"/>
-                                                            <!-- <Setter TargetName="bottomLine"
+                                                            <Setter TargetName="bottomLine"
                                                                     Property="IsVisible"
-                                                                    Value="True"/> -->
+                                                                    Value="True"/>
                                                         </DataTrigger>
                                                     </ImageButton.Triggers>
                                                 </ImageButton>
@@ -158,7 +158,7 @@
 
                                     <Label Text="Entry Date"
                                            Grid.Row="0"
-                                           Style="{StaticResource Label16Medium}"/>
+                                           Style="{StaticResource Label16MediumGrayStyle}"/>
 
                                     <Label Text="{Binding Date,StringFormat='{0: dd MMM yyyy HH:mm tt}'}"
                                            Grid.Row="0"
@@ -168,7 +168,7 @@
 
                                     <Label Text="Particular"
                                            Grid.Row="1"
-                                           Style="{StaticResource Label16Medium}"/>
+                                           Style="{StaticResource Label16MediumGrayStyle}"/>
 
                                     <Label Text="{Binding Particulars}"
                                            Grid.Row="1"
@@ -178,7 +178,7 @@
 
                                     <Label Text="Destination"
                                            Grid.Row="2"
-                                           Style="{StaticResource Label16Medium}"/>
+                                           Style="{StaticResource Label16MediumGrayStyle}"/>
 
                                     <Label Text="{Binding Destination}"
                                            Grid.Row="2"
@@ -188,7 +188,7 @@
 
                                     <Label Text="Travel DateTime"
                                            Grid.Row="3"
-                                           Style="{StaticResource Label16Medium}"/>
+                                           Style="{StaticResource Label16MediumGrayStyle}"/>
 
                                     <Label Text="{Binding TravelDate,StringFormat='{0: dd MMM yyyy HH:mm tt}'}"
                                            Grid.Row="3"
@@ -198,7 +198,7 @@
 
                                     <Label Text="Amount"
                                            Grid.Row="4"
-                                           Style="{StaticResource Label16Medium}"/>
+                                           Style="{StaticResource Label16MediumGrayStyle}"/>
 
                                     <Label Text="{Binding Amount}"
                                            Grid.Row="4"
@@ -208,7 +208,7 @@
 
                                     <Label Text="Ledger Balance"
                                            Grid.Row="5"
-                                           Style="{StaticResource Label16Medium}"/>
+                                           Style="{StaticResource Label16MediumGrayStyle}"/>
 
                                     <Label Text="{Binding Balance}"
                                            Grid.Row="5"

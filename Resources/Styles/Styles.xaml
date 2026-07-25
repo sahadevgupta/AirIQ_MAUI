@@ -398,6 +398,25 @@
 
         </Style>
 
+        <Style TargetType="Span"
+               x:Key="Span16MediumBlacStyle">
+
+                <Setter Property="TextColor"
+                        Value="{StaticResource Black}"/>
+                <Setter Property="FontSize"
+                        Value="{ext:ScaleFontSize Size='16'}"/>
+                <Setter Property="FontFamily"
+                        Value="RobotoMedium"/>
+
+        </Style>
+
+        <Style TargetType="Label"
+                        BasedOn="{StaticResource Label16Medium}"
+                        x:Key="Label16MediumGrayStyle">
+                <Setter Property="TextColor"
+                                Value="{StaticResource MeidumGray}"/>
+        </Style>
+
         <!--  ====================  -->
         <!--  ENTRY STYLES  -->
         <!--  ====================  -->
@@ -1121,9 +1140,9 @@
 
         <Style TargetType="CollectionView">
                 <Setter Property="VerticalScrollBarVisibility"
-                                Value="Never"/>
+                        Value="Never"/>
                 <Setter Property="HorizontalScrollBarVisibility"
-                                Value="Never"/>
+                        Value="Never"/>
         </Style>
 
         <!--#endregion-->

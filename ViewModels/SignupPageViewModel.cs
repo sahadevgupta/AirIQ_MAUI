@@ -1,5 +1,7 @@
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
+using AirIQ.Constants;
 using AirIQ.Configurations.Mapper;
 using AirIQ.Enums;
 using AirIQ.Models;
@@ -18,7 +20,9 @@ public partial class SignupPageViewModel : BaseViewModel
 {
     #region [ Properties ]
 
+    private readonly IDialogService _dialogService;
     private readonly ILookupService _lookupService;
+    private readonly IZoopVerificationService _zoopVerificationService;
 
     [ObservableProperty]
     private ObservableCollection<StepBarModel> _steps = new();
@@ -75,7 +79,19 @@ public partial class SignupPageViewModel : BaseViewModel
     private string? _secondaryMonthlyIncome;
 
     [ObservableProperty]
-    private string? _selectedReferredBy;
+    private string? _referredBy;
+
+    [ObservableProperty]
+    private string? _companyName;
+
+    [ObservableProperty]
+    private string? _fullName;
+
+    [ObservableProperty]
+    private string? _phoneNumber;
+
+    [ObservableProperty]
+    private string? _emailAddress;
 
     [ObservableProperty]
     private SignupRequest _signup = new();
@@ -125,6 +141,18 @@ public partial class SignupPageViewModel : BaseViewModel
     [ObservableProperty]
     private string? _confirmPassword;
 
+    [ObservableProperty]
+    private bool _isPanValid;
+
+    [ObservableProperty]
+    private string? _panRegisterdName;
+
+    [ObservableProperty]
+    private bool _isGstValid;
+
+    [ObservableProperty]
+    private string? _gstRegisterdName;
+
 
     private IEnumerable<StateDto> tempStates = Enumerable.Empty<StateDto>();
     private IEnumerable<CityDto> tempCities = Enumerable.Empty<CityDto>();
@@ -136,9 +164,13 @@ public partial class SignupPageViewModel : BaseViewModel
     #endregion
 
     public SignupPageViewModel(IViewModelParameters viewModelParameters,
-        ILookupService lookupService) : base(viewModelParameters)
+        ILookupService lookupService,
+        IZoopVerificationService zoopVerificationService,
+        IDialogService dialogService) : base(viewModelParameters)
     {
         _lookupService = lookupService;
+        _zoopVerificationService = zoopVerificationService;
+        _dialogService = dialogService;
 
         InitializeData();
     }
@@ -197,6 +229,53 @@ public partial class SignupPageViewModel : BaseViewModel
     partial void OnSelectedAirportChanged(City? value)
     {
         IsNearestAirportErrorVisible = value is null;
+    }
+
+    partial void OnCompanyNameChanged(string? value)
+    {
+        Signup.CompanyName = value;
+        IsCompanyNameErrorVisible = string.IsNullOrWhiteSpace(value);
+    }
+
+    partial void OnFullNameChanged(string? value)
+    {
+        Signup.FName = value;
+        IsFullNameErrorVisible = string.IsNullOrWhiteSpace(value);
+    }
+
+    partial void OnPhoneNumberChanged(string? value)
+    {
+        Signup.Phone = value;
+        IsPhoneNumberErrorVisible = string.IsNullOrWhiteSpace(value);
+    }
+
+    partial void OnEmailAddressChanged(string? value)
+    {
+        Signup.Email = value;
+        IsEmailErrorVisible = string.IsNullOrWhiteSpace(value) || !Regex.IsMatch(value, AppConstants.EmailRegex);
+    }
+
+    partial void OnWhatsAppNumberChanged(string? value)
+    {
+        IsWhatsAppNumberErrorVisible = string.IsNullOrWhiteSpace(value);
+    }
+
+    partial void OnReferredByChanged(string? value)
+    {
+        IsReferredByErrorVisible = string.IsNullOrWhiteSpace(value);
+    }
+
+    partial void OnPasswordChanged(string? value)
+    {
+        IsPasswordErrorVisible = string.IsNullOrWhiteSpace(value) || !Regex.IsMatch(value, AppConstants.PasswordRegex);
+        IsConfirmPasswordErrorVisible = string.IsNullOrWhiteSpace(ConfirmPassword)
+                                     || !string.Equals(value, ConfirmPassword, StringComparison.Ordinal);
+    }
+
+    partial void OnConfirmPasswordChanged(string? value)
+    {
+        IsConfirmPasswordErrorVisible = string.IsNullOrWhiteSpace(value)
+                                     || !string.Equals(Password, value, StringComparison.Ordinal);
     }
 
     partial void OnPrimaryMonthlyIncomeChanged(string? value)
@@ -324,7 +403,6 @@ public partial class SignupPageViewModel : BaseViewModel
         {
             CityEntryMainId = SelectedCity?.CityEntryMainId.ToString(),
             CityId = SelectedAirport?.Id.ToString(),
-            //CompanyName =
         };
 
     private bool ValidateCurrentStep(int index)
@@ -340,13 +418,15 @@ public partial class SignupPageViewModel : BaseViewModel
 
     private bool ValidatePersonalInformationStep()
     {
-        IsCompanyNameErrorVisible = string.IsNullOrWhiteSpace(Signup.CompanyName);
-        IsFullNameErrorVisible = string.IsNullOrWhiteSpace(Signup.FName);
-        IsPhoneNumberErrorVisible = string.IsNullOrWhiteSpace(Signup.Phone);
-        IsEmailErrorVisible = string.IsNullOrWhiteSpace(Signup.Email);
+        IsCompanyNameErrorVisible = string.IsNullOrWhiteSpace(CompanyName);
+        IsFullNameErrorVisible = string.IsNullOrWhiteSpace(FullName);
+        IsPhoneNumberErrorVisible = string.IsNullOrWhiteSpace(PhoneNumber);
+        IsEmailErrorVisible = string.IsNullOrWhiteSpace(EmailAddress)
+                           || !Regex.IsMatch(EmailAddress, AppConstants.EmailRegex);
         IsWhatsAppNumberErrorVisible = string.IsNullOrWhiteSpace(WhatsAppNumber);
-        IsReferredByErrorVisible = string.IsNullOrWhiteSpace(SelectedReferredBy);
-        IsPasswordErrorVisible = string.IsNullOrWhiteSpace(Password);
+        IsReferredByErrorVisible = string.IsNullOrWhiteSpace(ReferredBy);
+        IsPasswordErrorVisible = string.IsNullOrWhiteSpace(Password)
+                              || !Regex.IsMatch(Password, AppConstants.PasswordRegex);
         IsConfirmPasswordErrorVisible = string.IsNullOrWhiteSpace(ConfirmPassword)
                                      || !string.Equals(Password, ConfirmPassword, StringComparison.Ordinal);
 
@@ -609,6 +689,67 @@ public partial class SignupPageViewModel : BaseViewModel
         return Task.CompletedTask;
     }
 
-    #endregion
+    [RelayCommand]
+    private async Task ValidatePanAsync()
+    {
+        if (string.IsNullOrWhiteSpace(Signup.PanNo) || string.IsNullOrWhiteSpace(FullName))
+            return;
 
+        using (LoadingService.Show())
+        {
+            var response = await _zoopVerificationService.ValidatePanAsync(Signup.PanNo, FullName);
+            if (response is not null)
+            {
+                if (response.PanType?.Equals("Person", StringComparison.OrdinalIgnoreCase) == true)
+                {
+                    IsPanValid = response.UserFullName?.Equals(FullName, StringComparison.OrdinalIgnoreCase) == true;
+
+                    if (IsPanValid)
+                    {
+                        PanRegisterdName = response.UserFullName;
+                    }
+                    else
+                    {
+                        PanRegisterdName = string.Empty;
+
+                        await _dialogService.ShowStatusAlertAsync("Owner name and person's name on PAN Card should be same.", false, 3500);
+                    }
+
+                }
+                else if (response.PanType?.Equals("Firm", StringComparison.OrdinalIgnoreCase) == true ||
+                   response.PanType?.Equals("Comapny", StringComparison.OrdinalIgnoreCase) == true)
+                {
+                    IsPanValid = response.UserFullName?.Equals(CompanyName, StringComparison.OrdinalIgnoreCase) == true;
+                    if (IsPanValid)
+                    {
+                        PanRegisterdName = response.UserFullName;
+                    }
+                    else
+                    {
+                        PanRegisterdName = string.Empty;
+
+                        await _dialogService.ShowStatusAlertAsync("The company name and the name on the PAN should be same.", false, 3500);
+                    }
+                }
+            }
+        }
+    }
+
+    [RelayCommand]
+    private async Task ValidateGstNoAsync()
+    {
+        if (string.IsNullOrWhiteSpace(Signup.GstNo))
+            return;
+
+        using (LoadingService.Show())
+        {
+            var response = await _zoopVerificationService.ValidateGstAsync(Signup.GstNo);
+            IsGstValid = response is not null;
+            GstRegisterdName = IsGstValid ? response?.TradeName : string.Empty;
+        }
+    }
+
+    #endregion
 }
+
+

@@ -3,12 +3,14 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 x:Class="AirIQ_MAUI.Views.PaxCalendarPage"
                 x:Name="PaxCalendarRoot"
+                xmlns:controls="clr-namespace:AirIQ.Controls"
                 xmlns:models="clr-namespace:AirIQ.Models"
                 xmlns:respModel="clr-namespace:AirIQ.Models.Response"
                 xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
-                x:DataType="vm:PaxCalendarPageViewModel">
+                x:DataType="vm:PaxCalendarPageViewModel"
+                PageTitle="PAX Calendar">
 
     <views:BasePage.Resources>
         <Style x:Key="CardTextStyle"
@@ -44,102 +46,141 @@
     <views:BasePage.PageContent>
         <Grid Padding="16"
               RowDefinitions="Auto,Auto,*"
-              RowSpacing="20">
+              RowSpacing="20"
+              BackgroundColor="{StaticResource SecondaryBackgroundColor}">
 
-            <!-- Header -->
-            <Grid ColumnDefinitions="Auto,*,Auto,Auto"
-                  ColumnSpacing="0">
-                <CheckBox IsChecked="{Binding IsCcBooking}"
-                          Color="#9A9A9A"
-                          VerticalOptions="Center"
-                          BackgroundColor="Transparent"/>
+            <!-- <Button HorizontalOptions="End"
+                    Text="Wallet: Rs.12345"
+                    TranslationY="-60"
+                    Padding="10,0"
+                    BackgroundColor="{StaticResource Gray10}"
+                    HeightRequest="20"
+                    MinimumHeightRequest="20"
+                    TextColor="{StaticResource PrimaryColor}"/> -->
 
-                <Label Grid.Column="1"
-                       Text="CC BOOKING"
-                       VerticalOptions="Center"
-                       FontSize="14"
-                       FontAttributes="Bold"
-                       TextColor="#111111"/>
-
-                <Image Grid.Column="2"
-                       BackgroundColor="Transparent"
-                       Margin="0,0,15,0"
-                       Source="{FontImageSource Glyph=&#x276E;, Size=20, Color=#A5A5A5}">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding PreviousDateCommand}"/>
-                    </Image.GestureRecognizers>
-                </Image>
-
-                <Image Grid.Column="3"
-                       BackgroundColor="Transparent"
-                       Source="{FontImageSource Glyph=&#x276F;, Size=20, Color=#A5A5A5}">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NextDateCommand}"/>
-                    </Image.GestureRecognizers>
-                </Image>
+            <Grid ColumnDefinitions="*,*"
+                  ColumnSpacing="16">
+                <Button Text="Self Care"
+                        Style="{StaticResource SmallBorderButtonStyle}"
+                        MinimumHeightRequest="30"/>
+                <Button Text="Advance Booking"
+                        MinimumHeightRequest="30"
+                        Grid.Column="1"/>
             </Grid>
 
-            <!-- Fixed 3 date cards -->
-            <StackLayout Orientation="Horizontal"
-                         BindableLayout.ItemsSource="{Binding DateItems}"
-                         Grid.Row="1"
-                         BackgroundColor="Transparent"
-                         x:Name="dateItems"
-                         HorizontalOptions="Fill"
-                         Spacing="10">
+            <Border StrokeShape="RoundRectangle 8"
+                    BackgroundColor="White"
+                    Padding="16"
+                    Grid.Row="1">
+                <VerticalStackLayout>
 
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="models:DateCardItem">
-                        <Border Grid.Column="0"
-                                Stroke="#D9D9D9"
-                                StrokeThickness="1.5"
-                                BackgroundColor="White"
-                                StrokeShape="RoundRectangle 16"
-                                HorizontalOptions="FillAndExpand"
-                                Padding="6,10">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding BindingContext.SelectDateCommand,Source={x:Reference dateItems}}"
-                                                      CommandParameter="{Binding .}"/>
-                            </Border.GestureRecognizers>
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border"
-                                             Binding="{Binding IsSelected}"
-                                             Value="True">
-                                    <Setter Property="BackgroundColor"
-                                            Value="#1F7BC3"/>
-                                    <Setter Property="Stroke"
-                                            Value="#1F7BC3"/>
-                                </DataTrigger>
-                            </Border.Triggers>
-                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto"
-                                  RowSpacing="5">
-                                <Label Grid.Row="0"
-                                       Text="{Binding DayShort}"
-                                       Style="{StaticResource CardTextStyle}"
-                                       HorizontalTextAlignment="Center"/>
-                                <Label Grid.Row="1"
-                                       Text="{Binding DateNumber}"
-                                       Style="{StaticResource DateNumberStyle}"
-                                       FontSize="28"
-                                       HorizontalTextAlignment="Center"/>
-                                <Label Grid.Row="2"
-                                       Text="{Binding MonthYear}"
-                                       Style="{StaticResource CardTextStyle}"
-                                       HorizontalTextAlignment="Center"/>
-                                <BoxView Grid.Row="3"
-                                         HeightRequest="1"
-                                         Color="#D9D9D9"
-                                         VerticalOptions="End"/>
-                                <Label Grid.Row="4"
-                                       Text="{Binding PaxSummary}"
-                                       Style="{StaticResource CardTextStyle}"
-                                       HorizontalTextAlignment="Center"/>
-                            </Grid>
-                        </Border>
+                    <controls:SearchView IsFilterVisible="False"
+                                         IsDownloadVisible="False"
+                                         PlaceholderText="Search here"/>
 
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </StackLayout>
+                    <!-- Header -->
+                    <Grid ColumnDefinitions="Auto,*,Auto,Auto"
+                          ColumnSpacing="0">
+                        <CheckBox IsChecked="{Binding IsCcBooking}"
+                                  Color="#9A9A9A"
+                                  VerticalOptions="Center"
+                                  BackgroundColor="Transparent"/>
+
+                        <Label Grid.Column="1"
+                               Text="CC BOOKING"
+                               VerticalOptions="Center"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="#111111"/>
+
+                        <ImageButton Grid.Column="2"
+                                     BackgroundColor="Transparent"
+                                     Margin="0,0,15,0"
+                                     Source="arrow_right"
+                                     Rotation="180"
+                                     MinimumHeightRequest="0"
+                                     HeightRequest="35"
+                                     Command="{Binding PreviousDateCommand}">
+                            <!-- <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding PreviousDateCommand}"/>
+                    </Image.GestureRecognizers> -->
+                        </ImageButton>
+
+                        <ImageButton Grid.Column="3"
+                                     BackgroundColor="Transparent"
+                                     Source="arrow_right"
+                                     MinimumHeightRequest="0"
+                                     HeightRequest="35"
+                                     Command="{Binding NextDateCommand}">
+                            <!-- <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NextDateCommand}"/>
+                    </Image.GestureRecognizers> -->
+                        </ImageButton>
+                    </Grid>
+
+                    <!-- Fixed 3 date cards -->
+                    <StackLayout Orientation="Horizontal"
+                                 BindableLayout.ItemsSource="{Binding DateItems}"
+                                 Grid.Row="1"
+                                 BackgroundColor="Transparent"
+                                 x:Name="dateItems"
+                                 HorizontalOptions="Fill"
+                                 Spacing="10">
+
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="models:DateCardItem">
+                                <Border Grid.Column="0"
+                                        Stroke="#D9D9D9"
+                                        StrokeThickness="1.5"
+                                        BackgroundColor="White"
+                                        StrokeShape="RoundRectangle 8"
+                                        HorizontalOptions="FillAndExpand"
+                                        Padding="10">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.SelectDateCommand,Source={x:Reference dateItems}}"
+                                                              CommandParameter="{Binding .}"/>
+                                    </Border.GestureRecognizers>
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border"
+                                                     Binding="{Binding IsSelected}"
+                                                     Value="True">
+                                            <Setter Property="BackgroundColor"
+                                                    Value="#1F7BC3"/>
+                                            <Setter Property="Stroke"
+                                                    Value="#1F7BC3"/>
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                                          RowSpacing="5">
+                                        <Label Grid.Row="0"
+                                               Text="{Binding DayShort}"
+                                               Style="{StaticResource CardTextStyle}"
+                                               HorizontalTextAlignment="Center"/>
+                                        <Label Grid.Row="1"
+                                               Text="{Binding DateNumber}"
+                                               Style="{StaticResource DateNumberStyle}"
+                                               FontSize="28"
+                                               HorizontalTextAlignment="Center"/>
+                                        <Label Grid.Row="2"
+                                               Text="{Binding MonthYear}"
+                                               Style="{StaticResource CardTextStyle}"
+                                               HorizontalTextAlignment="Center"/>
+                                        <BoxView Grid.Row="3"
+                                                 HeightRequest="1"
+                                                 Color="#D9D9D9"
+                                                 VerticalOptions="End"/>
+                                        <Label Grid.Row="4"
+                                               Text="{Binding PaxSummary}"
+                                               Style="{StaticResource CardTextStyle}"
+                                               HorizontalTextAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </VerticalStackLayout>
+            </Border>
 
             <CollectionView ItemsSource="{Binding FlightBookingList}"
                             Grid.Row="2">
@@ -154,18 +195,17 @@
                                 StrokeShape="RoundRectangle 6"
                                 BackgroundColor="White"
                                 VerticalOptions="Start">
-                            <toolkit:Expander>
+                            <toolkit:Expander x:Name="expander">
                                 <toolkit:Expander.Header>
                                     <Border StrokeThickness="0">
                                         <Grid Padding="12,0"
                                               ColumnDefinitions="*,Auto"
                                               RowDefinitions="Auto,1">
-                                            <Label
-                                                Style="{StaticResource Label18Medium}"
-                                                VerticalOptions="Center">
+                                            <Label VerticalOptions="Center">
                                                 <Label.FormattedText>
                                                     <FormattedString>
-                                                        <Span Text="{Binding TicketRefNo,StringFormat='#{0}'}"/>
+                                                        <Span Text="{Binding TicketRefNo,StringFormat='#{0}'}"
+                                                              Style="{StaticResource Span16MediumBlacStyle}"/>
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
@@ -180,7 +220,7 @@
                                                              MinimumHeightRequest="30"
                                                              MinimumWidthRequest="30"
                                                              InputTransparent="True">
-                                                    <!-- <ImageButton.Triggers>
+                                                    <ImageButton.Triggers>
                                                         <DataTrigger TargetType="ImageButton"
                                                                      Binding="{Binding Source={x:Reference expander},Path=IsExpanded}"
                                                                      Value="True">
@@ -190,7 +230,7 @@
                                                                     Property="IsVisible"
                                                                     Value="True"/>
                                                         </DataTrigger>
-                                                    </ImageButton.Triggers> -->
+                                                    </ImageButton.Triggers>
                                                 </ImageButton>
                                             </HorizontalStackLayout>
 
@@ -242,7 +282,8 @@
                                     <Border Grid.Row="1"
                                             Grid.ColumnSpan="3"
                                             Padding="10"
-                                            BackgroundColor="#E8E8E8">
+                                            StrokeThickness="0"
+                                            BackgroundColor="#EEEEEE">
                                         <Grid ColumnDefinitions="*,Auto"
                                               RowDefinitions="Auto,Auto"
                                               RowSpacing="12">
@@ -337,19 +378,18 @@
                                         </Label.FormattedText>
                                     </Label>
 
-                                    <StackLayout Orientation="Horizontal"
-                                                 Grid.Row="3"
-                                                 Spacing="10"
-                                                 Grid.ColumnSpan="3">
+                                    <Grid ColumnDefinitions="*,*"
+                                          Grid.Row="3"
+                                          ColumnSpacing="10"
+                                          Grid.ColumnSpan="3">
                                         <Button Text="Show Names"
-                                                HorizontalOptions="FillAndExpand"/>
+                                                Style="{StaticResource SmallBorderButtonStyle}"
+                                                MinimumHeightRequest="40"
+                                                BackgroundColor="Transparent"/>
                                         <Button Text="Check In"
-                                                HorizontalOptions="FillAndExpand"/>
-                                    </StackLayout>
-
-
-
-
+                                                MinimumHeightRequest="40"
+                                                Grid.Column="1"/>
+                                    </Grid>
                                 </Grid>
                             </toolkit:Expander>
                         </Border>

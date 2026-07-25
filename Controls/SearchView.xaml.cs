@@ -36,6 +36,18 @@ public partial class SearchView : ContentView
 	public static readonly BindableProperty DownloadCommandProperty =
 		BindableProperty.Create(nameof(DownloadCommand), typeof(ICommand), typeof(SearchView), default(ICommand));
 
+	/// <summary>
+	///     Identifies the <see cref="IsDownloadVisible" /> bindable property.
+	/// </summary>
+	public static readonly BindableProperty IsDownloadVisibleProperty =
+		BindableProperty.Create(nameof(IsDownloadVisible), typeof(bool), typeof(SearchView), true);
+
+	/// <summary>
+	///     Identifies the <see cref="DownloadCommand" /> bindable property.
+	/// </summary>
+	public static readonly BindableProperty IsFilterVisibleProperty =
+		BindableProperty.Create(nameof(IsFilterVisible), typeof(bool), typeof(SearchView), true);
+
 	public string SearchText
 	{
 		get => (string)GetValue(SearchTextProperty);
@@ -64,6 +76,18 @@ public partial class SearchView : ContentView
 	{
 		get => (ICommand)GetValue(DownloadCommandProperty);
 		set => SetValue(DownloadCommandProperty, value);
+	}
+
+	public bool IsDownloadVisible
+	{
+		get => (bool)GetValue(IsDownloadVisibleProperty);
+		set => SetValue(IsDownloadVisibleProperty, value);
+	}
+
+	public bool IsFilterVisible
+	{
+		get => (bool)GetValue(IsFilterVisibleProperty);
+		set => SetValue(IsFilterVisibleProperty, value);
 	}
 
 

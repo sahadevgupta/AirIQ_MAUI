@@ -5,20 +5,32 @@
                 xmlns:controls="clr-namespace:AirIQ.Controls"
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
-                x:DataType="vm:UploadRequestPageViewModel">
+                x:DataType="vm:UploadRequestPageViewModel"
+                PageTitle="Upload Request">
     <views:BasePage.PageContent>
         <ScrollView>
-
 
             <VerticalStackLayout Padding="16"
                                  Spacing="0">
                 <controls:ExtendedEntry Title="Amount"
-                                        Text="{Binding Amount}"/>
+                                        SuffixText="*"
+                                        PlaceholderText="Enter Amount"
+                                        Text="{Binding Amount}"
+                                        IsErrorViewVisible="{Binding IsAmountErrorVisible}"
+                                        ErrorText="Amount should be greater than 0"/>
                 <controls:ExtendedEntry Title="Reference Number"
                                         Margin="0,20,0,0"
-                                        Text="{Binding ReferenceNumber}"/>
+                                        SuffixText="*"
+                                        PlaceholderText="Enter reference number"
+                                        Text="{Binding ReferenceNumber}"
+                                        IsErrorViewVisible="{Binding IsReferenceNumberErrorVisible}"
+                                        ErrorText="Please enter reference number"/>
                 <controls:ExtendedDropdown Title="Select Payment Mode"
+                                           SuffixText="*"
+                                           PlaceholderText="Select an option"
                                            SelectedItem="{Binding SelectedPaymentMode}"
+                                           IsError="{Binding IsPaymentModeErrorVisible}"
+                                           ErrorText="Please select payment mode"
                                            Margin="0,20,0,0">
                     <controls:ExtendedDropdown.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
@@ -32,6 +44,7 @@
                     </controls:ExtendedDropdown.ItemsSource>
                 </controls:ExtendedDropdown>
                 <Label Text="Upload File"
+                       Style="{StaticResource TitleStyleBlackBold}"
                        Margin="0,20,0,0"/>
                 <Border StrokeShape="RoundRectangle 8"
                         Grid.Row="1"
@@ -44,6 +57,7 @@
                     <Grid ColumnDefinitions="*,Auto"
                           ColumnSpacing="10">
                         <Label Text="{Binding FileName}"
+                               Style="{StaticResource TitleStyleBlackBold}"
                                VerticalOptions="Center">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding PickFileCommand}"/>
@@ -60,6 +74,7 @@
                 </Border>
 
                 <Label Text="Message"
+                       Style="{StaticResource TitleStyleBlackBold}"
                        Margin="0,20,0,0"/>
                 <Border StrokeShape="RoundRectangle 8"
                         Grid.Row="1"
@@ -69,6 +84,7 @@
                         Margin="0,5,0,0">
                     <Editor HeightRequest="150"
                             AutoSize="Disabled"
+                            Placeholder="Enter Message"
                             Text="{Binding Message}"
                             VerticalOptions="Start"/>
                 </Border>

@@ -20,39 +20,74 @@
         <controls:ExtendedEntry Title="Company Name"
                                 SuffixText="*"
                                 PlaceholderText="Enter Company Name"
-                                Text="{Binding Signup.CompanyName}"
+                                Text="{Binding CompanyName}"
                                 IsErrorViewVisible="{Binding IsCompanyNameErrorVisible}"
                                 ErrorText="Company name cannot be empty"/>
         <controls:ExtendedEntry Title="Full Name"
                                 SuffixText="*"
                                 PlaceholderText="Enter Full Name"
-                                Text="{Binding Signup.FName}"
+                                Text="{Binding FullName}"
                                 IsErrorViewVisible="{Binding IsFullNameErrorVisible}"
                                 ErrorText="Full name cannot be empty"/>
         <controls:ExtendedEntry Title="Phone Number"
                                 SuffixText="*"
                                 PlaceholderText="Enter Phone Number"
-                                Text="{Binding Signup.Phone}"
+                                Text="{Binding PhoneNumber}"
                                 IsErrorViewVisible="{Binding IsPhoneNumberErrorVisible}"
-                                ErrorText="Phone number cannot be empty"/>
+                                ErrorText="Phone number cannot be empty"
+                                EntryKeyboard="Telephone"/>
         <controls:ExtendedEntry Title="WhatsApp Number"
                                 SuffixText="*"
                                 PlaceholderText="Enter WhatsApp Number"
                                 Text="{Binding WhatsAppNumber}"
                                 IsErrorViewVisible="{Binding IsWhatsAppNumberErrorVisible}"
-                                ErrorText="WhatsApp number cannot be empty"/>
+                                ErrorText="WhatsApp number cannot be empty"
+                                EntryKeyboard="Telephone"/>
         <controls:ExtendedEntry Title="Email Address"
                                 SuffixText="*"
                                 PlaceholderText="Enter Email Address"
-                                Text="{Binding Signup.Email}"
+                                Text="{Binding EmailAddress}"
                                 IsErrorViewVisible="{Binding IsEmailErrorVisible}"
                                 ErrorText="Email address cannot be empty"/>
-        <controls:ExtendedEntry Title="Referred By"
+        <controls:ExtendedDropdown Title="Referred By"
+                                   SuffixText="*"
+                                   PlaceholderText="Enter Referred By"
+                                   IsError="{Binding IsReferredByErrorVisible}"
+                                   SelectedItem="{Binding ReferredBy}"
+                                   ErrorText="Referred by cannot be empty">
+            <controls:ExtendedDropdown.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>TTF</x:String>
+                    <x:String>OTM</x:String>
+                    <x:String>Satte</x:String>
+                    <x:String>Google</x:String>
+                    <x:String>Facebook</x:String>
+                    <x:String>Instagram</x:String>
+                    <x:String>Promotional SMS</x:String>
+                    <x:String>Promotional Email</x:String>
+                    <x:String>Promotional WhatsApp</x:String>
+                    <x:String>Sales Person</x:String>
+                </x:Array>
+            </controls:ExtendedDropdown.ItemsSource>
+        </controls:ExtendedDropdown>
+
+        <controls:ExtendedEntry Title="Sales Person"
                                 SuffixText="*"
-                                PlaceholderText="Enter Referred By"
-                                Text="{Binding SelectedReferredBy}"
-                                IsErrorViewVisible="{Binding IsReferredByErrorVisible}"
-                                ErrorText="Referred by cannot be empty"/>
+                                PlaceholderText="Enter Sales Person Name"
+                                Text="{Binding EmailAddress}"
+                                IsErrorViewVisible="{Binding IsEmailErrorVisible}"
+                                ErrorText="Email address cannot be empty"
+                                IsVisible="False">
+            <controls:ExtendedEntry.Triggers>
+                <DataTrigger TargetType="controls:ExtendedEntry"
+                             Binding="{Binding ReferredBy}"
+                             Value="Sales Person">
+                    <Setter Property="IsVisible"
+                            Value="True"/>
+                </DataTrigger>
+            </controls:ExtendedEntry.Triggers>
+        </controls:ExtendedEntry>
+
         <controls:ExtendedEntry Title="Password"
                                 SuffixText="*"
                                 PlaceholderText="Enter Password"

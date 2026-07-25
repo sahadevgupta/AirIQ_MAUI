@@ -4,25 +4,42 @@
              x:Class="AirIQ.Controls.SearchView"
              x:Name="searchView">
 
-    <Border Style="{StaticResource DefaultBorderStyle}">
+    <Border Style="{StaticResource DefaultBorderStyle}"
+            Padding="0"
+            StrokeThickness="0">
         <Grid ColumnDefinitions="*,Auto,Auto"
               ColumnSpacing="10"
-              HeightRequest="40">
+              HeightRequest="45">
 
             <Border Stroke="{StaticResource BorderColor}"
                     StrokeShape="RoundRectangle 6">
                 <SearchBar Text="{Binding SearchText,Source={x:Reference searchView}}"
                            Placeholder="{Binding PlaceholderText,Source={x:Reference searchView}}"
                            SearchCommand="{Binding SearchCommand,Source={x:Reference searchView}}"/>
+
+                <Border.Triggers>
+                    <MultiTrigger TargetType="Border">
+                        <MultiTrigger.Conditions>
+                            <BindingCondition Binding="{Binding IsFilterVisible ,Source={x:Reference searchView}}"
+                                              Value="False"/>
+                            <BindingCondition Binding="{Binding IsDownloadVisible ,Source={x:Reference searchView}}"
+                                              Value="False"/>
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Grid.ColumnSpan"
+                                Value="3"/>
+                    </MultiTrigger>
+                </Border.Triggers>
             </Border>
 
             <ImageButton Source="filter"
                          Grid.Column="1"
-                         Command="{Binding FilterCommand,Source={x:Reference searchView}}"/>
+                         Command="{Binding FilterCommand,Source={x:Reference searchView}}"
+                         IsVisible="{Binding IsFilterVisible ,Source={x:Reference searchView}}"/>
 
             <ImageButton Source="download"
                          Grid.Column="2"
-                         Command="{Binding DownloadCommand,Source={x:Reference searchView}}"/>
+                         Command="{Binding DownloadCommand,Source={x:Reference searchView}}"
+                         IsVisible="{Binding IsDownloadVisible,Source={x:Reference searchView}}"/>
         </Grid>
     </Border>
 

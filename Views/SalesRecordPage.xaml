@@ -4,11 +4,12 @@
                 x:Class="AirIQ.Views.SalesRecordPage"
                 xmlns:controls="clr-namespace:AirIQ.Controls"
                 xmlns:models="clr-namespace:AirIQ.Models"
+                xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                 xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
                 x:DataType="vm:SalesRecordPageViewModel"
-                Title="Sales Record">
+                PageTitle="{x:Static resx:AppResource.SalesRecord}">
 
     <views:BasePage.PageContent>
         <Grid Padding="16"
@@ -41,12 +42,13 @@
                                               ColumnDefinitions="*,Auto"
                                               RowDefinitions="Auto,1">
                                             <Label
-                                                Style="{StaticResource Label18Medium}"
                                                 VerticalOptions="Center">
                                                 <Label.FormattedText>
                                                     <FormattedString>
-                                                        <Span Text="{Binding Prefix}"/>
-                                                        <Span Text="{Binding SaleID}"/>
+                                                        <Span Text="{Binding Prefix}"
+                                                              Style="{StaticResource Span16MediumBlacStyle}"/>
+                                                        <Span Text="{Binding SaleID}"
+                                                              Style="{StaticResource Span16MediumBlacStyle}"/>
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
@@ -92,7 +94,7 @@
                                       ColumnSpacing="0">
                                     <Label Text="Passenger"
                                            Grid.Row="0"
-                                           Style="{StaticResource Label16Medium}"/>
+                                           Style="{StaticResource Label16MediumGrayStyle}"/>
 
                                     <Label Text="{Binding PassengersName}"
                                            Grid.Row="0"
@@ -102,7 +104,7 @@
 
                                     <Label Text="Entry Date"
                                            Grid.Row="1"
-                                           Style="{StaticResource Label16Medium}"/>
+                                           Style="{StaticResource Label16MediumGrayStyle}"/>
 
                                     <Label Text="{Binding EntryDate,StringFormat='{0: dd MMM yyyy HH:mm tt}'}"
                                            Grid.Row="1"
@@ -112,7 +114,7 @@
 
                                     <Label Text="Destination"
                                            Grid.Row="2"
-                                           Style="{StaticResource Label16Medium}"/>
+                                           Style="{StaticResource Label16MediumGrayStyle}"/>
 
                                     <Label Text="{Binding FDestName}"
                                            Grid.Row="2"
@@ -122,7 +124,7 @@
 
                                     <Label Text="PNR:"
                                            Grid.Row="3"
-                                           Style="{StaticResource Label16Medium}"/>
+                                           Style="{StaticResource Label16MediumGrayStyle}"/>
 
                                     <Label Text="{Binding PNR}"
                                            Grid.Row="3"
@@ -132,7 +134,7 @@
 
                                     <Label Text="Travel DateTime"
                                            Grid.Row="4"
-                                           Style="{StaticResource Label16Medium}"/>
+                                           Style="{StaticResource Label16MediumGrayStyle}"/>
 
                                     <Label Text="{Binding TravelDateTime,StringFormat='{0: dd MMM yyyy HH:mm tt}'}"
                                            Grid.Row="4"
@@ -142,7 +144,7 @@
 
                                     <Label Text="Airline"
                                            Grid.Row="5"
-                                           Style="{StaticResource Label16Medium}"/>
+                                           Style="{StaticResource Label16MediumGrayStyle}"/>
 
                                     <Label Text="{Binding AirlineName}"
                                            Grid.Row="5"
@@ -152,7 +154,7 @@
 
                                     <Label Text="Qty"
                                            Grid.Row="6"
-                                           Style="{StaticResource Label16Medium}"/>
+                                           Style="{StaticResource Label16MediumGrayStyle}"/>
 
                                     <Label Text="{Binding PAX_Qty}"
                                            Grid.Row="6"
@@ -162,7 +164,7 @@
 
                                     <Label Text="Price"
                                            Grid.Row="7"
-                                           Style="{StaticResource Label16Medium}"/>
+                                           Style="{StaticResource Label16MediumGrayStyle}"/>
 
                                     <Label Text="{Binding FinalRate}"
                                            Grid.Row="7"
@@ -172,7 +174,7 @@
 
                                     <Label Text="Amount"
                                            Grid.Row="8"
-                                           Style="{StaticResource Label16Medium}"/>
+                                           Style="{StaticResource Label16MediumGrayStyle}"/>
 
                                     <Label Text="{Binding Amount}"
                                            Grid.Row="8"

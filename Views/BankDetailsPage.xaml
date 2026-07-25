@@ -3,32 +3,37 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 x:Class="AirIQ_MAUI.Views.BankDetailsPage"
                 xmlns:views="clr-namespace:AirIQ.Views"
-                xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls">
+                xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+                PageTitle="Bank Details">
 
     <views:BasePage.PageContent>
         <ScrollView>
             <Grid Padding="16"
                   RowDefinitions="Auto,Auto,Auto"
                   RowSpacing="10">
-                <Border>
+                <Border StrokeShape="RoundRectangle 4">
                     <Grid ColumnDefinitions="Auto,*"
                           RowDefinitions="Auto,1,Auto,1,Auto,1,Auto,1,Auto,1,Auto,Auto">
                         <Image Source="account_assured"
                                Margin="16,12"/>
 
                         <VerticalStackLayout Grid.Column="1"
-                                             Padding="0,16">
+                                             Padding="0,16"
+                                             Spacing="6">
 
                             <Button Text="ICICI Bank Limited"
                                     Style="{StaticResource BorderlessButton}"
                                     TextColor="Black"
+                                    FontAttributes="Bold"
+                                    FontSize="16"
                                     HorizontalOptions="Start"
                                     ImageSource="icici_logo"
                                     ContentLayout="Left,10"
                                     Padding="0"
                                     MinimumHeightRequest="0"
                                     BackgroundColor="Transparent"/>
-                            <Label Text="IMPS / NEFT / RTGS"/>
+                            <Label Text="IMPS / NEFT / RTGS"
+                                   Style="{StaticResource Label14Regular}"/>
                         </VerticalStackLayout>
 
                         <BoxView Color="#E8E8E8"
@@ -44,8 +49,10 @@
                                Padding="0,12">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Account Name"/>
-                                    <Span Text="&#10;AIR IQ Savings"/>
+                                    <Span Text="Account Name"
+                                          Style="{StaticResource Span16RegularGray50Style}"/>
+                                    <Span Text="&#10;AIR IQ Savings"
+                                          Style="{StaticResource Span16MediumBlacStyle}"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -62,8 +69,10 @@
                                Grid.Row="4">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Account Number"/>
-                                    <Span Text="&#10;AIR IQ Savings"/>
+                                    <Span Text="Account Number"
+                                          Style="{StaticResource Span16RegularGray50Style}"/>
+                                    <Span Text="&#10;AQVI61065"
+                                          Style="{StaticResource Span16MediumBlacStyle}"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -73,7 +82,7 @@
                                  Grid.Row="5"
                                  Grid.ColumnSpan="2"/>
 
-                        <Image Source="credit_card_circle"
+                        <!-- <Image Source="credit_card_circle"
                                Grid.Row="6"
                                Margin="16,12"/>
                         <Label Grid.Column="1"
@@ -81,8 +90,10 @@
                                Grid.Row="6">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Account Name"/>
-                                    <Span Text="&#10;AIR IQ Savings"/>
+                                    <Span Text="Account Name"
+                                          Style="{StaticResource Span16RegularGray50Style}"/>
+                                    <Span Text="&#10;AIR IQ Savings"
+                                          Style="{StaticResource Span16MediumBlacStyle}"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -90,7 +101,7 @@
                         <BoxView Color="#E8E8E8"
                                  HeightRequest="1"
                                  Grid.Row="7"
-                                 Grid.ColumnSpan="2"/>
+                                 Grid.ColumnSpan="2"/> -->
 
                         <Image Source="wallet"
                                Grid.Row="8"
@@ -100,8 +111,10 @@
                                Grid.Row="8">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Account Type"/>
-                                    <Span Text="&#10;AIR IQ Savings"/>
+                                    <Span Text="Account Type"
+                                          Style="{StaticResource Span16RegularGray50Style}"/>
+                                    <Span Text="&#10;Current Account"
+                                          Style="{StaticResource Span16MediumBlacStyle}"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -119,8 +132,10 @@
                                Grid.Row="10">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="IFSC Code"/>
-                                    <Span Text="&#10;AIR IQ Savings"/>
+                                    <Span Text="IFSC Code"
+                                          Style="{StaticResource Span16RegularGray50Style}"/>
+                                    <Span Text="&#10;ICIC00000104"
+                                          Style="{StaticResource Span16MediumBlacStyle}"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -133,7 +148,9 @@
                                     Margin="16,12"
                                     StrokeThickness="0"
                                     Padding="10,8">
-                                <Label Text="Note: If using ICICI Bank, Please use “Other Bank” option to add AIR IQ as beneficiary"/>
+                                <Label Text="Note: If using ICICI Bank, Please use “Other Bank” option to add AIR IQ as beneficiary"
+                                       Style="{StaticResource Label14MediumGray90Style}"
+                                       TextColor="{StaticResource Gray70}"/>
                             </Border>
 
                             <BoxView Color="#E8E8E8"
@@ -141,9 +158,13 @@
                             <Label Padding="16,12">
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="Scan QR code"/>
+                                        <Span Text="Scan QR code"
+                                              Style="{StaticResource Span16BoldPrimaryStyle}"
+                                              TextColor="Black"/>
                                         <Span Text="&#10;"/>
-                                        <Span Text="scan the Qr code to pay"/>
+                                        <Span Text="scan the Qr code to pay"
+                                              Style="{StaticResource Span12RegularGray50Style}"
+                                              FontSize="14"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -161,6 +182,7 @@
 
                                     <Label Text="ID: airiq@icici"
                                            VerticalOptions="Center"
+                                           Style="{StaticResource Label14Bold}"
                                            Margin="10,0,0,5"
                                            Grid.Row="1"/>
 
@@ -170,21 +192,28 @@
                                             VerticalOptions="Center"
                                             Style="{StaticResource BorderlessButton}"
                                             MinimumHeightRequest="0"
+                                            ImageSource="content_copy"
+                                            ContentLayout="Right,2"
                                             Padding="0"
-                                            Margin="0,0,0,5"/>
+                                            Margin="0,0,5,5"/>
                                 </Grid>
 
                             </Border>
 
 
                             <BoxView Color="#E8E8E8"
+                                     Margin="0,12,0,0"
                                      HeightRequest="1"/>
                             <Label Padding="16,12">
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="UPI Apps"/>
+                                        <Span Text="UPI Apps"
+                                              Style="{StaticResource Span16BoldPrimaryStyle}"
+                                              TextColor="Black"/>
                                         <Span Text="&#10;"/>
-                                        <Span Text="Pay using UPI app"/>
+                                        <Span Text="Pay using UPI app"
+                                              Style="{StaticResource Span12RegularGray50Style}"
+                                              FontSize="14"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -192,25 +221,30 @@
                     </Grid>
                 </Border>
 
-                <Border Grid.Row="1">
+                <Border Grid.Row="1"
+                        StrokeShape="RoundRectangle 4">
                     <Grid ColumnDefinitions="Auto,*"
-                          RowDefinitions="Auto,1,Auto,1,Auto,1,Auto,1,Auto,1,Auto">
+                          RowDefinitions="Auto,1,Auto,1,Auto,1,Auto,1,Auto,Auto">
                         <Image Source="account_assured"
                                Margin="16,12"/>
 
                         <VerticalStackLayout Grid.Column="1"
-                                             Padding="0,16">
+                                             Padding="0,16"
+                                             Spacing="6">
 
                             <Button Text="ICICI Bank Limited"
                                     Style="{StaticResource BorderlessButton}"
                                     TextColor="Black"
+                                    FontAttributes="Bold"
+                                    FontSize="16"
                                     HorizontalOptions="Start"
                                     ImageSource="icici_logo"
                                     ContentLayout="Left,10"
                                     Padding="0"
                                     MinimumHeightRequest="0"
                                     BackgroundColor="Transparent"/>
-                            <Label Text="IMPS / NEFT / RTGS"/>
+                            <Label Text="IMPS / NEFT / RTGS / Cash Deposit"
+                                   Style="{StaticResource Label14Regular}"/>
                         </VerticalStackLayout>
 
                         <BoxView Color="#E8E8E8"
@@ -225,8 +259,10 @@
                                Padding="0,12">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Account Name"/>
-                                    <Span Text="&#10;AIR IQ Savings"/>
+                                    <Span Text="Account Name"
+                                          Style="{StaticResource Span16RegularGray50Style}"/>
+                                    <Span Text="&#10;AIR IQ 365 Limited"
+                                          Style="{StaticResource Span16MediumBlacStyle}"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -243,8 +279,10 @@
                                Grid.Row="4">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Account Number"/>
-                                    <Span Text="&#10;AIR IQ Savings"/>
+                                    <Span Text="Account Number"
+                                          Style="{StaticResource Span16RegularGray50Style}"/>
+                                    <Span Text="&#10;777705666135"
+                                          Style="{StaticResource Span16MediumBlacStyle}"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -262,8 +300,10 @@
                                Grid.Row="6">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Account Name"/>
-                                    <Span Text="&#10;AIR IQ Savings"/>
+                                    <Span Text="Account Type"
+                                          Style="{StaticResource Span16RegularGray50Style}"/>
+                                    <Span Text="&#10;Current Account"
+                                          Style="{StaticResource Span16MediumBlacStyle}"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -273,7 +313,7 @@
                                  Grid.Row="7"
                                  Grid.ColumnSpan="2"/>
 
-                        <Image Source="wallet"
+                        <Image Source="account_bank"
                                Grid.Row="8"
                                Margin="16,12"/>
                         <Label Grid.Column="1"
@@ -281,43 +321,40 @@
                                Grid.Row="8">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Account Type"/>
-                                    <Span Text="&#10;AIR IQ Savings"/>
+                                    <Span Text="IFSC Code"
+                                          Style="{StaticResource Span16RegularGray50Style}"/>
+                                    <Span Text="&#10;ICIC00000208"
+                                          Style="{StaticResource Span16MediumBlacStyle}"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
 
-                        <BoxView Color="#E8E8E8"
-                                 HeightRequest="1"
-                                 Grid.Row="9"
-                                 Grid.ColumnSpan="2"/>
-
-                        <Image Source="account_bank"
-                               Grid.Row="10"
-                               Margin="16,12"/>
-                        <Label Grid.Column="1"
-                               Padding="0,12"
-                               Grid.Row="10">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="IFSC Code"/>
-                                    <Span Text="&#10;AIR IQ Savings"/>
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
+                        <Border BackgroundColor="#E5F3FE"
+                                Grid.Row="9"
+                                Grid.ColumnSpan="2"
+                                Margin="16,12"
+                                StrokeThickness="0"
+                                Padding="10,8">
+                            <Label Text="Note: If using ICICI Bank, Please use “Other Bank” option to add AIR IQ as beneficiary"
+                                   Style="{StaticResource Label14MediumGray90Style}"
+                                   TextColor="{StaticResource Gray70}"/>
+                        </Border>
 
                     </Grid>
 
                 </Border>
 
                 <Border Grid.Row="2"
+                        StrokeShape="RoundRectangle 4"
                         Padding="30,25">
                     <VerticalStackLayout HorizontalOptions="Center"
                                          Spacing="10">
                         <Image Source="info_fill"
-                                HeightRequest="30"/>
+                               HeightRequest="30"/>
                         <Label HorizontalTextAlignment="Center"
-                               HorizontalOptions="Center">
+                               HorizontalOptions="Center"
+                               Style="{StaticResource Label14Regular}"
+                               TextColor="{StaticResource Gray90}">
                             <Label.Text>
                                 We don't accept cash deposit over Rs. 1,90,000 in one day. If you deposit more than this, the extra amount will be lost and won't be added to your account.
                             </Label.Text>

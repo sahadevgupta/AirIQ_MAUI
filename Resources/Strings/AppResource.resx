@@ -324,4 +324,70 @@
   <data name="BookFlight" xml:space="preserve">
     <value>Book Flight</value>
   </data>
+  <data name="BusinessInformationTitle" xml:space="preserve">
+    <value>Business Information</value>
+  </data>
+  <data name="PrimaryBusiness" xml:space="preserve">
+    <value>Primary Business</value>
+  </data>
+  <data name="SelectPrimaryBusinessType" xml:space="preserve">
+    <value>Select Primary Business Type</value>
+  </data>
+  <data name="MonthlyBusiness" xml:space="preserve">
+    <value>Monthly Business</value>
+  </data>
+  <data name="SelectMonthlyBusinessType" xml:space="preserve">
+    <value>Select Monthly Business Type</value>
+  </data>
+  <data name="PrimaryMonthlyTypeIsRequired" xml:space="preserve">
+    <value>Primary business type is required</value>
+  </data>
+  <data name="PrimaryMonthlyBusinessIsRequired" xml:space="preserve">
+    <value>Primary monthly business is required</value>
+  </data>
+  <data name="SecondaryBusiness" xml:space="preserve">
+    <value>Secondary Business</value>
+  </data>
+  <data name="SelectSecondaryBusinessType" xml:space="preserve">
+    <value>Select Secondary Business Type</value>
+  </data>
+  <data name="SelectSecondaryMonthlyBusiness" xml:space="preserve">
+    <value>Select secondary monthly business</value>
+  </data>
+  <data name="PANNo" xml:space="preserve">
+    <value>PAN No</value>
+  </data>
+  <data name="EnterPANNo" xml:space="preserve">
+    <value>Enter PAN No</value>
+  </data>
+  <data name="CompanyGSTNo" xml:space="preserve">
+    <value>Company GST No</value>
+  </data>
+  <data name="EnterCompanyGSTNo" xml:space="preserve">
+    <value>Enter Company GST No</value>
+  </data>
+  <data name="OnlineOtasWorkingWith" xml:space="preserve">
+    <value>Online OTAs you are working with ?</value>
+  </data>
+  <data name="OnlineOTA1" xml:space="preserve">
+    <value>Online OTA 1</value>
+  </data>
+  <data name="OnlineOTA2" xml:space="preserve">
+    <value>Online OTA 2</value>
+  </data>
+  <data name="SeriesOtasWorkingWith" xml:space="preserve">
+    <value>Series OTAs you are working with ?</value>
+  </data>
+  <data name="SeriesOTA2" xml:space="preserve">
+    <value>Series OTA 2</value>
+  </data>
+  <data name="SeriesOTA1" xml:space="preserve">
+    <value>Series OTA 1</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
 </root>
