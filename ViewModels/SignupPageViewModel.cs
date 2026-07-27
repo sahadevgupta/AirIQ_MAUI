@@ -153,6 +153,9 @@ public partial class SignupPageViewModel : BaseViewModel
     [ObservableProperty]
     private string? _gstRegisterdName;
 
+    [ObservableProperty]
+    private string? _salesPersonName;
+
 
     private IEnumerable<StateDto> tempStates = Enumerable.Empty<StateDto>();
     private IEnumerable<CityDto> tempCities = Enumerable.Empty<CityDto>();
@@ -180,7 +183,10 @@ public partial class SignupPageViewModel : BaseViewModel
     partial void OnSelectedCountryChanged(Country? value)
     {
         IsCountryErrorVisible = value is null;
-
+        SelectedState = null;
+        SelectedDistrict = null;
+        SelectedCity = null;
+        SelectedAirport = null;
         var result = tempStates.Where(s => s.CountryId == value?.Id && s.Status.GetValueOrDefault());
         States = new ObservableCollection<State>(BackendToAppModelMapper.GetStates(result));
     }
@@ -188,7 +194,9 @@ public partial class SignupPageViewModel : BaseViewModel
     partial void OnSelectedStateChanged(State? value)
     {
         IsStateErrorVisible = value is null;
-
+        SelectedDistrict = null;
+        SelectedCity = null;
+        SelectedAirport = null;
         var result = tempDistricts.Where(d => d.State == value?.Name && d.Status.GetValueOrDefault());
         Districts = new ObservableCollection<District>(BackendToAppModelMapper.GetDistricts(result));
     }
@@ -196,7 +204,8 @@ public partial class SignupPageViewModel : BaseViewModel
     partial void OnSelectedDistrictChanged(District? value)
     {
         IsDistrictErrorVisible = value is null;
-
+        SelectedCity = null;
+        SelectedAirport = null;
         var result = tempMainCities.Where(c => c.State == value?.State && c.DistrictId == value?.Id && c.Status.GetValueOrDefault());
         Cities = new ObservableCollection<MainCity>(BackendToAppModelMapper.GetMainCities(result));
     }
@@ -204,7 +213,7 @@ public partial class SignupPageViewModel : BaseViewModel
     partial void OnSelectedCityChanged(MainCity? value)
     {
         IsCityErrorVisible = value is null;
-
+        SelectedAirport = null;
         var result = tempCities.Where(c => c.State == value?.State && c.Status.GetValueOrDefault());
         NearestAirport = new ObservableCollection<City>(BackendToAppModelMapper.GetCities(result));
     }
@@ -245,8 +254,8 @@ public partial class SignupPageViewModel : BaseViewModel
 
     partial void OnPhoneNumberChanged(string? value)
     {
-        Signup.Phone = value;
-        IsPhoneNumberErrorVisible = string.IsNullOrWhiteSpace(value);
+        Signup.Phone = value?.Trim();
+        IsPhoneNumberErrorVisible = !IsValidIndianMobileNumber(Signup.Phone);
     }
 
     partial void OnEmailAddressChanged(string? value)
@@ -401,8 +410,20 @@ public partial class SignupPageViewModel : BaseViewModel
     private SignupRequest CreateSignupRequest()
         => new SignupRequest
         {
+            CompanyName = CompanyName,
+            Phone = PhoneNumber?.Trim(),
+            Email = EmailAddress,
+            Password = Password,
+            Country = SelectedCountry?.Name,
+            State = SelectedState?.Name,
+            CountryId = SelectedCountry?.Id.ToString(),
+            DistrictId = SelectedDistrict?.Id.ToString(),
             CityEntryMainId = SelectedCity?.CityEntryMainId.ToString(),
             CityId = SelectedAirport?.Id.ToString(),
+            PrimaryBusinessId = SelectedPrimaryBusinessType?.Id.ToString(),
+            SecondaryBusinessId = SelectedSecondaryBusinessType is null ? null : SelectedSecondaryBusinessType?.Id.ToString(),
+            MonthlyValue = PrimaryMonthlyIncome,
+            MonthlyValue2 = SecondaryMonthlyIncome
         };
 
     private bool ValidateCurrentStep(int index)
@@ -420,7 +441,7 @@ public partial class SignupPageViewModel : BaseViewModel
     {
         IsCompanyNameErrorVisible = string.IsNullOrWhiteSpace(CompanyName);
         IsFullNameErrorVisible = string.IsNullOrWhiteSpace(FullName);
-        IsPhoneNumberErrorVisible = string.IsNullOrWhiteSpace(PhoneNumber);
+        IsPhoneNumberErrorVisible = !IsValidIndianMobileNumber(PhoneNumber);
         IsEmailErrorVisible = string.IsNullOrWhiteSpace(EmailAddress)
                            || !Regex.IsMatch(EmailAddress, AppConstants.EmailRegex);
         IsWhatsAppNumberErrorVisible = string.IsNullOrWhiteSpace(WhatsAppNumber);
@@ -438,6 +459,16 @@ public partial class SignupPageViewModel : BaseViewModel
             && !IsReferredByErrorVisible
             && !IsPasswordErrorVisible
             && !IsConfirmPasswordErrorVisible;
+    }
+
+    private static bool IsValidIndianMobileNumber(string? phoneNumber)
+    {
+        if (string.IsNullOrWhiteSpace(phoneNumber))
+        {
+            return false;
+        }
+
+        return Regex.IsMatch(phoneNumber.Trim(), @"^[6-9]\d{9}$");
     }
 
     private bool ValidateContactInformationStep()
@@ -470,23 +501,6 @@ public partial class SignupPageViewModel : BaseViewModel
             && !IsSecondaryBusinessTypeErrorVisible
             && !IsSecondaryMonthlyIncomeErrorVisible;
     }
-
-    // private bool IsFormValid(StepBarModel stepBar)
-    // {
-    //     return stepBar.Index switch
-    //     {
-    //         0 => ValidatePersonalInformation(),
-    //         1 => ValidateContactInformation(),
-    //         2 => ValidateBusinessInformation()
-    //     };
-    // }
-
-    // private bool ValidatePersonalInformation()
-    // {
-    //     if (string.IsNullOrEmpty(Signup.CompanyName))
-
-
-    // }
 
     #endregion
 
@@ -682,11 +696,26 @@ public partial class SignupPageViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private Task SubmitAsync()
+    private async Task SubmitAsync()
     {
-        var a = Signup;
-        var request = CreateSignupRequest();
-        return Task.CompletedTask;
+        if (IsBusy)
+            return;
+
+        try
+        {
+            IsBusy = true;
+            var request = CreateSignupRequest();
+            var result = sourceAccountManagerItems.FirstOrDefault(x => x.Name?.Equals(ReferredBy, StringComparison.OrdinalIgnoreCase) == true);
+
+            using (LoadingService.Show())
+            {
+                await _lookupService.SignupAsync(request);
+            }
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
     [RelayCommand]

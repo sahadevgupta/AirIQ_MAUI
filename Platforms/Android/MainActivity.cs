@@ -8,8 +8,12 @@ using Android.OS;
 using Android.Views;
 using AndroidX.Activity;
 using AndroidX.Core.View;
+using AirIQ.Services.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Maui;
 using Microsoft.Maui.Controls.Platform;
 using Microsoft.Maui.Platform;
+using AirIQ.Helpers;
 
 
 namespace AirIQ;
@@ -24,6 +28,11 @@ namespace AirIQ;
         ConfigChanges.ScreenLayout |
         ConfigChanges.SmallestScreenSize |
         ConfigChanges.Density)]
+[IntentFilter(
+    new[] { Intent.ActionView },
+    Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
+    DataScheme = "airiq",
+    DataHost = "upi-callback")]
 public class MainActivity : MauiAppCompatActivity
 {
     private global::Android.Views.View? _statusBarScrim;
@@ -34,6 +43,7 @@ public class MainActivity : MauiAppCompatActivity
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
+        HandleUpiCallbackIntent(Intent);
         EnsureWindowInsetsListener();
         ApplySystemBars();
 
@@ -45,6 +55,22 @@ public class MainActivity : MauiAppCompatActivity
         base.OnResume();
         EnsureWindowInsetsListener();
         ApplySystemBars();
+    }
+
+    protected override void OnNewIntent(Intent? intent)
+    {
+        base.OnNewIntent(intent);
+        HandleUpiCallbackIntent(intent);
+    }
+
+    private static void HandleUpiCallbackIntent(Intent? intent)
+    {
+        var data = intent?.DataString;
+        if (string.IsNullOrWhiteSpace(data))
+            return;
+
+        var callbackService = ServiceHelper.GetService<IUpiPaymentCallbackService>();
+        callbackService?.HandleCallbackUri(data);
     }
 
     public override void OnWindowFocusChanged(bool hasFocus)

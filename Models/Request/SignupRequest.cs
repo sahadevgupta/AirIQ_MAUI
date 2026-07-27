@@ -47,5 +47,6 @@ namespace AirIQ.Models.Request
         public string? OnlineOta2 { get; set; }
         public string? SeriesOta1 { get; set; }
         public string? SeriesOta2 { get; set; }
+        public string? Password { get; set; }
     }
 }

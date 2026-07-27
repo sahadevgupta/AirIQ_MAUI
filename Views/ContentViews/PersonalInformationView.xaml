@@ -34,7 +34,7 @@
                                 PlaceholderText="Enter Phone Number"
                                 Text="{Binding PhoneNumber}"
                                 IsErrorViewVisible="{Binding IsPhoneNumberErrorVisible}"
-                                ErrorText="Phone number cannot be empty"
+                                ErrorText="Please enter a valid 10-digit Indian mobile number."
                                 EntryKeyboard="Telephone"/>
         <controls:ExtendedEntry Title="WhatsApp Number"
                                 SuffixText="*"
@@ -74,9 +74,7 @@
         <controls:ExtendedEntry Title="Sales Person"
                                 SuffixText="*"
                                 PlaceholderText="Enter Sales Person Name"
-                                Text="{Binding EmailAddress}"
-                                IsErrorViewVisible="{Binding IsEmailErrorVisible}"
-                                ErrorText="Email address cannot be empty"
+                                Text="{Binding SalesPersonName}"
                                 IsVisible="False">
             <controls:ExtendedEntry.Triggers>
                 <DataTrigger TargetType="controls:ExtendedEntry"

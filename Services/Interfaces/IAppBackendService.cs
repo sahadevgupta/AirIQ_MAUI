@@ -109,6 +109,9 @@ namespace AirIQ.Services.Interfaces
             [AliasAs("Message")] string message,
             [AliasAs("File")] StreamPart? file);
 
+        [Post(UrlConstants.Signup)]
+        Task<ApiResponse<string>> SignupAsync([Body(BodySerializationMethod.Serialized)] SignupRequest request);
+
         #endregion
     }
 }

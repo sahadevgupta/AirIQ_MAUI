@@ -22,4 +22,5 @@ public static class UrlConstants
     public const string GroupQueryRecords = "/api/group-queries/records";
     public const string UploadRequest = "/api/upload-request/submit";
     public const string PaxCalendarFlight = "/api/pax-calendar/flights";
+    public const string Signup = "/api/account/signup";
 }

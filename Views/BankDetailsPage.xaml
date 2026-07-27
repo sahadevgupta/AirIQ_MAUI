@@ -3,7 +3,9 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 x:Class="AirIQ_MAUI.Views.BankDetailsPage"
                 xmlns:views="clr-namespace:AirIQ.Views"
+                xmlns:vm="clr-namespace:AirIQ.ViewModels"
                 xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+                x:DataType="vm:BankDetailsPageViewModel"
                 PageTitle="Bank Details">
 
     <views:BasePage.PageContent>
@@ -176,7 +178,7 @@
                                         HeightRequest="150"
                                         WidthRequest="150"
                                         ForegroundColor="black"
-                                        Value="https://dotnet.microsoft.com"
+                                        Value="{Binding QrValue}"
                                         Format="QrCode"
                                         Margin="3"/>
 
@@ -217,6 +219,113 @@
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
+
+                            <Grid Padding="16,0,16,16"
+                                  ColumnDefinitions="*,*,*,*"
+                                  ColumnSpacing="10">
+                                <Border Stroke="#E9EDF5"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 18"
+                                        Padding="10,14"
+                                        BackgroundColor="White">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenUpiAppCommand}"
+                                                              CommandParameter="GooglePay"/>
+                                    </Border.GestureRecognizers>
+
+                                    <VerticalStackLayout Spacing="12"
+                                                         HorizontalOptions="Center"
+                                                         VerticalOptions="Center">
+                                        <Image Source="upi_googlepay"
+                                               HeightRequest="42"
+                                               WidthRequest="82"
+                                               HorizontalOptions="Center"
+                                               Aspect="AspectFit"/>
+                                        <Label Text="Google Pay"
+                                               Style="{StaticResource Label14Regular}"
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="#4F5B76"/>
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <Border Grid.Column="1"
+                                        Stroke="#E9EDF5"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 18"
+                                        Padding="10,14"
+                                        BackgroundColor="White">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenUpiAppCommand}"
+                                                              CommandParameter="PhonePe"/>
+                                    </Border.GestureRecognizers>
+
+                                    <VerticalStackLayout Spacing="12"
+                                                         HorizontalOptions="Center"
+                                                         VerticalOptions="Center">
+                                        <Image Source="upi_phonepe"
+                                               HeightRequest="42"
+                                               WidthRequest="42"
+                                               HorizontalOptions="Center"
+                                               Aspect="AspectFit"/>
+                                        <Label Text="PhonePe"
+                                               Style="{StaticResource Label14Regular}"
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="#4F5B76"/>
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <Border Grid.Column="2"
+                                        Stroke="#E9EDF5"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 18"
+                                        Padding="10,14"
+                                        BackgroundColor="White">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenUpiAppCommand}"
+                                                              CommandParameter="Paytm"/>
+                                    </Border.GestureRecognizers>
+
+                                    <VerticalStackLayout Spacing="12"
+                                                         HorizontalOptions="Center"
+                                                         VerticalOptions="Center">
+                                        <Image Source="upi_paytm"
+                                               HeightRequest="42"
+                                               WidthRequest="74"
+                                               HorizontalOptions="Center"
+                                               Aspect="AspectFit"/>
+                                        <Label Text="Paytm"
+                                               Style="{StaticResource Label14Regular}"
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="#4F5B76"/>
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <Border Grid.Column="3"
+                                        Stroke="#E9EDF5"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 18"
+                                        Padding="10,14"
+                                        BackgroundColor="White">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenUpiAppCommand}"
+                                                              CommandParameter="BHIM"/>
+                                    </Border.GestureRecognizers>
+
+                                    <VerticalStackLayout Spacing="12"
+                                                         HorizontalOptions="Center"
+                                                         VerticalOptions="Center">
+                                        <Image Source="upi_bhim"
+                                               HeightRequest="42"
+                                               WidthRequest="58"
+                                               HorizontalOptions="Center"
+                                               Aspect="AspectFit"/>
+                                        <Label Text="BHIM"
+                                               Style="{StaticResource Label14Regular}"
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="#4F5B76"/>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </Grid>
                         </VerticalStackLayout>
                     </Grid>
                 </Border>

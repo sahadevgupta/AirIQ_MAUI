@@ -52,12 +52,18 @@
                                                    ErrorText="City is required"
                                                    DisplayMemberPath="CityName"
                                                    IsEnabled="{Binding SelectedDistrict, Converter={toolkit:IsNotNullConverter}}"/>
+                        <controls:ExtendedEntry Title="Pin Code"
+                                                SuffixText="*"
+                                                PlaceholderText="Enter Pincode"
+                                                Text="{Binding Signup.PinCode}"/>
                         <controls:ExtendedEntry Title="Address"
                                                 SuffixText="*"
-                                                PlaceholderText="Enter Address"/>
+                                                PlaceholderText="Enter Address"
+                                                Text="{Binding Signup.Add1}"/>
                         <controls:ExtendedEntry Title="Specify your Locality"
                                                 SuffixText="*"
-                                                PlaceholderText="Enter Locality"/>
+                                                PlaceholderText="Enter Locality"
+                                                Text="{Binding Signup.Add2}"/>
 
                         <controls:ExtendedDropdown Title="Nearest Airport"
                                                    SuffixText="*"

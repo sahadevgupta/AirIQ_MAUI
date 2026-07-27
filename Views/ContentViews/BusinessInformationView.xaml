@@ -94,7 +94,8 @@
                                 Command="{Binding ValidatePanCommand}"/>
 
                         <controls:ExtendedEntry Title="Company GST No"
-                                                PlaceholderText="Enter Company GST No"/>
+                                                PlaceholderText="Enter Company GST No"
+                                                Text="{Binding Signup.GstNo}"/>
 
                         <Button Text="Verify"
                                 HorizontalOptions="Start"
@@ -105,12 +106,16 @@
 
                         <controls:ExtendedEntry Title="Online OTAs you are working with ?"
                                                 SuffixText="*"
-                                                PlaceholderText="Online OTA 1"/>
-                        <controls:ExtendedEntry PlaceholderText="Online OTA 1"/>
+                                                PlaceholderText="Online OTA 1"
+                                                Text="{Binding Signup.OnlineOta1}"/>
+                        <controls:ExtendedEntry PlaceholderText="Online OTA 1"
+                                                Text="{Binding Signup.OnlineOta2}"/>
                         <controls:ExtendedEntry Title="Series OTAs you are working with ?"
                                                 SuffixText="*"
-                                                PlaceholderText="Series OTA 1"/>
-                        <controls:ExtendedEntry PlaceholderText="Series OTA 1"/>
+                                                PlaceholderText="Series OTA 1"
+                                                Text="{Binding Signup.SeriesOta1}"/>
+                        <controls:ExtendedEntry PlaceholderText="Series OTA 1"
+                                                Text="{Binding Signup.SeriesOta2}"/>
 
                 </VerticalStackLayout>
 
