@@ -1,6 +1,7 @@
 using AirIQ.Configurations.CustomExceptions;
 using AirIQ.Enums;
 using AirIQ.Models;
+using AirIQ.Models.Request;
 using AirIQ.Models.Response;
 using AirIQ.Services.Interfaces;
 
@@ -132,6 +133,27 @@ namespace AirIQ.Services
                 HandleException(exception);
             }
             return lookupItemDtos;
+        }
+
+        public async Task<string> SignupAsync(SignupRequest signupRequest)
+        {
+            IEnumerable<LookupItemDto> lookupItemDtos = Enumerable.Empty<LookupItemDto>();
+            try
+            {
+                await Connectivity.CheckConnected();
+
+                var apiResponse = await BackendService.SignupAsync(signupRequest).ConfigureAwait(false);
+                return apiResponse.Message ?? string.Empty;
+            }
+            catch (NotConnectedException notConntectedException)
+            {
+                HandleException(notConntectedException);
+            }
+            catch (Exception exception)
+            {
+                HandleException(exception);
+            }
+            return string.Empty;
         }
     }
 }

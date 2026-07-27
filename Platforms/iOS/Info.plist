@@ -28,5 +28,18 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.companyname.airiq.newUI.upi</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>airiq</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

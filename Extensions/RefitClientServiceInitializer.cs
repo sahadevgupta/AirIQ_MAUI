@@ -32,6 +32,15 @@ namespace AirIQ.Extensions
             })
             .AddHttpMessageHandler<HttpMessageLogHandler>();
 
+            builder.Services
+                    .AddRefitClient<IZoopApi>()
+                    .ConfigureHttpClient(client =>
+                    {
+                        client.BaseAddress = new Uri("https://live.zoop.one");
+                        client.DefaultRequestHeaders.Add("app-id", "6801f6c4d125b80028ec2485");
+                        client.DefaultRequestHeaders.Add("api-key", "XNG2S4P-MF64MJK-HSMEHFX-3YAHZ3G");
+                    });
+
             return builder;
         }
     }

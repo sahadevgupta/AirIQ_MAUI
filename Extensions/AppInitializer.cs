@@ -1,18 +1,7 @@
 ﻿using AirIQ.Controls;
-using AirIQ.Extensions;
-using AirIQ.Services;
-using AirIQ.Services.Interfaces;
-using AirIQ.ViewModels;
-using AirIQ.ViewModels.Common;
-using AirIQ.Views;
-using CommunityToolkit.Maui;
-using Mopups.Interfaces;
-using Mopups.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Microsoft.Maui.Handlers;
+using Microsoft.Maui.Platform;
 
 namespace AirIQ.Extensions
 {
@@ -49,6 +38,15 @@ namespace AirIQ.Extensions
 
         private static MauiAppBuilder ConfigureAppHandlers(this MauiAppBuilder builder)
         {
+            EditorHandler.Mapper.AppendToMapping("NestedScroll", (handler, view) =>
+            {
+#if ANDROID
+                handler.PlatformView.SetBackgroundColor(Colors.Transparent.ToPlatform());
+                handler.PlatformView.Background = null;
+                handler.PlatformView.SetOnTouchListener(new EditorTouchListener());
+#endif
+            });
+
             return builder.ConfigureMauiHandlers(handlers =>
             {
                 handlers.AddHandler<CustomDropdown, AirIQ.Platforms.Handlers.CustomDropdownHandler>();
@@ -56,6 +54,34 @@ namespace AirIQ.Extensions
                 handlers.AddHandler(typeof(Shell), typeof(AirIQ.Platforms.Handlers.CustomShellRenderer));
 #endif
             });
+
+
         }
     }
+
+#if ANDROID
+
+
+
+    public class EditorTouchListener : Java.Lang.Object, Android.Views.View.IOnTouchListener
+    {
+        public bool OnTouch(Android.Views.View? v, Android.Views.MotionEvent? e)
+        {
+            switch (e?.Action)
+            {
+                case Android.Views.MotionEventActions.Down:
+                case Android.Views.MotionEventActions.Move:
+                    v?.Parent?.RequestDisallowInterceptTouchEvent(true);
+                    break;
+
+                case Android.Views.MotionEventActions.Up:
+                case Android.Views.MotionEventActions.Cancel:
+                    v?.Parent?.RequestDisallowInterceptTouchEvent(false);
+                    break;
+            }
+
+            return false;
+        }
+    }
+#endif
 }

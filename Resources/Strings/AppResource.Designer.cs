@@ -680,5 +680,203 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("BookFlight", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Business Information.
+        /// </summary>
+        internal static string BusinessInformationTitle {
+            get {
+                return ResourceManager.GetString("BusinessInformationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Primary Business.
+        /// </summary>
+        internal static string PrimaryBusiness {
+            get {
+                return ResourceManager.GetString("PrimaryBusiness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Primary Business Type.
+        /// </summary>
+        internal static string SelectPrimaryBusinessType {
+            get {
+                return ResourceManager.GetString("SelectPrimaryBusinessType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Monthly Business.
+        /// </summary>
+        internal static string MonthlyBusiness {
+            get {
+                return ResourceManager.GetString("MonthlyBusiness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Monthly Business Type.
+        /// </summary>
+        internal static string SelectMonthlyBusinessType {
+            get {
+                return ResourceManager.GetString("SelectMonthlyBusinessType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Primary business type is required.
+        /// </summary>
+        internal static string PrimaryMonthlyTypeIsRequired {
+            get {
+                return ResourceManager.GetString("PrimaryMonthlyTypeIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Primary monthly business is required.
+        /// </summary>
+        internal static string PrimaryMonthlyBusinessIsRequired {
+            get {
+                return ResourceManager.GetString("PrimaryMonthlyBusinessIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Secondary Business.
+        /// </summary>
+        internal static string SecondaryBusiness {
+            get {
+                return ResourceManager.GetString("SecondaryBusiness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Secondary Business Type.
+        /// </summary>
+        internal static string SelectSecondaryBusinessType {
+            get {
+                return ResourceManager.GetString("SelectSecondaryBusinessType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select secondary monthly business.
+        /// </summary>
+        internal static string SelectSecondaryMonthlyBusiness {
+            get {
+                return ResourceManager.GetString("SelectSecondaryMonthlyBusiness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PAN No.
+        /// </summary>
+        internal static string PANNo {
+            get {
+                return ResourceManager.GetString("PANNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter PAN No.
+        /// </summary>
+        internal static string EnterPANNo {
+            get {
+                return ResourceManager.GetString("EnterPANNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Company GST No.
+        /// </summary>
+        internal static string CompanyGSTNo {
+            get {
+                return ResourceManager.GetString("CompanyGSTNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Company GST No.
+        /// </summary>
+        internal static string EnterCompanyGSTNo {
+            get {
+                return ResourceManager.GetString("EnterCompanyGSTNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Online OTAs you are working with ?.
+        /// </summary>
+        internal static string OnlineOtasWorkingWith {
+            get {
+                return ResourceManager.GetString("OnlineOtasWorkingWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Online OTA 1.
+        /// </summary>
+        internal static string OnlineOTA1 {
+            get {
+                return ResourceManager.GetString("OnlineOTA1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Online OTA 2.
+        /// </summary>
+        internal static string OnlineOTA2 {
+            get {
+                return ResourceManager.GetString("OnlineOTA2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Series OTAs you are working with ?.
+        /// </summary>
+        internal static string SeriesOtasWorkingWith {
+            get {
+                return ResourceManager.GetString("SeriesOtasWorkingWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Series OTA 2.
+        /// </summary>
+        internal static string SeriesOTA2 {
+            get {
+                return ResourceManager.GetString("SeriesOTA2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Series OTA 1.
+        /// </summary>
+        internal static string SeriesOTA1 {
+            get {
+                return ResourceManager.GetString("SeriesOTA1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        internal static string Submit {
+            get {
+                return ResourceManager.GetString("Submit", resourceCulture);
+            }
+        }
     }
 }

@@ -55,9 +55,9 @@
 
                 </Border>
 
-                <Grid.GestureRecognizers>
+                <!-- <Grid.GestureRecognizers>
                     <TapGestureRecognizer Tapped="StepTapped_Tapped"/>
-                </Grid.GestureRecognizers>
+                </Grid.GestureRecognizers> -->
 
             </Grid>
 

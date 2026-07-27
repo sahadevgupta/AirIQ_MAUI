@@ -1,12 +1,16 @@
-using System;
 using System.Collections.ObjectModel;
+
 using AirIQ.Enums;
 using AirIQ.Models;
 using AirIQ.Resources.Strings;
 using AirIQ.Services.Interfaces;
 using AirIQ.Views;
+
+using AirIQ_MAUI.Views;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+
 using Mopups.Services;
 
 namespace AirIQ.ViewModels.Common;
@@ -77,6 +81,30 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
         {
             case MenuType.SalesRecord:
                 await ShellNavigationService.Navigate<SalesRecordPage>();
+                break;
+            case MenuType.RefundsRecord:
+                await ShellNavigationService.Navigate<RefundsRecordPage>();
+                break;
+            case MenuType.AccountsLedger:
+                await ShellNavigationService.Navigate<AccountLedgerRecordPage>();
+                break;
+            case MenuType.BankDetails:
+                await ShellNavigationService.Navigate<BankDetailsPage>();
+                break;
+            case MenuType.TemporaryCredit:
+                await ShellNavigationService.Navigate<TempCreditPage>();
+                break;
+            case MenuType.UploadRequest:
+                await ShellNavigationService.Navigate<UploadRequestPage>();
+                break;
+            case MenuType.GroupQuery:
+                await ShellNavigationService.Navigate<GroupQueryPage>();
+                break;
+            case MenuType.PaxCalendar:
+                await ShellNavigationService.Navigate<PaxCalendarPage>();
+                break;
+            case MenuType.OnlineRecharge:
+                await ShellNavigationService.Navigate<OnlineRechargePage>();
                 break;
         }
     }

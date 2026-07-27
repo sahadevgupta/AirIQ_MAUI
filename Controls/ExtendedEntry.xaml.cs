@@ -22,6 +22,19 @@ public partial class ExtendedEntry : ContentView
         set => SetValue(TitleProperty, value);
     }
 
+    // Bindable Property for SuffixText
+    public static readonly BindableProperty SuffixTextProperty =
+                            BindableProperty.Create(nameof(SuffixText),
+                            typeof(string),
+                            typeof(ExtendedEntry),
+                            string.Empty);
+
+    public string SuffixText
+    {
+        get => (string)GetValue(SuffixTextProperty);
+        set => SetValue(SuffixTextProperty, value);
+    }
+
     // Bindable Property for Placeholder
     public static readonly BindableProperty PlaceholderTextProperty =
                             BindableProperty.Create(nameof(PlaceholderText),

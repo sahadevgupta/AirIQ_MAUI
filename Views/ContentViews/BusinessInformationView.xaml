@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirIQ.Views.ContentViews.BusinessInformationView"
              xmlns:controls="clr-namespace:AirIQ.Controls"
+             xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
         <Grid ColumnDefinitions="*,*"
               ColumnSpacing="10"
@@ -12,7 +13,7 @@
                 <VerticalStackLayout Spacing="10"
                                      Grid.ColumnSpan="2">
 
-                        <Label Text="Business Information"
+                        <Label Text="{x:Static resx:AppResource.BusinessInformationTitle}"
                                Style="{StaticResource Label18Medium}"
                                TextColor="{StaticResource PrimaryColor}"
                                LineHeight="1.2"
@@ -21,45 +22,100 @@
                                Margin="0,8,0,0"/>
 
                         <controls:ExtendedDropdown Title="Primary Business"
+                                                   SuffixText="*"
                                                    PlaceholderText="Select Primary Business Type"
                                                    ItemsSource="{Binding PrimaryBusinessTypes}"
                                                    SelectedItem="{Binding SelectedPrimaryBusinessType}"
+                                                   IsError="{Binding IsPrimaryBusinessTypeErrorVisible}"
+                                                   ErrorText="Primary business type is required"
                                                    DisplayMemberPath="Name"/>
 
                         <controls:ExtendedDropdown Title="Monthly Business"
-                                                   PlaceholderText="Select Monthly Business Type"/>
+                                                   SuffixText="*"
+                                                   PlaceholderText="Select Monthly Business Type"
+                                                   IsError="{Binding IsPrimaryMonthlyIncomeErrorVisible}"
+                                                   ErrorText="Primary monthly business is required"
+                                                   SelectedItem="{Binding PrimaryMonthlyIncome}">
+                                <controls:ExtendedDropdown.ItemsSource>
+                                        <x:Array Type="{x:Type x:String}">
+                                                <x:String>Below 5 Lacs</x:String>
+                                                <x:String>5 - 10 Lacs</x:String>
+                                                <x:String>10 - 20 Lacs</x:String>
+                                                <x:String>20 - 30 Lacs</x:String>
+                                                <x:String>30 - 40 Lacs</x:String>
+                                                <x:String>40 - 50 Lacs</x:String>
+                                                <x:String>50 - 75 Lacs</x:String>
+                                                <x:String>75 - 1 Crore</x:String>
+                                                <x:String>Above 1 Crore</x:String>
+                                        </x:Array>
+                                </controls:ExtendedDropdown.ItemsSource>
+                        </controls:ExtendedDropdown>
 
                         <controls:ExtendedDropdown Title="Secondary Business"
+                                                   SuffixText="*"
                                                    PlaceholderText="Select Secondary Business Type"
                                                    ItemsSource="{Binding SecondaryBusinessTypes}"
                                                    SelectedItem="{Binding SelectedSecondaryBusinessType}"
+                                                   IsError="{Binding IsSecondaryBusinessTypeErrorVisible}"
+                                                   ErrorText="Select secondary business type"
                                                    DisplayMemberPath="Name"
                                                    IsEnabled="{Binding SelectedPrimaryBusinessType, Converter={toolkit:IsNotNullConverter}}"/>
 
+                        <controls:ExtendedDropdown Title="Monthly Business"
+                                                   SuffixText="*"
+                                                   PlaceholderText="Select Monthly Business Type"
+                                                   IsError="{Binding IsSecondaryMonthlyIncomeErrorVisible}"
+                                                   ErrorText="Select secondary monthly business"
+                                                   SelectedItem="{Binding SecondaryMonthlyIncome}">
+                                <controls:ExtendedDropdown.ItemsSource>
+                                        <x:Array Type="{x:Type x:String}">
+                                                <x:String>Below 5 Lacs</x:String>
+                                                <x:String>5 - 10 Lacs</x:String>
+                                                <x:String>10 - 20 Lacs</x:String>
+                                                <x:String>20 - 30 Lacs</x:String>
+                                                <x:String>30 - 40 Lacs</x:String>
+                                                <x:String>40 - 50 Lacs</x:String>
+                                                <x:String>50 - 75 Lacs</x:String>
+                                                <x:String>75 - 1 Crore</x:String>
+                                                <x:String>Above 1 Crore</x:String>
+                                        </x:Array>
+                                </controls:ExtendedDropdown.ItemsSource>
+                        </controls:ExtendedDropdown>
+
                         <controls:ExtendedEntry Title="PAN No"
-                                                PlaceholderText="Enter PAN No"/>
+                                                PlaceholderText="Enter PAN No"
+                                                Text="{Binding Signup.PanNo}"/>
 
                         <Button Text="Verify"
                                 HorizontalOptions="Start"
                                 TextColor="{StaticResource PrimaryColor}"
                                 BackgroundColor="White"
-                                Style="{StaticResource SmallBorderButtonStyle}"/>
+                                Style="{StaticResource SmallBorderButtonStyle}"
+                                Command="{Binding ValidatePanCommand}"/>
 
                         <controls:ExtendedEntry Title="Company GST No"
-                                                PlaceholderText="Enter Company GST No"/>
+                                                PlaceholderText="Enter Company GST No"
+                                                Text="{Binding Signup.GstNo}"/>
 
                         <Button Text="Verify"
                                 HorizontalOptions="Start"
                                 TextColor="{StaticResource PrimaryColor}"
                                 BackgroundColor="White"
-                                Style="{StaticResource SmallBorderButtonStyle}"/>
+                                Style="{StaticResource SmallBorderButtonStyle}"
+                                Command="{Binding ValidateGstCommand}"/>
 
                         <controls:ExtendedEntry Title="Online OTAs you are working with ?"
-                                                PlaceholderText="Online OTA 1"/>
-                        <controls:ExtendedEntry PlaceholderText="Online OTA 1"/>
+                                                SuffixText="*"
+                                                PlaceholderText="Online OTA 1"
+                                                Text="{Binding Signup.OnlineOta1}"/>
+                        <controls:ExtendedEntry PlaceholderText="Online OTA 1"
+                                                Text="{Binding Signup.OnlineOta2}"/>
                         <controls:ExtendedEntry Title="Series OTAs you are working with ?"
-                                                PlaceholderText="Series OTA 1"/>
-                        <controls:ExtendedEntry PlaceholderText="Series OTA 1"/>
+                                                SuffixText="*"
+                                                PlaceholderText="Series OTA 1"
+                                                Text="{Binding Signup.SeriesOta1}"/>
+                        <controls:ExtendedEntry PlaceholderText="Series OTA 1"
+                                                Text="{Binding Signup.SeriesOta2}"/>
 
                 </VerticalStackLayout>
 
@@ -81,7 +137,7 @@
                         Grid.Column="1"
                         TextColor="White"
                         BackgroundColor="{StaticResource PrimaryColor}"
-                        Command="{Binding NextStepCommand}"
+                        Command="{Binding SubmitCommand}"
                         Style="{StaticResource ButtonCorneredStyle}"/>
         </Grid>
 </ContentView>

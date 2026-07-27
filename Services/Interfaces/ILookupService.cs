@@ -1,4 +1,5 @@
 using AirIQ.Enums;
+using AirIQ.Models.Request;
 using AirIQ.Models.Response;
 
 namespace AirIQ.Services.Interfaces
@@ -11,5 +12,6 @@ namespace AirIQ.Services.Interfaces
         Task<IEnumerable<MainCityDto>> GetMainCitiesAsync();
         Task<IEnumerable<StateDto>> GetStatesAsync();
         Task<IEnumerable<LookupItemDto>> GetAccountManagersAsync(AccountManagerType type);
+        Task<string> SignupAsync(SignupRequest signupRequest);
     }
 }

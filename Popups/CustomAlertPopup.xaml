@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopup:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="AirIQ_MAUI.Popups.CustomAlertPopup"
+                 xmlns:mopup="clr-namespace:Mopups.Pages;assembly=Mopups"
+                 xmlns:mopupsanim="clr-namespace:Mopups.Animations;assembly=Mopups"
+                 BackgroundColor="{StaticResource PopupBackground}"
+                 CloseWhenBackgroundIsClicked="False"
+                 x:Name="customAlertDialog">
+    <mopup:PopupPage.Animation>
+        <mopupsanim:MoveAnimation
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinIn"
+            EasingOut="SinOut"
+            PositionIn="Center"
+            PositionOut="Center"/>
+    </mopup:PopupPage.Animation>
+
+    <Border VerticalOptions="Center"
+            Padding="20"
+            BackgroundColor="White"
+            StrokeShape="RoundRectangle 10"
+            Margin="16,0">
+        <VerticalStackLayout Spacing="20">
+            <Image HorizontalOptions="Center"
+                   VerticalOptions="Center">
+                <Image.Source>
+                    <FontImageSource
+                        FontFamily="MyFont"
+                        Size="50"
+                        Glyph="{Binding Icon, Source={x:Reference customAlertDialog}}"
+                        Color="{Binding IconTintColor, Source={x:Reference customAlertDialog}}"/>
+                </Image.Source>
+            </Image>
+
+            <Label Style="{DynamicResource PopupLabelStyle}"
+                   Text="{Binding Message, Source={x:Reference customAlertDialog}}"
+                   HorizontalTextAlignment="Center"
+                   FontSize="Body"/>
+
+            <Button Text="Ok"
+                    TextColor="White"
+                    BackgroundColor="Black"
+                    Clicked="Button_Clicked"
+                    HorizontalOptions="Center"
+                    MinimumWidthRequest="100"/>
+        </VerticalStackLayout>
+    </Border>
+</mopup:PopupPage>

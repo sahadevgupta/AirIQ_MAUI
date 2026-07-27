@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                x:Class="AirIQ_MAUI.Views.PaxCalendarPage"
+                x:Name="PaxCalendarRoot"
+                xmlns:controls="clr-namespace:AirIQ.Controls"
+                xmlns:models="clr-namespace:AirIQ.Models"
+                xmlns:respModel="clr-namespace:AirIQ.Models.Response"
+                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                xmlns:views="clr-namespace:AirIQ.Views"
+                xmlns:vm="clr-namespace:AirIQ.ViewModels"
+                x:DataType="vm:PaxCalendarPageViewModel"
+                PageTitle="PAX Calendar">
+
+    <views:BasePage.Resources>
+        <Style x:Key="CardTextStyle"
+               BasedOn="{StaticResource Label12BlackRobotoMedium}"
+               TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="#111111"/>
+            <Style.Triggers>
+                <DataTrigger TargetType="Label"
+                             Binding="{Binding IsSelected}"
+                             Value="True">
+                    <Setter Property="TextColor"
+                            Value="White"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DateNumberStyle"
+               TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="#1F7BC3"/>
+            <Style.Triggers>
+                <DataTrigger TargetType="Label"
+                             Binding="{Binding IsSelected}"
+                             Value="True">
+                    <Setter Property="TextColor"
+                            Value="White"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </views:BasePage.Resources>
+
+    <views:BasePage.PageContent>
+        <Grid Padding="16"
+              RowDefinitions="Auto,Auto,*"
+              RowSpacing="20"
+              BackgroundColor="{StaticResource SecondaryBackgroundColor}">
+
+            <!-- <Button HorizontalOptions="End"
+                    Text="Wallet: Rs.12345"
+                    TranslationY="-60"
+                    Padding="10,0"
+                    BackgroundColor="{StaticResource Gray10}"
+                    HeightRequest="20"
+                    MinimumHeightRequest="20"
+                    TextColor="{StaticResource PrimaryColor}"/> -->
+
+            <Grid ColumnDefinitions="*,*"
+                  ColumnSpacing="16">
+                <Button Text="Self Care"
+                        Style="{StaticResource SmallBorderButtonStyle}"
+                        MinimumHeightRequest="30"/>
+                <Button Text="Advance Booking"
+                        MinimumHeightRequest="30"
+                        Grid.Column="1"/>
+            </Grid>
+
+            <Border StrokeShape="RoundRectangle 8"
+                    BackgroundColor="White"
+                    Padding="16"
+                    Grid.Row="1">
+                <VerticalStackLayout>
+
+                    <controls:SearchView IsFilterVisible="False"
+                                         IsDownloadVisible="False"
+                                         PlaceholderText="Search here"/>
+
+                    <!-- Header -->
+                    <Grid ColumnDefinitions="Auto,*,Auto,Auto"
+                          ColumnSpacing="0">
+                        <CheckBox IsChecked="{Binding IsCcBooking}"
+                                  Color="#9A9A9A"
+                                  VerticalOptions="Center"
+                                  BackgroundColor="Transparent"/>
+
+                        <Label Grid.Column="1"
+                               Text="CC BOOKING"
+                               VerticalOptions="Center"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="#111111"/>
+
+                        <ImageButton Grid.Column="2"
+                                     BackgroundColor="Transparent"
+                                     Margin="0,0,15,0"
+                                     Source="arrow_right"
+                                     Rotation="180"
+                                     MinimumHeightRequest="0"
+                                     HeightRequest="35"
+                                     Command="{Binding PreviousDateCommand}">
+                            <!-- <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding PreviousDateCommand}"/>
+                    </Image.GestureRecognizers> -->
+                        </ImageButton>
+
+                        <ImageButton Grid.Column="3"
+                                     BackgroundColor="Transparent"
+                                     Source="arrow_right"
+                                     MinimumHeightRequest="0"
+                                     HeightRequest="35"
+                                     Command="{Binding NextDateCommand}">
+                            <!-- <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NextDateCommand}"/>
+                    </Image.GestureRecognizers> -->
+                        </ImageButton>
+                    </Grid>
+
+                    <!-- Fixed 3 date cards -->
+                    <StackLayout Orientation="Horizontal"
+                                 BindableLayout.ItemsSource="{Binding DateItems}"
+                                 Grid.Row="1"
+                                 BackgroundColor="Transparent"
+                                 x:Name="dateItems"
+                                 HorizontalOptions="Fill"
+                                 Spacing="10">
+
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="models:DateCardItem">
+                                <Border Grid.Column="0"
+                                        Stroke="#D9D9D9"
+                                        StrokeThickness="1.5"
+                                        BackgroundColor="White"
+                                        StrokeShape="RoundRectangle 8"
+                                        HorizontalOptions="FillAndExpand"
+                                        Padding="10">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.SelectDateCommand,Source={x:Reference dateItems}}"
+                                                              CommandParameter="{Binding .}"/>
+                                    </Border.GestureRecognizers>
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border"
+                                                     Binding="{Binding IsSelected}"
+                                                     Value="True">
+                                            <Setter Property="BackgroundColor"
+                                                    Value="#1F7BC3"/>
+                                            <Setter Property="Stroke"
+                                                    Value="#1F7BC3"/>
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                                          RowSpacing="5">
+                                        <Label Grid.Row="0"
+                                               Text="{Binding DayShort}"
+                                               Style="{StaticResource CardTextStyle}"
+                                               HorizontalTextAlignment="Center"/>
+                                        <Label Grid.Row="1"
+                                               Text="{Binding DateNumber}"
+                                               Style="{StaticResource DateNumberStyle}"
+                                               FontSize="28"
+                                               HorizontalTextAlignment="Center"/>
+                                        <Label Grid.Row="2"
+                                               Text="{Binding MonthYear}"
+                                               Style="{StaticResource CardTextStyle}"
+                                               HorizontalTextAlignment="Center"/>
+                                        <BoxView Grid.Row="3"
+                                                 HeightRequest="1"
+                                                 Color="#D9D9D9"
+                                                 VerticalOptions="End"/>
+                                        <Label Grid.Row="4"
+                                               Text="{Binding PaxSummary}"
+                                               Style="{StaticResource CardTextStyle}"
+                                               HorizontalTextAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <CollectionView ItemsSource="{Binding FlightBookingList}"
+                            Grid.Row="2">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="10"
+                                       Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="respModel:PaxCalendarFlightDto">
+                        <Border Grid.Row="1"
+                                Stroke="{StaticResource BorderColor}"
+                                StrokeShape="RoundRectangle 6"
+                                BackgroundColor="White"
+                                VerticalOptions="Start">
+                            <toolkit:Expander x:Name="expander">
+                                <toolkit:Expander.Header>
+                                    <Border StrokeThickness="0">
+                                        <Grid Padding="12,0"
+                                              ColumnDefinitions="*,Auto"
+                                              RowDefinitions="Auto,1">
+                                            <Label VerticalOptions="Center">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding TicketRefNo,StringFormat='#{0}'}"
+                                                              Style="{StaticResource Span16MediumBlacStyle}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <HorizontalStackLayout Grid.Column="1"
+                                                                   Spacing="0"
+                                                                   BackgroundColor="Transparent"
+                                                                   HorizontalOptions="End">
+                                                <ImageButton Source="invoice"
+                                                             Scale="0.4"/>
+
+                                                <ImageButton Source="arrow_right"
+                                                             MinimumHeightRequest="30"
+                                                             MinimumWidthRequest="30"
+                                                             InputTransparent="True">
+                                                    <ImageButton.Triggers>
+                                                        <DataTrigger TargetType="ImageButton"
+                                                                     Binding="{Binding Source={x:Reference expander},Path=IsExpanded}"
+                                                                     Value="True">
+                                                            <Setter Property="Rotation"
+                                                                    Value="270"/>
+                                                            <Setter TargetName="bottomLine"
+                                                                    Property="IsVisible"
+                                                                    Value="True"/>
+                                                        </DataTrigger>
+                                                    </ImageButton.Triggers>
+                                                </ImageButton>
+                                            </HorizontalStackLayout>
+
+                                            <BoxView Grid.Row="1"
+                                                     Grid.ColumnSpan="2"
+                                                     x:Name="bottomLine"
+                                                     IsVisible="False"
+                                                     Color="{StaticResource BorderColor}"/>
+                                        </Grid>
+                                    </Border>
+                                </toolkit:Expander.Header>
+                                <Grid ColumnDefinitions="3*,4*,3*"
+                                      RowDefinitions="Auto,Auto,Auto,Auto"
+                                      Padding="12"
+                                      RowSpacing="10">
+                                    <Label
+                                        VerticalTextAlignment="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding SourceCity}"
+                                                      Style="{StaticResource Label14MediumGray90Style}"
+                                                      FontSize="16"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="{Binding SourceAirportCode}"
+                                                      Style="{StaticResource Span12RegularGray50Style}"
+                                                      FontSize="16"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Image Source="flight_route"
+                                           Grid.Column="1"/>
+
+                                    <Label Grid.Column="2"
+                                           VerticalTextAlignment="Center"
+                                           HorizontalTextAlignment="End">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding DestinationCity}"
+                                                      Style="{StaticResource Label20MediumOnyxStyle}"
+                                                      TextColor="Black"/>
+                                                <Span Text="&#10; "/>
+                                                <Span Text="{Binding DestinationAirportCode}"
+                                                      Style="{StaticResource Label14RegularGray50Style}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Border Grid.Row="1"
+                                            Grid.ColumnSpan="3"
+                                            Padding="10"
+                                            StrokeThickness="0"
+                                            BackgroundColor="#EEEEEE">
+                                        <Grid ColumnDefinitions="*,Auto"
+                                              RowDefinitions="Auto,Auto"
+                                              RowSpacing="12">
+                                            <Label Grid.Column="0"
+                                                   VerticalTextAlignment="Center">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding AirlineCode}"
+                                                              Style="{StaticResource Label20MediumOnyxStyle}"
+                                                              TextColor="Black"/>
+                                                        <Span Text="{Binding FlightNumber, StringFormat=' ({0})'}"
+                                                              Style="{StaticResource Label14RegularGray50Style}"/>
+                                                        <Span Text="&#10;"/>
+                                                        <Span Text="Airline"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+
+                                            <Label Grid.Row="1"
+                                                   VerticalTextAlignment="Center">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding PAX_Qty, StringFormat='{0} Adult(s)'}"
+                                                              Style="{StaticResource Label20MediumOnyxStyle}"
+                                                              TextColor="Black"/>
+                                                        <Span Text=", "/>
+                                                        <Span Text="{Binding InfantCount, StringFormat='{0} Infant(s)'}"
+                                                              Style="{StaticResource Label20MediumOnyxStyle}"
+                                                              TextColor="Black"/>
+                                                        <Span Text="&#10;"/>
+                                                        <Span Text="Passengers"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+
+                                            <VerticalStackLayout Grid.Row="1"
+                                                                 Grid.Column="1">
+
+
+                                                <Button
+                                                    Style="{StaticResource BorderlessButton}"
+                                                    Padding="0"
+                                                    BackgroundColor="Transparent"
+                                                    VerticalOptions="Start"
+                                                    Text="{Binding PNR}"
+                                                    ImageSource="content_copy"
+                                                    MinimumHeightRequest="0"
+                                                    HeightRequest="20"
+                                                    ContentLayout="Right,8"/>
+
+                                                <Label Text="PNR"
+                                                       HorizontalOptions="End"/>
+
+                                            </VerticalStackLayout>
+
+                                        </Grid>
+                                    </Border>
+
+                                    <Label Grid.Row="2"
+                                           VerticalTextAlignment="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding DepTime}"
+                                                      Style="{StaticResource Label20MediumOnyxStyle}"
+                                                      TextColor="Black"/>
+                                                <Span Text="&#10; "/>
+                                                <Span Text="Departure"
+                                                      Style="{StaticResource Label14RegularGray50Style}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Label Text="{Binding DepartureDate,StringFormat='{0: dd MMM yyyy dddd}'}"
+                                           Grid.Row="2"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Center"
+                                           Grid.Column="1"/>
+
+                                    <Label Grid.Row="2"
+                                           Grid.Column="2"
+                                           HorizontalOptions="End"
+                                           VerticalTextAlignment="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding ArrTime}"
+                                                      Style="{StaticResource Label20MediumOnyxStyle}"
+                                                      TextColor="Black"/>
+                                                <Span Text="&#10; "/>
+                                                <Span Text="Arrival"
+                                                      Style="{StaticResource Label14RegularGray50Style}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Grid ColumnDefinitions="*,*"
+                                          Grid.Row="3"
+                                          ColumnSpacing="10"
+                                          Grid.ColumnSpan="3">
+                                        <Button Text="Show Names"
+                                                Style="{StaticResource SmallBorderButtonStyle}"
+                                                MinimumHeightRequest="40"
+                                                BackgroundColor="Transparent"/>
+                                        <Button Text="Check In"
+                                                MinimumHeightRequest="40"
+                                                Grid.Column="1"/>
+                                    </Grid>
+                                </Grid>
+                            </toolkit:Expander>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.EmptyView>
+
+                    <Border Grid.Row="1"
+                            Stroke="{StaticResource BorderColor}"
+                            StrokeShape="RoundRectangle 6"
+                            BackgroundColor="White"
+                            VerticalOptions="Start">
+                    </Border>
+                </CollectionView.EmptyView>
+            </CollectionView>
+
+
+        </Grid>
+    </views:BasePage.PageContent>
+</views:BasePage>

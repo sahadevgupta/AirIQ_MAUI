@@ -1,4 +1,3 @@
-using AirIQ.Controls;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Input;
@@ -100,6 +99,19 @@ public partial class ExtendedDropdown : ContentView
 
     public static readonly BindableProperty TextChangeCommandProperty =
     BindableProperty.Create(nameof(TextChangeCommand), typeof(ICommand), typeof(ExtendedDropdown));
+
+    // Bindable Property for SuffixText
+    public static readonly BindableProperty SuffixTextProperty =
+                            BindableProperty.Create(nameof(SuffixText),
+                            typeof(string),
+                            typeof(ExtendedDropdown),
+                            string.Empty);
+
+    public string SuffixText
+    {
+        get => (string)GetValue(SuffixTextProperty);
+        set => SetValue(SuffixTextProperty, value);
+    }
 
     public string Title
     {

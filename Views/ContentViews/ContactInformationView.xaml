@@ -18,37 +18,62 @@
                                Margin="0,8,0,0"/>
 
                         <controls:ExtendedDropdown Title="Country"
+                                                   SuffixText="*"
                                                    PlaceholderText="Select Country"
                                                    ItemsSource="{Binding Countries}"
                                                    SelectedItem="{Binding SelectedCountry}"
+                                                   IsError="{Binding IsCountryErrorVisible}"
+                                                   ErrorText="Country is required"
                                                    DisplayMemberPath="Name"/>
                         <controls:ExtendedDropdown Title="State"
+                                                   SuffixText="*"
                                                    PlaceholderText="Select State"
                                                    ItemsSource="{Binding States}"
                                                    SelectedItem="{Binding SelectedState}"
+                                                   IsError="{Binding IsStateErrorVisible}"
+                                                   ErrorText="State is required"
                                                    DisplayMemberPath="Name"
                                                    IsEnabled="{Binding SelectedCountry, Converter={toolkit:IsNotNullConverter}}"/>
                         <controls:ExtendedDropdown Title="District"
+                                                   SuffixText="*"
                                                    PlaceholderText="Select District"
                                                    ItemsSource="{Binding Districts}"
                                                    SelectedItem="{Binding SelectedDistrict}"
+                                                   IsError="{Binding IsDistrictErrorVisible}"
+                                                   ErrorText="District is required"
                                                    DisplayMemberPath="Name"
                                                    IsEnabled="{Binding SelectedState, Converter={toolkit:IsNotNullConverter}}"/>
                         <controls:ExtendedDropdown Title="City"
+                                                   SuffixText="*"
                                                    PlaceholderText="Select City"
                                                    ItemsSource="{Binding Cities}"
                                                    SelectedItem="{Binding SelectedCity}"
+                                                   IsError="{Binding IsCityErrorVisible}"
+                                                   ErrorText="City is required"
                                                    DisplayMemberPath="CityName"
                                                    IsEnabled="{Binding SelectedDistrict, Converter={toolkit:IsNotNullConverter}}"/>
+                        <controls:ExtendedEntry Title="Pin Code"
+                                                SuffixText="*"
+                                                PlaceholderText="Enter Pincode"
+                                                Text="{Binding Signup.PinCode}"/>
                         <controls:ExtendedEntry Title="Address"
-                                                PlaceholderText="Enter Address"/>
+                                                SuffixText="*"
+                                                PlaceholderText="Enter Address"
+                                                Text="{Binding Signup.Add1}"/>
                         <controls:ExtendedEntry Title="Specify your Locality"
-                                                PlaceholderText="Enter Locality"/>
+                                                SuffixText="*"
+                                                PlaceholderText="Enter Locality"
+                                                Text="{Binding Signup.Add2}"/>
 
-                        <controls:ExtendedEntry Title="Nearest Airport"
-                                                PlaceholderText="Enter Nearest Airport"/>
-
-
+                        <controls:ExtendedDropdown Title="Nearest Airport"
+                                                   SuffixText="*"
+                                                   PlaceholderText="Select Nearest Airport"
+                                                   ItemsSource="{Binding NearestAirport}"
+                                                   SelectedItem="{Binding SelectedAirport}"
+                                                   IsError="{Binding IsNearestAirportErrorVisible}"
+                                                   ErrorText="Nearest airport is required"
+                                                   DisplayMemberPath="Name"
+                                                   IsEnabled="{Binding SelectedCity, Converter={toolkit:IsNotNullConverter}}"/>
                 </VerticalStackLayout>
 
                 <Button Text="Back"

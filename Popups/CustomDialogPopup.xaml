@@ -35,7 +35,9 @@
             </Image>
 
             <Label Style="{DynamicResource PopupLabelStyle}"
-                   Text="{Binding Message, Source={x:Reference customDialog}}"/>
+                   Text="{Binding Message, Source={x:Reference customDialog}}"
+                   HorizontalTextAlignment="Center"
+                   FontSize="Body"/>
         </VerticalStackLayout>
     </Border>
 

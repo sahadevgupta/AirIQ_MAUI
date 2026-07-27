@@ -1,4 +1,5 @@
 using System;
+using AirIQ.Enums;
 using CommunityToolkit.Maui.Core;
 
 namespace AirIQ.Services.Interfaces;
@@ -10,4 +11,5 @@ public interface IDialogService
     Task ShowSnackBarAync(string message, bool isSuccess, double fontSize, double duration, string? actionText, Action? action);
     Task<bool> DisplayAlertAsync(string title, string message, string acceptText, string cancelText);
     Task DisplayAlertAsync(string title, string message, string cancelText);
+    Task ShowAlertDialog(string message, AlertType alertType = AlertType.Warning);
 }

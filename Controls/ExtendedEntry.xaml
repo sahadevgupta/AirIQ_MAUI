@@ -8,11 +8,21 @@
     <Grid RowSpacing="4"
           RowDefinitions="Auto,Auto,48, Auto">
 
-        <Label x:Name="TitleLabel"
-               Grid.Row="0"
-               Style="{StaticResource TitleStyleBlackBold}"
-               Text="{Binding Title, Source={x:Reference customEntryControlWithTitle}}"
-               IsVisible="{Binding Title, Source={x:Reference customEntryControlWithTitle}, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"/>
+        <HorizontalStackLayout Spacing="6">
+
+            <Label x:Name="TitleLabel"
+                   Grid.Row="0"
+                   Style="{StaticResource TitleStyleBlackBold}"
+                   Text="{Binding Title, Source={x:Reference customEntryControlWithTitle}}"
+                   IsVisible="{Binding Title, Source={x:Reference customEntryControlWithTitle}, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"/>
+
+            <Label x:Name="SuffixLabel"
+                   Grid.Row="0"
+                   Style="{StaticResource TitleStyleBlackBold}"
+                   TextColor="Red"
+                   Text="{Binding SuffixText, Source={x:Reference customEntryControlWithTitle}}"
+                   IsVisible="{Binding SuffixText, Source={x:Reference customEntryControlWithTitle}, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"/>
+        </HorizontalStackLayout>
 
         <Label x:Name="SupportLabel"
                Grid.Row="1"

@@ -398,6 +398,25 @@
 
         </Style>
 
+        <Style TargetType="Span"
+               x:Key="Span16MediumBlacStyle">
+
+                <Setter Property="TextColor"
+                        Value="{StaticResource Black}"/>
+                <Setter Property="FontSize"
+                        Value="{ext:ScaleFontSize Size='16'}"/>
+                <Setter Property="FontFamily"
+                        Value="RobotoMedium"/>
+
+        </Style>
+
+        <Style TargetType="Label"
+                        BasedOn="{StaticResource Label16Medium}"
+                        x:Key="Label16MediumGrayStyle">
+                <Setter Property="TextColor"
+                                Value="{StaticResource MeidumGray}"/>
+        </Style>
+
         <!--  ====================  -->
         <!--  ENTRY STYLES  -->
         <!--  ====================  -->
@@ -493,6 +512,14 @@
                         Value="{StaticResource Secondary50}"/>
                 <Setter Property="TextColor"
                         Value="{StaticResource White}"/>
+        </Style>
+
+        <Style x:Key="BorderlessButton"
+               TargetType="Button">
+                <Setter Property="BackgroundColor"
+                        Value="Transparent"/>
+                <Setter Property="TextColor"
+                        Value="{StaticResource PrimaryColor}"/>
         </Style>
 
         <!--  ====================  -->
@@ -1109,6 +1136,13 @@
                         Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}"/>
                 <Setter Property="SelectedTabColor"
                         Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}"/>
+        </Style>
+
+        <Style TargetType="CollectionView">
+                <Setter Property="VerticalScrollBarVisibility"
+                        Value="Never"/>
+                <Setter Property="HorizontalScrollBarVisibility"
+                        Value="Never"/>
         </Style>
 
         <!--#endregion-->

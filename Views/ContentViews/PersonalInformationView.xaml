@@ -3,8 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirIQ.Views.ContentViews.PersonalInformationView"
              xmlns:controls="clr-namespace:AirIQ.Controls"
-             BackgroundColor="White">
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:AirIQ.ViewModels"
+             BackgroundColor="White"
+             x:DataType="vm:SignupPageViewModel">
     <VerticalStackLayout Spacing="10">
+
         <Label Text="Personal Information"
                Style="{StaticResource Label18Medium}"
                TextColor="{StaticResource PrimaryColor}"
@@ -14,22 +18,87 @@
                Margin="0,8,0,0"/>
 
         <controls:ExtendedEntry Title="Company Name"
-                                PlaceholderText="Enter Company Name"/>
+                                SuffixText="*"
+                                PlaceholderText="Enter Company Name"
+                                Text="{Binding CompanyName}"
+                                IsErrorViewVisible="{Binding IsCompanyNameErrorVisible}"
+                                ErrorText="Company name cannot be empty"/>
         <controls:ExtendedEntry Title="Full Name"
-                                PlaceholderText="Enter Full Name"/>
+                                SuffixText="*"
+                                PlaceholderText="Enter Full Name"
+                                Text="{Binding FullName}"
+                                IsErrorViewVisible="{Binding IsFullNameErrorVisible}"
+                                ErrorText="Please enter first and last name separated by one space."/>
         <controls:ExtendedEntry Title="Phone Number"
-                                PlaceholderText="Enter Phone Number"/>
+                                SuffixText="*"
+                                PlaceholderText="Enter Phone Number"
+                                Text="{Binding PhoneNumber}"
+                                IsErrorViewVisible="{Binding IsPhoneNumberErrorVisible}"
+                                ErrorText="Please enter a valid 10-digit Indian mobile number."
+                                EntryKeyboard="Telephone"/>
         <controls:ExtendedEntry Title="WhatsApp Number"
-                                PlaceholderText="Enter WhatsApp Number"/>
+                                SuffixText="*"
+                                PlaceholderText="Enter WhatsApp Number"
+                                Text="{Binding WhatsAppNumber}"
+                                IsErrorViewVisible="{Binding IsWhatsAppNumberErrorVisible}"
+                                ErrorText="WhatsApp number cannot be empty"
+                                EntryKeyboard="Telephone"/>
         <controls:ExtendedEntry Title="Email Address"
-                                PlaceholderText="Enter Email Address"/>
-        <controls:ExtendedEntry Title="Referred By"
-                                PlaceholderText="Enter Referred By"/>
+                                SuffixText="*"
+                                PlaceholderText="Enter Email Address"
+                                Text="{Binding EmailAddress}"
+                                IsErrorViewVisible="{Binding IsEmailErrorVisible}"
+                                ErrorText="Email address cannot be empty"/>
+        <controls:ExtendedDropdown Title="Referred By"
+                                   SuffixText="*"
+                                   PlaceholderText="Enter Referred By"
+                                   IsError="{Binding IsReferredByErrorVisible}"
+                                   SelectedItem="{Binding ReferredBy}"
+                                   ErrorText="Referred by cannot be empty">
+            <controls:ExtendedDropdown.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>TTF</x:String>
+                    <x:String>OTM</x:String>
+                    <x:String>Satte</x:String>
+                    <x:String>Google</x:String>
+                    <x:String>Facebook</x:String>
+                    <x:String>Instagram</x:String>
+                    <x:String>Promotional SMS</x:String>
+                    <x:String>Promotional Email</x:String>
+                    <x:String>Promotional WhatsApp</x:String>
+                    <x:String>Sales Person</x:String>
+                </x:Array>
+            </controls:ExtendedDropdown.ItemsSource>
+        </controls:ExtendedDropdown>
+
+        <controls:ExtendedEntry Title="Sales Person"
+                                SuffixText="*"
+                                PlaceholderText="Enter Sales Person Name"
+                                Text="{Binding SalesPersonName}"
+                                IsVisible="False">
+            <controls:ExtendedEntry.Triggers>
+                <DataTrigger TargetType="controls:ExtendedEntry"
+                             Binding="{Binding ReferredBy}"
+                             Value="Sales Person">
+                    <Setter Property="IsVisible"
+                            Value="True"/>
+                </DataTrigger>
+            </controls:ExtendedEntry.Triggers>
+        </controls:ExtendedEntry>
+
         <controls:ExtendedEntry Title="Password"
-                                PlaceholderText="Enter Password"/>
+                                SuffixText="*"
+                                PlaceholderText="Enter Password"
+                                Text="{Binding Password}"
+                                IsErrorViewVisible="{Binding IsPasswordErrorVisible}"
+                                ErrorText="Password cannot be empty"/>
 
         <controls:ExtendedEntry Title="Confirmed Password"
-                                PlaceholderText="Enter Confirm Password"/>
+                                SuffixText="*"
+                                PlaceholderText="Enter Confirm Password"
+                                Text="{Binding ConfirmPassword}"
+                                IsErrorViewVisible="{Binding IsConfirmPasswordErrorVisible}"
+                                ErrorText="Confirm password is required and must match"/>
 
         <Button Text="Next"
                 Margin="0,20,0,0"

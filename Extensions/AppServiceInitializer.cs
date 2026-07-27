@@ -17,11 +17,14 @@ public static class AppServiceInitializer
         builder.Services.AddTransient<IViewModelParameters, ViewModelParameters>()
                         .AddTransient<IApiServiceBaseParams, ApiServiceBaseParams>()
                         .AddTransient<IDialogService, DialogService>()
-                        .AddTransient<ILookupService, LookupService>()
+                        .AddTransient<IUpiAppLaunchService, AirIQ.Platforms.Services.UpiAppLaunchService>()
+                            .AddTransient<IUpiPaymentCallbackService, UpiPaymentCallbackService>()
+                            .AddTransient<ILookupService, LookupService>()
                         .AddTransient<ILoginService, LoginService>()
                         .AddTransient<IFlightService, FlightService>()
                         .AddTransient<IAuthService, AuthService>()
-                        .AddTransient<IOperationsService, OperationsService>();
+                        .AddTransient<IOperationsService, OperationsService>()
+                        .AddTransient<IZoopVerificationService, ZoopVerificationService>();
 
 
         builder.Services.AddSingleton<ILoadingPopUpService, AirIQ.Platforms.Services.LoadingPopupService>();
