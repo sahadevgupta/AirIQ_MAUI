@@ -7,6 +7,8 @@ using Mopups.Interfaces;
 using Application = Microsoft.Maui.Controls.Application;
 using Font = Microsoft.Maui.Font;
 using Color = Microsoft.Maui.Graphics.Color;
+using AirIQ.Enums;
+using AirIQ_MAUI.Popups;
 
 namespace AirIQ.Services;
 
@@ -132,6 +134,32 @@ public class DialogService(IPopupNavigation popupNavigation) : IDialogService
         {
             await Shell.Current.DisplayAlertAsync(title, message, cancelText);
         });
+    }
+
+    public async Task ShowAlertDialog(string message, AlertType alertType = AlertType.Warning)
+    {
+        var popup = new CustomAlertPopup
+        {
+            Message = message,
+            Icon = alertType == AlertType.Warning ?
+                   FontAwesomeIcons.ExclamationTriangle :
+                  (alertType == AlertType.Success ? FontAwesomeIcons.CheckCircle : FontAwesomeIcons.TimesCircle),
+
+            IconTintColor = alertType == AlertType.Warning ?
+                   (Color)Application.Current!.Resources["StandardOrange"] :
+                  (alertType == AlertType.Success ? (Color)Application.Current!.Resources["Green"] : Colors.Red),
+        };
+
+        bool isMyPopupOpen = popupNavigation.PopupStack
+                                            .Any(p => p is CustomDialogPopup);
+        if (!isMyPopupOpen)
+        {
+            await MainThread.InvokeOnMainThreadAsync(async () =>
+            {
+                await popupNavigation.PushAsync(popup);
+            });
+
+        }
     }
 
 }

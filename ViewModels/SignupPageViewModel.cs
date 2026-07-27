@@ -13,6 +13,7 @@ using AirIQ.Views.ContentViews;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using AirIQ.Views;
 
 namespace AirIQ.ViewModels;
 
@@ -248,8 +249,7 @@ public partial class SignupPageViewModel : BaseViewModel
 
     partial void OnFullNameChanged(string? value)
     {
-        Signup.FName = value;
-        IsFullNameErrorVisible = string.IsNullOrWhiteSpace(value);
+        IsFullNameErrorVisible = !IsValidFullName(value);
     }
 
     partial void OnPhoneNumberChanged(string? value)
@@ -407,24 +407,27 @@ public partial class SignupPageViewModel : BaseViewModel
         }
     }
 
-    private SignupRequest CreateSignupRequest()
-        => new SignupRequest
-        {
-            CompanyName = CompanyName,
-            Phone = PhoneNumber?.Trim(),
-            Email = EmailAddress,
-            Password = Password,
-            Country = SelectedCountry?.Name,
-            State = SelectedState?.Name,
-            CountryId = SelectedCountry?.Id.ToString(),
-            DistrictId = SelectedDistrict?.Id.ToString(),
-            CityEntryMainId = SelectedCity?.CityEntryMainId.ToString(),
-            CityId = SelectedAirport?.Id.ToString(),
-            PrimaryBusinessId = SelectedPrimaryBusinessType?.Id.ToString(),
-            SecondaryBusinessId = SelectedSecondaryBusinessType is null ? null : SelectedSecondaryBusinessType?.Id.ToString(),
-            MonthlyValue = PrimaryMonthlyIncome,
-            MonthlyValue2 = SecondaryMonthlyIncome
-        };
+    private void CreateSignupRequest()
+    {
+        var (firstName, lastName) = SplitFullName(FullName);
+
+        Signup.CompanyName = CompanyName;
+        Signup.FName = firstName;
+        Signup.LName = lastName;
+        Signup.Phone = PhoneNumber?.Trim();
+        Signup.Email = EmailAddress;
+        Signup.Password = Password;
+        Signup.Country = SelectedCountry?.Name;
+        Signup.State = SelectedState?.Name;
+        Signup.CountryId = SelectedCountry?.Id.ToString();
+        Signup.DistrictId = SelectedDistrict?.Id.ToString();
+        Signup.CityEntryMainId = SelectedCity?.CityEntryMainId.ToString();
+        Signup.CityId = SelectedAirport?.Id.ToString();
+        Signup.PrimaryBusinessId = SelectedPrimaryBusinessType?.Id.ToString();
+        Signup.SecondaryBusinessId = SelectedSecondaryBusinessType is null ? null : SelectedSecondaryBusinessType?.Id.ToString();
+        Signup.MonthlyValue = PrimaryMonthlyIncome;
+        Signup.MonthlyValue2 = SecondaryMonthlyIncome;
+    }
 
     private bool ValidateCurrentStep(int index)
     {
@@ -440,7 +443,7 @@ public partial class SignupPageViewModel : BaseViewModel
     private bool ValidatePersonalInformationStep()
     {
         IsCompanyNameErrorVisible = string.IsNullOrWhiteSpace(CompanyName);
-        IsFullNameErrorVisible = string.IsNullOrWhiteSpace(FullName);
+        IsFullNameErrorVisible = !IsValidFullName(FullName);
         IsPhoneNumberErrorVisible = !IsValidIndianMobileNumber(PhoneNumber);
         IsEmailErrorVisible = string.IsNullOrWhiteSpace(EmailAddress)
                            || !Regex.IsMatch(EmailAddress, AppConstants.EmailRegex);
@@ -469,6 +472,27 @@ public partial class SignupPageViewModel : BaseViewModel
         }
 
         return Regex.IsMatch(phoneNumber.Trim(), @"^[6-9]\d{9}$");
+    }
+
+    private static bool IsValidFullName(string? fullName)
+    {
+        if (string.IsNullOrWhiteSpace(fullName))
+        {
+            return false;
+        }
+
+        return Regex.IsMatch(fullName.Trim(), @"^[^\s]+ [^\s]+$");
+    }
+
+    private static (string? FirstName, string? LastName) SplitFullName(string? fullName)
+    {
+        if (!IsValidFullName(fullName))
+        {
+            return (null, null);
+        }
+
+        var parts = fullName!.Trim().Split(' ', 2, StringSplitOptions.None);
+        return (parts[0], parts[1]);
     }
 
     private bool ValidateContactInformationStep()
@@ -500,6 +524,15 @@ public partial class SignupPageViewModel : BaseViewModel
             && !IsPrimaryMonthlyIncomeErrorVisible
             && !IsSecondaryBusinessTypeErrorVisible
             && !IsSecondaryMonthlyIncomeErrorVisible;
+    }
+
+    private bool ValidateMandatoryFieldsForSubmit()
+    {
+        var isPersonalInfoValid = ValidatePersonalInformationStep();
+        var isContactInfoValid = ValidateContactInformationStep();
+        var isBusinessInfoValid = ValidateBusinessInformationStep();
+
+        return isPersonalInfoValid && isContactInfoValid && isBusinessInfoValid;
     }
 
     #endregion
@@ -701,15 +734,32 @@ public partial class SignupPageViewModel : BaseViewModel
         if (IsBusy)
             return;
 
+        if (!ValidateMandatoryFieldsForSubmit())
+        {
+            await _dialogService.ShowStatusAlertAsync("Please fill all mandatory fields correctly before submitting.", false, 3000);
+            return;
+        }
+
         try
         {
             IsBusy = true;
-            var request = CreateSignupRequest();
+            CreateSignupRequest();
             var result = sourceAccountManagerItems.FirstOrDefault(x => x.Name?.Equals(ReferredBy, StringComparison.OrdinalIgnoreCase) == true);
 
             using (LoadingService.Show())
             {
-                await _lookupService.SignupAsync(request);
+                var response = await _lookupService.SignupAsync(Signup);
+                if (!string.IsNullOrWhiteSpace(response) && response.Contains("Agency registration submitted successfully."))
+                {
+                    string message = "Thank you for registering. Your details have been received and are under review. We'll notify you by email once your account has been verified and activated. You can sign in after receiving the approval email.";
+                    await _dialogService.ShowAlertDialog(message, AlertType.Success);
+
+                    await ShellNavigationService.Navigate<LoginPage>(true);
+                }
+                else
+                {
+                    await _dialogService.ShowAlertDialog(response, AlertType.Error);
+                }
             }
         }
         finally

@@ -143,7 +143,7 @@ namespace AirIQ.Services
                 await Connectivity.CheckConnected();
 
                 var apiResponse = await BackendService.SignupAsync(signupRequest).ConfigureAwait(false);
-                return apiResponse.Content ?? string.Empty;
+                return apiResponse.Message ?? string.Empty;
             }
             catch (NotConnectedException notConntectedException)
             {

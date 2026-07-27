@@ -110,7 +110,7 @@ namespace AirIQ.Services.Interfaces
             [AliasAs("File")] StreamPart? file);
 
         [Post(UrlConstants.Signup)]
-        Task<ApiResponse<string>> SignupAsync([Body(BodySerializationMethod.Serialized)] SignupRequest request);
+        Task<SignupDto> SignupAsync([Body(BodySerializationMethod.Serialized)] SignupRequest request);
 
         #endregion
     }

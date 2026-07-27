@@ -28,7 +28,7 @@
                                 PlaceholderText="Enter Full Name"
                                 Text="{Binding FullName}"
                                 IsErrorViewVisible="{Binding IsFullNameErrorVisible}"
-                                ErrorText="Full name cannot be empty"/>
+                                ErrorText="Please enter first and last name separated by one space."/>
         <controls:ExtendedEntry Title="Phone Number"
                                 SuffixText="*"
                                 PlaceholderText="Enter Phone Number"
