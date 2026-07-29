@@ -9,10 +9,11 @@ namespace AirIQ.Extensions
 {
     public static class RefitClientServiceInitializer
     {
-        public static MauiAppBuilder RefitClientInit(this MauiAppBuilder builder)
+        public static MauiAppBuilder RefitClientInit(this MauiAppBuilder builder, IAppConfiguration configuration)
         {
+
             builder.Services.AddTransient<HttpMessageLogHandler>();
-            Uri defaultUri = new Uri(AppConfiguration.BaseUrl);
+            Uri defaultUri = new Uri(configuration.BaseUrl);
 
             builder.Services.AddRefitClient<IAppBackendService>(new RefitSettings
             {
@@ -37,8 +38,8 @@ namespace AirIQ.Extensions
                     .ConfigureHttpClient(client =>
                     {
                         client.BaseAddress = new Uri("https://live.zoop.one");
-                        client.DefaultRequestHeaders.Add("app-id", "6801f6c4d125b80028ec2485");
-                        client.DefaultRequestHeaders.Add("api-key", "XNG2S4P-MF64MJK-HSMEHFX-3YAHZ3G");
+                        client.DefaultRequestHeaders.Add("app-id", configuration.ZoopAppId);
+                        client.DefaultRequestHeaders.Add("api-key", configuration.ZoopApiKey);
                     });
 
             return builder;
@@ -47,13 +48,9 @@ namespace AirIQ.Extensions
 
     public class HttpMessageLogHandler : DelegatingHandler
     {
-        private readonly string BaseAddress = AppConfiguration.BaseUrl;
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var relativeUrl = request.RequestUri!.AbsoluteUri.Substring(BaseAddress.Length);
-            var newUri = Combine(BaseAddress, relativeUrl);
-            request.RequestUri = new Uri(newUri);
             var req = request;
             var id = Guid.NewGuid().ToString();
             var msg = $"[{id} -   ]";

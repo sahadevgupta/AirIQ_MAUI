@@ -13,6 +13,26 @@
 
         h1 {
             color: #2c3e50;
+            margin-bottom: 0.4em;
+        }
+
+        .header-actions {
+            margin: 0 0 1.2em;
+        }
+
+        .dashboard-link {
+            display: inline-block;
+            background: #1f5fbf;
+            color: #fff;
+            text-decoration: none;
+            padding: 9px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: 1px solid #154d9f;
+        }
+
+        .dashboard-link:hover {
+            background: #154d9f;
         }
 
         table {
@@ -60,6 +80,9 @@
 
 <body>
     <h1>Project Stability Audit Report</h1>
+    <div class="header-actions">
+        <a class="dashboard-link" href="ProjectStabilityDashboard.html">Open Graphical Dashboard</a>
+    </div>
     <table>
         <tr>
             <th>File</th>

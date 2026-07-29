@@ -1,3 +1,4 @@
+using AirIQ.Configurations;
 using AirIQ.Constants;
 using AirIQ.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -23,6 +24,7 @@ public partial class SessionExpiryPopupViewModel : ObservableObject
     public SessionExpiryPopupViewModel(ILoginService loginService)
     {
         _loginService = loginService;
+
         _sessionResponsTcs = new TaskCompletionSource<bool>();
     }
 

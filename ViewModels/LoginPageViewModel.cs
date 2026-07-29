@@ -1,4 +1,5 @@
-﻿using AirIQ.Constants;
+﻿using AirIQ.Configurations;
+using AirIQ.Constants;
 using AirIQ.Models.Response;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;

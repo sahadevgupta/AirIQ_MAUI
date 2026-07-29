@@ -1,4 +1,5 @@
-﻿using AirIQ.Configurations.Mapper;
+﻿using AirIQ.Configurations;
+using AirIQ.Configurations.Mapper;
 using AirIQ.Constants;
 using AirIQ.Models;
 using AirIQ.Services.Interfaces;
