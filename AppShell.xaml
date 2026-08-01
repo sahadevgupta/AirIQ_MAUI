@@ -26,60 +26,37 @@
                     Value="{StaticResource PrimaryColor}"/>
             <Setter Property="Shell.TabBarUnselectedColor"
                     Value="{StaticResource Gray600}"/>
+            <Setter Property="Shell.TabBarBackgroundColor"
+                    Value="#FFFFFF"/>
+        </Style>
+
+        <Style TargetType="ShellContent"
+               ApplyToDerivedTypes="True">
+            <Setter Property="Shell.TabBarTitleColor"
+                    Value="{StaticResource PrimaryColor}"/>
         </Style>
     </Shell.Resources>
 
     <Shell.FlyoutContentTemplate>
         <DataTemplate>
             <views:MenuContentView/>
-            <!-- FULL SCREEN FLYOUT -->
         </DataTemplate>
     </Shell.FlyoutContentTemplate>
 
-    <!-- ============================================ -->
-    <!-- AUTHENTICATION ROUTES (No TabBar) -->
-    <!-- ============================================ -->
-
-    <!-- ROUTE: loading - Initial loading/splash screen -->
-    <ShellContent
-        Title="Loading"
-        ContentTemplate="{DataTemplate controls:LoadingIndicatorView}"
-        Route="loading"
-        Shell.TabBarIsVisible="False"
-        Shell.FlyoutItemIsVisible="False"/>
-
-    <!-- ROUTE: login - User authentication -->
-    <ShellContent
-        Title="Login"
-        ContentTemplate="{DataTemplate local:LoginPage}"
-        Route="LoginPage"
-        Shell.TabBarIsVisible="False"
-        Shell.FlyoutItemIsVisible="False"/>
-
-    <!-- ============================================ -->
-    <!-- MAIN APPLICATION ROUTES (With TabBar) -->
-    <!-- ============================================ -->
-
-    <FlyoutItem>
-        <ShellContent Title="Search"/>
-    </FlyoutItem>
+    <ShellContent Title="Loading"
+                  ContentTemplate="{DataTemplate controls:LoadingIndicatorView}"
+                  Route="loading"
+                  Shell.TabBarIsVisible="False"
+                  Shell.FlyoutItemIsVisible="False"/>
 
     <TabBar Route="app">
-        <ShellContent Route="home"
-                      Title="{x:Static resx:AppResource.Flights}"
+        <ShellContent Title="Flights"
                       ContentTemplate="{DataTemplate local:DashboardPage}"
-                      Icon="flight">
-            <!-- <ShellContent.Icon>
-                <FontImageSource
-                    FontFamily="MyFont"
-                    Glyph="{x:Static helpers:FontAwesomeIcons.Plane}"
-                    Size="24"/>
-            </ShellContent.Icon> -->
-        </ShellContent>
-
-        <ShellContent
-            Title="{x:Static resx:AppResource.Hotels}"
-            ContentTemplate="{DataTemplate local:HotelsPage}">
+                      Route="home"
+                      Icon="flight"/>
+        <ShellContent Title="Hotels"
+                      ContentTemplate="{DataTemplate local:HotelsPage}"
+                      Route="HotelsPage">
             <ShellContent.Icon>
                 <FontImageSource
                     FontFamily="MyFont"
@@ -87,11 +64,9 @@
                     Size="24"/>
             </ShellContent.Icon>
         </ShellContent>
-
-
-        <ShellContent
-            Title="{x:Static resx:AppResource.Account}"
-            ContentTemplate="{DataTemplate local:AccountsPage}">
+        <ShellContent Title="Account"
+                      ContentTemplate="{DataTemplate local:AccountsPage}"
+                      Route="AccountPage">
             <ShellContent.Icon>
                 <FontImageSource
                     FontFamily="MyFont"
@@ -99,10 +74,9 @@
                     Size="24"/>
             </ShellContent.Icon>
         </ShellContent>
-
-        <ShellContent
-            Title="{x:Static resx:AppResource.Settings}"
-            ContentTemplate="{DataTemplate local:SettingsPage}">
+        <ShellContent Title="Settings"
+                      ContentTemplate="{DataTemplate local:SettingsPage}"
+                      Route="SettingsPage">
             <ShellContent.Icon>
                 <FontImageSource
                     FontFamily="MyFont"
@@ -110,7 +84,6 @@
                     Size="24"/>
             </ShellContent.Icon>
         </ShellContent>
-
     </TabBar>
 
 </Shell>

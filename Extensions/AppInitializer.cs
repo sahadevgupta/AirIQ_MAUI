@@ -1,5 +1,6 @@
 ﻿using AirIQ.Controls;
 
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 
@@ -49,8 +50,10 @@ namespace AirIQ.Extensions
             return builder.ConfigureMauiHandlers(handlers =>
             {
                 handlers.AddHandler<CustomDropdown, AirIQ.Platforms.Handlers.CustomDropdownHandler>();
+                handlers.AddHandler<Entry, AirIQ.Platforms.Handlers.PlainEntryHandler>();
+                handlers.AddHandler<BorderlessEntry, AirIQ.Platforms.Handlers.PlainEntryHandler>();
 #if ANDROID
-                handlers.AddHandler(typeof(Shell), typeof(AirIQ.Platforms.Handlers.CustomShellRenderer));
+                //handlers.AddHandler(typeof(Shell), typeof(AirIQ.Platforms.Handlers.CustomShellRenderer));
 #endif
             });
 

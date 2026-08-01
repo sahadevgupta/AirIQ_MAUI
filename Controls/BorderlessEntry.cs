@@ -20,11 +20,9 @@ namespace AirIQ.Controls
                     handler.PlatformView.InputType = Android.Text.InputTypes.TextVariationShortMessage;
                     handler.PlatformView.SetBackgroundColor(Colors.Transparent.ToPlatform());
                     handler.PlatformView.Background = null;
-
 #endif
                 }
             });
         }
     }
-    
 }

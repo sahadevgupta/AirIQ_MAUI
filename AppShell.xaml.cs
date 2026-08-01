@@ -1,5 +1,4 @@
 using AirIQ.Views;
-
 using AirIQ_MAUI.Views;
 
 namespace AirIQ;
@@ -9,6 +8,13 @@ public partial class AppShell : Shell
 	public AppShell()
 	{
 		InitializeComponent();
+
+		// Apply custom TabBar styling
+#if ANDROID
+		AirIQ.Platforms.Handlers.TabBarCustomization.CustomizeTabBar(this);
+#elif IOS
+		AirIQ.Platforms.Handlers.TabBarIOSCustomization.CustomizeTabBar(this);
+#endif
 
 		Routing.RegisterRoute(nameof(ChangePasswordPage), typeof(ChangePasswordPage));
 		Routing.RegisterRoute(nameof(FlightsPage), typeof(FlightsPage));
