@@ -139,11 +139,11 @@ public class MainActivity : MauiAppCompatActivity
             controller.AppearanceLightNavigationBars = useDarkIcons;
         }
 
-        if (resolvedPage?.GetType() == typeof(DashboardPage))
-        {
-            RemoveStatusBarScrim();
-        }
-        else
+        // if (resolvedPage?.GetType() == typeof(DashboardPage))
+        // {
+        //     RemoveStatusBarScrim();
+        // }
+        // else
         {
             ApplyStatusBarScrim(chromeColor);
         }

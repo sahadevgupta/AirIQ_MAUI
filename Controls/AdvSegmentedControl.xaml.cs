@@ -29,7 +29,7 @@ public partial class AdvSegmentedControl : ContentView
     /// Identifies the <see cref="ItemSelectedProperty"/> bindable property.
     /// </summary>
     public static readonly BindableProperty ItemSelectedProperty =
-        BindableProperty.Create(nameof(ItemSelected), typeof(object), typeof(AdvSegmentedControl), null, BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) => OnItemSelectedChanged(bindable, oldValue, newValue));
+        BindableProperty.Create(nameof(ItemSelected), typeof(object), typeof(AdvSegmentedControl), null, BindingMode.TwoWay);
 
 
 
@@ -49,9 +49,25 @@ public partial class AdvSegmentedControl : ContentView
     /// Identifies the <see cref="SelectedItemChangedCommandProperty"/> bindable property.
     /// </summary>
     public static readonly BindableProperty SelectedItemChangedCommandProperty =
-        BindableProperty.Create(nameof(SelectedItemChangedCommand), typeof(Command<object>), typeof(AdvSegmentedControl), default(Command<object>), BindingMode.TwoWay, null, SelectedItemChangedCommandPropertyChanged);
+        BindableProperty.Create(nameof(SelectedItemChangedCommand), typeof(ICommand), typeof(AdvSegmentedControl), default(ICommand), BindingMode.TwoWay);
 
+    public static readonly BindableProperty ItemTemplateProperty
+                = BindableProperty.Create(nameof(ItemTemplate), typeof(DataTemplate), typeof(AdvSegmentedControl), default(DataTemplate));
 
+    public static readonly BindableProperty ItemSpacingProperty
+        = BindableProperty.Create(nameof(ItemSpacing), typeof(double), typeof(AdvSegmentedControl), 0.0);
+
+    public DataTemplate ItemTemplate
+    {
+        get { return (DataTemplate)GetValue(ItemTemplateProperty); }
+        set { SetValue(ItemTemplateProperty, value); }
+    }
+
+    public double ItemSpacing
+    {
+        get { return (double)GetValue(ItemSpacingProperty); }
+        set { SetValue(ItemSpacingProperty, value); }
+    }
 
     public object ItemSelected
     {
@@ -94,11 +110,11 @@ public partial class AdvSegmentedControl : ContentView
         OnPropertyChanged("SelectedItemChangedCommand");
     }
 
-    public Command<string> SelectedItemChangedCommand
+    public ICommand SelectedItemChangedCommand
     {
         get
         {
-            return (Command<string>)GetValue(SelectedItemChangedCommandProperty);
+            return (ICommand)GetValue(SelectedItemChangedCommandProperty);
         }
         set
         {
@@ -207,42 +223,73 @@ public partial class AdvSegmentedControl : ContentView
         set { SetValue(SelectedTabIndexProperty, value); }
     }
 
-    public ICommand TapCommand => new Command(OnTap);
-    void OnTap(object val)
-    {
-        ItemSelected = val;
-    }
-
-    private static void OnItemSelectedChanged(BindableObject bindable, object oldValue, object newValue)
-    {
-
-    }
-
     private static void OnItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
     {
+        // handle new items
+        var control = (AdvSegmentedControl)bindable;
         if (newValue != null)
         {
-            // handle new items
-            var control = (AdvSegmentedControl)bindable;
+
             control.TabButtonHolder.Children?.Clear();
+            control.TabButtonHolder.ColumnDefinitions.Clear();
+
+            var items = ((IEnumerable)newValue).Cast<object>().ToList();
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                control.TabButtonHolder.ColumnDefinitions.Add(
+                    new ColumnDefinition { Width = GridLength.Star });
+            }
 
             int index = 0;
+
             foreach (var item in (IEnumerable)newValue)
             {
-                var newTab = new TabButton(
-                    FormatType(item, control.DisplayMemberPath),
-                    index,
-                    ((AdvSegmentedControl)bindable).PrimaryColor,
-                    ((AdvSegmentedControl)bindable).SecondaryColor,
-                    index == 0 ? true : false,
-                    item);
+                View tabView;
 
-                newTab.TabButtonClicked += (sender, args) =>
+                if (control.ItemTemplate != null)
                 {
-                    ((AdvSegmentedControl)bindable).SelectedTabIndex = ((TabButton)sender).TabIndex;
-                    ((AdvSegmentedControl)bindable).SendSelectedTabIndexChangedEvent();
-                    ((AdvSegmentedControl)bindable).SelectedItemChangedCommand?.Execute(newValue);
-                    foreach (var tabButton in ((AdvSegmentedControl)bindable).TabButtonHolder.Children)
+                    tabView = (View)control.ItemTemplate.CreateContent();
+                    tabView.BindingContext = item;
+
+                    // var tapGesture = new TapGestureRecognizer();
+                    // tapGesture.Tapped += (_, __) =>
+                    // {
+                    //     control.SelectedTabIndex = index;
+                    //     control.SendSelectedTabIndexChangedEvent();
+                    // };
+
+                    // tabView.GestureRecognizers.Add(tapGesture);
+                }
+                else
+                {
+                    tabView = new TabButton(
+                        FormatType(item, control.DisplayMemberPath),
+                        index,
+                        control.PrimaryColor,
+                        control.SecondaryColor,
+                        //index == control.SelectedTabIndex,
+                        index == 0 ? true : false,
+                        item);
+                }
+
+                // var newTab = new TabButton(
+                //     FormatType(item, control.DisplayMemberPath),
+                //     index,
+                //     control.PrimaryColor,
+                //     control.SecondaryColor,
+                //     index == 0 ? true : false,
+                //     item);
+
+                var tap = new TapGestureRecognizer();
+
+                tap.Command = new Command(() =>
+                {
+                    var a = control.GetItemIndex(item);
+                    control.SelectedTabIndex = a;
+                    control.SendSelectedTabIndexChangedEvent();
+                    control.SelectedItemChangedCommand?.Execute(item);
+                    foreach (var tabButton in control.TabButtonHolder.Children)
                     {
 
                         var prop = tabButton.GetType().GetRuntimeProperties().FirstOrDefault(p => string.Equals(p.Name, control.SelectionIndicator, StringComparison.OrdinalIgnoreCase));
@@ -250,27 +297,44 @@ public partial class AdvSegmentedControl : ContentView
                         {
                             prop.SetValue(tabButton, tabButton.Equals(newValue));
                         }
-
-                       ((TabButton)tabButton).UpdateTabButtonState(((AdvSegmentedControl)bindable).SelectedTabIndex);
                     }
+                });
 
-                };
+                tabView.GestureRecognizers.Add(tap);
 
+                // tabView.TabButtonClicked += (sender, args) =>
+                // {
+                //     control.SelectedTabIndex = ((TabButton)sender).TabIndex;
+                //     control.SendSelectedTabIndexChangedEvent();
+                //     control.SelectedItemChangedCommand?.Execute(newValue);
+                //     foreach (var tabButton in control.TabButtonHolder.Children)
+                //     {
 
-                Grid.SetColumn(newTab, index++);
+                //         var prop = tabButton.GetType().GetRuntimeProperties().FirstOrDefault(p => string.Equals(p.Name, control.SelectionIndicator, StringComparison.OrdinalIgnoreCase));
+                //         if (prop != null)
+                //         {
+                //             prop.SetValue(tabButton, tabButton.Equals(newValue));
+                //         }
 
-                ((AdvSegmentedControl)bindable).TabButtonHolder.Children.Add(newTab);
+                //         ((TabButton)tabButton).UpdateTabButtonState(((AdvSegmentedControl)bindable).SelectedTabIndex);
+                //     }
+
+                // };
+                Grid.SetColumn(tabView, index);
+                control.TabButtonHolder.Children.Add(tabView);
+
+                index++;
             }
 
-            if (((AdvSegmentedControl)bindable).SelectedTabIndex >
-                ((AdvSegmentedControl)bindable).TabButtonHolder.Children.Count - 1)
+            if (control.SelectedTabIndex >
+                control.TabButtonHolder.Children.Count - 1)
             {
-                ((AdvSegmentedControl)bindable).SelectedTabIndex = 0;
+                control.SelectedTabIndex = 0;
             }
         }
         else
         {
-            ((AdvSegmentedControl)bindable).TabButtonHolder.Children?.Clear();
+            control.TabButtonHolder.Children?.Clear();
         }
     }
 
@@ -305,6 +369,17 @@ public partial class AdvSegmentedControl : ContentView
         eventArgs.SelectedTabIndex = SelectedTabIndex;
 
         SelectedTabIndexChanged?.Invoke(this, eventArgs);
+    }
+
+    private int GetItemIndex(object item)
+    {
+        if (ItemsSource == null)
+            return -1;
+
+        return ItemsSource
+            .Cast<object>()
+            .ToList()
+            .IndexOf(item);
     }
 }
 public class SelectedTabIndexEventArgs : EventArgs

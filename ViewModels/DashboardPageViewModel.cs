@@ -125,16 +125,7 @@ namespace AirIQ.ViewModels
 
         #region [ Commands ]
 
-        [RelayCommand]
-        private void OpenMenu()
-        {
-            //Shell.Current.FlyoutIsPresented = true;
 
-            var popup = new MenuPopup();
-
-            var popupservice = ServiceHelper.GetService<IPopupNavigation>();
-            popupservice.PushAsync(popup);
-        }
 
         [RelayCommand]
         private void SearchSourceAirports(string searchKey)

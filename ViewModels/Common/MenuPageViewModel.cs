@@ -36,6 +36,7 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
 
     private void PopuplateMenuOptions()
     {
+
         BuildNumber = $"App Version: {AppInfo.Current.VersionString}";
         Menus = new ObservableCollection<MenuOption>
         {
@@ -80,31 +81,34 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
         switch (selectedMenu.MenuType)
         {
             case MenuType.SalesRecord:
-                await ShellNavigationService.Navigate<SalesRecordPage>();
+                await ShellNavigationService.NavigateToFlyoutPage<SalesRecordPage>();
                 break;
             case MenuType.RefundsRecord:
-                await ShellNavigationService.Navigate<RefundsRecordPage>();
+                await ShellNavigationService.NavigateToFlyoutPage<RefundsRecordPage>();
                 break;
             case MenuType.AccountsLedger:
-                await ShellNavigationService.Navigate<AccountLedgerRecordPage>();
+                await ShellNavigationService.NavigateToFlyoutPage<AccountLedgerRecordPage>();
                 break;
             case MenuType.BankDetails:
-                await ShellNavigationService.Navigate<BankDetailsPage>();
+                await ShellNavigationService.NavigateToFlyoutPage<BankDetailsPage>();
                 break;
             case MenuType.TemporaryCredit:
-                await ShellNavigationService.Navigate<TempCreditPage>();
+                await ShellNavigationService.NavigateToFlyoutPage<TempCreditPage>();
                 break;
             case MenuType.UploadRequest:
-                await ShellNavigationService.Navigate<UploadRequestPage>();
+                await ShellNavigationService.NavigateToFlyoutPage<UploadRequestPage>();
                 break;
             case MenuType.GroupQuery:
-                await ShellNavigationService.Navigate<GroupQueryPage>();
+                await ShellNavigationService.NavigateToFlyoutPage<GroupQueryPage>();
                 break;
             case MenuType.PaxCalendar:
-                await ShellNavigationService.Navigate<PaxCalendarPage>();
+                await ShellNavigationService.NavigateToFlyoutPage<PaxCalendarPage>();
                 break;
             case MenuType.OnlineRecharge:
-                await ShellNavigationService.Navigate<OnlineRechargePage>();
+                await ShellNavigationService.NavigateToFlyoutPage<OnlineRechargePage>();
+                break;
+            case MenuType.Flight:
+                await Shell.Current.GoToAsync("//app/home");
                 break;
         }
     }

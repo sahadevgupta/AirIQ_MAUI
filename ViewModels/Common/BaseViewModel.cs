@@ -1,13 +1,18 @@
 ﻿using AirIQ.Configurations;
 using AirIQ.Configurations.Mapper;
 using AirIQ.Constants;
+using AirIQ.Extensions;
+using AirIQ.Helpers;
 using AirIQ.Models;
+using AirIQ.Popups;
 using AirIQ.Services.Interfaces;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Mopups.Interfaces;
 using Font = Microsoft.Maui.Font;
+using NavigationMode = AirIQ.Enums.NavigationMode;
 
 namespace AirIQ.ViewModels.Common;
 
@@ -69,12 +74,33 @@ public abstract partial class BaseViewModel : ViewModelBase, IDestructible
         return Task.CompletedTask;
     }
 
+    private async Task NavigateBackAsync()
+    {
+        await ShellNavigationService.NavigateBack();
+    }
+
     #region [ Commands ]
 
     [RelayCommand]
-    private async Task Back()
+    private async Task Navigate(NavigationMode navigationMode)
     {
-        await ShellNavigationService.NavigateBack();
+        await (navigationMode switch
+        {
+            NavigationMode.Hamburger => OpenMenuAsync(),
+            NavigationMode.Back => NavigateBackAsync(),
+            _ => Task.CompletedTask
+        });
+
+    }
+
+    [RelayCommand]
+    private async Task OpenMenuAsync()
+    {
+
+        var popup = new MenuPopup();
+
+        var popupservice = ServiceHelper.GetService<IPopupNavigation>();
+        await popupservice?.PushAsync(popup)!;
     }
 
     #endregion

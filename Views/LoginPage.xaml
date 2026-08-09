@@ -40,11 +40,13 @@
 
                 <controls:ExtendedEntry PlaceholderText="{x:Static resx:AppResource.EnterUsername}"
                                         Title="{x:Static resx:AppResource.UserName}"
-                                        LeftIcon="person"
+                                        LeadingIconType="Image"
+                                        LeadingIcon="person"
                                         Text="{Binding Username}"/>
 
                 <controls:ExtendedEntry PlaceholderText="{x:Static resx:AppResource.EnterPassword}"
-                                        LeftIcon="password"
+                                        LeadingIconType="Image"
+                                        LeadingIcon="password"
                                         IsPassword="True"
                                         Title="{x:Static resx:AppResource.Password}"
                                         Text="{Binding Password}"/>

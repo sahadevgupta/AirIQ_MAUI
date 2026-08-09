@@ -16,7 +16,7 @@ public partial class SearchView : ContentView
 	///     Identifies the <see cref="PlaceholderText" /> bindable property.
 	/// </summary>
 	public static readonly BindableProperty PlaceholderTextProperty =
-		BindableProperty.Create(nameof(PlaceholderText), typeof(string), typeof(SearchView));
+		BindableProperty.Create(nameof(PlaceholderText), typeof(string), typeof(SearchView), defaultValue: "Search here..");
 
 	/// <summary>
 	///     Identifies the <see cref="SearchCommand" /> bindable property.

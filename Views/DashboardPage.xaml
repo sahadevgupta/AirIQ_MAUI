@@ -17,6 +17,9 @@
 
     <Grid RowDefinitions="Auto,*">
       <Image Source="navigation"
+             VerticalOptions="Start"
+             HeightRequest="330"
+             Opacity="0.8"
              Aspect="AspectFill"/>
 
       <Grid ColumnDefinitions="Auto,Auto"
@@ -58,15 +61,21 @@
                VerticalOptions="Center">
           <Label.FormattedText>
             <FormattedString>
-              <Span Text="{x:Static resx:AppResource.BookYourFlightWith}"
-                    Style="{StaticResource Label32Bold}"/>
+              <Span Text="{x:Static resx:AppResource.BookYourFlight}"
+                    Style="{StaticResource Label32Bold}"
+                    FontSize="34"/>
               <Span Text=" &#10;"/>
-              <Span Text="{x:Static resx:AppResource.Air}"
+              <Span Text="with "
+                    Style="{StaticResource Label32Bold}"
+                    FontSize="34"/>
+              <Span Text="AIR "
                     TextColor="{StaticResource PrimaryColor}"
-                    Style="{StaticResource Label32Bold}"/>
-              <Span Text="{x:Static resx:AppResource.IQ}"
+                    Style="{StaticResource Label32Bold}"
+                    FontSize="34"/>
+              <Span Text="iQ"
                     TextColor="red"
-                    Style="{StaticResource Label32Bold}"/>
+                    Style="{StaticResource Label32Bold}"
+                    FontSize="34"/>
             </FormattedString>
           </Label.FormattedText>
         </Label>

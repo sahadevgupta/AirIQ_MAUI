@@ -47,7 +47,16 @@
                   ContentTemplate="{DataTemplate controls:LoadingIndicatorView}"
                   Route="loading"
                   Shell.TabBarIsVisible="False"
+                  Shell.NavBarIsVisible="False"
                   Shell.FlyoutItemIsVisible="False"/>
+
+    <!-- ROUTE: login - User authentication -->
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate local:LoginPage}"
+        Route="LoginPage"
+        Shell.TabBarIsVisible="False"
+        Shell.FlyoutItemIsVisible="False"/>
 
     <TabBar Route="app">
         <ShellContent Title="Flights"

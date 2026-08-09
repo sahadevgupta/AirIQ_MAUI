@@ -62,30 +62,76 @@ public partial class ExtendedEntry : ContentView
     }
 
     // Bindable Property for Icon
-    public static readonly BindableProperty LeftIconProperty =
-                            BindableProperty.Create(nameof(LeftIcon),
+    public static readonly BindableProperty LeadingIconProperty =
+                            BindableProperty.Create(nameof(LeadingIcon),
                             typeof(string),
                             typeof(ExtendedEntry),
                             null,
                             BindingMode.TwoWay);
 
-    public string LeftIcon
+    public string LeadingIcon
     {
-        get => (string)GetValue(LeftIconProperty);
-        set => SetValue(LeftIconProperty, value);
+        get => (string)GetValue(LeadingIconProperty);
+        set => SetValue(LeadingIconProperty, value);
     }
 
-    public static readonly BindableProperty RightIconProperty =
-                            BindableProperty.Create(nameof(RightIcon),
+    public static readonly BindableProperty TrailingIconProperty =
+                            BindableProperty.Create(nameof(TrailingIcon),
                             typeof(string),
                             typeof(ExtendedEntry),
                             null,
                             BindingMode.TwoWay);
 
-    public string RightIcon
+    public string TrailingIcon
     {
-        get => (string)GetValue(RightIconProperty);
-        set => SetValue(RightIconProperty, value);
+        get => (string)GetValue(TrailingIconProperty);
+        set => SetValue(TrailingIconProperty, value);
+    }
+
+    public static readonly BindableProperty LeadingIconColorProperty =
+                            BindableProperty.Create(nameof(LeadingIconColor),
+                            typeof(Color),
+                            typeof(ExtendedEntry));
+
+    public Color LeadingIconColor
+    {
+        get => (Color)GetValue(LeadingIconColorProperty);
+        set => SetValue(LeadingIconProperty, value);
+    }
+
+    public static readonly BindableProperty TrailingIconColorProperty =
+                            BindableProperty.Create(nameof(TrailingIconColor),
+                            typeof(Color),
+                            typeof(ExtendedEntry));
+
+    public Color TrailingIconColor
+    {
+        get => (Color)GetValue(TrailingIconColorProperty);
+        set => SetValue(TrailingIconColorProperty, value);
+    }
+
+    public static readonly BindableProperty LeadingIconSizeProperty =
+                            BindableProperty.Create(nameof(LeadingIconSize),
+                            typeof(double),
+                            typeof(ExtendedEntry),
+                            default(double));
+
+    public double LeadingIconSize
+    {
+        get => (double)GetValue(LeadingIconSizeProperty);
+        set => SetValue(LeadingIconSizeProperty, value);
+    }
+
+    public static readonly BindableProperty TrailingIconSizeProperty =
+                            BindableProperty.Create(nameof(TrailingIconSize),
+                            typeof(double),
+                            typeof(ExtendedEntry),
+                             default(double));
+
+    public double TrailingIconSize
+    {
+        get => (double)GetValue(TrailingIconSizeProperty);
+        set => SetValue(TrailingIconSizeProperty, value);
     }
 
 
@@ -242,6 +288,33 @@ public partial class ExtendedEntry : ContentView
         set => SetValue(MaxLengthProperty, value);
     }
 
+    public static readonly BindableProperty LeadingIconTypeProperty =
+    BindableProperty.Create(
+        nameof(LeadingIconType),
+        typeof(CustomIconType),
+        typeof(ExtendedEntry),
+        CustomIconType.None);
+
+    public CustomIconType LeadingIconType
+    {
+        get => (CustomIconType)GetValue(LeadingIconTypeProperty);
+        set => SetValue(LeadingIconTypeProperty, value);
+    }
+
+
+    public static readonly BindableProperty TrailingIconTypeProperty =
+        BindableProperty.Create(
+            nameof(TrailingIconType),
+            typeof(CustomIconType),
+            typeof(ExtendedEntry),
+            CustomIconType.None);
+
+    public CustomIconType TrailingIconType
+    {
+        get => (CustomIconType)GetValue(TrailingIconTypeProperty);
+        set => SetValue(TrailingIconTypeProperty, value);
+    }
+
     #region [ Show/Hide Password ]
 
     private bool _isPassword;
@@ -253,7 +326,7 @@ public partial class ExtendedEntry : ContentView
             _isPassword = value;
             if (_isPassword)
             {
-                RightIcon = "visibility";
+                TrailingIcon = "visibility";
                 this.Dispatcher.Dispatch(async () =>
                 {
                     await Task.Delay(50);
@@ -265,12 +338,12 @@ public partial class ExtendedEntry : ContentView
                     bool hasFocus = InputEntry.IsFocused;
                     if (InputEntry.IsPassword)
                     {
-                        RightIcon = "visibility";
+                        TrailingIcon = "visibility";
                         InputEntry.IsPassword = false;
                     }
                     else
                     {
-                        RightIcon = "visibility";
+                        TrailingIcon = "visibility";
                         InputEntry.IsPassword = true;
                     }
 
@@ -284,6 +357,7 @@ public partial class ExtendedEntry : ContentView
             }
         }
     }
+
     #endregion
 
     public event EventHandler<TextChangedEventArgs> TextChanged;

@@ -30,7 +30,7 @@ public abstract class ApiServiceBase
         MainThread.BeginInvokeOnMainThread(() =>
         {
             //Handle the exception
-            Debug.WriteLine("ApiServiceBase HandleException [{exceptionName}] \n{exceptionToString}", exception.GetType().Name, exception.ToString());
+            Debug.WriteLine($"ApiServiceBase HandleException  {exception.GetType().Name}, {exception.ToString()}");
 
 
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();

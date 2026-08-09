@@ -13,9 +13,8 @@ namespace AirIQ.Models
         private bool isSelected;
 
         public ICommand? TabCommand { get; set; }
-        public BookingTypes type { get; set; }
 
         public string? key { get; set; }
-
+        public string? Icon { get; set; }
     }
 }

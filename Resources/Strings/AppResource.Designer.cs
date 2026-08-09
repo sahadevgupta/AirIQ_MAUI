@@ -394,11 +394,11 @@ namespace AirIQ.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Book your flight with.
+        ///   Looks up a localized string similar to Book your flight.
         /// </summary>
-        internal static string BookYourFlightWith {
+        internal static string BookYourFlight {
             get {
-                return ResourceManager.GetString("BookYourFlightWith", resourceCulture);
+                return ResourceManager.GetString("BookYourFlight", resourceCulture);
             }
         }
         

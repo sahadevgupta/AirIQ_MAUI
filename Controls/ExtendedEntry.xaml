@@ -3,8 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirIQ.Controls.ExtendedEntry"
              xmlns:controls="clr-namespace:AirIQ.Controls"
+             xmlns:converters="clr-namespace:AirIQ.Converter"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Name="customEntryControlWithTitle">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:IconSourceConverter x:Key="IconSourceConverter"/>
+            <converters:IconTypeToVisibilityConverter x:Key="IconTypeToVisibilityConverter"/>
+        </ResourceDictionary>
+    </ContentView.Resources>
     <Grid RowSpacing="4"
           RowDefinitions="Auto,Auto,48, Auto">
 
@@ -55,10 +63,52 @@
                       BackgroundColor="Transparent"
                       HorizontalOptions="Fill">
 
-                    <Image Source="{Binding LeftIcon,Source={x:Reference customEntryControlWithTitle}}"
+                    <!-- <Image Source="{Binding LeftIcon,Source={x:Reference customEntryControlWithTitle}}"
                            IsVisible="{Binding LeftIcon,Source={x:Reference customEntryControlWithTitle}, Converter={toolkit:IsStringNotNullOrEmptyConverter}}"
                            x:Name="leftimg"
                            Margin="12,4,0,4"/>
+
+                    <Image Grid.Column="0"
+                           Margin="12,4,0,4"
+                           IsVisible="{Binding IsLeftFontImage,Source={x:Reference customEntryControlWithTitle}}">
+                        <Image.Source>
+                            <FontImageSource FontFamily="IconFont"
+                                             Size="Large"
+                                             Color="{Binding LeftIconTintColor,Source={x:Reference customEntryControlWithTitle}}"
+                                             Glyph="{Binding LeftIcon,Source={x:Reference customEntryControlWithTitle}}"/>
+                        </Image.Source>
+                    </Image> -->
+
+                    <!-- ==================== LEADING ICON ==================== -->
+                    <Image Grid.Column="0"
+                           Margin="12,4,0,4"
+                           Aspect="AspectFit"
+                           IsVisible="{Binding LeadingIconType,
+                               Source={x:Reference customEntryControlWithTitle},
+                               Converter={StaticResource IconTypeToVisibilityConverter}}">
+
+                        <Image.Source>
+                            <MultiBinding Converter="{StaticResource IconSourceConverter}">
+
+                                <!-- Icon Type -->
+                                <Binding Path="LeadingIconType"
+                                         Source="{x:Reference customEntryControlWithTitle}"/>
+
+                                <!-- Font Glyph -->
+                                <Binding Path="LeadingIcon"
+                                         Source="{x:Reference customEntryControlWithTitle}"/>
+
+                                <!-- Font Color -->
+                                <Binding Path="LeadingIconColor"
+                                         Source="{x:Reference customEntryControlWithTitle}"/>
+
+                                <!-- Font Size -->
+                                <Binding Path="LeadingIconSize"
+                                         Source="{x:Reference customEntryControlWithTitle}"/>
+
+                            </MultiBinding>
+                        </Image.Source>
+                    </Image>
 
                     <controls:BorderlessEntry x:Name="InputEntry"
                                               Grid.Column="1"
@@ -91,7 +141,7 @@
                     </controls:BorderlessEntry>
                 </Grid>
 
-                <Image Source="{Binding RightIcon,Source={x:Reference customEntryControlWithTitle}}"
+                <!-- <Image Source="{Binding RightIcon,Source={x:Reference customEntryControlWithTitle}}"
                        IsVisible="{Binding RightIcon,Source={x:Reference customEntryControlWithTitle}, Converter={toolkit:IsStringNotNullOrEmptyConverter}}"
                        x:Name="rightimg"
                        Grid.Column="1"
@@ -100,6 +150,38 @@
                         <TapGestureRecognizer Command="{Binding IconTapCommand,Source={x:Reference customEntryControlWithTitle}}"
                                               CommandParameter="{Binding IconTapCommandParameter,Source={x:Reference customEntryControlWithTitle}}"/>
                     </Image.GestureRecognizers>
+                </Image> -->
+
+                <!-- ==================== TRAILING ICON ==================== -->
+                <Image Grid.Column="2"
+                       Margin="0,4,12,4"
+                       Aspect="AspectFit"
+                       IsVisible="{Binding TrailingIconType,
+                               Source={x:Reference customEntryControlWithTitle},
+                               Converter={StaticResource IconTypeToVisibilityConverter}}"
+                       x:Name="rightimg">
+
+                    <Image.Source>
+                        <MultiBinding Converter="{StaticResource IconSourceConverter}">
+
+                            <!-- Icon Type -->
+                            <Binding Path="TrailingIconType"
+                                     Source="{x:Reference customEntryControlWithTitle}"/>
+
+                            <!-- Font Glyph -->
+                            <Binding Path="TrailingIcon"
+                                     Source="{x:Reference customEntryControlWithTitle}"/>
+
+                            <!-- Font Color -->
+                            <Binding Path="TrailingIconColor"
+                                     Source="{x:Reference customEntryControlWithTitle}"/>
+
+                            <!-- Font Size -->
+                            <Binding Path="TrailingIconSize"
+                                     Source="{x:Reference customEntryControlWithTitle}"/>
+
+                        </MultiBinding>
+                    </Image.Source>
                 </Image>
             </Grid>
         </Border>

@@ -47,6 +47,23 @@ namespace AirIQ.Extensions
 #endif
             });
 
+            EditorHandler.Mapper.AppendToMapping("BorderlessEditor", (handler, view) =>
+            {
+                if (view is not BorderlessEditor)
+                    return;
+
+#if IOS
+                handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
+                handler.PlatformView.Layer.BorderWidth = 0;
+                handler.PlatformView.Layer.BorderColor = UIKit.UIColor.Clear.CGColor;
+                handler.PlatformView.TextContainerInset = UIKit.UIEdgeInsets.Zero;
+                handler.PlatformView.TextContainer.LineFragmentPadding = 0;
+#elif ANDROID
+                handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
+                handler.PlatformView.Background = null;
+#endif
+            });
+
             return builder.ConfigureMauiHandlers(handlers =>
             {
                 handlers.AddHandler<CustomDropdown, AirIQ.Platforms.Handlers.CustomDropdownHandler>();
