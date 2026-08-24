@@ -33,6 +33,12 @@ namespace AirIQ.Extensions
             })
             .AddHttpMessageHandler<HttpMessageLogHandler>();
 
+            builder.Services.AddRefitClient<IAuthenticationApi>()
+            .ConfigureHttpClient(j =>
+            {
+                j.BaseAddress = defaultUri;
+            });
+
             builder.Services
                     .AddRefitClient<IZoopApi>()
                     .ConfigureHttpClient(client =>

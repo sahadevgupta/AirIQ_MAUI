@@ -14,7 +14,7 @@ namespace AirIQ.ViewModels
 {
     public partial class LoginPageViewModel : BaseViewModel
     {
-        readonly ILoginService _loginService;
+        readonly IAuthenticationService _loginService;
 
         [ObservableProperty]
         private string? _username = "9380715388"; //string.Empty; //"9382915717";
@@ -23,7 +23,7 @@ namespace AirIQ.ViewModels
         private string? _password = "9380715388"; //"123456789";
 
         public LoginPageViewModel(IViewModelParameters viewModelParameters,
-        ILoginService loginService) : base(viewModelParameters)
+        IAuthenticationService loginService) : base(viewModelParameters)
         {
             _loginService = loginService;
         }

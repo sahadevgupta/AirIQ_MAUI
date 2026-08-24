@@ -10,7 +10,7 @@ namespace AirIQ.ViewModels.Common;
 
 public partial class SessionExpiryPopupViewModel : ObservableObject
 {
-    readonly ILoginService _loginService;
+    readonly IAuthenticationService _loginService;
     private TaskCompletionSource<bool> _sessionResponsTcs;
 
     [ObservableProperty]
@@ -21,7 +21,7 @@ public partial class SessionExpiryPopupViewModel : ObservableObject
 
     public Task<bool> SessionResponseTask => _sessionResponsTcs.Task;
 
-    public SessionExpiryPopupViewModel(ILoginService loginService)
+    public SessionExpiryPopupViewModel(IAuthenticationService loginService)
     {
         _loginService = loginService;
 

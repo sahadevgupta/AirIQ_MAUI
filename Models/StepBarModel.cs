@@ -9,7 +9,9 @@ public partial class StepBarModel : ObservableObject
     public int Index { get; set; }
     public bool IsNotLast { get; set; }
     public bool IsFirst { get; set; }
-    public double ListWidth { get; set; }
+
+    [ObservableProperty]
+    private double _listWidth;
 
     [ObservableProperty]
     private string? _stepName;
