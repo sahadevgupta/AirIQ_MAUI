@@ -1,4 +1,5 @@
-﻿using AirIQ.Configurations;
+﻿using System.Text.Json;
+using AirIQ.Configurations;
 using AirIQ.Constants;
 using AirIQ.Models.Response;
 using AirIQ.Services.Interfaces;
@@ -7,14 +8,15 @@ using AirIQ.Views;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-
-using Newtonsoft.Json;
+using Mopups.Interfaces;
+using Refit;
 
 namespace AirIQ.ViewModels
 {
     public partial class LoginPageViewModel : BaseViewModel
     {
         readonly IAuthenticationService _loginService;
+        readonly IPopupNavigation _popupNavigation;
 
         [ObservableProperty]
         private string? _username = "9380715388"; //string.Empty; //"9382915717";
@@ -23,9 +25,11 @@ namespace AirIQ.ViewModels
         private string? _password = "9380715388"; //"123456789";
 
         public LoginPageViewModel(IViewModelParameters viewModelParameters,
-        IAuthenticationService loginService) : base(viewModelParameters)
+            IAuthenticationService loginService,
+            IPopupNavigation popupNavigation) : base(viewModelParameters)
         {
             _loginService = loginService;
+            _popupNavigation = popupNavigation;
         }
 
         #region [ Commands ]
@@ -47,14 +51,22 @@ namespace AirIQ.ViewModels
                     userDto = await _loginService.LoginAsync(Username!, Password!);
                 }
 
-                Console.WriteLine("Login Detsils : " + JsonConvert.SerializeObject(userDto));
+                Console.WriteLine("Login Detsils : " + JsonSerializer.Serialize(userDto));
                 if (userDto != default)
                 {
                     AppConfiguration.IsLoggedInUser = true;
-                    AppConfiguration.UserDetails = JsonConvert.SerializeObject(userDto);
+                    AppConfiguration.UserDetails = JsonSerializer.Serialize(userDto);
                     AppConfiguration.CurrentUser = userDto;
                     Console.WriteLine("Navigate To Home : ");
                     await Shell.Current.GoToAsync("//app/home");
+                }
+            }
+            catch (ApiException apiEx)
+            {
+                var content = JsonSerializer.Deserialize<ApiErrorResponse>(apiEx.Content!);
+                if (content is not null)
+                {
+                    await ShowAlertAsync(content.Message ?? string.Empty);
                 }
             }
             catch (Exception ex)
@@ -77,6 +89,12 @@ namespace AirIQ.ViewModels
         private async Task ForgotPassword()
         {
             await ShellNavigationService.Navigate<ForgotPasswordPage>();
+        }
+
+        [RelayCommand]
+        private async Task DisplayContactUsViewAsync()
+        {
+            await _popupNavigation.PushAsync(new ContactUsPopup());
         }
 
         #endregion

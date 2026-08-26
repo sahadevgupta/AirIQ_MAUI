@@ -326,7 +326,8 @@ public partial class ExtendedEntry : ContentView
             _isPassword = value;
             if (_isPassword)
             {
-                TrailingIcon = "visibility";
+                TrailingIcon = "visibility_off";
+                TrailingIconType = CustomIconType.Image;
                 this.Dispatcher.Dispatch(async () =>
                 {
                     await Task.Delay(50);
@@ -343,7 +344,7 @@ public partial class ExtendedEntry : ContentView
                     }
                     else
                     {
-                        TrailingIcon = "visibility";
+                        TrailingIcon = "visibility_off";
                         InputEntry.IsPassword = true;
                     }
 

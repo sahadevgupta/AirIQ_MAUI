@@ -1,4 +1,5 @@
 using System.Windows.Input;
+using AirIQ.Configurations;
 using NavigationMode = AirIQ.Enums.NavigationMode;
 
 namespace AirIQ.Controls;
@@ -37,7 +38,7 @@ public partial class NavigationBarControl : ContentView
 
 
 	public static readonly BindableProperty AmountProperty =
-	BindableProperty.Create(nameof(Amount), typeof(double), typeof(NavigationBarControl), 0.0, BindingMode.TwoWay);
+	BindableProperty.Create(nameof(Amount), typeof(double), typeof(NavigationBarControl), AppConfiguration.CurrentUser?.Balance, BindingMode.TwoWay);
 
 
 	public ICommand NavigateCommand

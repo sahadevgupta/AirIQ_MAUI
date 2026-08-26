@@ -24,6 +24,7 @@ public partial class SignupPageViewModel : BaseViewModel
     private readonly IDialogService _dialogService;
     private readonly ILookupService _lookupService;
     private readonly IZoopVerificationService _zoopVerificationService;
+    private readonly IAuthenticationService _authenticationService;
 
     [ObservableProperty]
     private ObservableCollection<StepBarModel> _steps = new();
@@ -170,11 +171,13 @@ public partial class SignupPageViewModel : BaseViewModel
     public SignupPageViewModel(IViewModelParameters viewModelParameters,
         ILookupService lookupService,
         IZoopVerificationService zoopVerificationService,
-        IDialogService dialogService) : base(viewModelParameters)
+        IDialogService dialogService,
+        IAuthenticationService authenticationService) : base(viewModelParameters)
     {
         _lookupService = lookupService;
         _zoopVerificationService = zoopVerificationService;
         _dialogService = dialogService;
+        _authenticationService = authenticationService;
     }
 
     #region [ Methods & Service Calls ]
@@ -746,7 +749,7 @@ public partial class SignupPageViewModel : BaseViewModel
 
             using (LoadingService.Show())
             {
-                var response = await _lookupService.SignupAsync(Signup);
+                var response = await _authenticationService.SignupAsync(Signup);
                 if (!string.IsNullOrWhiteSpace(response) && response.Contains("Agency registration submitted successfully."))
                 {
                     string message = "Thank you for registering. Your details have been received and are under review. We'll notify you by email once your account has been verified and activated. You can sign in after receiving the approval email.";

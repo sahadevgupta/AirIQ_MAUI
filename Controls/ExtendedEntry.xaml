@@ -161,6 +161,11 @@
                                Converter={StaticResource IconTypeToVisibilityConverter}}"
                        x:Name="rightimg">
 
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding IconTapCommand,Source={x:Reference customEntryControlWithTitle}}"
+                                              CommandParameter="{Binding IconTapCommandParameter,Source={x:Reference customEntryControlWithTitle}}"/>
+                    </Image.GestureRecognizers>
+
                     <Image.Source>
                         <MultiBinding Converter="{StaticResource IconSourceConverter}">
 

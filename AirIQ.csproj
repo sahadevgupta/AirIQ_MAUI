@@ -58,20 +58,20 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.90" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.10" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="15.0.0" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.100" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.11" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="15.0.1" />
 		<PackageReference Include="Mopups" Version="1.3.4" />
-		<PackageReference Include="Refit.HttpClientFactory" Version="14.0.1" />
-		<PackageReference Include="Refit.Reflection" Version="14.0.1" />
-		<PackageReference Include="Refit.Newtonsoft.Json" Version="14.0.1" />
-		<PackageReference Include="Sentry.Maui" Version="6.8.0" />
+		<PackageReference Include="Refit.HttpClientFactory" Version="15.2.0" />
+		<PackageReference Include="Refit.Reflection" Version="15.2.0" />
+		<PackageReference Include="Refit.Newtonsoft.Json" Version="15.2.0" />
+		<PackageReference Include="Sentry.Maui" Version="6.9.0" />
 		<PackageReference Include="Syncfusion.Maui.Toolkit" Version="1.0.9" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.22.0" />
-		<PackageReference Include="Microsoft.Maui.Essentials" Version="10.0.90" />
-		<PackageReference Include="System.Text.Json" Version="10.0.10" />
-		<PackageReference Include="ZXing.Net.Maui.Controls" Version="0.10.3" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.10" />
+		<PackageReference Include="Microsoft.Maui.Essentials" Version="10.0.100" />
+		<PackageReference Include="System.Text.Json" Version="10.0.11" />
+		<PackageReference Include="ZXing.Net.Maui.Controls" Version="0.10.4" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.11" />
 
 	</ItemGroup>
 

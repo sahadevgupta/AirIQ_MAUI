@@ -101,7 +101,11 @@
                         <FormattedString>
                             <Span Text="{x:Static resx:AppResource.ContactUs}"
                                   TextDecorations="Underline"
-                                  Style="{StaticResource Span12RegularGray50Style}"/>
+                                  Style="{StaticResource Span12RegularGray50Style}">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding DisplayContactUsViewCommand}"/>
+                                </Span.GestureRecognizers>
+                            </Span>
                             <Span Text=" &#x2022; "
                                   Style="{StaticResource Span12RegularGray50Style}"/>
                             <Span Text="{x:Static resx:AppResource.TermsAndConditions}"

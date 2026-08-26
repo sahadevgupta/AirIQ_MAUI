@@ -5,6 +5,7 @@ using AirIQ.Constants;
 using AirIQ.Models.Request;
 using AirIQ.Models.Response;
 using AirIQ.Services.Interfaces;
+using Refit;
 
 namespace AirIQ.Services;
 
@@ -32,6 +33,10 @@ public class AuthenticationService(IApiServiceBaseParams apiServiceBaseParams,
                 await apiServiceBaseParams.SecureStorageService.SetAsync(PreferenceKeyConstants.AuthKey, loginResponse.Token!);
             }
             userDto = loginResponse.User;
+        }
+        catch (ApiException)
+        {
+            throw;
         }
         catch (NotConnectedException notConntectedException)
         {
@@ -159,13 +164,17 @@ public class AuthenticationService(IApiServiceBaseParams apiServiceBaseParams,
 
     public async Task<string> SignupAsync(SignupRequest signupRequest)
     {
-        IEnumerable<LookupItemDto> lookupItemDtos = Enumerable.Empty<LookupItemDto>();
+        string info = string.Empty;
         try
         {
             await Connectivity.CheckConnected();
 
             var apiResponse = await appBackendService.SignupAsync(signupRequest).ConfigureAwait(false);
-            return apiResponse.Message ?? string.Empty;
+            info = apiResponse.Message ?? string.Empty;
+        }
+        catch (ApiException apiEx)
+        {
+            info = apiEx.Content ?? string.Empty;
         }
         catch (NotConnectedException notConntectedException)
         {
@@ -174,7 +183,8 @@ public class AuthenticationService(IApiServiceBaseParams apiServiceBaseParams,
         catch (Exception exception)
         {
             HandleException(exception);
+
         }
-        return string.Empty;
+        return info;
     }
 }

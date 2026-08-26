@@ -1,6 +1,7 @@
 ﻿using AirIQ.Configurations;
 using AirIQ.Configurations.Mapper;
 using AirIQ.Constants;
+using AirIQ.Enums;
 using AirIQ.Extensions;
 using AirIQ.Helpers;
 using AirIQ.Models;
@@ -59,6 +60,11 @@ public abstract partial class BaseViewModel : ViewModelBase, IDestructible
     public async Task ShowStatusAlertAsync(string message, bool response = true, int timeout = 2500)
     {
         await DialogService.ShowStatusAlertAsync(message, response, timeout);
+    }
+
+    public async Task ShowAlertAsync(string message, AlertType alertType = AlertType.Warning)
+    {
+        await DialogService.ShowAlertDialog(message, alertType);
     }
 
     public virtual Task LoadDataWhenNavigatedTo()

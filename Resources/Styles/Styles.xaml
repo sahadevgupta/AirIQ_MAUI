@@ -387,6 +387,18 @@
         </Style>
 
         <Style TargetType="Span"
+               x:Key="Span14RegularGray500Style">
+
+                <Setter Property="TextColor"
+                        Value="{StaticResource Gray500}"/>
+                <Setter Property="FontSize"
+                        Value="{ext:ScaleFontSize Size='14'}"/>
+                <Setter Property="FontFamily"
+                        Value="RobotoRegular"/>
+
+        </Style>
+
+        <Style TargetType="Span"
                x:Key="Span16BoldPrimaryStyle">
 
                 <Setter Property="TextColor"
@@ -411,10 +423,10 @@
         </Style>
 
         <Style TargetType="Label"
-                        BasedOn="{StaticResource Label16Medium}"
-                        x:Key="Label16MediumGrayStyle">
+               BasedOn="{StaticResource Label16Medium}"
+               x:Key="Label16MediumGrayStyle">
                 <Setter Property="TextColor"
-                                Value="{StaticResource MeidumGray}"/>
+                        Value="{StaticResource MeidumGray}"/>
         </Style>
 
         <!--  ====================  -->

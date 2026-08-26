@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopup:PopupPage x:Class="AirIQ.ContactUsPopup"
+                 xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:mopup="clr-namespace:Mopups.Pages;assembly=Mopups"
+                 xmlns:mopupsanim="clr-namespace:Mopups.Animations;assembly=Mopups"
+                 BackgroundColor="{StaticResource PopupBackground}">
+    <mopup:PopupPage.Animation>
+        <mopupsanim:MoveAnimation
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinIn"
+            EasingOut="SinOut"
+            PositionIn="Bottom"
+            PositionOut="Bottom"/>
+    </mopup:PopupPage.Animation>
+
+    <Border VerticalOptions="End"
+            Padding="20"
+            BackgroundColor="White"
+            StrokeShape="RoundRectangle 20,20,0,0">
+        <Grid ColumnDefinitions="50,*"
+              RowDefinitions="Auto,Auto,Auto,Auto"
+              ColumnSpacing="10"
+              RowSpacing="16">
+            <Label Text="Contact Us"
+                   Grid.ColumnSpan="2"
+                   Style="{StaticResource Label20Medium}"/>
+            <Image Source="close"
+                   Grid.Column="1"
+                   HorizontalOptions="End"/>
+            <Image Source="circle_mail"
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   HorizontalOptions="Start"/>
+            <Label Grid.Row="1"
+                   Grid.Column="1">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Email Address"
+                              Style="{StaticResource Span14RegularGray500Style}"/>
+                        <Span Text="&#10;"/>
+                        <Span Text="info@airiq.in"
+                              Style="{StaticResource Span16MediumBlacStyle}"
+                              TextColor="{StaticResource Gray90}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Image Source="circle_call"
+                   Grid.Row="2"
+                   Grid.Column="0"
+                   HorizontalOptions="Start"/>
+            <Label Grid.Row="2"
+                   Grid.Column="1">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Contact Number"
+                              Style="{StaticResource Span14RegularGray500Style}"/>
+                        <Span Text="&#10;"/>
+                        <Span Text="+ 91 9555 202 202"
+                              Style="{StaticResource Span16MediumBlacStyle}"
+                              TextColor="{StaticResource Gray90}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Image Source="circle_location"
+                   Grid.Row="3"
+                   Grid.Column="0"
+                   HorizontalOptions="Start"/>
+            <Label Grid.Row="3"
+                   Grid.Column="1">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Address"
+                              Style="{StaticResource Span14RegularGray500Style}"/>
+                        <Span Text="&#10;"/>
+                        <Span Text="2nd Floor, Sevoke Road, Siliguri 734001,
+West Bengal, India"
+                              Style="{StaticResource Span16MediumBlacStyle}"
+                              TextColor="{StaticResource Gray90}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </Grid>
+
+    </Border>
+
+</mopup:PopupPage>

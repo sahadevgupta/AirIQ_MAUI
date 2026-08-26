@@ -91,14 +91,16 @@
                                 PlaceholderText="Enter Password"
                                 Text="{Binding Password}"
                                 IsErrorViewVisible="{Binding IsPasswordErrorVisible}"
-                                ErrorText="Password cannot be empty"/>
+                                ErrorText="Password cannot be empty"
+                                IsPassword="True"/>
 
         <controls:ExtendedEntry Title="Confirmed Password"
                                 SuffixText="*"
                                 PlaceholderText="Enter Confirm Password"
                                 Text="{Binding ConfirmPassword}"
                                 IsErrorViewVisible="{Binding IsConfirmPasswordErrorVisible}"
-                                ErrorText="Confirm password is required and must match"/>
+                                ErrorText="Confirm password is required and must match"
+                                IsPassword="True"/>
 
         <Button Text="Next"
                 Margin="0,20,0,0"
