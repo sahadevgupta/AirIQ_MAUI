@@ -15,24 +15,27 @@ public class AuthenticationService(IApiServiceBaseParams apiServiceBaseParams,
 {
     public async Task<UserDto?> LoginAsync(string username, string password)
     {
-        UserDto? userDto = new();
+        // IMPORTANT: must start as null, not `new()`. LoginPageViewModel treats a non-null
+        // return as a successful login and navigates to Home; a `new UserDto()` sentinel
+        // left over from a caught exception below used to look like a real, empty user and
+        // trigger a false-success navigation.
+        UserDto? userDto = null;
         try
         {
-            Console.WriteLine("LoginAsync invoked : ");
+            Console.WriteLine($"[Login] LoginAsync invoked for user '{username}'");
             await Connectivity.CheckConnected();
             var request = new LoginRequest
             {
                 UserName = username,
                 Password = password,
             };
-            Console.WriteLine("Login Without API invoked : ");
             var loginResponse = await appBackendService.LoginAsync(request).ConfigureAwait(false);
-            Console.WriteLine("Login Without API response : " + JsonSerializer.Serialize(loginResponse));
-            if (!string.IsNullOrWhiteSpace(loginResponse.Token))
+            Console.WriteLine($"[Login] API responded, token present: {!string.IsNullOrWhiteSpace(loginResponse?.Token)}");
+            if (loginResponse is not null && !string.IsNullOrWhiteSpace(loginResponse.Token))
             {
                 await apiServiceBaseParams.SecureStorageService.SetAsync(PreferenceKeyConstants.AuthKey, loginResponse.Token!);
             }
-            userDto = loginResponse.User;
+            userDto = loginResponse?.User;
         }
         catch (ApiException)
         {
@@ -40,10 +43,12 @@ public class AuthenticationService(IApiServiceBaseParams apiServiceBaseParams,
         }
         catch (NotConnectedException notConntectedException)
         {
+            Console.WriteLine("[Login] No connectivity: " + notConntectedException.Message);
             HandleException(notConntectedException);
         }
         catch (Exception exception)
         {
+            Console.WriteLine("[Login] Unexpected error in LoginAsync: " + exception);
             HandleException(exception);
         }
         return userDto;

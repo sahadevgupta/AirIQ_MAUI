@@ -1,31 +1,28 @@
 using AirIQ.Controls;
 using AirIQ.Extensions;
 using AirIQ.Services.Interfaces;
+using Android.App;
+using Android.Graphics.Drawables;
 using Android.Views;
 using Microsoft.Maui.Platform;
 using Application = Microsoft.Maui.Controls.Application;
 using View = Android.Views.View;
+using Window = Android.Views.Window;
 
 namespace AirIQ.Platforms.Services
 {
     public class LoadingPopupService : ILoadingPopUpService
     {
-        private readonly object _syncRoot = new();
-        private View? _nativeView;
-        private int _activeCount;
+        private View? _nativeView { get; set; }
+
+        private Dialog? _dialog { get; set; }
+
+        private bool isInitialized;
 
         public IDisposable Show()
         {
-            bool shouldDisplay;
-            lock (_syncRoot)
-            {
-                shouldDisplay = ++_activeCount == 1;
-            }
-
-            if (shouldDisplay)
-            {
-                RunOnMainThread(DisplayLoader);
-            }
+            InitLoaderView();
+            _dialog?.Show();
 
             return new DisposableAction(() =>
             {
@@ -40,95 +37,75 @@ namespace AirIQ.Platforms.Services
             });
         }
 
-        public void Hide()
+        private void InitLoaderView()
         {
-            bool shouldDismiss;
-            lock (_syncRoot)
+            //if (!isInitialized)
             {
-                if (_activeCount == 0)
-                    return;
-
-                shouldDismiss = --_activeCount == 0;
-            }
-
-            if (shouldDismiss)
-            {
-                RunOnMainThread(DismissLoader);
-            }
-        }
-
-        private static void RunOnMainThread(Action action)
-        {
-            if (MainThread.IsMainThread)
-                action();
-            else
-                MainThread.BeginInvokeOnMainThread(action);
-        }
-
-        /// <summary>
-        /// Must run on the UI thread. Creates a fresh native overlay for this show/hide
-        /// session so state left over from navigation (page/activity changes) can't cause
-        /// the loader to silently fail to reattach.
-        /// </summary>
-        private void DisplayLoader()
-        {
-            try
-            {
-                var windows = Application.Current?.Windows;
-                var mainPage = windows is { Count: > 0 } ? windows[0].Page : null;
-                var mauiContext = mainPage?.Handler?.MauiContext;
-                if (mauiContext is null)
-                    return;
-
-                var rootView = Platform.CurrentActivity?.Window?.DecorView as ViewGroup;
-                if (rootView is null)
-                    return;
-
                 var loadingIndicatorView = new LoadingIndicatorView();
+                var mainPage = Application.Current?.Windows[0].Page;
+                if (mainPage is null)
+                    return;
+
                 var mainDisplay = DeviceDisplay.MainDisplayInfo;
                 loadingIndicatorView.Layout(new Rect(0, 0, mainDisplay.Width / mainDisplay.Density, mainDisplay.Height / mainDisplay.Density));
 
-                var nativeView = loadingIndicatorView.ToHandler(mauiContext)?.PlatformView as View;
-                if (nativeView is null)
-                    return;
+                _nativeView = loadingIndicatorView.ToHandler(mainPage.Handler?.MauiContext!)?.PlatformView!;
 
-                rootView.AddView(nativeView);
-                _nativeView = nativeView;
-            }
-            catch (Exception)
-            {
-                // best-effort UI, never let a loader failure crash the caller
+                var activity = Platform.CurrentActivity;
+                var rootView = activity?.Window?.DecorView as ViewGroup;
+
+                rootView?.AddView(_nativeView);
+
+                // _dialog = new Dialog(Platform.CurrentActivity!);
+                // _dialog.RequestWindowFeature((int)WindowFeatures.NoTitle);
+                // _dialog.SetCancelable(false);
+                // _dialog.SetContentView(_nativeView);
+                // Window? window = _dialog.Window;
+                // window?.SetLayout(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
+                // window?.ClearFlags(WindowManagerFlags.DimBehind);
+                // window?.SetBackgroundDrawable(new ColorDrawable(Colors.Transparent.ToPlatform()));
+
+                isInitialized = true;
             }
         }
 
-        /// <summary>Must run on the UI thread.</summary>
-        private void DismissLoader()
+        public void Hide()
         {
             try
             {
+                // _dialog?.Hide();
+                // _dialog?.Dismiss();
+
                 if (_nativeView?.Parent is ViewGroup parent)
                 {
                     parent.RemoveView(_nativeView);
                 }
             }
+            catch { }
+        }
+
+        /// <summary>
+        /// Dispose pattern for Android service
+        /// </summary>
+        public void Dispose()
+        {
+            try
+            {
+                _dialog?.Hide();
+                _dialog?.Dismiss();
+                _dialog?.Dispose();
+                _dialog = null;
+                _nativeView = null;
+            }
             catch (Exception)
             {
                 // ignore
             }
-            finally
-            {
-                _nativeView = null;
-            }
         }
 
-        public void Dispose()
+        public Task HideAsync()
         {
-            lock (_syncRoot)
-            {
-                _activeCount = 0;
-            }
-
-            RunOnMainThread(DismissLoader);
+            throw new NotImplementedException();
         }
     }
 }

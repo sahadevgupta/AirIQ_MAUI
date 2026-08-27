@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopup:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:mopup="clr-namespace:Mopups.Pages;assembly=Mopups"
+                 xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+                 x:Class="AirIQ.Controls.LoadingIndicatorViewPopup"
+                 BackgroundColor="{StaticResource PopupBackground}"
+                 CloseWhenBackgroundIsClicked="False">
+
+    <Grid ColumnDefinitions="2*,6*,2*">
+
+        <!--
+            IMPORTANT: this must stay a Mopups PopupPage, not a plain ContentPage manually
+            spliced into the native view tree.
+
+            Root cause history:
+            1) An animated-GIF Image here used to crash the app on Android: an animated GIF
+               Image is backed by the native AnimatedImageDrawable, which decodes frames on a
+               background thread, and dismissing the popup while that thread was mid-decode
+               aborted the process with a native SIGABRT ("Pure virtual function called!") that
+               no C# try/catch could prevent. Confirmed via `adb logcat -b crash` on a physical
+               device: repeated "AnimatedImageTh" / SkAnimatedImage::decodeNextFrame aborts on
+               every login attempt.
+            2) Switching to SKLottieView (renders via Skia/Skottie, sidestepping that native
+               decoder) fixed the crash but then never rendered anything. Root cause: this page
+               used to be shown by manually building a ContentPage, extracting its raw native
+               PlatformView, and inserting it directly into the Activity's DecorView
+               (LoadingPopupService), bypassing MAUI's normal Window/Page attachment. Confirmed
+               by decompiling SkiaSharp.Extended.UI: SKAnimatedSurfaceView only starts its
+               animation ticker when the element's VisualElement.Window is non-null - a page
+               that's never actually pushed onto a window's navigation stack never satisfies
+               that, so OnPaintSurface never repaints past the first (pre-load) frame.
+
+            Presenting this as a Mopups PopupPage via IPopupNavigation.PushAsync (see
+            Services/LoadingPopupService.cs) makes it a properly window-attached page, so the
+            Skottie ticker runs correctly. Don't reintroduce manual native view injection.
+        -->
+        <skia:SKLottieView Source="loading.json"
+                           RepeatCount="-1"
+                           IsAnimationEnabled="True"
+                           WidthRequest="200"
+                           HeightRequest="200"
+                           Grid.Column="1"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
+    </Grid>
+
+</mopup:PopupPage>

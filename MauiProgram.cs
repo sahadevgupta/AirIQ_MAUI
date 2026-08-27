@@ -14,6 +14,7 @@ using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using AirIQ.Services.Interfaces;
 using Refit;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace AirIQ
 {
@@ -32,6 +33,7 @@ namespace AirIQ
                 .ConfigureMopups()
                 .InitializeApp()
                 .ConfigureSyncfusionToolkit()
+                .UseSkiaSharp()
                 .UseSentry(options =>
                 {
                     // The DSN is the only required setting.
