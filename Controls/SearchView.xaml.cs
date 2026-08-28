@@ -10,7 +10,7 @@ public partial class SearchView : ContentView
 	///     Identifies the <see cref="SearchText" /> bindable property.
 	/// </summary>
 	public static readonly BindableProperty SearchTextProperty =
-		BindableProperty.Create(nameof(SearchText), typeof(string), typeof(SearchView));
+		BindableProperty.Create(nameof(SearchText), typeof(string), typeof(SearchView), defaultBindingMode: BindingMode.TwoWay);
 
 	/// <summary>
 	///     Identifies the <see cref="PlaceholderText" /> bindable property.

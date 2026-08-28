@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:AirIQ.Controls"
              x:Class="AirIQ.Controls.SearchView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Name="searchView">
 
 
@@ -20,7 +21,16 @@
                 <Image Source="search"/>
                 <local:BorderlessEntry Grid.Column="1"
                                        Text="{Binding SearchText,Source={x:Reference searchView}}"
-                                       Placeholder="{Binding PlaceholderText,Source={x:Reference searchView}}"/>
+                                       Placeholder="{Binding PlaceholderText,Source={x:Reference searchView}}"
+                                       x:Name="UserStoppedTypingEntry">
+                    <local:BorderlessEntry.Behaviors>
+                        <toolkit:UserStoppedTypingBehavior Command="{Binding SearchCommand,Source={x:Reference searchView}}"
+                                                           BindingContext="{Binding Path=BindingContext, Source={x:Reference UserStoppedTypingEntry}, x:DataType=local:BorderlessEntry}"
+                                                           StoppedTypingTimeThreshold="1000"
+                                                           MinimumLengthThreshold="3"
+                                                           ShouldDismissKeyboardAutomatically="True"/>
+                    </local:BorderlessEntry.Behaviors>
+                </local:BorderlessEntry>
             </Grid>
 
             <Border.Triggers>

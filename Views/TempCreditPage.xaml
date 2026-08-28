@@ -17,7 +17,9 @@
               BackgroundColor="{StaticResource SecondaryBackgroundColor}">
 
             <Border Style="{StaticResource DefaultBorderStyle}">
-                <controls:SearchView VerticalOptions="Start"/>
+                <controls:SearchView VerticalOptions="Start"
+                                     SearchText="{Binding SearchText}"
+                                     SearchCommand="{Binding SearchCommand}"/>
 
             </Border>
 
@@ -40,11 +42,10 @@
                                 VerticalOptions="Start">
                             <toolkit:Expander x:Name="expander">
                                 <toolkit:Expander.Header>
-                                    <Border StrokeThickness="0"
-                                            Padding="16,8">
-                                        <Grid Padding="12,0"
-                                              ColumnDefinitions="*,Auto"
-                                              RowDefinitions="Auto,Auto">
+                                    <Border StrokeThickness="1"
+                                            Padding="16,12">
+                                        <Grid ColumnDefinitions="*,Auto"
+                                              RowDefinitions="Auto">
                                             <Label
                                                 VerticalOptions="Center">
                                                 <Label.FormattedText>
@@ -73,20 +74,11 @@
                                                                      Value="True">
                                                             <Setter Property="Rotation"
                                                                     Value="270"/>
-                                                            <Setter TargetName="bottomLine"
-                                                                    Property="IsVisible"
-                                                                    Value="True"/>
+
                                                         </DataTrigger>
                                                     </ImageButton.Triggers>
                                                 </ImageButton>
                                             </HorizontalStackLayout>
-
-                                            <BoxView Grid.Row="1"
-                                                     Grid.ColumnSpan="2"
-                                                     x:Name="bottomLine"
-                                                     IsVisible="False"
-                                                     Margin="0,10,0,0"
-                                                     Color="{StaticResource BorderColor}"/>
                                         </Grid>
                                     </Border>
                                 </toolkit:Expander.Header>

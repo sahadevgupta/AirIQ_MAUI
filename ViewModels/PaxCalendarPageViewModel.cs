@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using AirIQ.Configurations;
 using AirIQ.Constants;
+using AirIQ.Extensions;
 using AirIQ.Models;
 using AirIQ.Models.Response;
 using AirIQ.Services.Interfaces;
@@ -25,8 +26,13 @@ namespace AirIQ.ViewModels
         [ObservableProperty]
         private DateTime _selectedTravelDate;
 
+        private List<PaxCalendarFlightDto> flightBookingsTemp = new();
+
         [ObservableProperty]
         private ObservableCollection<PaxCalendarFlightDto>? _flightBookingList;
+
+        [ObservableProperty]
+        private string? _searchText;
 
         private DateCardItem? _leftDateItem;
 
@@ -115,8 +121,30 @@ namespace AirIQ.ViewModels
 "2026-09-01");
                 // travelDate.ToString("yyyy-MM-dd"));
 
-                FlightBookingList = new ObservableCollection<PaxCalendarFlightDto>(result);
+                flightBookingsTemp = result?.ToList() ?? new List<PaxCalendarFlightDto>();
+                FilterFlightBookings(SearchText);
             }
+        }
+
+        private void FilterFlightBookings(string? searchKey)
+        {
+            var filtered = string.IsNullOrEmpty(searchKey)
+                ? flightBookingsTemp
+                : flightBookingsTemp.Where(x =>
+                    x.TicketRefNo.ContainsIgnoreCase(searchKey) ||
+                    x.PNR.ContainsIgnoreCase(searchKey) ||
+                    x.SourceCity.ContainsIgnoreCase(searchKey) ||
+                    x.DestinationCity.ContainsIgnoreCase(searchKey) ||
+                    x.AirlineCode.ContainsIgnoreCase(searchKey) ||
+                    x.FlightNumber.ContainsIgnoreCase(searchKey));
+
+            FlightBookingList = new ObservableCollection<PaxCalendarFlightDto>(filtered);
+        }
+
+        partial void OnSearchTextChanged(string? value)
+        {
+            if (string.IsNullOrEmpty(value))
+                FilterFlightBookings(value);
         }
 
         partial void OnSelectedDateItemChanged(DateCardItem? value)
@@ -156,6 +184,12 @@ namespace AirIQ.ViewModels
                 return;
 
             SelectedDateItem = item;
+        }
+
+        [RelayCommand]
+        private void Search(string? searchText)
+        {
+            FilterFlightBookings(searchText);
         }
 
         #endregion
