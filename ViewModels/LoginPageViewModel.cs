@@ -81,7 +81,7 @@ namespace AirIQ.ViewModels
                     // to Home right after this. If the popup's removal were left to fire-and-forget,
                     // it could still be mid-dismiss when Shell navigates, leaving it stuck on top
                     // of Home. HideAsync guarantees it's actually gone first.
-                    await LoadingService.HideAsync();
+                    LoadingService.Hide();
                 }
 
                 Console.WriteLine($"[Login] LoginAsync returned user: {(userDto is null ? "null" : "present")}");
@@ -152,6 +152,18 @@ namespace AirIQ.ViewModels
         private async Task DisplayContactUsViewAsync()
         {
             await _popupNavigation.PushAsync(new ContactUsPopup());
+        }
+
+        [RelayCommand]
+        private async Task NavigateToTermsAsync()
+        {
+            await ShellNavigationService.Navigate<TermsAndConditionsPage>();
+        }
+
+        [RelayCommand]
+        private async Task NavigateToPolicyAsync()
+        {
+            await ShellNavigationService.Navigate<PrivacyPolicyPage>();
         }
 
         #endregion

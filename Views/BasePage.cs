@@ -9,6 +9,7 @@ using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
 using Application = Microsoft.Maui.Controls.Application;
 using NavigationPage = Microsoft.Maui.Controls.NavigationPage;
 using NavigationMode = AirIQ.Enums.NavigationMode;
+using AirIQ.Configurations;
 
 namespace AirIQ.Views;
 
@@ -39,6 +40,7 @@ public abstract class BasePage : ContentPage
 		_navBar.SetBinding(Controls.NavigationBarControl.IsBackVisibleProperty, new Binding(nameof(IsBackVisible), source: this));
 		_navBar.SetBinding(Controls.NavigationBarControl.NavigateCommandProperty, new Binding("NavigateCommand", source: this.BindingContext));
 		_navBar.SetBinding(NavigationBarControl.NavigationModeProperty, new Binding(nameof(NavigationMode), source: this));
+		_navBar.SetBinding(NavigationBarControl.IsWalletVisibleProperty, binding: new Binding(nameof(IsWalletVisible), source: this));
 
 		_content = new ContentView();
 		_content.BackgroundColor = Colors.White;
@@ -75,6 +77,9 @@ public abstract class BasePage : ContentPage
 	public static readonly BindableProperty NavigationModeProperty =
 		BindableProperty.Create(nameof(NavigationMode), typeof(NavigationMode), typeof(BasePage), defaultValue: NavigationMode.Back);
 
+	public static readonly BindableProperty IsWalletVisibleProperty =
+		BindableProperty.Create(nameof(IsWalletVisible), typeof(bool), typeof(BasePage), defaultValue: true);
+
 	public string PageTitle
 	{
 		get => (string)GetValue(PageTitleProperty);
@@ -85,6 +90,12 @@ public abstract class BasePage : ContentPage
 	{
 		get => (bool)GetValue(IsBackVisibleProperty);
 		set => SetValue(IsBackVisibleProperty, value);
+	}
+
+	public bool IsWalletVisible
+	{
+		get => (bool)GetValue(IsWalletVisibleProperty);
+		set => SetValue(IsWalletVisibleProperty, value);
 	}
 
 	public bool IsNavBarVisible
@@ -191,6 +202,8 @@ public abstract class BasePage : ContentPage
 			activity.ApplySystemBars(this);
 		}
 #endif
+
+		_navBar.Amount = AppConfiguration.CurrentUser?.Balance ?? 0;
 	}
 
 	protected override void OnDisappearing()

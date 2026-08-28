@@ -93,8 +93,8 @@ namespace AirIQ.Platforms.Services
     imageView.CenterXAnchor.ConstraintEqualTo(loadingView.CenterXAnchor),
     imageView.CenterYAnchor.ConstraintEqualTo(loadingView.CenterYAnchor),
     // You also need to define size
-    imageView.WidthAnchor.ConstraintEqualTo(200),
-    imageView.HeightAnchor.ConstraintEqualTo(200)
+    imageView.WidthAnchor.ConstraintEqualTo(50),
+    imageView.HeightAnchor.ConstraintEqualTo(50)
 });
 
             return loadingView;

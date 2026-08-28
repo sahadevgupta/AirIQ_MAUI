@@ -1,6 +1,6 @@
 using Microsoft.Maui.Controls;
 
-namespace AirIQ;
+namespace AirIQ.Controls;
 
 public partial class LoadingIndicatorView : ContentPage
 {

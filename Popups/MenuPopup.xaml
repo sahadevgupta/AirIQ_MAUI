@@ -28,7 +28,8 @@
         <Grid RowDefinitions="Auto,*,Auto"
               ColumnDefinitions="Auto, *"
               BackgroundColor="{StaticResource PrimaryColor}"
-              RowSpacing="16">
+              RowSpacing="16"
+              MinimumWidthRequest="{OnIdiom Tablet=500}">
 
             <HorizontalStackLayout Spacing="12"
                                    Padding="20">

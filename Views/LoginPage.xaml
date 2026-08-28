@@ -110,12 +110,20 @@
                                   Style="{StaticResource Span12RegularGray50Style}"/>
                             <Span Text="{x:Static resx:AppResource.TermsAndConditions}"
                                   TextDecorations="Underline"
-                                  Style="{StaticResource Span12RegularGray50Style}"/>
+                                  Style="{StaticResource Span12RegularGray50Style}">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NavigateToTermsCommand}"/>
+                                </Span.GestureRecognizers>
+                            </Span>
                             <Span Text=" &#x2022; "
                                   Style="{StaticResource Span12RegularGray50Style}"/>
                             <Span Text="{x:Static resx:AppResource.PrivacyPolicy}"
                                   TextDecorations="Underline"
-                                  Style="{StaticResource Span12RegularGray50Style}"/>
+                                  Style="{StaticResource Span12RegularGray50Style}">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NavigateToPolicyCommand}"/>
+                                </Span.GestureRecognizers>
+                            </Span>
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>

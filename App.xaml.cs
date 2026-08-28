@@ -34,7 +34,7 @@ namespace AirIQ
                         if (AppConfiguration.IsLoggedInUser)
                         {
                             AppConfiguration.CurrentUser = JsonSerializer.Deserialize<UserDto>(AppConfiguration.UserDetails);
-                            await Shell.Current.GoToAsync("//app/home");
+                            await Shell.Current.GoToAsync("///home");
                         }
                         else
                         {

@@ -58,7 +58,13 @@
         Shell.TabBarIsVisible="False"
         Shell.FlyoutItemIsVisible="False"/>
 
-    <TabBar Route="app">
+    <ShellContent Title="Flights"
+                  ContentTemplate="{DataTemplate local:DashboardPage}"
+                  Route="home"
+                  Icon="flight"/>
+
+    <TabBar Route="app"
+            IsVisible="False">
         <ShellContent Title="Flights"
                       ContentTemplate="{DataTemplate local:DashboardPage}"
                       Route="home"

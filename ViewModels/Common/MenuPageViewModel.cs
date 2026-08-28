@@ -108,7 +108,7 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
                 await ShellNavigationService.NavigateToFlyoutPage<OnlineRechargePage>();
                 break;
             case MenuType.Flight:
-                await Shell.Current.GoToAsync("//app/home");
+                await Shell.Current.GoToAsync("///home");
                 break;
         }
     }

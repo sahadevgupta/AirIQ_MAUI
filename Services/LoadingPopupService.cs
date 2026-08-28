@@ -13,6 +13,8 @@ namespace AirIQ.Services;
 /// view never is). Presenting the loader as a Mopups popup keeps it a properly window-attached
 /// page. See LoadingIndicatorView.xaml for the full incident history.
 /// </summary>
+
+/*
 public class LoadingPopupService(IPopupNavigation popupNavigation) : ILoadingPopUpService
 {
     private readonly object _syncRoot = new();
@@ -125,4 +127,6 @@ public class LoadingPopupService(IPopupNavigation popupNavigation) : ILoadingPop
 
         _ = DismissLoaderAsync();
     }
+   
 }
+ */

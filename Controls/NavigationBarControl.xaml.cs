@@ -35,10 +35,11 @@ public partial class NavigationBarControl : ContentView
 	public static readonly BindableProperty NavigationModeProperty =
 		BindableProperty.Create(nameof(NavigationMode), typeof(NavigationMode), typeof(NavigationBarControl), defaultValue: NavigationMode.Back, propertyChanged: OnNavigationModeChanged);
 
-
+	public static readonly BindableProperty IsWalletVisibleProperty =
+			BindableProperty.Create(nameof(IsWalletVisible), typeof(bool), typeof(NavigationBarControl), true);
 
 	public static readonly BindableProperty AmountProperty =
-	BindableProperty.Create(nameof(Amount), typeof(double), typeof(NavigationBarControl), AppConfiguration.CurrentUser?.Balance, BindingMode.TwoWay);
+		BindableProperty.Create(nameof(Amount), typeof(double), typeof(NavigationBarControl), 0.0, BindingMode.TwoWay);
 
 
 	public ICommand NavigateCommand
@@ -75,11 +76,11 @@ public partial class NavigationBarControl : ContentView
 		set => SetValue(EndIconSourceProperty, value);
 	}
 
-	// public string NavigationIcon
-	// {
-	// 	get => (string)GetValue(NavigationIconProperty);
-	// 	set => SetValue(NavigationIconProperty, value);
-	// }
+	public bool IsWalletVisible
+	{
+		get => (bool)GetValue(IsWalletVisibleProperty);
+		set => SetValue(IsWalletVisibleProperty, value);
+	}
 
 	public Color BackButtonTintColor
 	{

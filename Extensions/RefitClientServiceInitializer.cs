@@ -15,23 +15,12 @@ namespace AirIQ.Extensions
             builder.Services.AddTransient<HttpMessageLogHandler>();
             Uri defaultUri = new Uri(configuration.BaseUrl);
 
-            builder.Services.AddRefitClient<IAppBackendService>(new RefitSettings
-            {
-                ExceptionFactory = async (response) =>
-                {
-                    if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                    {
-                        var content = await response.Content.ReadAsStringAsync();
-                        return new UnauthorizedException($"Unauthorized: {content}");
-                    }
-                    return null; // Default for other status codes            
-                }
-            })
+            builder.Services.AddRefitClient<IAppBackendService>()
             .ConfigureHttpClient(j =>
             {
                 j.BaseAddress = defaultUri;
-            })
-            .AddHttpMessageHandler<HttpMessageLogHandler>();
+            });
+            //.AddHttpMessageHandler<HttpMessageLogHandler>();
 
             builder.Services.AddRefitClient<IAuthenticationApi>()
             .ConfigureHttpClient(j =>

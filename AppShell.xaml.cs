@@ -31,5 +31,7 @@ public partial class AppShell : Shell
 		Routing.RegisterRoute(nameof(UploadRequestPage), typeof(UploadRequestPage));
 		Routing.RegisterRoute(nameof(OnlineRechargePage), typeof(OnlineRechargePage));
 		Routing.RegisterRoute(nameof(PaxCalendarPage), typeof(PaxCalendarPage));
+		Routing.RegisterRoute(nameof(TermsAndConditionsPage), typeof(TermsAndConditionsPage));
+		Routing.RegisterRoute(nameof(PrivacyPolicyPage), typeof(PrivacyPolicyPage));
 	}
 }
