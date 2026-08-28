@@ -94,25 +94,5 @@ public partial class SearchView : ContentView
 	public SearchView()
 	{
 		InitializeComponent();
-		ModifyControl();
-	}
-
-	private void ModifyControl()
-	{
-		Microsoft.Maui.Handlers.SearchBarHandler.Mapper.AppendToMapping(nameof(SearchView), (handler, view) =>
-		{
-#if IOS
-			handler.PlatformView.BackgroundColor = Colors.Transparent.ToPlatform();
-			//handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
-			handler.PlatformView.ClipsToBounds = true;
-			handler.PlatformView.Layer.BorderWidth = 0;
-			handler.PlatformView.Layer.BorderColor = UIKit.UIColor.Clear.CGColor;
-#elif ANDROID
-
-			handler.PlatformView.SetBackgroundColor(Colors.Transparent.ToPlatform());
-			handler.PlatformView.Background = null;
-
-#endif
-		});
 	}
 }

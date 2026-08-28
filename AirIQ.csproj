@@ -69,7 +69,6 @@
 		<PackageReference Include="Syncfusion.Maui.Toolkit" Version="1.0.9" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.22.0" />
 		<PackageReference Include="Microsoft.Maui.Essentials" Version="10.0.100" />
-		<PackageReference Include="System.Text.Json" Version="10.0.11" />
 		<PackageReference Include="ZXing.Net.Maui.Controls" Version="0.10.4" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.11" />
 		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="3.0.0" />

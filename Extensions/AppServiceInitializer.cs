@@ -20,7 +20,7 @@ public static class AppServiceInitializer
                         .AddTransient<IAuthenticationService, AuthenticationService>()
                         .AddTransient<IDialogService, DialogService>()
                         .AddTransient<IUpiAppLaunchService, AirIQ.Platforms.Services.UpiAppLaunchService>()
-                        .AddTransient<IUpiPaymentCallbackService, UpiPaymentCallbackService>()
+
                         .AddTransient<ILookupService, LookupService>()
                         .AddTransient<IAuthenticationService, AuthenticationService>()
                         .AddTransient<IFlightService, FlightService>()
@@ -35,7 +35,8 @@ public static class AppServiceInitializer
                         .AddSingleton<IConnectivityService, ConnectivityService>()
                         .AddSingleton<ISecureStorageService, SecureStorageService>()
                         .AddSingleton<IPopupNavigation>(MopupService.Instance)
-                        .AddSingleton<IAppConfiguration, AppConfiguration>();
+                        .AddSingleton<IAppConfiguration, AppConfiguration>()
+                        .AddSingleton<IUpiPaymentCallbackService, UpiPaymentCallbackService>();
 
         return builder;
     }

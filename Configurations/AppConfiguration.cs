@@ -1,4 +1,5 @@
-﻿using AirIQ.Models.Response;
+﻿using AirIQ.Enums;
+using AirIQ.Models.Response;
 using AirIQ.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 
@@ -45,5 +46,7 @@ namespace AirIQ.Configurations
         public string MicrosoftClarityProjectId { get; private set; }
 
         public static UserDto? CurrentUser;
+
+        public static MenuType SelectedMenuType { get; set; } = MenuType.Flight;
     }
 }

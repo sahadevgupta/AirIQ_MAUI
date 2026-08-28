@@ -51,7 +51,6 @@ namespace AirIQ.Extensions
             {
                 if (view is not BorderlessEditor)
                     return;
-
 #if IOS
                 handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
                 handler.PlatformView.Layer.BorderWidth = 0;
@@ -64,14 +63,45 @@ namespace AirIQ.Extensions
 #endif
             });
 
+            EntryHandler.Mapper.AppendToMapping(nameof(BorderlessEntry), (handler, view) =>
+            {
+                if (view is BorderlessEntry control)
+                {
+#if IOS
+                    handler.PlatformView.BackgroundColor = Colors.Transparent.ToPlatform();
+                    handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+                    handler.PlatformView.ClipsToBounds = true;
+                    handler.PlatformView.Layer.BorderWidth = 0;
+                    handler.PlatformView.Layer.BorderColor = UIKit.UIColor.Clear.CGColor;
+#elif ANDROID
+                    handler.PlatformView.InputType = Android.Text.InputTypes.TextVariationShortMessage;
+                    handler.PlatformView.SetBackgroundColor(Colors.Transparent.ToPlatform());
+                    handler.PlatformView.Background = null;
+#endif
+                }
+            });
+
+            SearchBarHandler.Mapper.AppendToMapping(nameof(SearchView), (handler, view) =>
+           {
+#if IOS
+                handler.PlatformView.BackgroundColor = Colors.Transparent.ToPlatform();
+                //handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+                handler.PlatformView.ClipsToBounds = true;
+                handler.PlatformView.Layer.BorderWidth = 0;
+                handler.PlatformView.Layer.BorderColor = UIKit.UIColor.Clear.CGColor;
+#elif ANDROID
+
+               handler.PlatformView.SetBackgroundColor(Colors.Transparent.ToPlatform());
+               handler.PlatformView.Background = null;
+
+#endif
+           });
+
             return builder.ConfigureMauiHandlers(handlers =>
             {
                 handlers.AddHandler<CustomDropdown, AirIQ.Platforms.Handlers.CustomDropdownHandler>();
                 handlers.AddHandler<Entry, AirIQ.Platforms.Handlers.PlainEntryHandler>();
                 handlers.AddHandler<BorderlessEntry, AirIQ.Platforms.Handlers.PlainEntryHandler>();
-#if ANDROID
-                //handlers.AddHandler(typeof(Shell), typeof(AirIQ.Platforms.Handlers.CustomShellRenderer));
-#endif
             });
 
 

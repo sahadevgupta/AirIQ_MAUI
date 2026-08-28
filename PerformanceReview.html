@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AirIQ MAUI — Performance &amp; Code-Quality Review</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --panel:#ffffff; --text:#1c2128; --muted:#5b6472; --border:#e2e5ea;
+    --code-bg:#f1f3f6; --link:#2563eb;
+    --crit-bg:#fdeceb; --crit-bd:#e0413a; --crit-tx:#9c221d;
+    --high-bg:#fef3e6; --high-bd:#e78a1f; --high-tx:#8a5210;
+    --med-bg:#fef9e3;  --med-bd:#d4ad0a; --med-tx:#7a6205;
+    --low-bg:#eef2f6;  --low-bd:#8a97a8; --low-tx:#4a5568;
+    --ok-bg:#eaf7ee;   --ok-bd:#2f9e52; --ok-tx:#1f6b38;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+  }
+  .wrap{max-width:960px; margin:0 auto; padding:40px 24px 120px;}
+  header.hero{
+    background:linear-gradient(135deg,#1c2c4c,#0f1a30); color:#fff;
+    border-radius:14px; padding:36px 32px; margin-bottom:32px;
+  }
+  header.hero h1{margin:0 0 8px; font-size:1.7rem;}
+  header.hero p{margin:4px 0; color:#c9d3e6; font-size:0.95rem;}
+  .badge-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px;}
+  .stat{
+    background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15);
+    border-radius:8px; padding:8px 14px; font-size:0.82rem;
+  }
+  .stat b{display:block; font-size:1.15rem;}
+  nav.toc{
+    background:var(--panel); border:1px solid var(--border); border-radius:12px;
+    padding:20px 24px; margin-bottom:32px;
+  }
+  nav.toc h2{margin-top:0; font-size:1rem; text-transform:uppercase; letter-spacing:.04em; color:var(--muted);}
+  nav.toc ol{columns:2; column-gap:32px; margin:0; padding-left:20px;}
+  nav.toc li{margin-bottom:6px; font-size:0.92rem;}
+  nav.toc a{color:var(--link); text-decoration:none;}
+  nav.toc a:hover{text-decoration:underline;}
+  section{margin-bottom:44px;}
+  section > h2{
+    font-size:1.3rem; border-bottom:2px solid var(--border); padding-bottom:10px; margin-bottom:18px;
+    scroll-margin-top:20px;
+  }
+  section > h2 .tag{font-size:0.7rem; font-weight:600; color:var(--muted); text-transform:none; margin-left:8px;}
+  .finding{
+    background:var(--panel); border:1px solid var(--border); border-left-width:5px;
+    border-radius:10px; padding:16px 20px; margin-bottom:16px; scroll-margin-top:20px;
+  }
+  .finding.crit{border-left-color:var(--crit-bd);}
+  .finding.high{border-left-color:var(--high-bd);}
+  .finding.med{border-left-color:var(--med-bd);}
+  .finding.low{border-left-color:var(--low-bd);}
+  .finding-head{display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;}
+  .finding-head h3{margin:0; font-size:1.02rem; flex:1 1 auto; min-width:200px;}
+  .sev{
+    font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.03em;
+    padding:3px 9px; border-radius:20px; white-space:nowrap;
+  }
+  .sev.crit{background:var(--crit-bg); color:var(--crit-tx); border:1px solid var(--crit-bd);}
+  .sev.high{background:var(--high-bg); color:var(--high-tx); border:1px solid var(--high-bd);}
+  .sev.med{background:var(--med-bg); color:var(--med-tx); border:1px solid var(--med-bd);}
+  .sev.low{background:var(--low-bg); color:var(--low-tx); border:1px solid var(--low-bd);}
+  .cat{
+    font-size:0.68rem; font-weight:600; color:var(--muted); background:var(--code-bg);
+    padding:3px 9px; border-radius:20px; border:1px solid var(--border);
+  }
+  code, .path{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:0.85em;
+    background:var(--code-bg); padding:1px 5px; border-radius:4px; color:#1a3a6b;
+  }
+  .finding dl{margin:10px 0 0; display:grid; grid-template-columns:120px 1fr; row-gap:6px; column-gap:10px; font-size:0.9rem;}
+  .finding dt{color:var(--muted); font-weight:600;}
+  .finding dd{margin:0;}
+  .scope{
+    display:inline-block; margin-top:10px; font-size:0.78rem; font-weight:600;
+    padding:3px 10px; border-radius:6px;
+  }
+  .scope.safe{background:var(--ok-bg); color:var(--ok-tx);}
+  .scope.arch{background:var(--high-bg); color:var(--high-tx);}
+  .ok-box{
+    background:var(--ok-bg); border:1px solid var(--ok-bd); border-radius:10px;
+    padding:16px 20px; margin-top:18px; font-size:0.92rem;
+  }
+  .ok-box h4{margin:0 0 8px; color:var(--ok-tx); font-size:0.85rem; text-transform:uppercase; letter-spacing:.03em;}
+  .ok-box ul{margin:0; padding-left:20px;}
+  .ok-box li{margin-bottom:6px;}
+  .risk-box{
+    background:var(--low-bg); border:1px dashed var(--low-bd); border-radius:10px;
+    padding:16px 20px; margin-top:14px; font-size:0.9rem;
+  }
+  .risk-box h4{margin:0 0 8px; color:var(--low-tx); font-size:0.8rem; text-transform:uppercase;}
+  .na-box{
+    background:var(--panel); border:1px solid var(--border); border-radius:10px;
+    padding:16px 20px; color:var(--muted); font-style:italic;
+  }
+  .prio-grid{display:grid; gap:16px;}
+  .prio-card{border-radius:10px; padding:18px 22px; border:1px solid var(--border);}
+  .prio-card h3{margin:0 0 10px; font-size:1rem;}
+  .prio-card ol{margin:0; padding-left:20px;}
+  .prio-card li{margin-bottom:8px; font-size:0.92rem;}
+  .prio-card.p0{background:var(--crit-bg); border-color:var(--crit-bd);}
+  .prio-card.p0 h3{color:var(--crit-tx);}
+  .prio-card.p1{background:var(--high-bg); border-color:var(--high-bd);}
+  .prio-card.p1 h3{color:var(--high-tx);}
+  .prio-card.p2{background:var(--med-bg); border-color:var(--med-bd);}
+  .prio-card.p2 h3{color:var(--med-tx);}
+  .prio-card.p3{background:var(--low-bg); border-color:var(--low-bd);}
+  .prio-card.p3 h3{color:var(--low-tx);}
+  .top10{
+    background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:8px 8px;
+  }
+  .top10 ol{margin:0; padding:0 0 0 0; list-style:none; counter-reset:top10;}
+  .top10 li{
+    counter-increment:top10; position:relative; padding:14px 20px 14px 56px;
+    border-bottom:1px solid var(--border); font-size:0.93rem;
+  }
+  .top10 li:last-child{border-bottom:none;}
+  .top10 li::before{
+    content:counter(top10); position:absolute; left:16px; top:12px;
+    width:28px; height:28px; border-radius:50%; background:#1c2c4c; color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem;
+  }
+  .summary3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;}
+  .summary3 .box{border-radius:10px; padding:16px 18px; border:1px solid var(--border); font-size:0.88rem;}
+  .summary3 .box h4{margin:0 0 8px; font-size:0.82rem; text-transform:uppercase; letter-spacing:.03em;}
+  .summary3 .confirmed{background:var(--crit-bg); border-color:var(--crit-bd);}
+  .summary3 .confirmed h4{color:var(--crit-tx);}
+  .summary3 .potential{background:var(--med-bg); border-color:var(--med-bd);}
+  .summary3 .potential h4{color:var(--med-tx);}
+  .summary3 .correct{background:var(--ok-bg); border-color:var(--ok-bd);}
+  .summary3 .correct h4{color:var(--ok-tx);}
+  @media (max-width:640px){
+    nav.toc ol{columns:1;}
+    .finding dl{grid-template-columns:100px 1fr;}
+    .summary3{grid-template-columns:1fr;}
+  }
+  footer{color:var(--muted); font-size:0.82rem; text-align:center; margin-top:60px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>AirIQ MAUI — Performance &amp; Code-Quality Review</h1>
+  <p>Full-application audit: ViewModels, XAML/UI, Services/API, Navigation &amp; DI, Async/Threading, Memory, Images, Search, Background Sync.</p>
+  <p>No changes applied — review only. Pure Refit/REST app, no local SQLite database.</p>
+  <div class="badge-row">
+    <div class="stat"><b>4</b>Critical</div>
+    <div class="stat"><b>7</b>High</div>
+    <div class="stat"><b>13</b>Medium</div>
+    <div class="stat"><b>14</b>Low</div>
+  </div>
+</header>
+
+<nav class="toc">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#s1">1. ViewModels</a></li>
+    <li><a href="#s2">2. XAML / UI</a></li>
+    <li><a href="#s3">3. Navigation / Startup / DI</a></li>
+    <li><a href="#s4">4. API / Networking</a></li>
+    <li><a href="#s5">5. SQLite / Database</a></li>
+    <li><a href="#s6">6. Async / Multithreading</a></li>
+    <li><a href="#s7">7. Memory</a></li>
+    <li><a href="#s8">8. Images / Files</a></li>
+    <li><a href="#s9">9. Search / Filtering</a></li>
+    <li><a href="#s10">10. Background Sync</a></li>
+    <li><a href="#prio">Prioritized Summary (P0–P3)</a></li>
+    <li><a href="#top10">Top 10 Highest-Impact Fixes</a></li>
+    <li><a href="#breakdown">Confirmed / Potential / Correct</a></li>
+  </ol>
+</nav>
+
+<!-- ============ 1. VIEWMODELS ============ -->
+<section id="s1">
+  <h2>1. ViewModels</h2>
+
+  <div class="finding high">
+    <div class="finding-head">
+      <h3>Missing concurrency guard on <code>LoadMoreAsync</code></h3>
+      <span class="sev high">High</span><span class="cat">Async</span>
+    </div>
+    <dl>
+      <dt>Files</dt><dd><span class="path">ViewModels/AccountLedgerRecordPageViewModel.cs:56-74</span>, <span class="path">RefundsRecordPageViewModel.cs:56-74</span>, <span class="path">SalesRecordPageViewModel.cs:58-76</span>, <span class="path">TempCreditPageViewModel.cs:60-83</span></dd>
+      <dt>Why</dt><dd>No <code>AllowConcurrentExecutions=false</code> or busy guard. <code>CollectionView.RemainingItemsThreshold</code> can fire more than once before the first page finishes loading, or a user double-taps — concurrent calls read the same <code>page</code> value, issue duplicate API requests, and each independently increments the cursor.</dd>
+      <dt>Impact</dt><dd>Duplicate rows in the list, corrupted pagination cursor, wasted API calls.</dd>
+      <dt>Triggers</dt><dd>Fast scrolling near list bottom, or double-tap on a "load more" affordance.</dd>
+      <dt>Fix</dt><dd><code>[RelayCommand(AllowConcurrentExecutions = false)]</code> or an <code>IsLoadingMore</code> flag as <code>CanExecute</code>.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding high">
+    <div class="finding-head">
+      <h3>Missing concurrency guard on <code>ConfirmBooking</code></h3>
+      <span class="sev high">High</span><span class="cat">Async</span>
+    </div>
+    <dl>
+      <dt>File</dt><dd><span class="path">ViewModels/FlightBookingPageViewModel.cs:170-242</span></dd>
+      <dt>Why</dt><dd>Double-tap on "Confirm Booking" can fire the paid-booking API twice concurrently — no guard, unlike <code>ChangePasswordPageViewModel.VerifyPassword</code> / <code>ForgotPasswordPageViewModel.Verify</code> which correctly use it.</dd>
+      <dt>Impact</dt><dd>Potential duplicate flight booking submitted to the backend.</dd>
+      <dt>Triggers</dt><dd>Rapid double-tap on Confirm Booking.</dd>
+      <dt>Fix</dt><dd><code>AllowConcurrentExecutions = false</code>.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head">
+      <h3>Fire-and-forget race on rapid picker/date changes</h3>
+      <span class="sev med">Medium</span><span class="cat">Async / Race</span>
+    </div>
+    <dl>
+      <dt>Files</dt><dd><span class="path">DashboardPageViewModel.cs:56-61</span> (<code>OnSelectedDestinationAirportChanged</code>), <span class="path">FlightsPageViewModel.cs:55-76</span> (<code>OnCurrentDateChanged</code> / <code>OnSelectedTravelDateChanged</code>), <span class="path">PaxCalendarPageViewModel.cs:150-160</span> (<code>OnSelectedDateItemChanged</code>)</dd>
+      <dt>Why</dt><dd><code>_ = SomeAsync()</code> with no CancellationToken. Rapid changes fire overlapping API calls; a slower stale response can complete after a newer one and overwrite bound state with outdated data.</dd>
+      <dt>Impact</dt><dd>Wrong flight/date list shown transiently; wasted network calls.</dd>
+      <dt>Triggers</dt><dd>User taps through pickers/date navigation quickly.</dd>
+      <dt>Fix</dt><dd>Per-change CancellationTokenSource, or a generation counter to discard stale responses.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding low">
+    <div class="finding-head"><h3>Menu list rebuilt on every open</h3><span class="sev low">Low</span><span class="cat">Memory / Collection</span></div>
+    <dl>
+      <dt>File</dt><dd><span class="path">ViewModels/Common/MenuPageViewModel.cs:32-54,120-124</span></dd>
+      <dt>Why</dt><dd><code>PopuplateMenuOptions</code> rebuilds a static 10-item collection every hamburger-menu open, unguarded.</dd>
+      <dt>Impact</dt><dd>Negligible allocation at this size, but dead repeated work.</dd>
+      <dt>Fix</dt><dd>Populate once / guard with an <code>_initialized</code> flag.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding low">
+    <div class="finding-head"><h3>Dead <code>Clear()</code> before reassignment</h3><span class="sev low">Low</span><span class="cat">Collection</span></div>
+    <dl>
+      <dt>File</dt><dd><span class="path">PaxCalendarPageViewModel.cs:106-113</span> (<code>BuildDateWindow</code>)</dd>
+      <dt>Why</dt><dd><code>DateItems?.Clear()</code> immediately followed by full reassignment — the Clear (and its notification) is wasted work on every date-window rebuild.</dd>
+      <dt>Fix</dt><dd>Remove the <code>Clear()</code> call.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding low">
+    <div class="finding-head"><h3><code>Continue</code> command missing concurrency guard</h3><span class="sev low">Low</span><span class="cat">Async</span></div>
+    <dl>
+      <dt>File</dt><dd><span class="path">ForgotPasswordPageViewModel.cs:29-42</span></dd>
+      <dt>Why</dt><dd>Inconsistent with sibling <code>Verify</code>; double-tap can duplicate an OTP-send API call.</dd>
+      <dt>Fix</dt><dd>Add <code>AllowConcurrentExecutions = false</code>, matching <code>Verify</code>.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="risk-box">
+    <h4>Potential risks</h4>
+    <p><b>SignupPageViewModel.cs:369,372-409</b> — <code>InitializeData</code> fire-and-forgets its lookup fetch; not cancelled if the user backs out mid-Signup. Exceptions are caught, so no crash, but wasted work continues after navigating away. <i>Architectural (needs cancellation plumbing).</i></p>
+    <p><b>FlightBookingPageViewModel.cs:264-267</b> — <code>LoadDataWhenNavigatedTo</code> is declared <code>async</code> but never awaits its own init call, so the base class marks the page "loaded" before passenger data actually finishes building. <i>Safe/minimal — just add <code>await</code>.</i></p>
+  </div>
+
+  <div class="ok-box">
+    <h4>Confirmed correct / good patterns</h4>
+    <ul>
+      <li><code>ObservableRangeCollection.AddRange()/ReplaceRange()</code> used by all 4 record-list VMs — batches to a single <code>CollectionChanged</code> notification, not per-item churn.</li>
+      <li><code>StringExtensions.ContainsIgnoreCase</code> — no allocation, used consistently in every filter.</li>
+      <li><code>LoginPageViewModel.Login</code> — correctly gates on <code>IsBusy</code> via <code>CanExecute</code> + explicit re-entrancy check.</li>
+      <li><code>SignupPageViewModel.FetchListingDataAsync</code> — the only <code>Task.WhenAll</code> in the app, correctly parallelizes 6 independent lookup calls.</li>
+      <li>No static/singleton fields on any ViewModel accumulate data across navigations.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 2. XAML/UI ============ -->
+<section id="s2">
+  <h2>2. XAML / UI</h2>
+
+  <div class="finding crit">
+    <div class="finding-head">
+      <h3>Static MAUI handler-mapper mutated from instance constructors</h3>
+      <span class="sev crit">Critical</span><span class="cat">Rendering / Handler-mapping</span>
+    </div>
+    <dl>
+      <dt>Files</dt><dd><span class="path">Controls/BorderlessEntry.cs:9-26</span>, <span class="path">Controls/SearchView.xaml.cs:94-117</span></dd>
+      <dt>Why</dt><dd>Both constructors call <code>Handler.Mapper.AppendToMapping(...)</code> on the <b>shared static</b> <code>EntryHandler.Mapper</code>/<code>SearchBarHandler.Mapper</code>. MAUI's <code>AppendToMapping</code> wraps the existing action in a new closure rather than replacing it — running this per-instance means every instantiation of <code>BorderlessEntry</code> (pervasive via <code>ExtendedEntry</code>, re-created on every CollectionView item-template recycle in passenger content views) or <code>SearchView</code> permanently adds another wrapping layer to the shared mapper for the life of the process, never unwound.</dd>
+      <dt>Impact</dt><dd>Unbounded compounding overhead (O(N) delegate chain) and closures held alive across the whole session — worsens continuously the longer the app runs.</dd>
+      <dt>Triggers</dt><dd>Every navigation to/from a form page (<code>ExtendedEntry</code>) or a search page (<code>SearchView</code>); every passenger row added.</dd>
+      <dt>Fix</dt><dd>Move <code>AppendToMapping</code> into a <code>static</code> constructor or a one-time <code>MauiProgram</code> handler-registration block.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal — high value</span>
+  </div>
+
+  <div class="finding high">
+    <div class="finding-head">
+      <h3>CollectionView nested inside ScrollView (confirmed real case)</h3>
+      <span class="sev high">High</span><span class="cat">Rendering / Virtualization</span>
+    </div>
+    <dl>
+      <dt>File</dt><dd><span class="path">Views/HotelsPage.xaml:32-132</span></dd>
+      <dt>Why</dt><dd><code>Hotels</code> is unbounded search-result data; item template is a shadowed <code>Frame</code> + nested <code>Grid</code>/<code>Image</code>/labels. With virtualization disabled, every result is measured/rendered simultaneously.</dd>
+      <dt>Impact</dt><dd>Jank/frame drops proportional to result-set size; worst on Android where Frame shadows are expensive per item.</dd>
+      <dt>Fix</dt><dd>Move the search-fields Frame into <code>CollectionView.Header</code>, drop the outer ScrollView.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+    <div class="risk-box" style="margin-top:14px;">
+      <h4>Refuted leads</h4>
+      8 of 10 originally-suspected files checked and refuted: BankDetailsPage, DashboardPage, TermsAndConditionsPage, UploadRequestPage, GroupQueryPage, PrivacyPolicyPage, LoginPage have a ScrollView but <b>no CollectionView at all</b>. <code>StepBarComponentView.xaml</code> has both but as Grid-row siblings, not nested.
+    </div>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3>No <code>x:DataType</code> — defeats compiled bindings</h3><span class="sev med">Medium</span><span class="cat">Binding</span></div>
+    <dl>
+      <dt>Files</dt><dd><span class="path">Views/HotelsPage.xaml</span> and <span class="path">Views/SummaryPage.xaml</span> (page + item template)</dd>
+      <dt>Why</dt><dd>Every other CollectionView-bearing page correctly sets <code>x:DataType</code>; these two fall back to slower reflection-based binding.</dd>
+      <dt>Fix</dt><dd>Add <code>x:DataType</code> to page root and DataTemplate.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3>Blocking <code>GC.Collect()</code> call</h3><span class="sev med">Medium</span><span class="cat">Rendering / GC</span></div>
+    <dl>
+      <dt>File</dt><dd><span class="path">Controls/CalendarView.xaml.cs:210-218</span> (<code>OnDisappearing</code>)</dd>
+      <dt>Why</dt><dd>Forces a full synchronous GC on every date-picker popup close — visible micro-jank, worse on Android, unnecessary since state is already nulled on the same line.</dd>
+      <dt>Fix</dt><dd>Delete the call.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding low">
+    <div class="finding-head"><h3>Reflection-by-name lookup per tap</h3><span class="sev low">Low</span><span class="cat">Binding</span></div>
+    <dl>
+      <dt>Files</dt><dd><span class="path">Controls/AdvSegmentedControl.xaml.cs:284-301</span>, <span class="path">Controls/SegmentedControl.cs:113-121</span></dd>
+      <dt>Why</dt><dd>Negligible in practice — segmented-control item counts are always small (2-4 tabs).</dd>
+    </dl>
+    <span class="scope safe">Optional</span>
+  </div>
+
+  <div class="ok-box">
+    <h4>Confirmed correct</h4>
+    <ul>
+      <li>All data-heavy CollectionViews (Flights/TempCredit/PaxCalendar/Sales/Refunds/AccountLedger/FlightBooking/MenuPopup) stand alone, not nested in ScrollView, correctly use <code>x:DataType</code>.</li>
+      <li><code>CalendarView</code>'s 6×7 date-cell grid is pooled/reused, not rebuilt — good pattern, marred only by the stray <code>GC.Collect()</code>.</li>
+      <li>All 8 converters are cheap — no reflection or loops.</li>
+      <li>Popups correctly pair <code>+=</code>/<code>-=</code> on PropertyChanged.</li>
+      <li>No deep (5+ level) layout nesting found anywhere.</li>
+      <li>No dynamic ImageSource defeats built-in URI image caching.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 3. NAVIGATION/STARTUP/DI ============ -->
+<section id="s3">
+  <h2>3. Navigation / Startup / DI</h2>
+
+  <div class="finding crit">
+    <div class="finding-head">
+      <h3><code>IUpiPaymentCallbackService</code> registered Transient</h3>
+      <span class="sev crit">Critical</span><span class="cat">DI-lifetime</span>
+    </div>
+    <dl>
+      <dt>Files</dt><dd><span class="path">Extensions/AppServiceInitializer.cs:23</span>, <span class="path">Platforms/Android/MainActivity.cs:72</span>, <span class="path">Platforms/iOS/AppDelegate.cs:18</span>, <span class="path">ViewModels/BankDetailsPageViewModel.cs:17-24</span></dd>
+      <dt>Why</dt><dd>The platform deep-link handlers and <code>BankDetailsPageViewModel</code> each resolve a <b>different transient instance</b>, so the ViewModel's <code>CallbackReceived</code> subscription is on an instance nobody ever writes to.</dd>
+      <dt>Impact</dt><dd>UPI payment-callback delivery is broken entirely.</dd>
+      <dt>Fix</dt><dd>Register as Singleton — <b>but this must be paired with the dead-cleanup-path fix in §6/§7</b>, or the fix trades a functional bug for a new leak.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal once done together</span>
+  </div>
+
+  <div class="finding high">
+    <div class="finding-head"><h3>Android loading-indicator caching guard disabled</h3><span class="sev high">High</span><span class="cat">Lifecycle</span></div>
+    <dl>
+      <dt>File</dt><dd><span class="path">Platforms/Android/Services/LoadingPopupService.cs:40-70</span></dd>
+      <dt>Why</dt><dd>The <code>isInitialized</code> short-circuit is commented out — every <code>LoadingService.Show()</code> call constructs a brand-new native view/handler tree from scratch. Fires on ~15 ViewModel call sites — essentially every API call in the app.</dd>
+      <dt>Fix</dt><dd>Restore the guard / reuse the cached view.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding high">
+    <div class="finding-head"><h3>iOS loading-indicator re-decodes GIF from scratch every show</h3><span class="sev high">High</span><span class="cat">Lifecycle</span></div>
+    <dl>
+      <dt>Files</dt><dd><span class="path">Platforms/iOS/Services/LoadingPopupService.cs:31-68</span>, <span class="path">Platforms/iOS/ImageExtension.cs:22-47,92-138</span></dd>
+      <dt>Why</dt><dd>No caching of decoded frames or the constructed <code>CAKeyFrameAnimation</code>; all runs synchronously on the main dispatch queue on every Show().</dd>
+      <dt>Fix</dt><dd>Cache decoded frames/animation, reuse across Show()/Hide() cycles.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3><code>BuildServiceProvider()</code> anti-pattern at startup</h3><span class="sev med">Medium</span><span class="cat">Startup / DI</span></div>
+    <dl>
+      <dt>File</dt><dd><span class="path">MauiProgram.cs:51</span></dd>
+      <dt>Why</dt><dd>Builds a throwaway second DI container just to read 3 config strings, duplicating construction of the <code>IAppConfiguration</code> singleton.</dd>
+      <dt>Fix</dt><dd>Read <code>builder.Configuration[...]</code> directly before <code>Build()</code>.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3>Only 2 of ~22 pages registered in DI</h3><span class="sev med">Medium</span><span class="cat">Navigation / DI</span></div>
+    <dl>
+      <dt>File</dt><dd><span class="path">Extensions/ViewInitializer.cs:9-10</span></dd>
+      <dt>Why</dt><dd>Only <code>LoginPage</code>/<code>DashboardPage</code> registered; all other pages resolved through Shell's route-factory fallback instead of the DI container's cached resolution — inconsistent with <code>ViewModelInitializer</code>, which registers all ~19 ViewModels.</dd>
+      <dt>Fix</dt><dd>Register all page types, mirroring ViewModelInitializer; verify no behavior change first.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal (verify first)</span>
+  </div>
+
+  <div class="finding low">
+    <div class="finding-head"><h3>Sentry <code>Debug = true</code> not gated by <code>#if DEBUG</code></h3><span class="sev low">Low</span><span class="cat">Startup</span></div>
+    <dl><dt>File</dt><dd><span class="path">MauiProgram.cs:46</span></dd>
+      <dt>Why</dt><dd>Runs in Release/production too, unlike the adjacent <code>AddDebug()</code> which is correctly gated.</dd></dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding low">
+    <div class="finding-head"><h3>Duplicate DI registration</h3><span class="sev low">Low</span><span class="cat">DI</span></div>
+    <dl><dt>File</dt><dd><span class="path">Extensions/AppServiceInitializer.cs:20,25</span></dd>
+      <dt>Why</dt><dd><code>IAuthenticationService</code> registered twice; harmless but a hygiene smell.</dd></dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding low">
+    <div class="finding-head"><h3>Menu popup rebuilds content + spins up duplicate transient VM</h3><span class="sev low">Low</span><span class="cat">Lifecycle / DI</span></div>
+    <dl><dt>Files</dt><dd><span class="path">Popups/MenuPopup.xaml.cs:17-24</span>, <span class="path">Views/ContentViews/MenuContentView.xaml.cs:16-23</span></dd>
+      <dt>Why</dt><dd><code>OnParentSet()</code> has no "already loaded" guard, and each resolves its own separate <code>MenuPageViewModel</code>, rebuilding the same static list twice per menu interaction.</dd></dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding low">
+    <div class="finding-head"><h3>Unobserved startup task</h3><span class="sev low">Low</span><span class="cat">Async / Startup</span></div>
+    <dl><dt>File</dt><dd><span class="path">App.xaml.cs:17-20</span></dd>
+      <dt>Why</dt><dd>Fire-and-forget <code>Task.Run</code> with no try/catch; a failure silently leaves the airport cache null and later lookups throw with no diagnostic trail.</dd></dl>
+    <span class="scope safe">Safe / minimal — add try/catch + Sentry report</span>
+  </div>
+
+  <div class="ok-box">
+    <h4>Confirmed correct</h4>
+    <ul>
+      <li>ViewModel DI lifetimes (all Transient) and Service lifetimes (Singleton/Transient) are appropriate throughout.</li>
+      <li>No duplicate constructor+lifecycle loading found across any of the 12 VMs that override lifecycle hooks.</li>
+      <li><code>BasePage</code>'s lifecycle dispatch to VM hooks is fire-and-forget (non-blocking) — data loading never delays the navigation transition.</li>
+      <li>Route registration tables are built once at startup, not per-navigation.</li>
+      <li><code>AirportExtensions</code> correctly caches parsed JSON with a null-guard, off the UI thread.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 4. API/NETWORKING ============ -->
+<section id="s4">
+  <h2>4. API / Networking</h2>
+
+  <div class="finding high">
+    <div class="finding-head"><h3>No caching on reference/lookup data</h3><span class="sev high">High</span><span class="cat">API / Caching</span></div>
+    <dl>
+      <dt>File</dt><dd><span class="path">Services/LookupService.cs:13-137</span> (all 6 methods — countries/states/cities/main-cities/districts/account-managers)</dd>
+      <dt>Why</dt><dd>Refetched from the network on every Signup visit (fired concurrently via <code>Task.WhenAll</code> — good concurrency, but the calls themselves are unconditionally repeated).</dd>
+      <dt>Fix</dt><dd>In-memory cache with a manual invalidation hook.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding high">
+    <div class="finding-head"><h3>Repeated SecureStorage read + JWT parse on every authenticated call</h3><span class="sev high">High</span><span class="cat">Async / SecureStorage</span></div>
+    <dl>
+      <dt>Files</dt><dd><span class="path">Services/AuthService.cs:18-61</span>, <span class="path">Services/ApiServiceBase.cs:49-72</span></dd>
+      <dt>Why</dt><dd><code>GetHeader()</code> calls <code>Auth()</code> for every request, doing a native Keychain/Keystore read plus full JWT claims parsing every time — no in-memory cache of the still-valid parsed token.</dd>
+      <dt>Impact</dt><dd>Adds latency to every authenticated API call across the app.</dd>
+      <dt>Fix</dt><dd>Cache the parsed <code>AuthInfoDto</code> in memory; only re-read from SecureStorage on expiry.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3>Session-expiry popup can stack under concurrency</h3><span class="sev med">Medium</span><span class="cat">Async / Concurrency</span></div>
+    <dl>
+      <dt>File</dt><dd><span class="path">Services/AuthService.cs:30-53</span></dd>
+      <dt>Why</dt><dd>No semaphore/lock guards the re-auth branch; concurrent authenticated calls that all see an expired token at once each independently show a <code>SessionExpiryPopup</code>.</dd>
+      <dt>Fix</dt><dd><code>SemaphoreSlim(1,1)</code> or a shared in-flight <code>Task</code>.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3>Route list refetched unconditionally on every Dashboard visit</h3><span class="sev med">Medium</span><span class="cat">API / Caching</span></div>
+    <dl>
+      <dt>File</dt><dd><span class="path">Services/FlightService.cs:12-36</span>, called from <span class="path">DashboardPageViewModel.cs:69-82,190-193</span></dd>
+      <dt>Why</dt><dd>Reference data with no caching.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3>Source-generated JSON context exists but is dead code</h3><span class="sev med">Medium</span><span class="cat">Serialization</span></div>
+    <dl>
+      <dt>File</dt><dd><span class="path">Extensions/AppJsonContext.cs</span></dd>
+      <dt>Why</dt><dd>Registers 3 types but is never wired into <code>RefitSettings</code>; all Refit (de)serialization falls back to reflection-based System.Text.Json. Missed savings on every API response app-wide, plus a trimming/AOT risk.</dd>
+      <dt>Fix</dt><dd>Expand context to cover all DTOs, wire into <span class="path">RefitClientServiceInitializer.cs</span>.</dd>
+    </dl>
+    <span class="scope arch">Architectural</span>
+  </div>
+
+  <div class="finding low">
+    <div class="finding-head"><h3>Serializer inconsistency (currently unused)</h3><span class="sev low">Low</span><span class="cat">Serialization</span></div>
+    <dl><dt>File</dt><dd><span class="path">Services/SecureStorageService.cs:1-18</span></dd>
+      <dt>Why</dt><dd><code>GetAsync&lt;T&gt;</code> uses Newtonsoft.Json while the rest of the app is on System.Text.Json; confirmed dead code today.</dd></dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding low">
+    <div class="finding-head"><h3>No pagination on city/district lookups</h3><span class="sev low">Low</span><span class="cat">API / Pagination</span></div>
+    <dl><dt>File</dt><dd><span class="path">Services/LookupService.cs</span> — <code>GetCitiesAsync</code>/<code>GetDistrictsAsync</code></dd>
+      <dt>Why</dt><dd>Secondary to the missing-cache issue above; becomes a one-time cost once caching is added.</dd></dl>
+    <span class="scope arch">Architectural (server-side support required)</span>
+  </div>
+
+  <div class="ok-box">
+    <h4>Confirmed correct</h4>
+    <ul>
+      <li><code>OperationsService</code> record-fetch methods are all correctly paginated with <code>page</code>/<code>pageSize</code>.</li>
+      <li>Refit clients registered via <code>AddRefitClient&lt;T&gt;().ConfigureHttpClient(...)</code> — correct pooled <code>IHttpClientFactory</code> pattern.</li>
+      <li>Only 2 <code>.Result</code> hits in the entire codebase, both confirmed to be a DTO property named <code>Result</code>, not <code>Task.Result</code> — no actual blocking calls anywhere.</li>
+      <li>No retry/backoff logic (a resilience gap, not a perf defect — no retry-storm risk either).</li>
+      <li><code>ConfigureAwait(false)</code> used consistently and correctly, only in non-UI-touching Services code.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 5. SQLITE/DATABASE ============ -->
+<section id="s5">
+  <h2>5. SQLite / Database</h2>
+  <div class="na-box">
+    N/A — confirmed via repo-wide search: no SQLite/local database exists anywhere in this app. It's a pure REST/Refit app with SecureStorage for token persistence only. None of the N+1/missing-index/large-table concerns apply.
+  </div>
+</section>
+
+<!-- ============ 6. ASYNC/MULTITHREADING ============ -->
+<section id="s6">
+  <h2>6. Async / Multithreading</h2>
+
+  <div class="finding crit">
+    <div class="finding-head"><h3>No reference counting on the shared loading-indicator native view</h3><span class="sev crit">Critical</span><span class="cat">Memory / Threading</span></div>
+    <dl>
+      <dt>Files</dt><dd><span class="path">Platforms/Android/Services/LoadingPopupService.cs:22-38,43,74-84</span>, <span class="path">Platforms/iOS/Services/LoadingPopupService.cs:20-42</span></dd>
+      <dt>Why</dt><dd><code>ILoadingPopUpService</code> is a Singleton; both implementations track "the current view" in a single mutable field, overwritten by every <code>Show()</code>. If two <code>Show()</code> calls overlap (plausible — see §1's fire-and-forget races), the earlier view's reference is silently overwritten; <code>Hide()</code> only ever removes the most recent view.</dd>
+      <dt>Impact</dt><dd>The earlier native view is orphaned in the visual tree permanently. A correct reference-counted implementation already exists, commented out, in the codebase.</dd>
+      <dt>Fix</dt><dd>Port the existing commented-out reference-counting implementation.</dd>
+    </dl>
+    <span class="scope arch">Architectural — known-good fix already exists</span>
+  </div>
+
+  <div class="finding high">
+    <div class="finding-head"><h3><code>IDestructible.Destory()</code> cleanup path is dead code</h3><span class="sev high">High</span><span class="cat">Memory</span></div>
+    <dl>
+      <dt>Files</dt><dd><span class="path">Services/NavigationService.cs</span> (whole class), <span class="path">Views/BasePage.cs:172-216</span></dd>
+      <dt>Why</dt><dd>The only cleanup hook in the app is invoked exclusively from the custom <code>NavigationService</code>'s back-navigation paths — but no ViewModel or View ever calls <code>INavigationService.Navigate*</code>; all real navigation goes through <code>ShellNavigationService</code>, and <code>BasePage</code> never calls <code>Destory()</code>.</dd>
+      <dt>Impact</dt><dd>Any ViewModel relying on <code>Destory()</code> to unsubscribe from a long-lived event never actually unsubscribes — currently affects <code>BankDetailsPageViewModel.Destory()</code>'s unsubscribe of <code>_upiPaymentCallbackService.CallbackReceived</code>. <b>Directly interacts with the Transient-DI bug in §3/§7</b> — fixing that bug the obvious way (Singleton) would immediately turn this into an active leak.</dd>
+      <dt>Fix</dt><dd>Fix both together.</dd>
+    </dl>
+    <span class="scope arch">Architectural</span>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3><code>DialogService.ShowToast</code> is a pointless <code>async void</code></h3><span class="sev med">Medium</span><span class="cat">Async</span></div>
+    <dl>
+      <dt>File</dt><dd><span class="path">Services/DialogService.cs:79-92</span></dd>
+      <dt>Why</dt><dd>No top-level <code>await</code>, so <code>async</code> accomplishes nothing except making callers unable to observe failures; the dispatched inner lambda's <code>await toast.Show(...)</code> is effectively async-void too.</dd>
+      <dt>Fix</dt><dd>Return <code>Task</code>, wrap inner body in try/catch.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3>iOS GIF frame cache keyed globally, not per-image-name</h3><span class="sev med">Medium</span><span class="cat">Memory / Correctness</span></div>
+    <dl>
+      <dt>File</dt><dd><span class="path">Platforms/iOS/ImageExtension.cs:15-19,30-40</span></dd>
+      <dt>Why</dt><dd>Static fields cache only the first GIF ever loaded; any second, differently-named GIF silently reuses stale frame data.</dd>
+      <dt>Fix</dt><dd>Key the cache by filename.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding low">
+    <div class="finding-head"><h3>Undisposed <code>CancellationTokenSource</code> instances</h3><span class="sev low">Low</span><span class="cat">Memory</span></div>
+    <dl><dt>Files</dt><dd><span class="path">Services/DialogService.cs:83,103</span>, <span class="path">Services/ApiServiceBase.cs:36</span></dd>
+      <dt>Why</dt><dd>No <code>using</code>/Dispose; low-impact today since none use <code>CancelAfter</code>.</dd></dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding low">
+    <div class="finding-head"><h3>Unnecessary <code>Task.Run</code> around an already-async call</h3><span class="sev low">Low</span><span class="cat">Threading</span></div>
+    <dl><dt>File</dt><dd><span class="path">Controls/CalendarView.xaml.cs:112</span></dd>
+      <dt>Why</dt><dd>Wraps <code>MopupService.Instance.PopAsync(true)</code> in <code>Task.Run</code>, discarding the result; wasted thread-hop plus swallowed exceptions.</dd></dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding low">
+    <div class="finding-head"><h3>Unobserved toast task</h3><span class="sev low">Low</span><span class="cat">Async</span></div>
+    <dl><dt>File</dt><dd><span class="path">Services/ApiServiceBase.cs:43</span> (<code>HandleException</code>)</dd>
+      <dt>Why</dt><dd><code>toast.Show(...)</code> not awaited inside <code>MainThread.BeginInvokeOnMainThread</code>; silent failure only.</dd></dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="finding low">
+    <div class="finding-head"><h3>Missing try/catch around an async-void event handler</h3><span class="sev low">Low</span><span class="cat">Async</span></div>
+    <dl><dt>File</dt><dd><span class="path">ViewModels/BankDetailsPageViewModel.cs:81-84</span> (<code>OnUpiCallbackReceived</code>)</dd>
+      <dt>Why</dt><dd>Currently low risk since this handler's event never fires today (per the Transient-DI bug); becomes relevant once fixed.</dd></dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="ok-box">
+    <h4>Confirmed correct</h4>
+    <ul>
+      <li>No actual blocking calls (<code>.Result</code>/<code>.Wait()</code>/<code>GetAwaiter().GetResult()</code>) anywhere in the codebase.</li>
+      <li><code>ConfigureAwait(false)</code> used correctly and consistently in Services-layer code only.</li>
+      <li>No <code>IDispatcherTimer</code> usage anywhere; the one <code>System.Threading.Timer</code> is a correctly self-disposing one-shot timer.</li>
+      <li>No streams left undisposed anywhere.</li>
+      <li>Of 9 <code>async void</code> methods found, 7 are legitimate framework-required event-handler shapes.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 7. MEMORY ============ -->
+<section id="s7">
+  <h2>7. Memory</h2>
+
+  <div class="finding crit">
+    <div class="finding-head"><h3>Native view + event-observer leak on iOS dropdowns</h3><span class="sev crit">Critical</span><span class="cat">Memory</span></div>
+    <dl>
+      <dt>Files</dt><dd><span class="path">Platforms/iOS/Handlers/IosDropDownBox.cs:26,105</span> (static <code>Instances</code> list) and <span class="path">:22-23,229-242</span> (keyboard NSNotificationCenter observers)</dd>
+      <dt>Why</dt><dd>Every <code>IosDropDownBox</code> (backing <code>CustomDropdown</code>, used in Signup/BusinessInformationView etc., often several per page) adds itself to a static list in its constructor and is never removed — <code>CustomDropdownHandler.DisconnectHandler</code> only cleans up its own event wiring. The two NSNotificationCenter keyboard observers registered per instance are likewise never removed.</dd>
+      <dt>Impact</dt><dd>Every dropdown ever created on iOS is pinned alive (native view tree + observers) for the entire app session, continuously handling keyboard events against detached views.</dd>
+      <dt>Fix</dt><dd>Remove <code>this</code> from <code>Instances</code> and dispose the two observers from a teardown path invoked by <code>DisconnectHandler</code>. The Android equivalent (<code>CustomDropdownHandler.cs</code>) already does this correctly — use as reference.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal — high value</span>
+  </div>
+
+  <p style="color:var(--muted); font-size:0.88rem;">See also §6 (Async/Multithreading) for the loading-indicator reference-counting leak and the dead <code>Destory()</code> cleanup-path leak — both are Memory-category findings cross-referenced there to keep the DI/lifecycle story together.</p>
+
+  <div class="ok-box">
+    <h4>Confirmed correct</h4>
+    <ul>
+      <li>Of 41 <code>+=</code> subscriptions found repo-wide, all except the iOS dropdown case are correctly paired with <code>-=</code> or are legitimate one-time app/window-lifetime subscriptions.</li>
+      <li><code>StepBarViewCell</code>/<code>StepBarComponentView</code>/<code>SegmentedControl</code> all correctly unsubscribe before resubscribing on binding-context change.</li>
+      <li><code>WeakReferenceMessenger</code>/<code>MessagingCenter</code> not used anywhere (N/A).</li>
+      <li>No <code>Connectivity.ConnectivityChanged</code> subscription exists anywhere (N/A).</li>
+      <li>No static collections found anywhere that accumulate across navigations.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 8. IMAGES/FILES ============ -->
+<section id="s8">
+  <h2>8. Images / Files</h2>
+
+  <div class="finding med">
+    <div class="finding-head"><h3>Oversized decorative header image</h3><span class="sev med">Medium</span><span class="cat">Images</span></div>
+    <dl>
+      <dt>File</dt><dd><span class="path">Resources/Images/navigation.png</span> (1408×1117px, 2.6MB PNG), used at <span class="path">Views/DashboardPage.xaml:19</span></dd>
+      <dt>Why</dt><dd>Displayed as a 330pt-tall <code>AspectFill</code> image on the most-visited page in the app; full-resolution bitmap decoded into memory on every Dashboard show.</dd>
+      <dt>Fix</dt><dd>Re-export at a size appropriate to display bounds, compressed format (WebP/optimized JPEG).</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal — asset-only</span>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3>Unused 4MB asset still bundled into every build</h3><span class="sev med">Medium</span><span class="cat">Images</span></div>
+    <dl>
+      <dt>File</dt><dd><span class="path">Resources/Images/loading.gif</span> (3342×1664px)</dd>
+      <dt>Why</dt><dd>Confirmed unreferenced anywhere in code (the actual loader uses a separate, much smaller <code>loader.gif</code>); still processed/duplicated per-density by the resizetizer.</dd>
+      <dt>Fix</dt><dd>Delete, or confirm intended use and wire it up.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="ok-box">
+    <h4>Confirmed correct</h4>
+    <ul>
+      <li>Remote image URLs (e.g. <code>AirlineLogoUrl</code>) are bound directly as <code>Image.Source</code> string, using MAUI's default cached <code>UriImageSource</code>.</li>
+      <li>File upload (<code>OperationsService.UploadRequestAsync</code>) streams the picked file via <code>File.OpenRead</code> into a multipart <code>StreamPart</code> — no full in-memory read, no base64 encoding, no synchronous UI-thread work.</li>
+    </ul>
+  </div>
+  <p style="color:var(--muted); font-size:0.88rem;">The loading-indicator GIF re-decode issue is cross-referenced under §3/§6 — same root cause as the caching problems here.</p>
+</section>
+
+<!-- ============ 9. SEARCH/FILTERING ============ -->
+<section id="s9">
+  <h2>9. Search / Filtering</h2>
+  <p style="color:var(--muted); font-size:0.88rem; margin-top:-8px;">Per instruction, debounce is not flagged — <code>UserStoppedTypingBehavior</code> in <code>Controls/SearchView.xaml:27</code> already handles it correctly.</p>
+
+  <div class="finding med">
+    <div class="finding-head"><h3>Inconsistent collection-replace pattern on search</h3><span class="sev med">Medium</span><span class="cat">Search</span></div>
+    <dl>
+      <dt>File</dt><dd><span class="path">ViewModels/PaxCalendarPageViewModel.cs:129-142</span> (<code>FilterFlightBookings</code>)</dd>
+      <dt>Why</dt><dd>Unlike its 4 sibling record-list ViewModels (which use <code>ObservableRangeCollection&lt;T&gt;.ReplaceRange(...)</code>), this VM does <code>FlightBookingList = new ObservableCollection&lt;T&gt;(filtered)</code> — a brand-new collection instance and full CollectionView rebind on every debounced keystroke and every date-window navigation.</dd>
+      <dt>Fix</dt><dd>Switch to <code>ObservableRangeCollection&lt;T&gt;</code> + <code>ReplaceRange(...)</code>, matching the established pattern elsewhere.</dd>
+    </dl>
+    <span class="scope safe">Safe / minimal</span>
+  </div>
+
+  <div class="ok-box">
+    <h4>Confirmed correct</h4>
+    <ul>
+      <li>All 4 other search/filter ViewModels (Sales/Refunds/AccountLedger/TempCredit) perform a single LINQ <code>.Where()</code> pass and bulk-replace via <code>ReplaceRange</code>.</li>
+      <li><code>StringExtensions.ContainsIgnoreCase</code> avoids per-keystroke allocation.</li>
+      <li>Search never redundantly re-fetches from the server — filtering runs over already-loaded in-memory data.</li>
+      <li><code>SearchView</code> control itself does no extra per-keystroke work.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 10. BACKGROUND SYNC ============ -->
+<section id="s10">
+  <h2>10. Background Sync</h2>
+  <div class="na-box">
+    Confirmed: no background/periodic sync exists anywhere in the app. No <code>Timer</code>/<code>IDispatcherTimer</code>/<code>Device.StartTimer</code>/recursive <code>Task.Delay</code> loops found. <code>ConnectivityService.CheckConnected()</code> is a synchronous on-demand check, not polling — and nothing subscribes to <code>Connectivity.ConnectivityChanged</code>, so there's no risk of overlapping resyncs. Android <code>MainActivity.OnResume</code> only reapplies window-inset styling. This category is clean — no findings.
+  </div>
+</section>
+
+<!-- ============ PRIORITIZED SUMMARY ============ -->
+<section id="prio">
+  <h2>Prioritized Summary</h2>
+  <div class="prio-grid">
+    <div class="prio-card p0">
+      <h3>P0 — Critical</h3>
+      <ol>
+        <li><a href="#s7"><code>IosDropDownBox</code> static list + NSNotificationCenter observers never removed</a> — permanent per-dropdown iOS leak</li>
+        <li><a href="#s2"><code>BorderlessEntry</code>/<code>SearchView</code> appending to shared static handler mapper from constructors</a> — unbounded session-long overhead</li>
+        <li><a href="#s6">Loading-indicator singleton with no reference counting</a> — orphaned native views on overlap</li>
+        <li><a href="#s3"><code>IUpiPaymentCallbackService</code> registered Transient</a> — breaks the payment-callback bridge; combined with dead cleanup, a leak trap too</li>
+      </ol>
+    </div>
+    <div class="prio-card p1">
+      <h3>P1 — High</h3>
+      <ol>
+        <li>Missing concurrency guards on <code>LoadMoreAsync</code> (×4) and <code>ConfirmBooking</code></li>
+        <li>Android loading-indicator rebuilds full native view tree on every <code>Show()</code></li>
+        <li>iOS loading-indicator fully re-decodes GIF on every <code>Show()</code></li>
+        <li><code>AuthService</code>: SecureStorage + JWT parse repeated every authenticated call, no caching</li>
+        <li><code>LookupService</code>: 6 reference-data endpoints refetched on every Signup visit</li>
+        <li><code>HotelsPage.xaml</code>: genuine CollectionView-in-ScrollView virtualization anti-pattern</li>
+        <li><code>NavigationService</code>/<code>Destory()</code> cleanup path is dead code</li>
+      </ol>
+    </div>
+    <div class="prio-card p2">
+      <h3>P2 — Medium</h3>
+      <ol>
+        <li>Fire-and-forget races in Dashboard/Flights/PaxCalendar picker handlers</li>
+        <li>Session-expiry popup can stack under concurrent expired-token requests</li>
+        <li>Route list refetched unconditionally every Dashboard visit</li>
+        <li><code>AppJsonContext</code> source-gen serialization unused</li>
+        <li><code>MauiProgram.cs</code> throwaway <code>BuildServiceProvider()</code> container</li>
+        <li>Only 2 of ~22 pages registered in DI</li>
+        <li><code>CalendarView.OnDisappearing()</code> forces a blocking <code>GC.Collect()</code></li>
+        <li>Missing <code>x:DataType</code> on HotelsPage/SummaryPage</li>
+        <li>Oversized <code>navigation.png</code> (2.6MB) decoded every Dashboard show</li>
+        <li>Unused 4MB <code>loading.gif</code> bundled into every build</li>
+        <li><code>PaxCalendarPageViewModel</code> search rebuilds new collection instead of <code>ReplaceRange</code></li>
+        <li><code>DialogService.ShowToast</code> pointless/unsafe <code>async void</code></li>
+        <li>iOS GIF frame cache keyed globally, breaks on second distinct GIF</li>
+      </ol>
+    </div>
+    <div class="prio-card p3">
+      <h3>P3 — Low</h3>
+      <ol>
+        <li>Menu list rebuilt per open + duplicate transient VM</li>
+        <li>Dead <code>Clear()</code> before reassignment (PaxCalendar)</li>
+        <li><code>ForgotPasswordPageViewModel.Continue</code> missing concurrency guard</li>
+        <li>Signup lookup fetch not cancelled on navigate-away</li>
+        <li><code>FlightBookingPageViewModel</code> fire-and-forgets its own init</li>
+        <li>Sentry <code>Debug=true</code> not gated by <code>#if DEBUG</code></li>
+        <li>Duplicate <code>IAuthenticationService</code> DI registration</li>
+        <li><code>AirportExtensions</code> startup task unobserved</li>
+        <li>Undisposed CancellationTokenSources in DialogService/ApiServiceBase</li>
+        <li>Unnecessary <code>Task.Run</code> around <code>PopAsync</code></li>
+        <li>Unobserved toast task in <code>ApiServiceBase.HandleException</code></li>
+        <li>Missing try/catch in <code>BankDetailsPageViewModel.OnUpiCallbackReceived</code></li>
+        <li><code>SecureStorageService</code> serializer inconsistency (dead code)</li>
+        <li><code>AdvSegmentedControl</code> reflection-by-name lookup per tap</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TOP 10 ============ -->
+<section id="top10">
+  <h2>Top 10 Highest-Impact Fixes</h2>
+  <div class="top10">
+    <ol>
+      <li><b>Fix the loading-indicator lifecycle end-to-end</b> (Android caching guard, iOS GIF re-decode, reference counting) — fires on ~15 call sites, i.e. essentially every API call in the app. Single biggest cumulative win.</li>
+      <li><b>Move <code>BorderlessEntry</code>/<code>SearchView</code>'s <code>AppendToMapping</code> calls to static constructors</b> — stops an unbounded, session-long compounding cost touching nearly every form and recycled CollectionView item template.</li>
+      <li><b>Fix <code>IosDropDownBox</code>'s static <code>Instances</code> leak + orphaned keyboard observers</b> — permanent native memory/view leak on iOS, one instance per dropdown ever shown.</li>
+      <li><b>Add <code>AllowConcurrentExecutions = false</code> to <code>LoadMoreAsync</code> (×4) and <code>ConfirmBooking</code></b> — cheap, mechanical fix, eliminates duplicate API calls, duplicate rows, and a duplicate-booking risk.</li>
+      <li><b>Fix <code>IUpiPaymentCallbackService</code> DI lifetime + wire up real cleanup</b> — do both together, or the fix trades a functional bug for a leak.</li>
+      <li><b>Cache the parsed auth token in <code>AuthService</code></b> instead of re-reading SecureStorage + re-parsing the JWT on every call — latency win on literally every API request.</li>
+      <li><b>Add in-memory caching to <code>LookupService</code></b> — removes 6 redundant network round-trips from every Signup visit.</li>
+      <li><b>Fix <code>HotelsPage.xaml</code>'s CollectionView-in-ScrollView nesting</b> — the one confirmed real virtualization anti-pattern over unbounded data.</li>
+      <li><b>Wire <code>AppJsonContext</code> into Refit's <code>RefitSettings</code></b> — switches every API (de)serialization from reflection to source-gen, plus removes an AOT/trimming risk.</li>
+      <li><b>Guard rapid picker/date-change handlers with cancellation</b> (Dashboard/Flights/PaxCalendar) — eliminates the stale-response race after fast user interaction.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ BREAKDOWN ============ -->
+<section id="breakdown">
+  <h2>Confirmed vs Potential vs Already-Correct</h2>
+  <div class="summary3">
+    <div class="box confirmed">
+      <h4>Confirmed problems</h4>
+      Verified against actual code, not just pattern-matched: all P0/P1 items, plus the Medium items across §2, §4, §6, §8, §9.
+    </div>
+    <div class="box potential">
+      <h4>Potential risks</h4>
+      Plausible, lower confidence: Signup's uncancelled lookup fetch after navigate-away (exceptions caught, no visible harm today); BankDetails UPI-callback dialog racing teardown (currently moot — event never fires due to the DI bug); whether MAUI's Shell route-factory fallback uses DI-aware resolution or plain reflection (couldn't be confirmed from static reading alone).
+    </div>
+    <div class="box correct">
+      <h4>Already correct</h4>
+      Batched <code>ObservableRangeCollection</code> updates app-wide; efficient culture-free string search; correct <code>Task.WhenAll</code> usage; correct Refit/<code>IHttpClientFactory</code> registration; zero actual blocking calls; consistent <code>ConfigureAwait(false)</code> scoping; zero background sync of any kind; correct server-paginated "load more"; correct event pairing everywhere except one iOS leak; appropriate DI lifetimes throughout.
+    </div>
+  </div>
+</section>
+
+<footer>
+  AirIQ MAUI performance &amp; code-quality review — review only, no code changes applied.
+</footer>
+
+</div>
+</body>
+</html>

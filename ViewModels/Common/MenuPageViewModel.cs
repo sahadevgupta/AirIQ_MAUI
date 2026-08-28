@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 
+using AirIQ.Configurations;
 using AirIQ.Enums;
 using AirIQ.Models;
 using AirIQ.Resources.Strings;
@@ -51,6 +52,11 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
             new MenuOption{Title=AppResource.PaxCalendar,IconSource="pax_calendar", MenuType=MenuType.PaxCalendar},
             new MenuOption{Title=AppResource.OnlineRecharge,MenuType = MenuType.OnlineRecharge},
         };
+
+        foreach (var menu in Menus)
+        {
+            menu.IsSelected = menu.MenuType == AppConfiguration.SelectedMenuType;
+        }
     }
 
     #endregion
@@ -77,6 +83,12 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
     [RelayCommand]
     private async Task Menu(MenuOption selectedMenu)
     {
+        AppConfiguration.SelectedMenuType = selectedMenu.MenuType;
+        foreach (var menu in Menus)
+        {
+            menu.IsSelected = menu.MenuType == selectedMenu.MenuType;
+        }
+
         ClosePopup();
         switch (selectedMenu.MenuType)
         {
