@@ -8,6 +8,8 @@ using Microsoft.Maui.Controls.PlatformConfiguration;
 using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
 using Application = Microsoft.Maui.Controls.Application;
 using NavigationPage = Microsoft.Maui.Controls.NavigationPage;
+using NavigationMode = AirIQ.Enums.NavigationMode;
+using AirIQ.Configurations;
 
 namespace AirIQ.Views;
 
@@ -20,7 +22,10 @@ public abstract class BasePage : ContentPage
 	{
 		Shell.SetNavBarIsVisible(this, false);
 		NavigationPage.SetHasNavigationBar(this, false);
+
+#if IOS
 		ApplyStatusBarStyle();
+#endif
 
 		var layout = new Grid
 		{
@@ -33,7 +38,9 @@ public abstract class BasePage : ContentPage
 		_navBar = new Controls.NavigationBarControl();
 		_navBar.SetBinding(Controls.NavigationBarControl.TitleProperty, new Binding(nameof(PageTitle), source: this));
 		_navBar.SetBinding(Controls.NavigationBarControl.IsBackVisibleProperty, new Binding(nameof(IsBackVisible), source: this));
-		_navBar.SetBinding(Controls.NavigationBarControl.BackCommandProperty, new Binding("BackCommand", source: this.BindingContext));
+		_navBar.SetBinding(Controls.NavigationBarControl.NavigateCommandProperty, new Binding("NavigateCommand", source: this.BindingContext));
+		_navBar.SetBinding(NavigationBarControl.NavigationModeProperty, new Binding(nameof(NavigationMode), source: this));
+		_navBar.SetBinding(NavigationBarControl.IsWalletVisibleProperty, binding: new Binding(nameof(IsWalletVisible), source: this));
 
 		_content = new ContentView();
 		_content.BackgroundColor = Colors.White;
@@ -65,7 +72,13 @@ public abstract class BasePage : ContentPage
 		BindableProperty.Create(nameof(PageTitle), typeof(string), typeof(BasePage), string.Empty);
 
 	public static readonly BindableProperty IsBackVisibleProperty =
-	BindableProperty.Create(nameof(IsBackVisible), typeof(bool), typeof(BasePage), true);
+		BindableProperty.Create(nameof(IsBackVisible), typeof(bool), typeof(BasePage), true);
+
+	public static readonly BindableProperty NavigationModeProperty =
+		BindableProperty.Create(nameof(NavigationMode), typeof(NavigationMode), typeof(BasePage), defaultValue: NavigationMode.Back);
+
+	public static readonly BindableProperty IsWalletVisibleProperty =
+		BindableProperty.Create(nameof(IsWalletVisible), typeof(bool), typeof(BasePage), defaultValue: true);
 
 	public string PageTitle
 	{
@@ -77,6 +90,12 @@ public abstract class BasePage : ContentPage
 	{
 		get => (bool)GetValue(IsBackVisibleProperty);
 		set => SetValue(IsBackVisibleProperty, value);
+	}
+
+	public bool IsWalletVisible
+	{
+		get => (bool)GetValue(IsWalletVisibleProperty);
+		set => SetValue(IsWalletVisibleProperty, value);
 	}
 
 	public bool IsNavBarVisible
@@ -92,6 +111,12 @@ public abstract class BasePage : ContentPage
 	{
 		get => (View)GetValue(PageContentProperty);
 		set => SetValue(PageContentProperty, value);
+	}
+
+	public NavigationMode NavigationMode
+	{
+		get => (NavigationMode)GetValue(NavigationModeProperty);
+		set => SetValue(NavigationModeProperty, value);
 	}
 	private static void OnPageContentChanged(BindableObject bindable, object oldValue, object newValue)
 	{
@@ -111,7 +136,7 @@ public abstract class BasePage : ContentPage
 		{
 			this.Behaviors.Add(new StatusBarBehavior
 			{
-				StatusBarColor = Color.FromArgb("#D0E1FD"),
+				StatusBarColor = Color.FromArgb("#4D9DF0"),
 				StatusBarStyle = StatusBarStyle.LightContent
 			});
 		}
@@ -141,6 +166,8 @@ public abstract class BasePage : ContentPage
 	#endregion
 
 	#region [ Override Methods ]
+
+
 
 	protected override void OnNavigatedTo(NavigatedToEventArgs args)
 	{
@@ -174,12 +201,9 @@ public abstract class BasePage : ContentPage
 		{
 			activity.ApplySystemBars(this);
 		}
-		if (this.GetType() == typeof(DashboardPage))
-		{
-
-			this.Background = (Brush)Application.Current?.Resources["BrandGradient"]!;
-		}
 #endif
+
+		_navBar.Amount = AppConfiguration.CurrentUser?.Balance ?? 0;
 	}
 
 	protected override void OnDisappearing()

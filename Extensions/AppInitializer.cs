@@ -1,5 +1,6 @@
 ﻿using AirIQ.Controls;
 
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 
@@ -14,7 +15,6 @@ namespace AirIQ.Extensions
                 .ConfigureAppHandlers()
                 .ViewInit()
                 .ViewModelInit()
-                .RefitClientInit()
                 .RegisterAppServices()
                 .RegisterForNavigation();
 
@@ -47,12 +47,61 @@ namespace AirIQ.Extensions
 #endif
             });
 
+            EditorHandler.Mapper.AppendToMapping("BorderlessEditor", (handler, view) =>
+            {
+                if (view is not BorderlessEditor)
+                    return;
+#if IOS
+                handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
+                handler.PlatformView.Layer.BorderWidth = 0;
+                handler.PlatformView.Layer.BorderColor = UIKit.UIColor.Clear.CGColor;
+                handler.PlatformView.TextContainerInset = UIKit.UIEdgeInsets.Zero;
+                handler.PlatformView.TextContainer.LineFragmentPadding = 0;
+#elif ANDROID
+                handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
+                handler.PlatformView.Background = null;
+#endif
+            });
+
+            EntryHandler.Mapper.AppendToMapping(nameof(BorderlessEntry), (handler, view) =>
+            {
+                if (view is BorderlessEntry control)
+                {
+#if IOS
+                    handler.PlatformView.BackgroundColor = Colors.Transparent.ToPlatform();
+                    handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+                    handler.PlatformView.ClipsToBounds = true;
+                    handler.PlatformView.Layer.BorderWidth = 0;
+                    handler.PlatformView.Layer.BorderColor = UIKit.UIColor.Clear.CGColor;
+#elif ANDROID
+                    handler.PlatformView.InputType = Android.Text.InputTypes.TextVariationShortMessage;
+                    handler.PlatformView.SetBackgroundColor(Colors.Transparent.ToPlatform());
+                    handler.PlatformView.Background = null;
+#endif
+                }
+            });
+
+            SearchBarHandler.Mapper.AppendToMapping(nameof(SearchView), (handler, view) =>
+           {
+#if IOS
+                handler.PlatformView.BackgroundColor = Colors.Transparent.ToPlatform();
+                //handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+                handler.PlatformView.ClipsToBounds = true;
+                handler.PlatformView.Layer.BorderWidth = 0;
+                handler.PlatformView.Layer.BorderColor = UIKit.UIColor.Clear.CGColor;
+#elif ANDROID
+
+               handler.PlatformView.SetBackgroundColor(Colors.Transparent.ToPlatform());
+               handler.PlatformView.Background = null;
+
+#endif
+           });
+
             return builder.ConfigureMauiHandlers(handlers =>
             {
                 handlers.AddHandler<CustomDropdown, AirIQ.Platforms.Handlers.CustomDropdownHandler>();
-#if ANDROID
-                handlers.AddHandler(typeof(Shell), typeof(AirIQ.Platforms.Handlers.CustomShellRenderer));
-#endif
+                handlers.AddHandler<Entry, AirIQ.Platforms.Handlers.PlainEntryHandler>();
+                handlers.AddHandler<BorderlessEntry, AirIQ.Platforms.Handlers.PlainEntryHandler>();
             });
 
 

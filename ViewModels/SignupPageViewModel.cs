@@ -24,6 +24,7 @@ public partial class SignupPageViewModel : BaseViewModel
     private readonly IDialogService _dialogService;
     private readonly ILookupService _lookupService;
     private readonly IZoopVerificationService _zoopVerificationService;
+    private readonly IAuthenticationService _authenticationService;
 
     [ObservableProperty]
     private ObservableCollection<StepBarModel> _steps = new();
@@ -170,13 +171,13 @@ public partial class SignupPageViewModel : BaseViewModel
     public SignupPageViewModel(IViewModelParameters viewModelParameters,
         ILookupService lookupService,
         IZoopVerificationService zoopVerificationService,
-        IDialogService dialogService) : base(viewModelParameters)
+        IDialogService dialogService,
+        IAuthenticationService authenticationService) : base(viewModelParameters)
     {
         _lookupService = lookupService;
         _zoopVerificationService = zoopVerificationService;
         _dialogService = dialogService;
-
-        InitializeData();
+        _authenticationService = authenticationService;
     }
 
     #region [ Methods & Service Calls ]
@@ -327,42 +328,45 @@ public partial class SignupPageViewModel : BaseViewModel
         }
     }
 
-    private void InitializeData()
+    private async Task InitializeData()
     {
-        _ = FetchListingDataAsync();
-
-        Steps = new ObservableCollection<StepBarModel>()
+        using (LoadingService.Show())
         {
-            new StepBarModel()
+            sourceAccountManagerItems = await _lookupService.GetAccountManagersAsync(AccountManagerType.Source);
+            Steps = new ObservableCollection<StepBarModel>()
             {
-                StepName="Personal",
-                Status=StepBarStatus.InProgress,
-                IsNotLast=true,
-                IsFirst=true,
-                MainContent=new PersonalInformationView(),
-                IsCurrentContent=true,
-            },
-            new StepBarModel()
-            {
-                StepName="Contact",
-                Status=StepBarStatus.Pending,
-                IsNotLast=true,
-                IsFirst=false,
-                IsCurrentContent=false
-            },
-            new StepBarModel()
-            {
-                StepName="Business",
-                Status=StepBarStatus.Pending,
-                IsNotLast=false,
-                IsFirst=false,
-                IsCurrentContent=false
-            }
-        };
-        StepListCount = Steps.Count;
+                new StepBarModel()
+                {
+                    StepName="Personal",
+                    Status=StepBarStatus.InProgress,
+                    IsNotLast=true,
+                    IsFirst=true,
+                    MainContent=new PersonalInformationView(),
+                    IsCurrentContent=true,
+                },
+                new StepBarModel()
+                {
+                    StepName="Contact",
+                    Status=StepBarStatus.Pending,
+                    IsNotLast=true,
+                    IsFirst=false,
+                    IsCurrentContent=false
+                },
+                new StepBarModel()
+                {
+                    StepName="Business",
+                    Status=StepBarStatus.Pending,
+                    IsNotLast=false,
+                    IsFirst=false,
+                    IsCurrentContent=false
+                }
+            };
+            StepListCount = Steps.Count;
 
-        AddContentForSelectedStep();
+            AddContentForSelectedStep();
+        }
 
+        _ = FetchListingDataAsync();
     }
 
     private async Task FetchListingDataAsync()
@@ -375,7 +379,6 @@ public partial class SignupPageViewModel : BaseViewModel
             var mainCitiesTask = _lookupService.GetMainCitiesAsync();
             var districtsTask = _lookupService.GetDistrictsAsync();
             var accountManagerTask = _lookupService.GetAccountManagersAsync(AccountManagerType.BusinessType);
-            var sourceAccountManagerTask = _lookupService.GetAccountManagersAsync(AccountManagerType.Source);
 
             await Task.WhenAll(
                 countriesTask,
@@ -385,19 +388,17 @@ public partial class SignupPageViewModel : BaseViewModel
                 districtsTask,
                 accountManagerTask);
 
-            var countriesTaskResponse = await countriesTask;
             tempStates = await statesTask;
             tempCities = await citiesTask;
             tempMainCities = await mainCitiesTask;
             tempDistricts = await districtsTask;
             tempLookupItems = await accountManagerTask;
             var lookupItemsDtos = tempLookupItems.ToList();
-            sourceAccountManagerItems = await sourceAccountManagerTask;
 
             var lookupItems = BackendToAppModelMapper.GetLookupItems(lookupItemsDtos
                                                      .Where(x => !string.Equals(x.Name, "None", StringComparison.OrdinalIgnoreCase)));
 
-            Countries = new ObservableCollection<Country>(BackendToAppModelMapper.GetCountries(countriesTaskResponse));
+            Countries = new ObservableCollection<Country>(BackendToAppModelMapper.GetCountries(await countriesTask));
 
             PrimaryBusinessTypes = new ObservableCollection<LookupItem>(lookupItems);
         }
@@ -748,7 +749,7 @@ public partial class SignupPageViewModel : BaseViewModel
 
             using (LoadingService.Show())
             {
-                var response = await _lookupService.SignupAsync(Signup);
+                var response = await _authenticationService.SignupAsync(Signup);
                 if (!string.IsNullOrWhiteSpace(response) && response.Contains("Agency registration submitted successfully."))
                 {
                     string message = "Thank you for registering. Your details have been received and are under review. We'll notify you by email once your account has been verified and activated. You can sign in after receiving the approval email.";
@@ -826,6 +827,15 @@ public partial class SignupPageViewModel : BaseViewModel
             IsGstValid = response is not null;
             GstRegisterdName = IsGstValid ? response?.TradeName : string.Empty;
         }
+    }
+
+    #endregion
+
+    #region [ Override Methods ]
+
+    public override async Task LoadDataWhenNavigatedTo()
+    {
+        await InitializeData();
     }
 
     #endregion

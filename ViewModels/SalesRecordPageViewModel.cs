@@ -1,5 +1,7 @@
+using AirIQ.Configurations;
 using AirIQ.Configurations.Mapper;
 using AirIQ.Constants;
+using AirIQ.Extensions;
 using AirIQ.Helpers;
 using AirIQ.Models;
 using AirIQ.Services.Interfaces;
@@ -18,11 +20,36 @@ public partial class SalesRecordPageViewModel(IViewModelParameters viewModelPara
     const int pageSize = 20;
     int page = 1;
 
+    private List<SalesRecord> salesRecordsTemp = new();
+
     [ObservableProperty]
     private ObservableRangeCollection<SalesRecord> _salesRecords = new();
+
+    [ObservableProperty]
+    private string? _searchText;
     #endregion
 
     #region [ Methods & Service Calls ]
+
+    private void FilterSalesRecords(string? searchKey)
+    {
+        var filtered = string.IsNullOrEmpty(searchKey)
+            ? salesRecordsTemp
+            : salesRecordsTemp.Where(x =>
+                x.Prefix.ContainsIgnoreCase(searchKey) ||
+                x.PNR.ContainsIgnoreCase(searchKey) ||
+                x.FDestName.ContainsIgnoreCase(searchKey) ||
+                x.AirlineName.ContainsIgnoreCase(searchKey) ||
+                x.PassengersName.ContainsIgnoreCase(searchKey));
+
+        SalesRecords.ReplaceRange(filtered);
+    }
+
+    partial void OnSearchTextChanged(string? value)
+    {
+        if (string.IsNullOrEmpty(value))
+            FilterSalesRecords(value);
+    }
 
     #endregion
 
@@ -37,10 +64,21 @@ public partial class SalesRecordPageViewModel(IViewModelParameters viewModelPara
             if (records.Any())
             {
                 var item = BackendToAppModelMapper.GetSalesRecords(records).ToList();
-                SalesRecords?.AddRange(item);
+                salesRecordsTemp.AddRange(item);
+
+                if (string.IsNullOrEmpty(SearchText))
+                    SalesRecords?.AddRange(item);
+                else
+                    FilterSalesRecords(SearchText);
             }
             page++;
         }
+    }
+
+    [RelayCommand]
+    private void Search(string? searchText)
+    {
+        FilterSalesRecords(searchText);
     }
 
     #endregion

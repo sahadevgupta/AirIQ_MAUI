@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using AirIQ.Configurations;
 using AirIQ.Constants;
 using AirIQ.Models.Response;
 using AirIQ.Services.Interfaces;
@@ -29,7 +30,7 @@ public abstract class ApiServiceBase
         MainThread.BeginInvokeOnMainThread(() =>
         {
             //Handle the exception
-            Debug.WriteLine("ApiServiceBase HandleException [{exceptionName}] \n{exceptionToString}", exception.GetType().Name, exception.ToString());
+            Debug.WriteLine($"ApiServiceBase HandleException  {exception.GetType().Name}, {exception.ToString()}");
 
 
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();

@@ -6,7 +6,8 @@
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
                 x:DataType="vm:UploadRequestPageViewModel"
-                PageTitle="Upload Request">
+                PageTitle="Upload Request"
+                NavigationMode="Hamburger">
     <views:BasePage.PageContent>
         <ScrollView>
 
@@ -82,11 +83,11 @@
                         BackgroundColor="White"
                         Padding="10,0"
                         Margin="0,5,0,0">
-                    <Editor HeightRequest="150"
-                            AutoSize="Disabled"
-                            Placeholder="Enter Message"
-                            Text="{Binding Message}"
-                            VerticalOptions="Start"/>
+                    <controls:BorderlessEditor HeightRequest="150"
+                                               AutoSize="Disabled"
+                                               Placeholder="Enter Message"
+                                               Text="{Binding Message}"
+                                               VerticalOptions="Start"/>
                 </Border>
 
                 <Button Text="Submit"

@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AirIQ.Configurations;
 using AirIQ.Configurations.Mapper;
 using AirIQ.Constants;
+using AirIQ.Extensions;
 using AirIQ.Helpers;
 using AirIQ.Models;
 using AirIQ.Services.Interfaces;
@@ -21,14 +23,35 @@ namespace AirIQ.ViewModels
         const int pageSize = 20;
         int page = 1;
 
+        private List<TempCreditRecord> tempCreditRecordsTemp = new();
+
         [ObservableProperty]
         private ObservableRangeCollection<TempCreditRecord> _tempCreditRecords = new();
+
+        [ObservableProperty]
+        private string? _searchText;
 
         public double TotalAmount => TempCreditRecords.Sum(x => x.Amount);
 
         #endregion
 
         #region [ Methods & Service Calls ]
+
+        private void FilterTempCreditRecords(string? searchKey)
+        {
+            var filtered = string.IsNullOrEmpty(searchKey)
+                ? tempCreditRecordsTemp
+                : tempCreditRecordsTemp.Where(x => x.Name.ContainsIgnoreCase(searchKey));
+
+            TempCreditRecords.ReplaceRange(filtered);
+            OnPropertyChanged(nameof(TotalAmount));
+        }
+
+        partial void OnSearchTextChanged(string? value)
+        {
+            if (string.IsNullOrEmpty(value))
+                FilterTempCreditRecords(value);
+        }
 
         #endregion
 
@@ -43,11 +66,26 @@ namespace AirIQ.ViewModels
                 if (records.Any())
                 {
                     var item = BackendToAppModelMapper.GetTempCreditRecords(records).ToList();
-                    TempCreditRecords?.AddRange(item);
-                    OnPropertyChanged(nameof(TotalAmount));
+                    tempCreditRecordsTemp.AddRange(item);
+
+                    if (string.IsNullOrEmpty(SearchText))
+                    {
+                        TempCreditRecords?.AddRange(item);
+                        OnPropertyChanged(nameof(TotalAmount));
+                    }
+                    else
+                    {
+                        FilterTempCreditRecords(SearchText);
+                    }
                 }
                 page++;
             }
+        }
+
+        [RelayCommand]
+        private void Search(string? searchText)
+        {
+            FilterTempCreditRecords(searchText);
         }
 
         #endregion

@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                x:Class="AirIQ_MAUI.Views.MyAccountPage"
+                xmlns:helpers="clr-namespace:AirIQ.Extensions"
+                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                xmlns:views="clr-namespace:AirIQ.Views"
+                xmlns:vm="clr-namespace:AirIQ.ViewModels"
+                x:DataType="vm:MyAccountPageViewModel"
+                NavigationMode="Hamburger"
+                PageTitle="Account">
+
+    <views:BasePage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label"
+                   x:Key="ImageStyle">
+                <Setter Property="FontFamily"
+                        Value="MyFont"/>
+                <Setter Property="FontSize"
+                        Value="16"/>
+                <Setter Property="TextColor"
+                        Value="LightSlateGray"/>
+                <Setter Property="VerticalOptions"
+                        Value="Center"/>
+            </Style>
+        </ResourceDictionary>
+    </views:BasePage.Resources>
+
+    <views:BasePage.PageContent>
+        <ScrollView>
+            <VerticalStackLayout Padding="16"
+                                 Spacing="16"
+                                 BackgroundColor="{StaticResource BackgroundColor}">
+
+                <!-- ==================== PROFILE CARD ==================== -->
+                <Border Style="{StaticResource DefaultBorderStyle}">
+                    <HorizontalStackLayout Spacing="16">
+
+                        <Grid HeightRequest="64"
+                              WidthRequest="64">
+                            <toolkit:AvatarView Text="{Binding CurrentUser.ContactPersonInitials}"
+                                                HeightRequest="64"
+                                                WidthRequest="64"
+                                                CornerRadius="32"
+                                                BackgroundColor="{StaticResource Primary0}"
+                                                FontSize="24"
+                                                FontFamily="RobotoMedium"
+                                                TextColor="{StaticResource Secondary50}"/>
+
+                            <Border WidthRequest="22"
+                                    HeightRequest="22"
+                                    Margin="0,0,-2,-2"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="End"
+                                    Stroke="White"
+                                    StrokeThickness="2"
+                                    StrokeShape="RoundRectangle 11"
+                                    BackgroundColor="{StaticResource PrimaryColor}">
+                                <Label Text="{x:Static helpers:FontAwesomeIcons.Camera}"
+                                       FontFamily="MyFont"
+                                       FontSize="10"
+                                       TextColor="White"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                                </Border.GestureRecognizers>
+                            </Border>
+                        </Grid>
+
+                        <VerticalStackLayout Spacing="2"
+                                             VerticalOptions="Center">
+                            <Label Text="{Binding CurrentUser.ContactPerson}"
+                                   Style="{StaticResource Label18Bold}"
+                                   TextColor="{StaticResource Gray90}"/>
+                            <Label Text="{Binding CurrentUser.EmailId}"
+                                   Style="{StaticResource Label14Regular}"
+                                   TextColor="{StaticResource Gray50}"/>
+                            <Label Text="{Binding CurrentUser.MobileNumber}"
+                                   Style="{StaticResource Label14Regular}"
+                                   TextColor="{StaticResource Gray50}"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- ==================== PROFILE ==================== -->
+                <Border Style="{StaticResource DefaultBorderStyle}"
+                        Padding="16,12">
+                    <VerticalStackLayout>
+                        <Label Text="Profile"
+                               Style="{StaticResource TitleStyleBlackBold}"
+                               Margin="0,0,0,4"/>
+
+                        <Grid ColumnDefinitions="24,*,Auto"
+                              ColumnSpacing="12"
+                              Padding="0,12"
+                              BackgroundColor="Transparent">
+                            <Label Grid.Column="0"
+                                   Text="{x:Static helpers:FontAwesomeIcons.User}"
+                                   Style="{StaticResource ImageStyle}"/>
+                            <Label Grid.Column="1"
+                                   Text="Personal Information"
+                                   Style="{StaticResource Label14MediumGray90Style}"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="2"
+                                   Text="{x:Static helpers:FontAwesomeIcons.ChevronRight}"
+                                   FontFamily="MyFont"
+                                   FontSize="12"
+                                   TextColor="{StaticResource Gray50}"
+                                   VerticalOptions="Center"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                        <BoxView Color="{StaticResource BorderColor}"
+                                 HeightRequest="1"/>
+
+                        <Grid ColumnDefinitions="24,*,Auto,Auto"
+                              ColumnSpacing="12"
+                              Padding="0,12"
+                              BackgroundColor="Transparent">
+                            <Label Grid.Column="0"
+                                   Text="{x:Static helpers:FontAwesomeIcons.Envelope}"
+                                   Style="{StaticResource ImageStyle}"/>
+                            <Label Grid.Column="1"
+                                   Text="Email"
+                                   Style="{StaticResource Label14MediumGray90Style}"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="2"
+                                   Text="{Binding CurrentUser.EmailId}"
+                                   Style="{StaticResource Label14Regular}"
+                                   TextColor="{StaticResource Gray50}"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="3"
+                                   Text="{x:Static helpers:FontAwesomeIcons.ChevronRight}"
+                                   FontFamily="MyFont"
+                                   FontSize="12"
+                                   TextColor="{StaticResource Gray50}"
+                                   VerticalOptions="Center"
+                                   Margin="8,0,0,0"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                        <BoxView Color="{StaticResource BorderColor}"
+                                 HeightRequest="1"/>
+
+                        <Grid ColumnDefinitions="24,*,Auto,Auto"
+                              ColumnSpacing="12"
+                              Padding="0,12"
+                              BackgroundColor="Transparent">
+                            <Label Grid.Column="0"
+                                   Text="{x:Static helpers:FontAwesomeIcons.PhoneAlt}"
+                                   Style="{StaticResource ImageStyle}"/>
+                            <Label Grid.Column="1"
+                                   Text="Mobile Number"
+                                   Style="{StaticResource Label14MediumGray90Style}"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="2"
+                                   Text="{Binding CurrentUser.MobileNumber}"
+                                   Style="{StaticResource Label14Regular}"
+                                   TextColor="{StaticResource Gray50}"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="3"
+                                   Text="{x:Static helpers:FontAwesomeIcons.ChevronRight}"
+                                   FontFamily="MyFont"
+                                   FontSize="12"
+                                   TextColor="{StaticResource Gray50}"
+                                   VerticalOptions="Center"
+                                   Margin="8,0,0,0"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ==================== SECURITY ==================== -->
+                <Border Style="{StaticResource DefaultBorderStyle}"
+                        Padding="16,12">
+                    <VerticalStackLayout>
+                        <Label Text="Security"
+                               Style="{StaticResource TitleStyleBlackBold}"
+                               Margin="0,0,0,4"/>
+
+                        <Grid ColumnDefinitions="24,*,Auto,Auto"
+                              ColumnSpacing="12"
+                              Padding="0,12"
+                              BackgroundColor="Transparent">
+                            <Label Grid.Column="0"
+                                   Text="{x:Static helpers:FontAwesomeIcons.Fingerprint}"
+                                   Style="{StaticResource ImageStyle}"/>
+                            <Label Grid.Column="1"
+                                   Text="Biometric Login"
+                                   Style="{StaticResource Label14MediumGray90Style}"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="2"
+                                   Text="Enabled"
+                                   Style="{StaticResource Label14Regular}"
+                                   TextColor="{StaticResource Green}"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="3"
+                                   Text="{x:Static helpers:FontAwesomeIcons.ChevronRight}"
+                                   FontFamily="MyFont"
+                                   FontSize="12"
+                                   TextColor="{StaticResource Gray50}"
+                                   VerticalOptions="Center"
+                                   Margin="8,0,0,0"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                        <BoxView Color="{StaticResource BorderColor}"
+                                 HeightRequest="1"/>
+
+                        <Grid ColumnDefinitions="24,*,Auto"
+                              ColumnSpacing="12"
+                              Padding="0,12"
+                              BackgroundColor="Transparent">
+                            <Label Grid.Column="0"
+                                   Text="{x:Static helpers:FontAwesomeIcons.Lock}"
+                                   Style="{StaticResource ImageStyle}"/>
+                            <Label Grid.Column="1"
+                                   Text="Change Password"
+                                   Style="{StaticResource Label14MediumGray90Style}"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="2"
+                                   Text="{x:Static helpers:FontAwesomeIcons.ChevronRight}"
+                                   FontFamily="MyFont"
+                                   FontSize="12"
+                                   TextColor="{StaticResource Gray50}"
+                                   VerticalOptions="Center"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ChangePasswordCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                        <BoxView Color="{StaticResource BorderColor}"
+                                 HeightRequest="1"/>
+
+                        <Grid ColumnDefinitions="24,*,Auto"
+                              ColumnSpacing="12"
+                              Padding="0,12"
+                              BackgroundColor="Transparent">
+                            <Label Grid.Column="0"
+                                   Text="{x:Static helpers:FontAwesomeIcons.ShieldAlt}"
+                                   Style="{StaticResource ImageStyle}"/>
+                            <Label Grid.Column="1"
+                                   Text="Security Questions"
+                                   Style="{StaticResource Label14MediumGray90Style}"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="2"
+                                   Text="{x:Static helpers:FontAwesomeIcons.ChevronRight}"
+                                   FontFamily="MyFont"
+                                   FontSize="12"
+                                   TextColor="{StaticResource Gray50}"
+                                   VerticalOptions="Center"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ==================== PREFERENCES ==================== -->
+                <Border Style="{StaticResource DefaultBorderStyle}"
+                        Padding="16,12">
+                    <VerticalStackLayout>
+                        <Label Text="Preferences"
+                               Style="{StaticResource TitleStyleBlackBold}"
+                               Margin="0,0,0,4"/>
+
+                        <Grid ColumnDefinitions="24,*,Auto"
+                              ColumnSpacing="12"
+                              Padding="0,12"
+                              BackgroundColor="Transparent">
+                            <Label Grid.Column="0"
+                                   Text="{x:Static helpers:FontAwesomeIcons.Bell}"
+                                   Style="{StaticResource ImageStyle}"/>
+                            <Label Grid.Column="1"
+                                   Text="Notification Preferences"
+                                   Style="{StaticResource Label14MediumGray90Style}"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="2"
+                                   Text="{x:Static helpers:FontAwesomeIcons.ChevronRight}"
+                                   FontFamily="MyFont"
+                                   FontSize="12"
+                                   TextColor="{StaticResource Gray50}"
+                                   VerticalOptions="Center"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                        <BoxView Color="{StaticResource BorderColor}"
+                                 HeightRequest="1"/>
+
+                        <Grid ColumnDefinitions="24,*,Auto,Auto"
+                              ColumnSpacing="12"
+                              Padding="0,12"
+                              BackgroundColor="Transparent">
+                            <Label Grid.Column="0"
+                                   Text="{x:Static helpers:FontAwesomeIcons.Globe}"
+                                   Style="{StaticResource ImageStyle}"/>
+                            <Label Grid.Column="1"
+                                   Text="Language"
+                                   Style="{StaticResource Label14MediumGray90Style}"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="2"
+                                   Text="English"
+                                   Style="{StaticResource Label14Regular}"
+                                   TextColor="{StaticResource Gray50}"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="3"
+                                   Text="{x:Static helpers:FontAwesomeIcons.ChevronRight}"
+                                   FontFamily="MyFont"
+                                   FontSize="12"
+                                   TextColor="{StaticResource Gray50}"
+                                   VerticalOptions="Center"
+                                   Margin="8,0,0,0"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                        <BoxView Color="{StaticResource BorderColor}"
+                                 HeightRequest="1"/>
+
+                        <Grid ColumnDefinitions="24,*,Auto,Auto"
+                              ColumnSpacing="12"
+                              Padding="0,12"
+                              BackgroundColor="Transparent">
+                            <Label Grid.Column="0"
+                                   Text="{x:Static helpers:FontAwesomeIcons.Moon}"
+                                   Style="{StaticResource ImageStyle}"/>
+                            <Label Grid.Column="1"
+                                   Text="Theme"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="2"
+                                   Text="System Default"
+                                   Style="{StaticResource Label14Regular}"
+                                   TextColor="{StaticResource Gray50}"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="3"
+                                   Text="{x:Static helpers:FontAwesomeIcons.ChevronRight}"
+                                   FontFamily="MyFont"
+                                   FontSize="12"
+                                   TextColor="{StaticResource Gray50}"
+                                   VerticalOptions="Center"
+                                   Margin="8,0,0,0"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ==================== ABOUT ==================== -->
+                <Border Style="{StaticResource DefaultBorderStyle}"
+                        Padding="16,12">
+                    <VerticalStackLayout>
+                        <Label Text="About"
+                               Style="{StaticResource TitleStyleBlackBold}"
+                               Margin="0,0,0,4"/>
+
+                        <Grid ColumnDefinitions="24,*,Auto"
+                              ColumnSpacing="12"
+                              Padding="0,12"
+                              BackgroundColor="Transparent">
+                            <Label Grid.Column="0"
+                                   Text="{x:Static helpers:FontAwesomeIcons.InfoCircle}"
+                                   Style="{StaticResource ImageStyle}"/>
+                            <Label Grid.Column="1"
+                                   Text="About App"
+                                   Style="{StaticResource Label14MediumGray90Style}"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="2"
+                                   Text="{x:Static helpers:FontAwesomeIcons.ChevronRight}"
+                                   FontFamily="MyFont"
+                                   FontSize="12"
+                                   TextColor="{StaticResource Gray50}"
+                                   VerticalOptions="Center"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AboutAppCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                        <BoxView Color="{StaticResource BorderColor}"
+                                 HeightRequest="1"/>
+
+                        <Grid ColumnDefinitions="24,*,Auto"
+                              ColumnSpacing="12"
+                              Padding="0,12"
+                              BackgroundColor="Transparent">
+                            <Label Grid.Column="0"
+                                   Text="{x:Static helpers:FontAwesomeIcons.FileAlt}"
+                                   Style="{StaticResource ImageStyle}"/>
+                            <Label Grid.Column="1"
+                                   Text="Terms &amp; Conditions"
+                                   Style="{StaticResource Label14MediumGray90Style}"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="2"
+                                   Text="{x:Static helpers:FontAwesomeIcons.ChevronRight}"
+                                   FontFamily="MyFont"
+                                   FontSize="12"
+                                   TextColor="{StaticResource Gray50}"
+                                   VerticalOptions="Center"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenTermsAndConditionsCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                        <BoxView Color="{StaticResource BorderColor}"
+                                 HeightRequest="1"/>
+
+                        <Grid ColumnDefinitions="24,*,Auto"
+                              ColumnSpacing="12"
+                              Padding="0,12"
+                              BackgroundColor="Transparent">
+                            <Label Grid.Column="0"
+                                   Text="{x:Static helpers:FontAwesomeIcons.ShieldAlt}"
+                                   Style="{StaticResource ImageStyle}"/>
+                            <Label Grid.Column="1"
+                                   Text="Privacy Policy"
+                                   Style="{StaticResource Label14MediumGray90Style}"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="2"
+                                   Text="{x:Static helpers:FontAwesomeIcons.ChevronRight}"
+                                   FontFamily="MyFont"
+                                   FontSize="12"
+                                   TextColor="{StaticResource Gray50}"
+                                   VerticalOptions="Center"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenPrivacyPolicyCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ==================== LOGOUT ==================== -->
+                <Border BackgroundColor="#FDEDEC"
+                        Stroke="{StaticResource AccentColor}"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 8"
+                        Padding="14">
+                    <HorizontalStackLayout Spacing="10"
+                                           HorizontalOptions="Center">
+                        <Label Text="{x:Static helpers:FontAwesomeIcons.SignOutAlt}"
+                               FontFamily="MyFont"
+                               FontSize="16"
+                               TextColor="{StaticResource Red}"
+                               VerticalOptions="Center"/>
+                        <Label Text="Logout"
+                               Style="{StaticResource Label16SemiBold}"
+                               TextColor="{StaticResource Red}"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding LogoutCommand}"/>
+                    </Border.GestureRecognizers>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </views:BasePage.PageContent>
+
+</views:BasePage>

@@ -41,17 +41,19 @@ namespace AirIQ.Platforms.Handlers
         {
             base.SetAppearance(bottomView, appearance);
             bottomNavigationView = bottomView;
-            bottomView.Elevation = 20; // adds shadow
+
             bottomView.SetBackgroundColor(Colors.White.ToPlatform());
 
-            if (!IsIndicatorAdded)
-            {
-                AddIndicatorView();
-                IsIndicatorAdded = true;
-            }
+            bottomView.Elevation = 30f; // adds shadow
+
+            // if (!IsIndicatorAdded)
+            // {
+            //     AddIndicatorView();
+            //     IsIndicatorAdded = true;
+            // }
 
             // Observe when Shell changes the active tab
-            shellItem.PropertyChanged += OnShellItemChanged;
+            //shellItem.PropertyChanged += OnShellItemChanged;
         }
 
         private void OnShellItemChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)

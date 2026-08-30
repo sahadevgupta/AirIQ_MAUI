@@ -10,13 +10,13 @@ public partial class SearchView : ContentView
 	///     Identifies the <see cref="SearchText" /> bindable property.
 	/// </summary>
 	public static readonly BindableProperty SearchTextProperty =
-		BindableProperty.Create(nameof(SearchText), typeof(string), typeof(SearchView));
+		BindableProperty.Create(nameof(SearchText), typeof(string), typeof(SearchView), defaultBindingMode: BindingMode.TwoWay);
 
 	/// <summary>
 	///     Identifies the <see cref="PlaceholderText" /> bindable property.
 	/// </summary>
 	public static readonly BindableProperty PlaceholderTextProperty =
-		BindableProperty.Create(nameof(PlaceholderText), typeof(string), typeof(SearchView));
+		BindableProperty.Create(nameof(PlaceholderText), typeof(string), typeof(SearchView), defaultValue: "Search here..");
 
 	/// <summary>
 	///     Identifies the <see cref="SearchCommand" /> bindable property.
@@ -94,25 +94,5 @@ public partial class SearchView : ContentView
 	public SearchView()
 	{
 		InitializeComponent();
-		ModifyControl();
-	}
-
-	private void ModifyControl()
-	{
-		Microsoft.Maui.Handlers.SearchBarHandler.Mapper.AppendToMapping(nameof(SearchView), (handler, view) =>
-		{
-#if IOS
-			handler.PlatformView.BackgroundColor = Colors.Transparent.ToPlatform();
-			//handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
-			handler.PlatformView.ClipsToBounds = true;
-			handler.PlatformView.Layer.BorderWidth = 0;
-			handler.PlatformView.Layer.BorderColor = UIKit.UIColor.Clear.CGColor;
-#elif ANDROID
-
-			handler.PlatformView.SetBackgroundColor(Colors.Transparent.ToPlatform());
-			handler.PlatformView.Background = null;
-
-#endif
-		});
 	}
 }

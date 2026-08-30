@@ -1,5 +1,7 @@
+using AirIQ.Configurations;
 using AirIQ.Configurations.Mapper;
 using AirIQ.Constants;
+using AirIQ.Extensions;
 using AirIQ.Helpers;
 using AirIQ.Models;
 using AirIQ.Services.Interfaces;
@@ -18,11 +20,34 @@ namespace AirIQ.ViewModels
         const int pageSize = 20;
         int page = 1;
 
+        private List<AccountLedgerRecord> accountLedgerRecordsTemp = new();
+
         [ObservableProperty]
         private ObservableRangeCollection<AccountLedgerRecord> _accountLedgerRecords = new();
+
+        [ObservableProperty]
+        private string? _searchText;
         #endregion
 
         #region [ Methods & Service Calls ]
+
+        private void FilterAccountLedgerRecords(string? searchKey)
+        {
+            var filtered = string.IsNullOrEmpty(searchKey)
+                ? accountLedgerRecordsTemp
+                : accountLedgerRecordsTemp.Where(x =>
+                    x.RefNo.ContainsIgnoreCase(searchKey) ||
+                    x.Particulars.ContainsIgnoreCase(searchKey) ||
+                    x.Destination.ContainsIgnoreCase(searchKey));
+
+            AccountLedgerRecords.ReplaceRange(filtered);
+        }
+
+        partial void OnSearchTextChanged(string? value)
+        {
+            if (string.IsNullOrEmpty(value))
+                FilterAccountLedgerRecords(value);
+        }
 
         #endregion
 
@@ -37,10 +62,21 @@ namespace AirIQ.ViewModels
                 if (records.Any())
                 {
                     var item = BackendToAppModelMapper.GetAccountLedgerRecords(records).ToList();
-                    AccountLedgerRecords?.AddRange(item);
+                    accountLedgerRecordsTemp.AddRange(item);
+
+                    if (string.IsNullOrEmpty(SearchText))
+                        AccountLedgerRecords?.AddRange(item);
+                    else
+                        FilterAccountLedgerRecords(SearchText);
                 }
                 page++;
             }
+        }
+
+        [RelayCommand]
+        private void Search(string? searchText)
+        {
+            FilterAccountLedgerRecords(searchText);
         }
 
         #endregion

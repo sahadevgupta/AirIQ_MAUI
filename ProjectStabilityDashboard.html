@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AirIQ Stability Dashboard</title>
+    <style>
+        :root {
+            --bg: #f4f7fb;
+            --surface: #ffffff;
+            --text: #142132;
+            --muted: #5c6b7a;
+            --border: #d8e0ea;
+            --blocker: #d64545;
+            --high: #ef7d2c;
+            --medium: #e3b341;
+            --low: #2f8f78;
+            --accent: #1f5fbf;
+            --shadow: 0 12px 28px rgba(14, 31, 53, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Avenir Next", "Segoe UI", Helvetica, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(900px 450px at 100% -10%, rgba(31, 95, 191, 0.12), transparent 55%),
+                radial-gradient(800px 360px at -10% 115%, rgba(47, 143, 120, 0.12), transparent 55%),
+                var(--bg);
+            min-height: 100vh;
+        }
+
+        .wrap {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 28px 18px 42px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0f2b4d, #1f5fbf);
+            color: #fff;
+            border-radius: 18px;
+            padding: 22px 24px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            right: -40px;
+            top: -40px;
+            width: 220px;
+            height: 220px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 0.3px;
+        }
+
+        .hero p {
+            margin: 8px 0 0;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .hero-link {
+            margin-top: 12px;
+            display: inline-block;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 7px 11px;
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.12);
+            font-size: 13px;
+        }
+
+        .hero-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .meta {
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .chip {
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.14);
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            letter-spacing: 0.2px;
+        }
+
+        .grid {
+            margin-top: 18px;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            padding: 14px;
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.45px;
+            margin-bottom: 6px;
+        }
+
+        .kpi-value {
+            font-size: 30px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .kpi-sub {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 7px;
+        }
+
+        .row {
+            margin-top: 16px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 12px;
+        }
+
+        .panel-title {
+            margin: 0 0 12px;
+            font-size: 16px;
+            letter-spacing: 0.2px;
+        }
+
+        .bar-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .bar-line {
+            display: grid;
+            grid-template-columns: 90px 1fr 34px;
+            gap: 10px;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .track {
+            height: 11px;
+            background: #e9eef5;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .fill {
+            height: 100%;
+            border-radius: 999px;
+        }
+
+        .fill.blocker {
+            background: var(--blocker);
+            width: 40%;
+        }
+
+        .fill.high {
+            background: var(--high);
+            width: 100%;
+        }
+
+        .fill.medium {
+            background: var(--medium);
+            width: 80%;
+        }
+
+        .fill.low {
+            background: var(--low);
+            width: 40%;
+        }
+
+        .legend {
+            margin-top: 14px;
+            font-size: 12px;
+            color: var(--muted);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        .risk-matrix {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px;
+        }
+
+        .risk-matrix th,
+        .risk-matrix td {
+            border: 1px solid var(--border);
+            padding: 8px;
+            text-align: center;
+        }
+
+        .risk-matrix th {
+            background: #f0f4fa;
+            font-weight: 600;
+        }
+
+        .cell-critical {
+            background: #ffe1e1;
+            font-weight: 700;
+        }
+
+        .cell-hot {
+            background: #fff1dd;
+            font-weight: 600;
+        }
+
+        .cell-warm {
+            background: #fff8dc;
+        }
+
+        .cell-calm {
+            background: #e8f4ee;
+        }
+
+        .issues {
+            margin-top: 16px;
+        }
+
+        .issue-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .issue-table th,
+        .issue-table td {
+            border: 1px solid var(--border);
+            padding: 9px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .issue-table th {
+            background: #f0f4fa;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .issue-location {
+            font-family: "Menlo", "Consolas", monospace;
+            font-size: 12px;
+            color: #2b3d52;
+        }
+
+        .issue-fix {
+            min-width: 280px;
+        }
+
+        .sev {
+            color: #fff;
+            font-size: 11px;
+            border-radius: 999px;
+            padding: 4px 8px;
+            display: inline-block;
+            min-width: 68px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .sev.blocker {
+            background: var(--blocker);
+        }
+
+        .sev.high {
+            background: var(--high);
+        }
+
+        .sev.medium {
+            background: var(--medium);
+            color: #232323;
+        }
+
+        .sev.low {
+            background: var(--low);
+        }
+
+        .roadmap {
+            margin-top: 16px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .step {
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--accent);
+            border-radius: 10px;
+            background: #fff;
+            padding: 10px 12px;
+        }
+
+        .step h4 {
+            margin: 0 0 5px;
+            font-size: 14px;
+        }
+
+        .step p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        @media (max-width: 980px) {
+            .grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 23px;
+            }
+
+            .bar-line {
+                grid-template-columns: 78px 1fr 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <section class="hero">
+            <h1>AirIQ Solution Stability Dashboard</h1>
+            <p>Visual summary of prioritized technical and security risks across the solution.</p>
+            <a class="hero-link" href="ProjectStabilityAuditReport.html">View Detailed Audit Table</a>
+            <div class="meta">
+                <span class="chip">Scope: Entire Solution</span>
+                <span class="chip">Total Findings: 13</span>
+                <span class="chip">Data Source: Stability Audit + Code Review</span>
+            </div>
+        </section>
+
+        <section class="grid">
+            <article class="card">
+                <div class="kpi-label">Blocker</div>
+                <div class="kpi-value" style="color: var(--blocker);">2</div>
+                <div class="kpi-sub">Immediate security exposure</div>
+            </article>
+            <article class="card">
+                <div class="kpi-label">High</div>
+                <div class="kpi-value" style="color: var(--high);">5</div>
+                <div class="kpi-sub">Runtime stability and data risk</div>
+            </article>
+            <article class="card">
+                <div class="kpi-label">Medium</div>
+                <div class="kpi-value" style="color: var(--medium);">4</div>
+                <div class="kpi-sub">Reliability and lifecycle concerns</div>
+            </article>
+            <article class="card">
+                <div class="kpi-label">Low</div>
+                <div class="kpi-value" style="color: var(--low);">2</div>
+                <div class="kpi-sub">Performance and maintainability debt</div>
+            </article>
+        </section>
+
+        <section class="row">
+            <article class="card">
+                <h3 class="panel-title">Severity Distribution</h3>
+                <div class="bar-list">
+                    <div class="bar-line">
+                        <span>Blocker</span>
+                        <div class="track">
+                            <div class="fill blocker"></div>
+                        </div>
+                        <strong>2</strong>
+                    </div>
+                    <div class="bar-line">
+                        <span>High</span>
+                        <div class="track">
+                            <div class="fill high"></div>
+                        </div>
+                        <strong>5</strong>
+                    </div>
+                    <div class="bar-line">
+                        <span>Medium</span>
+                        <div class="track">
+                            <div class="fill medium"></div>
+                        </div>
+                        <strong>4</strong>
+                    </div>
+                    <div class="bar-line">
+                        <span>Low</span>
+                        <div class="track">
+                            <div class="fill low"></div>
+                        </div>
+                        <strong>2</strong>
+                    </div>
+                </div>
+                <div class="legend">
+                    <span><i class="dot" style="background: var(--blocker);"></i>Blocker: security-critical</span>
+                    <span><i class="dot" style="background: var(--high);"></i>High: likely runtime impact</span>
+                    <span><i class="dot" style="background: var(--medium);"></i>Medium: fix in next sprint</span>
+                    <span><i class="dot" style="background: var(--low);"></i>Low: backlog improvements</span>
+                </div>
+            </article>
+
+            <article class="card">
+                <h3 class="panel-title">Risk Heat Matrix</h3>
+                <table class="risk-matrix" aria-label="Risk Heat Matrix">
+                    <thead>
+                        <tr>
+                            <th>Impact \ Likelihood</th>
+                            <th>Low</th>
+                            <th>Medium</th>
+                            <th>High</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Critical</th>
+                            <td></td>
+                            <td></td>
+                            <td class="cell-critical">Blockers</td>
+                        </tr>
+                        <tr>
+                            <th>High</th>
+                            <td></td>
+                            <td class="cell-warm">Medium</td>
+                            <td class="cell-hot">High</td>
+                        </tr>
+                        <tr>
+                            <th>Medium</th>
+                            <td class="cell-calm">Low</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+        </section>
+
+        <section class="card issues">
+            <h3 class="panel-title">Top Findings by Priority</h3>
+            <table class="issue-table" aria-label="Prioritized Findings">
+                <thead>
+                    <tr>
+                        <th style="width: 110px;">Severity</th>
+                        <th style="width: 220px;">Issue</th>
+                        <th style="width: 260px;">Location (File:Line)</th>
+                        <th>Why It Matters</th>
+                        <th class="issue-fix">Recommended Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="sev blocker">Blocker</span></td>
+                        <td>Hardcoded API credentials</td>
+                        <td class="issue-location">Extensions/RefitClientServiceInitializer.cs:40-41</td>
+                        <td>Exposes external service keys through source, logs, and extracted binaries.</td>
+                        <td>Move keys to secure configuration (environment/secret store), inject via options, rotate
+                            exposed keys.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="sev blocker">Blocker</span></td>
+                        <td>Hardcoded login defaults</td>
+                        <td class="issue-location">ViewModels/LoginPageViewModel.cs:19,22</td>
+                        <td>Creates unauthorized access risk and compliance violations in production builds.</td>
+                        <td>Replace defaults with empty values and guard test credentials behind debug-only compilation
+                            flags.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="sev high">High</span></td>
+                        <td>Sensitive login logging</td>
+                        <td class="issue-location">ViewModels/LoginPageViewModel.cs:43-44,49</td>
+                        <td>Username/password and user payload can leak through logs and diagnostics.</td>
+                        <td>Remove credential logging, redact sensitive fields, and log only non-PII identifiers.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="sev high">High</span></td>
+                        <td>Unsafe null-forgiving auth/storage</td>
+                        <td class="issue-location">Services/SecureStorageService.cs:14,17; Services/ApiServiceBase.cs:60
+                        </td>
+                        <td>Can cause runtime crashes and unpredictable auth behavior under null states.</td>
+                        <td>Replace null-forgiving with explicit null checks; return nullable/TryGet results and handle
+                            failures centrally.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="sev high">High</span></td>
+                        <td>Unobserved async work</td>
+                        <td class="issue-location">ViewModels/FlightsPageViewModel.cs:60,72;
+                            ViewModels/DashboardPageViewModel.cs:60; ViewModels/FlightBookingPageViewModel.cs:266</td>
+                        <td>Fire-and-forget tasks can fail silently, leaving stale UI and hidden bugs.</td>
+                        <td>Await async calls where possible; otherwise use a SafeFireAndForget helper that captures and
+                            logs exceptions.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="sev medium">Medium</span></td>
+                        <td>Async lifecycle initialization</td>
+                        <td class="issue-location">Views/SignupPage.xaml.cs:16,21</td>
+                        <td>Timing delays and async-void patterns increase race conditions on startup.</td>
+                        <td>Move async initialization to lifecycle methods (OnAppearing/Loaded), remove fixed delay,
+                            return Task-based flows.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="sev medium">Medium</span></td>
+                        <td>Navigation without resilience</td>
+                        <td class="issue-location">Services/ShellNavigationService.cs:13-14,25-26;
+                            Services/NavigationService.cs:213,220</td>
+                        <td>Unhandled route errors can break flows with no consistent fallback behavior.</td>
+                        <td>Wrap navigation APIs in try/catch, emit telemetry, and surface user-safe fallback messaging.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="sev low">Low</span></td>
+                        <td>Artificial UI delay</td>
+                        <td class="issue-location">Platforms/Android/Handlers/CustomDropdownHandler.cs:209</td>
+                        <td>One-second delay in dropdown population hurts responsiveness and UX quality.</td>
+                        <td>Remove Task.Delay; update adapter immediately or debounce based on actual user input events.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="card roadmap">
+            <h3 class="panel-title">Execution Roadmap</h3>
+            <div class="step">
+                <h4>Step 1: Security Hotfix (Immediate)</h4>
+                <p>Remove hardcoded secrets and credentials. Mask and minimize auth-related logs.</p>
+            </div>
+            <div class="step">
+                <h4>Step 2: Async and Exception Safety</h4>
+                <p>Replace service-level async void, add safe fire-and-forget wrapper, and harden null handling.</p>
+            </div>
+            <div class="step">
+                <h4>Step 3: Lifecycle and Navigation Reliability</h4>
+                <p>Refactor async page initialization and add try/catch with telemetry in navigation boundaries.</p>
+            </div>
+            <div class="step">
+                <h4>Step 4: Quality Improvements</h4>
+                <p>Remove artificial delays, simplify nullable state usage, and enforce analyzer rules in CI.</p>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

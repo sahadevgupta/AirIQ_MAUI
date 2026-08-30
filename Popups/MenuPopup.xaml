@@ -8,8 +8,14 @@
                  xmlns:models="clr-namespace:AirIQ.Models"
                  xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                  xmlns:vm="clr-namespace:AirIQ.ViewModels.Common"
+                 xmlns:converter="clr-namespace:AirIQ.Converter"
                  x:DataType="vm:MenuPageViewModel"
                  BackgroundColor="{StaticResource PopupBackground}">
+
+    <mopup:PopupPage.Resources>
+        <converter:MenuItemBackgroundConverter x:Key="MenuItemBackgroundConverter"/>
+        <converter:MenuItemForegroundConverter x:Key="MenuItemForegroundConverter"/>
+    </mopup:PopupPage.Resources>
 
     <mopup:PopupPage.Animation>
         <mopupsanim:MoveAnimation
@@ -28,7 +34,8 @@
         <Grid RowDefinitions="Auto,*,Auto"
               ColumnDefinitions="Auto, *"
               BackgroundColor="{StaticResource PrimaryColor}"
-              RowSpacing="16">
+              RowSpacing="16"
+              MinimumWidthRequest="{OnIdiom Tablet=500}">
 
             <HorizontalStackLayout Spacing="12"
                                    Padding="20">
@@ -65,25 +72,34 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:MenuOption">
-                        <HorizontalStackLayout Spacing="12"
-                                               Padding="20,10">
-                            <Image Source="{Binding IconSource, TargetNullValue='flight'}"
-                                   HeightRequest="30"
-                                   WidthRequest="25">
-                                <Image.Behaviors>
-                                    <toolkit:IconTintColorBehavior TintColor="White"/>
-                                </Image.Behaviors>
-                            </Image>
-                            <Label Text="{Binding Title}"
-                                   Style="{StaticResource Label16SemiBold}"
-                                   VerticalTextAlignment="Center"
-                                   TextColor="White"/>
+                        <Border Margin="12,0"
+                                Padding="20,10"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 10"
+                                BackgroundColor="{Binding IsSelected, Converter={StaticResource MenuItemBackgroundConverter}}">
+                            <HorizontalStackLayout Spacing="12">
+                                <Image x:Name="menuItemIcon"
+                                       Source="{Binding IconSource, TargetNullValue='flight'}"
+                                       HeightRequest="30"
+                                       WidthRequest="25">
+                                    <Image.Behaviors>
+                                        <!-- MAUI does not propagate BindingContext to Behaviors, so IsSelected is read explicitly
+                                             off this Image's own (correctly-updated-on-recycle) BindingContext instead. -->
+                                        <toolkit:IconTintColorBehavior x:DataType="{x:Null}"
+                                                                       TintColor="{Binding Source={x:Reference menuItemIcon}, Path=BindingContext.IsSelected, Converter={StaticResource MenuItemForegroundConverter}}"/>
+                                    </Image.Behaviors>
+                                </Image>
+                                <Label Text="{Binding Title}"
+                                       Style="{StaticResource Label16SemiBold}"
+                                       VerticalTextAlignment="Center"
+                                       TextColor="{Binding IsSelected, Converter={StaticResource MenuItemForegroundConverter}}"/>
+                            </HorizontalStackLayout>
 
-                            <HorizontalStackLayout.GestureRecognizers>
+                            <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding BindingContext.MenuCommand,Source={x:Reference menulist}}"
                                                       CommandParameter="{Binding }"/>
-                            </HorizontalStackLayout.GestureRecognizers>
-                        </HorizontalStackLayout>
+                            </Border.GestureRecognizers>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

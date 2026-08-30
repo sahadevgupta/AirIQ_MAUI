@@ -1,3 +1,4 @@
+using AirIQ.Configurations;
 using AirIQ.Services;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
@@ -16,24 +17,26 @@ public static class AppServiceInitializer
         //Transient Services
         builder.Services.AddTransient<IViewModelParameters, ViewModelParameters>()
                         .AddTransient<IApiServiceBaseParams, ApiServiceBaseParams>()
+                        .AddTransient<IAuthenticationService, AuthenticationService>()
                         .AddTransient<IDialogService, DialogService>()
                         .AddTransient<IUpiAppLaunchService, AirIQ.Platforms.Services.UpiAppLaunchService>()
-                            .AddTransient<IUpiPaymentCallbackService, UpiPaymentCallbackService>()
-                            .AddTransient<ILookupService, LookupService>()
-                        .AddTransient<ILoginService, LoginService>()
+
+                        .AddTransient<ILookupService, LookupService>()
+                        .AddTransient<IAuthenticationService, AuthenticationService>()
                         .AddTransient<IFlightService, FlightService>()
                         .AddTransient<IAuthService, AuthService>()
                         .AddTransient<IOperationsService, OperationsService>()
                         .AddTransient<IZoopVerificationService, ZoopVerificationService>();
 
 
-        builder.Services.AddSingleton<ILoadingPopUpService, AirIQ.Platforms.Services.LoadingPopupService>();
-        builder.Services.AddSingleton<INavigationService, NavigationService>();
-        builder.Services.AddSingleton<IShellNavigationService, ShellNavigationService>()
+        builder.Services.AddSingleton<ILoadingPopUpService, AirIQ.Platforms.Services.LoadingPopupService>()
+                        .AddSingleton<INavigationService, NavigationService>()
+                        .AddSingleton<IShellNavigationService, ShellNavigationService>()
                         .AddSingleton<IConnectivityService, ConnectivityService>()
                         .AddSingleton<ISecureStorageService, SecureStorageService>()
-                        .AddSingleton<IPopupNavigation>(MopupService.Instance);
-
+                        .AddSingleton<IPopupNavigation>(MopupService.Instance)
+                        .AddSingleton<IAppConfiguration, AppConfiguration>()
+                        .AddSingleton<IUpiPaymentCallbackService, UpiPaymentCallbackService>();
 
         return builder;
     }

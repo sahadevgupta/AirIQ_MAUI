@@ -40,11 +40,13 @@
 
                 <controls:ExtendedEntry PlaceholderText="{x:Static resx:AppResource.EnterUsername}"
                                         Title="{x:Static resx:AppResource.UserName}"
-                                        LeftIcon="person"
+                                        LeadingIconType="Image"
+                                        LeadingIcon="person"
                                         Text="{Binding Username}"/>
 
                 <controls:ExtendedEntry PlaceholderText="{x:Static resx:AppResource.EnterPassword}"
-                                        LeftIcon="password"
+                                        LeadingIconType="Image"
+                                        LeadingIcon="password"
                                         IsPassword="True"
                                         Title="{x:Static resx:AppResource.Password}"
                                         Text="{Binding Password}"/>
@@ -99,17 +101,29 @@
                         <FormattedString>
                             <Span Text="{x:Static resx:AppResource.ContactUs}"
                                   TextDecorations="Underline"
-                                  Style="{StaticResource Span12RegularGray50Style}"/>
+                                  Style="{StaticResource Span12RegularGray50Style}">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding DisplayContactUsViewCommand}"/>
+                                </Span.GestureRecognizers>
+                            </Span>
                             <Span Text=" &#x2022; "
                                   Style="{StaticResource Span12RegularGray50Style}"/>
                             <Span Text="{x:Static resx:AppResource.TermsAndConditions}"
                                   TextDecorations="Underline"
-                                  Style="{StaticResource Span12RegularGray50Style}"/>
+                                  Style="{StaticResource Span12RegularGray50Style}">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NavigateToTermsCommand}"/>
+                                </Span.GestureRecognizers>
+                            </Span>
                             <Span Text=" &#x2022; "
                                   Style="{StaticResource Span12RegularGray50Style}"/>
                             <Span Text="{x:Static resx:AppResource.PrivacyPolicy}"
                                   TextDecorations="Underline"
-                                  Style="{StaticResource Span12RegularGray50Style}"/>
+                                  Style="{StaticResource Span12RegularGray50Style}">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NavigateToPolicyCommand}"/>
+                                </Span.GestureRecognizers>
+                            </Span>
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>

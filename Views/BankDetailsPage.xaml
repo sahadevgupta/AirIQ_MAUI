@@ -6,7 +6,8 @@
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
                 xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
                 x:DataType="vm:BankDetailsPageViewModel"
-                PageTitle="Bank Details">
+                PageTitle="Bank Details"
+                NavigationMode="Hamburger">
 
     <views:BasePage.PageContent>
         <ScrollView>
@@ -220,13 +221,13 @@
                                 </Label.FormattedText>
                             </Label>
 
-                            <Grid Padding="16,0,16,16"
+                            <Grid Padding="12,0,12,16"
                                   ColumnDefinitions="*,*,*,*"
-                                  ColumnSpacing="10">
+                                  ColumnSpacing="8">
                                 <Border Stroke="#E9EDF5"
                                         StrokeThickness="1"
-                                        StrokeShape="RoundRectangle 18"
-                                        Padding="10,14"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="10"
                                         BackgroundColor="White">
                                     <Border.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding OpenUpiAppCommand}"
@@ -239,20 +240,21 @@
                                         <Image Source="upi_googlepay"
                                                HeightRequest="42"
                                                WidthRequest="82"
+                                               TranslationX="10"
                                                HorizontalOptions="Center"
                                                Aspect="AspectFit"/>
                                         <Label Text="Google Pay"
-                                               Style="{StaticResource Label14Regular}"
-                                               HorizontalTextAlignment="Center"
-                                               TextColor="#4F5B76"/>
+                                               Style="{StaticResource Label14SemiBold}"
+                                               TextColor="#4F5B76"
+                                               HorizontalTextAlignment="Center"/>
                                     </VerticalStackLayout>
                                 </Border>
 
                                 <Border Grid.Column="1"
                                         Stroke="#E9EDF5"
                                         StrokeThickness="1"
-                                        StrokeShape="RoundRectangle 18"
-                                        Padding="10,14"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="10"
                                         BackgroundColor="White">
                                     <Border.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding OpenUpiAppCommand}"
@@ -268,17 +270,17 @@
                                                HorizontalOptions="Center"
                                                Aspect="AspectFit"/>
                                         <Label Text="PhonePe"
-                                               Style="{StaticResource Label14Regular}"
-                                               HorizontalTextAlignment="Center"
-                                               TextColor="#4F5B76"/>
+                                               Style="{StaticResource Label14SemiBold}"
+                                               TextColor="#4F5B76"
+                                               HorizontalTextAlignment="Center"/>
                                     </VerticalStackLayout>
                                 </Border>
 
                                 <Border Grid.Column="2"
                                         Stroke="#E9EDF5"
                                         StrokeThickness="1"
-                                        StrokeShape="RoundRectangle 18"
-                                        Padding="10,14"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="10"
                                         BackgroundColor="White">
                                     <Border.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding OpenUpiAppCommand}"
@@ -294,17 +296,17 @@
                                                HorizontalOptions="Center"
                                                Aspect="AspectFit"/>
                                         <Label Text="Paytm"
-                                               Style="{StaticResource Label14Regular}"
-                                               HorizontalTextAlignment="Center"
-                                               TextColor="#4F5B76"/>
+                                               Style="{StaticResource Label14SemiBold}"
+                                               TextColor="#4F5B76"
+                                               HorizontalTextAlignment="Center"/>
                                     </VerticalStackLayout>
                                 </Border>
 
                                 <Border Grid.Column="3"
                                         Stroke="#E9EDF5"
                                         StrokeThickness="1"
-                                        StrokeShape="RoundRectangle 18"
-                                        Padding="10,14"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="10"
                                         BackgroundColor="White">
                                     <Border.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding OpenUpiAppCommand}"
@@ -320,9 +322,9 @@
                                                HorizontalOptions="Center"
                                                Aspect="AspectFit"/>
                                         <Label Text="BHIM"
-                                               Style="{StaticResource Label14Regular}"
-                                               HorizontalTextAlignment="Center"
-                                               TextColor="#4F5B76"/>
+                                               Style="{StaticResource Label14SemiBold}"
+                                               TextColor="#4F5B76"
+                                               HorizontalTextAlignment="Center"/>
                                     </VerticalStackLayout>
                                 </Border>
                             </Grid>

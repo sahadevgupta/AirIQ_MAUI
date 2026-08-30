@@ -1,0 +1,10 @@
+{
+    "ApiConfig": {
+        "BaseUrl": "https://uat.airiq.co.in",
+        "ApiKey": "MTQ5NzcyNTA6UG9ydGFsIEFQSSBCb29raW5nOjE4NTc4MTczMTE5NjY6UGxDK1p5dE9wQ09QUG9XOEZvcXgrT25Fem5aSUF4WFo5ZGhuMDNSZ1FzST0="
+    },
+    "Zoop": {
+        "AppId": "6801f6c4d125b80028ec2485",
+        "ApiKey": "XNG2S4P-MF64MJK-HSMEHFX-3YAHZ3G"
+    }
+}

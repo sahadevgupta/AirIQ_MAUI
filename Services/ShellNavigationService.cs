@@ -25,5 +25,15 @@ namespace AirIQ.Services
                 Shell.Current.GoToAsync(route) :
                 Shell.Current.GoToAsync(route, parameters);
         }
+
+        public Task NavigateToFlyoutPage<TPage>(IDictionary<string, object>? parameters = null) where TPage : Page
+        {
+            var route = typeof(TPage).Name;
+            route = $"//home/{route}";
+
+            return parameters is null ?
+                Shell.Current.GoToAsync(route) :
+                Shell.Current.GoToAsync(route, parameters);
+        }
     }
 }

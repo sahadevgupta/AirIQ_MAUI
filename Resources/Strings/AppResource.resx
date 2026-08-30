@@ -228,8 +228,8 @@
   <data name="UdaanHotels" xml:space="preserve">
     <value>UDAANHOTELS.COM</value>
   </data>
-  <data name="BookYourFlightWith" xml:space="preserve">
-    <value>Book your flight with</value>
+  <data name="BookYourFlight" xml:space="preserve">
+    <value>Book your flight</value>
   </data>
   <data name="Air" xml:space="preserve">
     <value>Air</value>

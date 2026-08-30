@@ -9,7 +9,6 @@ namespace AirIQ.Controls.StepBar;
 public partial class StepBarViewCell : ContentView
 {
 	private StepBarModel? _previousModel;
-	private int stepCount;
 	// Content for each step
 	public static readonly BindableProperty StepContentProperty =
 		BindableProperty.Create(nameof(StepContent), typeof(View), typeof(StepBarViewCell));
@@ -22,10 +21,9 @@ public partial class StepBarViewCell : ContentView
 
 	// Event to notify parent that a step is tapped
 	public event Action<View>? StepSelected;
-	public StepBarViewCell(int totalStepCount)
+	public StepBarViewCell()
 	{
 		InitializeComponent();
-		this.stepCount = totalStepCount;
 		if (Device.RuntimePlatform == Device.iOS)
 		{
 			progress.SetBinding(ProgressBar.ProgressProperty, "ProgressValue");
@@ -34,31 +32,6 @@ public partial class StepBarViewCell : ContentView
 		{
 			progress.SetBinding(ProgressBar.ProgressProperty, "ProgressValue", BindingMode.TwoWay);
 		}
-
-	}
-	protected override void OnSizeAllocated(double width, double height)
-	{
-		base.OnSizeAllocated(width, height);
-
-		var screenWidth = DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.Current.MainDisplayInfo.Density;
-		double cellwidth = screenWidth / stepCount;
-		progress.WidthRequest = cellwidth;
-		// mainLabel.WidthRequest = cellwidth - 8 - 20;
-		//if (BindingContext is StepBarModel selectedmodel)
-		//{
-		//    if (selectedmodel.IsNotLast)
-		//    {
-
-		//        progress.WidthRequest = this.WidthRequest - 20;
-		//        trackergrid.HorizontalOptions = LayoutOptions.CenterAndExpand;
-		//    }
-		//    else
-		//    {
-		//        this.WidthRequest = 100;
-		//        progress.Margin = new Thickness(-80, 10, 0, 0);
-		//        //trackergrid.HorizontalOptions = LayoutOptions.EndAndExpand;
-		//    }
-		//}
 
 	}
 
@@ -85,12 +58,6 @@ public partial class StepBarViewCell : ContentView
 				StepContent = selectedmodel.MainContent!;
 				StepSelected?.Invoke(selectedmodel.MainContent!);
 			}
-
-			var screenWidth = DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.Current.MainDisplayInfo.Density;
-			double cellwidth = screenWidth / stepCount;
-
-
-			progress.WidthRequest = cellwidth;
 		}
 
 	}

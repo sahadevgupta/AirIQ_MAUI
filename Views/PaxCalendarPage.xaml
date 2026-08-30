@@ -10,7 +10,8 @@
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
                 x:DataType="vm:PaxCalendarPageViewModel"
-                PageTitle="PAX Calendar">
+                PageTitle="PAX Calendar"
+                NavigationMode="Hamburger">
 
     <views:BasePage.Resources>
         <Style x:Key="CardTextStyle"
@@ -76,7 +77,9 @@
 
                     <controls:SearchView IsFilterVisible="False"
                                          IsDownloadVisible="False"
-                                         PlaceholderText="Search here"/>
+                                         PlaceholderText="Search here"
+                                         SearchText="{Binding SearchText}"
+                                         SearchCommand="{Binding SearchCommand}"/>
 
                     <!-- Header -->
                     <Grid ColumnDefinitions="Auto,*,Auto,Auto"
@@ -197,10 +200,10 @@
                                 VerticalOptions="Start">
                             <toolkit:Expander x:Name="expander">
                                 <toolkit:Expander.Header>
-                                    <Border StrokeThickness="0">
-                                        <Grid Padding="12,0"
+                                    <Border StrokeThickness="1">
+                                        <Grid Padding="12"
                                               ColumnDefinitions="*,Auto"
-                                              RowDefinitions="Auto,1">
+                                              RowDefinitions="Auto">
                                             <Label VerticalOptions="Center">
                                                 <Label.FormattedText>
                                                     <FormattedString>
@@ -210,11 +213,12 @@
                                                 </Label.FormattedText>
                                             </Label>
                                             <HorizontalStackLayout Grid.Column="1"
-                                                                   Spacing="0"
+                                                                   Spacing="8"
                                                                    BackgroundColor="Transparent"
                                                                    HorizontalOptions="End">
                                                 <ImageButton Source="invoice"
-                                                             Scale="0.4"/>
+                                                             MinimumHeightRequest="30"
+                                                             MinimumWidthRequest="30"/>
 
                                                 <ImageButton Source="arrow_right"
                                                              MinimumHeightRequest="30"
@@ -226,19 +230,10 @@
                                                                      Value="True">
                                                             <Setter Property="Rotation"
                                                                     Value="270"/>
-                                                            <Setter TargetName="bottomLine"
-                                                                    Property="IsVisible"
-                                                                    Value="True"/>
                                                         </DataTrigger>
                                                     </ImageButton.Triggers>
                                                 </ImageButton>
                                             </HorizontalStackLayout>
-
-                                            <BoxView Grid.Row="1"
-                                                     Grid.ColumnSpan="2"
-                                                     x:Name="bottomLine"
-                                                     IsVisible="False"
-                                                     Color="{StaticResource BorderColor}"/>
                                         </Grid>
                                     </Border>
                                 </toolkit:Expander.Header>

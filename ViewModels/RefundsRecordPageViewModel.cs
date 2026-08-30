@@ -1,5 +1,7 @@
+using AirIQ.Configurations;
 using AirIQ.Configurations.Mapper;
 using AirIQ.Constants;
+using AirIQ.Extensions;
 using AirIQ.Helpers;
 using AirIQ.Models;
 using AirIQ.Services.Interfaces;
@@ -18,11 +20,34 @@ namespace AirIQ.ViewModels
         const int pageSize = 20;
         int page = 1;
 
+        private List<RefundRecord> refundRecordsTemp = new();
+
         [ObservableProperty]
         private ObservableRangeCollection<RefundRecord> _refundRecords = new();
+
+        [ObservableProperty]
+        private string? _searchText;
         #endregion
 
         #region [ Methods & Service Calls ]
+
+        private void FilterRefundRecords(string? searchKey)
+        {
+            var filtered = string.IsNullOrEmpty(searchKey)
+                ? refundRecordsTemp
+                : refundRecordsTemp.Where(x =>
+                    x.Prefix.ContainsIgnoreCase(searchKey) ||
+                    x.PNR.ContainsIgnoreCase(searchKey) ||
+                    x.FDestName.ContainsIgnoreCase(searchKey));
+
+            RefundRecords.ReplaceRange(filtered);
+        }
+
+        partial void OnSearchTextChanged(string? value)
+        {
+            if (string.IsNullOrEmpty(value))
+                FilterRefundRecords(value);
+        }
 
         #endregion
 
@@ -37,10 +62,21 @@ namespace AirIQ.ViewModels
                 if (records.Any())
                 {
                     var item = BackendToAppModelMapper.GetRefundRecords(records).ToList();
-                    RefundRecords?.AddRange(item);
+                    refundRecordsTemp.AddRange(item);
+
+                    if (string.IsNullOrEmpty(SearchText))
+                        RefundRecords?.AddRange(item);
+                    else
+                        FilterRefundRecords(SearchText);
                 }
                 page++;
             }
+        }
+
+        [RelayCommand]
+        private void Search(string? searchText)
+        {
+            FilterRefundRecords(searchText);
         }
 
         #endregion

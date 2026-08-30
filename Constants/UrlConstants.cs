@@ -23,4 +23,8 @@ public static class UrlConstants
     public const string UploadRequest = "/api/upload-request/submit";
     public const string PaxCalendarFlight = "/api/pax-calendar/flights";
     public const string Signup = "/api/account/signup";
+    public const string ForgotPassword = "/api/account/forgotpassword";
+    public const string VerifyOTP = "/api/account/verifyotp";
+    public const string ResetPassword = "/api/account/resetpassword";
+    public const string ChangePassword = "/api/account/changepassword";
 }

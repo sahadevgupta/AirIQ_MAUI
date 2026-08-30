@@ -1,4 +1,4 @@
-﻿using AirIQ.Controls;
+using AirIQ.Controls;
 using AirIQ.Extensions;
 using AirIQ.Services.Interfaces;
 using Android.App;
@@ -101,6 +101,11 @@ namespace AirIQ.Platforms.Services
             {
                 // ignore
             }
+        }
+
+        public Task HideAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

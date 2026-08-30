@@ -7,7 +7,8 @@ using AirIQ.Services.Interfaces;
 
 namespace AirIQ.Services
 {
-    public class LookupService(IApiServiceBaseParams apiServiceBaseParams) : ApiServiceBase(apiServiceBaseParams), ILookupService
+    public class LookupService(IApiServiceBaseParams apiServiceBaseParams,
+        IAuthenticationApi authenticationApi) : ApiServiceBase(apiServiceBaseParams), ILookupService
     {
         public async Task<IEnumerable<CountryDto>> GetCountriesAsync()
         {
@@ -16,7 +17,7 @@ namespace AirIQ.Services
             {
                 await Connectivity.CheckConnected();
 
-                var apiResponse = await BackendService.GetCountries().ConfigureAwait(false);
+                var apiResponse = await authenticationApi.GetCountries().ConfigureAwait(false);
                 countryDtos = apiResponse ?? Enumerable.Empty<CountryDto>();
             }
             catch (NotConnectedException notConntectedException)
@@ -37,7 +38,7 @@ namespace AirIQ.Services
             {
                 await Connectivity.CheckConnected();
 
-                var apiResponse = await BackendService.GetCities().ConfigureAwait(false);
+                var apiResponse = await authenticationApi.GetCities().ConfigureAwait(false);
                 cityDtos = apiResponse ?? Enumerable.Empty<CityDto>();
             }
             catch (NotConnectedException notConntectedException)
@@ -58,7 +59,7 @@ namespace AirIQ.Services
             {
                 await Connectivity.CheckConnected();
 
-                var apiResponse = await BackendService.GetStates().ConfigureAwait(false);
+                var apiResponse = await authenticationApi.GetStates().ConfigureAwait(false);
                 stateDtos = apiResponse ?? Enumerable.Empty<StateDto>();
             }
             catch (NotConnectedException notConntectedException)
@@ -79,7 +80,7 @@ namespace AirIQ.Services
             {
                 await Connectivity.CheckConnected();
 
-                var apiResponse = await BackendService.GetMainCities().ConfigureAwait(false);
+                var apiResponse = await authenticationApi.GetMainCities().ConfigureAwait(false);
                 mainCityDtos = apiResponse ?? Enumerable.Empty<MainCityDto>();
             }
             catch (NotConnectedException notConntectedException)
@@ -100,7 +101,7 @@ namespace AirIQ.Services
             {
                 await Connectivity.CheckConnected();
 
-                var apiResponse = await BackendService.GetDistricts().ConfigureAwait(false);
+                var apiResponse = await authenticationApi.GetDistricts().ConfigureAwait(false);
                 districtDtos = apiResponse ?? Enumerable.Empty<DistrictDto>();
             }
             catch (NotConnectedException notConntectedException)
@@ -121,7 +122,7 @@ namespace AirIQ.Services
             {
                 await Connectivity.CheckConnected();
 
-                var apiResponse = await BackendService.GetAccountManagers(type).ConfigureAwait(false);
+                var apiResponse = await authenticationApi.GetAccountManagers(type).ConfigureAwait(false);
                 lookupItemDtos = apiResponse ?? Enumerable.Empty<LookupItemDto>();
             }
             catch (NotConnectedException notConntectedException)
@@ -133,27 +134,6 @@ namespace AirIQ.Services
                 HandleException(exception);
             }
             return lookupItemDtos;
-        }
-
-        public async Task<string> SignupAsync(SignupRequest signupRequest)
-        {
-            IEnumerable<LookupItemDto> lookupItemDtos = Enumerable.Empty<LookupItemDto>();
-            try
-            {
-                await Connectivity.CheckConnected();
-
-                var apiResponse = await BackendService.SignupAsync(signupRequest).ConfigureAwait(false);
-                return apiResponse.Message ?? string.Empty;
-            }
-            catch (NotConnectedException notConntectedException)
-            {
-                HandleException(notConntectedException);
-            }
-            catch (Exception exception)
-            {
-                HandleException(exception);
-            }
-            return string.Empty;
         }
     }
 }

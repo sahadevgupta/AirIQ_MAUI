@@ -15,25 +15,7 @@ namespace AirIQ.Services.Interfaces
         [Get(UrlConstants.Sectors)]
         Task<ServiceResponse<IEnumerable<FlightRouteDto>>> GetAvailableSectors([HeaderCollection] IDictionary<string, string> headers);
 
-        [Get(UrlConstants.Countries)]
-        Task<IEnumerable<CountryDto>> GetCountries();
-
-        [Get(UrlConstants.States)]
-        Task<IEnumerable<StateDto>> GetStates();
-
-        [Get(UrlConstants.Cities)]
-        Task<IEnumerable<CityDto>> GetCities();
-
-        [Get(UrlConstants.MainCities)]
-        Task<IEnumerable<MainCityDto>> GetMainCities();
-
-        [Get(UrlConstants.Districts)]
-        Task<IEnumerable<DistrictDto>> GetDistricts();
-
-        [Get(UrlConstants.Accountmanagers)]
-        Task<IEnumerable<LookupItemDto>> GetAccountManagers([AliasAs("type")] AccountManagerType type);
-
-        [Get($"{UrlConstants.SalesRecords}/{{agentId}}")]
+        [Get(path: $"{UrlConstants.SalesRecords}/{{agentId}}")]
         Task<RecordServiceResponse<IEnumerable<SalesRecordDto>>> GetSalesRecordsAsync(int agentId,
             [HeaderCollection] IDictionary<string, string> headers,
             [AliasAs("page")] int page,
@@ -87,8 +69,7 @@ namespace AirIQ.Services.Interfaces
         Task<LoginDto> Login([Body(BodySerializationMethod.Serialized)] LoginRequest request,
             [HeaderCollection] IDictionary<string, string> headers);
 
-        [Post(UrlConstants.LoginWithoutApiKey)]
-        Task<LoginDto> LoginAsync([Body(BodySerializationMethod.Serialized)] LoginRequest request);
+
 
         [Post(UrlConstants.Search)]
         Task<ServiceResponse<IEnumerable<FlightSearchResultDto>>> SearchFlights([Body(BodySerializationMethod.Serialized)] FlightSearchRequest request,
@@ -108,9 +89,6 @@ namespace AirIQ.Services.Interfaces
             [AliasAs("Amount")] decimal amount,
             [AliasAs("Message")] string message,
             [AliasAs("File")] StreamPart? file);
-
-        [Post(UrlConstants.Signup)]
-        Task<SignupDto> SignupAsync([Body(BodySerializationMethod.Serialized)] SignupRequest request);
 
         #endregion
     }

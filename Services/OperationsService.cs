@@ -1,3 +1,4 @@
+using AirIQ.Configurations;
 using AirIQ.Configurations.CustomExceptions;
 using AirIQ.Constants;
 using AirIQ.Models.Request;

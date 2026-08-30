@@ -8,7 +8,8 @@
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
                 x:DataType="vm:AccountLedgerRecordPageViewModel"
-                PageTitle="Account Ledger">
+                PageTitle="Account Ledger"
+                NavigationMode="Hamburger">
     <views:BasePage.PageContent>
         <Grid Padding="16"
               RowDefinitions="Auto,Auto,*"
@@ -80,9 +81,15 @@
                 </VerticalStackLayout>
             </Border>
 
-            <controls:SearchView VerticalOptions="Start"
-                                 Grid.ColumnSpan="3"
-                                 Grid.Row="1"/>
+            <Border StrokeShape="RoundRectangle 8"
+                    BackgroundColor="White"
+                    Grid.ColumnSpan="3"
+                    Padding="16"
+                    Grid.Row="1">
+                <controls:SearchView VerticalOptions="Start"
+                                     SearchText="{Binding SearchText}"
+                                     SearchCommand="{Binding SearchCommand}"/>
+            </Border>
 
             <CollectionView Grid.Row="2"
                             Grid.ColumnSpan="3"
@@ -104,10 +111,10 @@
                                 VerticalOptions="Start">
                             <toolkit:Expander x:Name="expander">
                                 <toolkit:Expander.Header>
-                                    <Border StrokeThickness="0">
-                                        <Grid Padding="12,0"
+                                    <Border StrokeThickness="1">
+                                        <Grid Padding="12"
                                               ColumnDefinitions="*,Auto"
-                                              RowDefinitions="Auto,1">
+                                              RowDefinitions="Auto">
                                             <Label VerticalOptions="Center">
                                                 <Label.FormattedText>
                                                     <FormattedString>
@@ -117,11 +124,12 @@
                                                 </Label.FormattedText>
                                             </Label>
                                             <HorizontalStackLayout Grid.Column="1"
-                                                                   Spacing="0"
+                                                                   Spacing="4"
                                                                    BackgroundColor="Transparent"
                                                                    HorizontalOptions="End">
                                                 <ImageButton Source="invoice"
-                                                             Scale="0.4"/>
+                                                             MinimumHeightRequest="30"
+                                                             MinimumWidthRequest="30"/>
 
                                                 <ImageButton Source="arrow_right"
                                                              MinimumHeightRequest="30"
@@ -133,19 +141,11 @@
                                                                      Value="True">
                                                             <Setter Property="Rotation"
                                                                     Value="270"/>
-                                                            <Setter TargetName="bottomLine"
-                                                                    Property="IsVisible"
-                                                                    Value="True"/>
+
                                                         </DataTrigger>
                                                     </ImageButton.Triggers>
                                                 </ImageButton>
                                             </HorizontalStackLayout>
-
-                                            <BoxView Grid.Row="1"
-                                                     Grid.ColumnSpan="2"
-                                                     x:Name="bottomLine"
-                                                     IsVisible="False"
-                                                     Color="{StaticResource BorderColor}"/>
                                         </Grid>
                                     </Border>
                                 </toolkit:Expander.Header>

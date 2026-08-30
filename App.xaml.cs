@@ -1,10 +1,10 @@
-﻿using AirIQ.Constants;
+﻿using AirIQ.Configurations;
+using AirIQ.Constants;
 using AirIQ.Extensions;
 using AirIQ.Models.Response;
 using AirIQ.Services.Interfaces;
 using AirIQ.Views;
-
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace AirIQ
 {
@@ -33,8 +33,8 @@ namespace AirIQ
                     {
                         if (AppConfiguration.IsLoggedInUser)
                         {
-                            AppConfiguration.CurrentUser = JsonConvert.DeserializeObject<UserDto>(AppConfiguration.UserDetails);
-                            await Shell.Current.GoToAsync("//app/home");
+                            AppConfiguration.CurrentUser = JsonSerializer.Deserialize<UserDto>(AppConfiguration.UserDetails);
+                            await Shell.Current.GoToAsync("///home");
                         }
                         else
                         {

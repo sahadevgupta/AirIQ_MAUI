@@ -15,7 +15,7 @@ public static class UpiPaymentConstants
         var transactionRef = global::System.Uri.EscapeDataString(GenerateTransactionRef());
         var merchantCategoryCode = global::System.Uri.EscapeDataString(MerchantCategoryCode);
 
-        return $"pa={payeeAddress}&pn={payeeName}&tr={transactionRef}&cu=INR&mc={merchantCategoryCode}&url={callback}";
+        return $"upi://pay?pa={payeeAddress}&pn={payeeName}&tr={transactionRef}&cu=INR&mc={merchantCategoryCode}&url={callback}";
     }
 
     private static string GenerateTransactionRef()

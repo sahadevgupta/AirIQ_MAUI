@@ -1,46 +1,62 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:AirIQ.Controls"
              x:Class="AirIQ.Controls.SearchView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Name="searchView">
 
-    <Border Style="{StaticResource DefaultBorderStyle}"
-            Padding="0"
-            StrokeThickness="0">
-        <Grid ColumnDefinitions="*,Auto,Auto"
-              ColumnSpacing="10"
-              HeightRequest="45">
 
-            <Border Stroke="{StaticResource BorderColor}"
-                    StrokeShape="RoundRectangle 6">
-                <SearchBar Text="{Binding SearchText,Source={x:Reference searchView}}"
-                           Placeholder="{Binding PlaceholderText,Source={x:Reference searchView}}"
-                           SearchCommand="{Binding SearchCommand,Source={x:Reference searchView}}"/>
+    <Grid ColumnDefinitions="*,Auto,Auto"
+          ColumnSpacing="10">
 
-                <Border.Triggers>
-                    <MultiTrigger TargetType="Border">
-                        <MultiTrigger.Conditions>
-                            <BindingCondition Binding="{Binding IsFilterVisible ,Source={x:Reference searchView}}"
-                                              Value="False"/>
-                            <BindingCondition Binding="{Binding IsDownloadVisible ,Source={x:Reference searchView}}"
-                                              Value="False"/>
-                        </MultiTrigger.Conditions>
-                        <Setter Property="Grid.ColumnSpan"
-                                Value="3"/>
-                    </MultiTrigger>
-                </Border.Triggers>
-            </Border>
+        <Border Stroke="{StaticResource BorderColor}"
+                BackgroundColor="White"
+                StrokeShape="RoundRectangle 6"
+                Padding="12"
+                HeightRequest="45">
 
-            <ImageButton Source="filter"
-                         Grid.Column="1"
-                         Command="{Binding FilterCommand,Source={x:Reference searchView}}"
-                         IsVisible="{Binding IsFilterVisible ,Source={x:Reference searchView}}"/>
+            <Grid ColumnDefinitions="Auto,*,Auto"
+                  ColumnSpacing="8">
+                <Image Source="search"/>
+                <local:BorderlessEntry Grid.Column="1"
+                                       Text="{Binding SearchText,Source={x:Reference searchView}}"
+                                       Placeholder="{Binding PlaceholderText,Source={x:Reference searchView}}"
+                                       x:Name="UserStoppedTypingEntry">
+                    <local:BorderlessEntry.Behaviors>
+                        <toolkit:UserStoppedTypingBehavior Command="{Binding SearchCommand,Source={x:Reference searchView}}"
+                                                           BindingContext="{Binding Path=BindingContext, Source={x:Reference UserStoppedTypingEntry}, x:DataType=local:BorderlessEntry}"
+                                                           StoppedTypingTimeThreshold="1000"
+                                                           MinimumLengthThreshold="3"
+                                                           ShouldDismissKeyboardAutomatically="True"/>
+                    </local:BorderlessEntry.Behaviors>
+                </local:BorderlessEntry>
+            </Grid>
 
-            <ImageButton Source="download"
-                         Grid.Column="2"
-                         Command="{Binding DownloadCommand,Source={x:Reference searchView}}"
-                         IsVisible="{Binding IsDownloadVisible,Source={x:Reference searchView}}"/>
-        </Grid>
-    </Border>
+            <Border.Triggers>
+                <MultiTrigger TargetType="Border">
+                    <MultiTrigger.Conditions>
+                        <BindingCondition Binding="{Binding IsFilterVisible ,Source={x:Reference searchView}}"
+                                          Value="False"/>
+                        <BindingCondition Binding="{Binding IsDownloadVisible ,Source={x:Reference searchView}}"
+                                          Value="False"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Grid.ColumnSpan"
+                            Value="3"/>
+                </MultiTrigger>
+            </Border.Triggers>
+        </Border>
+
+        <ImageButton Source="filter"
+                     Grid.Column="1"
+                     Command="{Binding FilterCommand,Source={x:Reference searchView}}"
+                     IsVisible="{Binding IsFilterVisible ,Source={x:Reference searchView}}"/>
+
+        <ImageButton Source="download"
+                     Grid.Column="2"
+                     Command="{Binding DownloadCommand,Source={x:Reference searchView}}"
+                     IsVisible="{Binding IsDownloadVisible,Source={x:Reference searchView}}"/>
+    </Grid>
+
 
 </ContentView>

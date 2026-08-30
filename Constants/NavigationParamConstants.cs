@@ -7,4 +7,6 @@ public static class NavigationParamConstants
     public const string SelectedFlight = nameof(SelectedFlight);
     public const string FlightSearchRequest = nameof(FlightSearchRequest);
     public const string TravelAllowedDates = nameof(TravelAllowedDates);
+    public const string TransactionKey = nameof(TransactionKey);
+    public const string Value = nameof(Value);
 }
