@@ -19,10 +19,10 @@ namespace AirIQ.ViewModels
         readonly IPopupNavigation _popupNavigation;
 
         [ObservableProperty]
-        private string? _username = "9380715388"; //string.Empty; //"9382915717";
+        private string? _username = string.Empty; //"9380715388"; //string.Empty; //"9382915717";
 
         [ObservableProperty]
-        private string? _password = "9380715388"; //"123456789";
+        private string? _password = string.Empty; //"9380715388"; //"123456789";
 
         public LoginPageViewModel(IViewModelParameters viewModelParameters,
             IAuthenticationService loginService,
@@ -39,6 +39,11 @@ namespace AirIQ.ViewModels
                 if (e.PropertyName == nameof(IsBusy))
                     LoginCommand.NotifyCanExecuteChanged();
             };
+
+#if DEBUG
+            Username = "9380715388";
+            Password = "9380715388";
+#endif
         }
 
         #region [ Commands ]

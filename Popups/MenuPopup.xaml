@@ -78,11 +78,15 @@
                                 StrokeShape="RoundRectangle 10"
                                 BackgroundColor="{Binding IsSelected, Converter={StaticResource MenuItemBackgroundConverter}}">
                             <HorizontalStackLayout Spacing="12">
-                                <Image Source="{Binding IconSource, TargetNullValue='flight'}"
+                                <Image x:Name="menuItemIcon"
+                                       Source="{Binding IconSource, TargetNullValue='flight'}"
                                        HeightRequest="30"
                                        WidthRequest="25">
                                     <Image.Behaviors>
-                                        <toolkit:IconTintColorBehavior TintColor="{Binding IsSelected, Converter={StaticResource MenuItemForegroundConverter}}"/>
+                                        <!-- MAUI does not propagate BindingContext to Behaviors, so IsSelected is read explicitly
+                                             off this Image's own (correctly-updated-on-recycle) BindingContext instead. -->
+                                        <toolkit:IconTintColorBehavior x:DataType="{x:Null}"
+                                                                       TintColor="{Binding Source={x:Reference menuItemIcon}, Path=BindingContext.IsSelected, Converter={StaticResource MenuItemForegroundConverter}}"/>
                                     </Image.Behaviors>
                                 </Image>
                                 <Label Text="{Binding Title}"

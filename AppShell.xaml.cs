@@ -1,3 +1,5 @@
+using AirIQ.Configurations;
+using AirIQ.Enums;
 using AirIQ.Views;
 using AirIQ_MAUI.Views;
 
@@ -5,6 +7,22 @@ namespace AirIQ;
 
 public partial class AppShell : Shell
 {
+	// Maps the last route segment of a menu-linked page to its MenuType, so the popup's
+	// selected item can be derived from Shell's actual navigation state rather than tracked separately.
+	static readonly Dictionary<string, MenuType> RouteToMenuTypeMap = new()
+	{
+		["home"] = MenuType.Flight,
+		[nameof(SalesRecordPage)] = MenuType.SalesRecord,
+		[nameof(RefundsRecordPage)] = MenuType.RefundsRecord,
+		[nameof(AccountLedgerRecordPage)] = MenuType.AccountsLedger,
+		[nameof(UploadRequestPage)] = MenuType.UploadRequest,
+		[nameof(TempCreditPage)] = MenuType.TemporaryCredit,
+		[nameof(BankDetailsPage)] = MenuType.BankDetails,
+		[nameof(GroupQueryPage)] = MenuType.GroupQuery,
+		[nameof(PaxCalendarPage)] = MenuType.PaxCalendar,
+		[nameof(OnlineRechargePage)] = MenuType.OnlineRecharge,
+	};
+
 	public AppShell()
 	{
 		InitializeComponent();
@@ -33,5 +51,17 @@ public partial class AppShell : Shell
 		Routing.RegisterRoute(nameof(PaxCalendarPage), typeof(PaxCalendarPage));
 		Routing.RegisterRoute(nameof(TermsAndConditionsPage), typeof(TermsAndConditionsPage));
 		Routing.RegisterRoute(nameof(PrivacyPolicyPage), typeof(PrivacyPolicyPage));
+
+		Navigated += OnShellNavigated;
+	}
+
+	void OnShellNavigated(object? sender, ShellNavigatedEventArgs e)
+	{
+		var segment = e.Current?.Location.OriginalString
+			.Split('/', StringSplitOptions.RemoveEmptyEntries)
+			.LastOrDefault();
+
+		if (segment is not null && RouteToMenuTypeMap.TryGetValue(segment, out var menuType))
+			AppConfiguration.SelectedMenuType = menuType;
 	}
 }

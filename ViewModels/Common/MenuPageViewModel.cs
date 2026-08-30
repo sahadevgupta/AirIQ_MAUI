@@ -50,7 +50,7 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
             new MenuOption{Title=AppResource.BankDetails, IconSource="account_balance", MenuType = MenuType.BankDetails},
             new MenuOption{Title=AppResource.GroupQuery,IconSource="question_exchange", MenuType = MenuType.GroupQuery},
             new MenuOption{Title=AppResource.PaxCalendar,IconSource="pax_calendar", MenuType=MenuType.PaxCalendar},
-            new MenuOption{Title=AppResource.OnlineRecharge,MenuType = MenuType.OnlineRecharge},
+            new MenuOption{Title=AppResource.OnlineRecharge, IconSource="online_recharge", MenuType = MenuType.OnlineRecharge},
         };
 
         foreach (var menu in Menus)
@@ -83,12 +83,6 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
     [RelayCommand]
     private async Task Menu(MenuOption selectedMenu)
     {
-        AppConfiguration.SelectedMenuType = selectedMenu.MenuType;
-        foreach (var menu in Menus)
-        {
-            menu.IsSelected = menu.MenuType == selectedMenu.MenuType;
-        }
-
         ClosePopup();
         switch (selectedMenu.MenuType)
         {
