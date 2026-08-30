@@ -44,6 +44,7 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
             new MenuOption{Title=AppResource.Flights, IconSource="flight", MenuType = MenuType.Flight },
             new MenuOption{Title=AppResource.SalesRecord, IconSource="finance_mode", MenuType= MenuType.SalesRecord},
             new MenuOption{Title=AppResource.RefundsRecord, IconSource="currency_exchange", MenuType = MenuType.RefundsRecord},
+            new MenuOption{Title=AppResource.Account, IconSource="account_circle", MenuType = MenuType.Account},
             new MenuOption{Title=AppResource.AccountsLedger, IconSource="manage_accounts", MenuType = MenuType.AccountsLedger},
             new MenuOption{Title=AppResource.UploadRequest, IconSource="upload_file", MenuType = MenuType.UploadRequest},
             new MenuOption{Title=AppResource.TemporaryCredit, IconSource="credit_card", MenuType=MenuType.TemporaryCredit},
@@ -91,6 +92,9 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
                 break;
             case MenuType.RefundsRecord:
                 await ShellNavigationService.NavigateToFlyoutPage<RefundsRecordPage>();
+                break;
+            case MenuType.Account:
+                await ShellNavigationService.NavigateToFlyoutPage<MyAccountPage>();
                 break;
             case MenuType.AccountsLedger:
                 await ShellNavigationService.NavigateToFlyoutPage<AccountLedgerRecordPage>();

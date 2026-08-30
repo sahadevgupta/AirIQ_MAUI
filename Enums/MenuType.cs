@@ -5,6 +5,7 @@ public enum MenuType
     Flight,
     SalesRecord,
     RefundsRecord,
+    Account,
     AccountsLedger,
     UploadRequest,
     TemporaryCredit,

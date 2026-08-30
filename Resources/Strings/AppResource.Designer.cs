@@ -599,7 +599,7 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("RefundsRecord", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Accounts Ledger.
         /// </summary>

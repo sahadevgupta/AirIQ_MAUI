@@ -14,6 +14,7 @@ public partial class AppShell : Shell
 		["home"] = MenuType.Flight,
 		[nameof(SalesRecordPage)] = MenuType.SalesRecord,
 		[nameof(RefundsRecordPage)] = MenuType.RefundsRecord,
+		[nameof(MyAccountPage)] = MenuType.Account,
 		[nameof(AccountLedgerRecordPage)] = MenuType.AccountsLedger,
 		[nameof(UploadRequestPage)] = MenuType.UploadRequest,
 		[nameof(TempCreditPage)] = MenuType.TemporaryCredit,
@@ -51,6 +52,7 @@ public partial class AppShell : Shell
 		Routing.RegisterRoute(nameof(PaxCalendarPage), typeof(PaxCalendarPage));
 		Routing.RegisterRoute(nameof(TermsAndConditionsPage), typeof(TermsAndConditionsPage));
 		Routing.RegisterRoute(nameof(PrivacyPolicyPage), typeof(PrivacyPolicyPage));
+		Routing.RegisterRoute(nameof(MyAccountPage), typeof(MyAccountPage));
 
 		Navigated += OnShellNavigated;
 	}

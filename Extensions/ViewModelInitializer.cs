@@ -26,6 +26,7 @@ namespace AirIQ.Extensions
                             .AddTransient<OnlineRechargePageViewModel>()
                             .AddTransient<PaxCalendarPageViewModel>()
                             .AddTransient<BankDetailsPageViewModel>()
+                            .AddTransient<MyAccountPageViewModel>()
                             .AddTransient<LegalViewModel>();
 
             return builder;

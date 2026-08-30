@@ -2,15 +2,335 @@
 <views:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 x:Class="AirIQ_MAUI.Views.OnlineRechargePage"
+                xmlns:controls="clr-namespace:AirIQ.Controls"
+                xmlns:helpers="clr-namespace:AirIQ.Extensions"
+                xmlns:models="clr-namespace:AirIQ.Models"
                 xmlns:views="clr-namespace:AirIQ.Views"
+                xmlns:vm="clr-namespace:AirIQ.ViewModels"
+                x:DataType="vm:OnlineRechargePageViewModel"
                 NavigationMode="Hamburger"
                 PageTitle="Online Recharge">
+
     <views:BasePage.PageContent>
-        <VerticalStackLayout>
-            <Label
-                Text="Welcome to .NET MAUI!"
-                VerticalOptions="Center"
-                HorizontalOptions="Center"/>
-        </VerticalStackLayout>
+        <ScrollView>
+            <VerticalStackLayout Padding="16"
+                                 Spacing="20">
+
+                <!-- ==================== PROVIDER TOGGLE ==================== -->
+                <controls:AdvSegmentedControl ItemsSource="{Binding ProviderOptions}"
+                                              DisplayMemberPath="Title"
+                                              BackgroundColor="Transparent"
+                                              ItemSpacing="12"
+                                              SelectedItemChangedCommand="{Binding SelectProviderCommand}">
+
+                    <controls:AdvSegmentedControl.ItemTemplate>
+                        <DataTemplate x:DataType="models:RechargeProviderOption">
+                            <Border Padding="0"
+                                    HeightRequest="48"
+                                    Stroke="{StaticResource BorderColor}"
+                                    StrokeThickness="1"
+                                    StrokeShape="RoundRectangle 10"
+                                    BackgroundColor="White">
+                                <Label Text="{Binding Title}"
+                                       Style="{StaticResource Label16SemiBold}"
+                                       TextColor="{StaticResource Gray90}"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       HorizontalTextAlignment="Center">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label"
+                                                     Binding="{Binding IsSelected}"
+                                                     Value="True">
+                                            <Setter Property="TextColor" Value="White"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border"
+                                                 Binding="{Binding IsSelected}"
+                                                 Value="True">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
+                                        <Setter Property="Stroke" Value="{StaticResource PrimaryColor}"/>
+                                    </DataTrigger>
+                                </Border.Triggers>
+                            </Border>
+                        </DataTemplate>
+                    </controls:AdvSegmentedControl.ItemTemplate>
+
+                </controls:AdvSegmentedControl>
+
+                <!-- ==================== CARD CONTENT ==================== -->
+                <Border Style="{StaticResource DefaultBorderStyle}">
+                    <VerticalStackLayout Spacing="20">
+
+                        <!-- ==================== PAYMENT OPTIONS ==================== -->
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="Choose payment option"
+                                   Style="{StaticResource TitleStyleBlackBold}"/>
+
+                            <Grid ColumnDefinitions="*,*,*,*,*"
+                                  ColumnSpacing="8">
+
+                                <Grid Grid.Column="0">
+                                    <Border Padding="8"
+                                            MinimumHeightRequest="56"
+                                            Stroke="{StaticResource BorderColor}"
+                                            StrokeThickness="1"
+                                            StrokeShape="RoundRectangle 8"
+                                            BackgroundColor="White">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding PaymentOptions[0].IsSelected}"
+                                                         Value="True">
+                                                <Setter Property="Stroke" Value="{StaticResource PrimaryColor}"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+
+                                        <Label Text="{Binding PaymentOptions[0].Title}"
+                                               Style="{StaticResource Label12SemiBold}"
+                                               TextColor="{StaticResource Gray90}"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"
+                                               HorizontalTextAlignment="Center"/>
+
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectPaymentOptionCommand}"
+                                                                   CommandParameter="{Binding PaymentOptions[0]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+
+                                    <Border WidthRequest="18"
+                                            HeightRequest="18"
+                                            Margin="0,-6,-6,0"
+                                            HorizontalOptions="End"
+                                            VerticalOptions="Start"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 9"
+                                            BackgroundColor="{StaticResource PrimaryColor}"
+                                            IsVisible="{Binding PaymentOptions[0].IsSelected}">
+                                        <Label Text="&#10003;"
+                                               TextColor="White"
+                                               FontSize="11"
+                                               FontAttributes="Bold"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                    </Border>
+                                </Grid>
+
+                                <Grid Grid.Column="1">
+                                    <Border Padding="8"
+                                            MinimumHeightRequest="56"
+                                            Stroke="{StaticResource BorderColor}"
+                                            StrokeThickness="1"
+                                            StrokeShape="RoundRectangle 8"
+                                            BackgroundColor="White">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding PaymentOptions[1].IsSelected}"
+                                                         Value="True">
+                                                <Setter Property="Stroke" Value="{StaticResource PrimaryColor}"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+
+                                        <Label Text="{Binding PaymentOptions[1].Title}"
+                                               Style="{StaticResource Label12SemiBold}"
+                                               TextColor="{StaticResource Gray90}"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"
+                                               HorizontalTextAlignment="Center"/>
+
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectPaymentOptionCommand}"
+                                                                   CommandParameter="{Binding PaymentOptions[1]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+
+                                    <Border WidthRequest="18"
+                                            HeightRequest="18"
+                                            Margin="0,-6,-6,0"
+                                            HorizontalOptions="End"
+                                            VerticalOptions="Start"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 9"
+                                            BackgroundColor="{StaticResource PrimaryColor}"
+                                            IsVisible="{Binding PaymentOptions[1].IsSelected}">
+                                        <Label Text="&#10003;"
+                                               TextColor="White"
+                                               FontSize="11"
+                                               FontAttributes="Bold"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                    </Border>
+                                </Grid>
+
+                                <Grid Grid.Column="2">
+                                    <Border Padding="8"
+                                            MinimumHeightRequest="56"
+                                            Stroke="{StaticResource BorderColor}"
+                                            StrokeThickness="1"
+                                            StrokeShape="RoundRectangle 8"
+                                            BackgroundColor="White">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding PaymentOptions[2].IsSelected}"
+                                                         Value="True">
+                                                <Setter Property="Stroke" Value="{StaticResource PrimaryColor}"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+
+                                        <Label Text="{Binding PaymentOptions[2].Title}"
+                                               Style="{StaticResource Label12SemiBold}"
+                                               TextColor="{StaticResource Gray90}"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"
+                                               HorizontalTextAlignment="Center"/>
+
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectPaymentOptionCommand}"
+                                                                   CommandParameter="{Binding PaymentOptions[2]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+
+                                    <Border WidthRequest="18"
+                                            HeightRequest="18"
+                                            Margin="0,-6,-6,0"
+                                            HorizontalOptions="End"
+                                            VerticalOptions="Start"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 9"
+                                            BackgroundColor="{StaticResource PrimaryColor}"
+                                            IsVisible="{Binding PaymentOptions[2].IsSelected}">
+                                        <Label Text="&#10003;"
+                                               TextColor="White"
+                                               FontSize="11"
+                                               FontAttributes="Bold"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                    </Border>
+                                </Grid>
+
+                                <Grid Grid.Column="3">
+                                    <Border Padding="8"
+                                            MinimumHeightRequest="56"
+                                            Stroke="{StaticResource BorderColor}"
+                                            StrokeThickness="1"
+                                            StrokeShape="RoundRectangle 8"
+                                            BackgroundColor="White">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding PaymentOptions[3].IsSelected}"
+                                                         Value="True">
+                                                <Setter Property="Stroke" Value="{StaticResource PrimaryColor}"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+
+                                        <Label Text="{Binding PaymentOptions[3].Title}"
+                                               Style="{StaticResource Label12SemiBold}"
+                                               TextColor="{StaticResource Gray90}"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"
+                                               HorizontalTextAlignment="Center"/>
+
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectPaymentOptionCommand}"
+                                                                   CommandParameter="{Binding PaymentOptions[3]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+
+                                    <Border WidthRequest="18"
+                                            HeightRequest="18"
+                                            Margin="0,-6,-6,0"
+                                            HorizontalOptions="End"
+                                            VerticalOptions="Start"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 9"
+                                            BackgroundColor="{StaticResource PrimaryColor}"
+                                            IsVisible="{Binding PaymentOptions[3].IsSelected}">
+                                        <Label Text="&#10003;"
+                                               TextColor="White"
+                                               FontSize="11"
+                                               FontAttributes="Bold"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                    </Border>
+                                </Grid>
+
+                                <Grid Grid.Column="4">
+                                    <Border Padding="8"
+                                            MinimumHeightRequest="56"
+                                            Stroke="{StaticResource BorderColor}"
+                                            StrokeThickness="1"
+                                            StrokeShape="RoundRectangle 8"
+                                            BackgroundColor="White">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding PaymentOptions[4].IsSelected}"
+                                                         Value="True">
+                                                <Setter Property="Stroke" Value="{StaticResource PrimaryColor}"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+
+                                        <Label Text="{Binding PaymentOptions[4].Title}"
+                                               Style="{StaticResource Label12SemiBold}"
+                                               TextColor="{StaticResource Gray90}"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"
+                                               HorizontalTextAlignment="Center"/>
+
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectPaymentOptionCommand}"
+                                                                   CommandParameter="{Binding PaymentOptions[4]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+
+                                    <Border WidthRequest="18"
+                                            HeightRequest="18"
+                                            Margin="0,-6,-6,0"
+                                            HorizontalOptions="End"
+                                            VerticalOptions="Start"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 9"
+                                            BackgroundColor="{StaticResource PrimaryColor}"
+                                            IsVisible="{Binding PaymentOptions[4].IsSelected}">
+                                        <Label Text="&#10003;"
+                                               TextColor="White"
+                                               FontSize="11"
+                                               FontAttributes="Bold"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                    </Border>
+                                </Grid>
+
+                            </Grid>
+                        </VerticalStackLayout>
+
+                        <!-- ==================== AMOUNT ==================== -->
+                        <controls:ExtendedEntry Title="Enter Amount"
+                                                PlaceholderText="0.00"
+                                                Text="{Binding Amount}"
+                                                EntryKeyboard="Numeric"
+                                                LeadingIconType="Font"
+                                                LeadingIcon="{x:Static helpers:FontAwesomeIcons.RupeeSign}"
+                                                LeadingIconColor="{StaticResource Gray50}"
+                                                LeadingIconSize="16"/>
+
+                        <!-- ==================== PAYMENT METHOD ==================== -->
+                        <controls:ExtendedDropdown Title="Payment Method"
+                                                   PlaceholderText="Choose an Option"
+                                                   ItemsSource="{Binding PaymentMethods}"
+                                                   SelectedItem="{Binding SelectedPaymentMethod}"/>
+
+                        <!-- ==================== CONTINUE PAYMENT ==================== -->
+                        <Button Text="Continue Payment"
+                                Style="{StaticResource ButtonCorneredStyle}"
+                                HorizontalOptions="Fill"
+                                Command="{Binding ContinuePaymentCommand}"/>
+
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
     </views:BasePage.PageContent>
+
 </views:BasePage>
