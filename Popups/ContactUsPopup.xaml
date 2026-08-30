@@ -4,6 +4,7 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  xmlns:mopup="clr-namespace:Mopups.Pages;assembly=Mopups"
                  xmlns:mopupsanim="clr-namespace:Mopups.Animations;assembly=Mopups"
+                 xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                  BackgroundColor="{StaticResource PopupBackground}">
     <mopup:PopupPage.Animation>
         <mopupsanim:MoveAnimation
@@ -23,7 +24,7 @@
               RowDefinitions="Auto,Auto,Auto,Auto"
               ColumnSpacing="10"
               RowSpacing="16">
-            <Label Text="Contact Us"
+            <Label Text="{x:Static resx:AppResource.ContactUs}"
                    Grid.ColumnSpan="2"
                    Style="{StaticResource Label20Medium}"/>
             <Image Source="close"
@@ -37,10 +38,10 @@
                    Grid.Column="1">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="Email Address"
+                        <Span Text="{x:Static resx:AppResource.EmailAddress}"
                               Style="{StaticResource Span14RegularGray500Style}"/>
                         <Span Text="&#10;"/>
-                        <Span Text="info@airiq.in"
+                        <Span Text="{x:Static resx:AppResource.SupportEmailAddress}"
                               Style="{StaticResource Span16MediumBlacStyle}"
                               TextColor="{StaticResource Gray90}"/>
                     </FormattedString>
@@ -55,10 +56,10 @@
                    Grid.Column="1">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="Contact Number"
+                        <Span Text="{x:Static resx:AppResource.ContactNumberLabel}"
                               Style="{StaticResource Span14RegularGray500Style}"/>
                         <Span Text="&#10;"/>
-                        <Span Text="+ 91 9555 202 202"
+                        <Span Text="{x:Static resx:AppResource.SupportPhoneNumber}"
                               Style="{StaticResource Span16MediumBlacStyle}"
                               TextColor="{StaticResource Gray90}"/>
                     </FormattedString>
@@ -73,11 +74,10 @@
                    Grid.Column="1">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="Address"
+                        <Span Text="{x:Static resx:AppResource.Address}"
                               Style="{StaticResource Span14RegularGray500Style}"/>
                         <Span Text="&#10;"/>
-                        <Span Text="2nd Floor, Sevoke Road, Siliguri 734001,
-West Bengal, India"
+                        <Span Text="{x:Static resx:AppResource.SupportOfficeAddress}"
                               Style="{StaticResource Span16MediumBlacStyle}"
                               TextColor="{StaticResource Gray90}"/>
                     </FormattedString>

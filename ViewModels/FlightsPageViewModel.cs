@@ -5,6 +5,7 @@ using AirIQ.Constants;
 using AirIQ.Helpers;
 using AirIQ.Models;
 using AirIQ.Models.Request;
+using AirIQ.Resources.Strings;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
 using AirIQ.Views;
@@ -114,7 +115,7 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
     [RelayCommand]
     private async Task CopyFlightDetail(Flight selectedFlight)
     {
-        await ShowSnackBar("Details are copied", fontSize: ScalingHelper.ScaleFontSize(16));
+        await ShowSnackBar(AppResource.DetailsCopied, fontSize: ScalingHelper.ScaleFontSize(16));
     }
 
     #endregion

@@ -4,6 +4,7 @@ using AirIQ.Constants;
 using AirIQ.Extensions;
 using AirIQ.Models;
 using AirIQ.Models.Response;
+using AirIQ.Resources.Strings;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
 
@@ -93,9 +94,9 @@ namespace AirIQ.ViewModels
 
         private void BuildDateWindow(DateTime selectedDate)
         {
-            LeftDateItem = new DateCardItem(_windowStartDate, "2 TKT-4PAX");
-            CenterDateItem = new DateCardItem(_windowStartDate.AddDays(1), "2 TKT-4PAX");
-            RightDateItem = new DateCardItem(_windowStartDate.AddDays(2), "2 TKT-4PAX");
+            LeftDateItem = new DateCardItem(_windowStartDate, AppResource.TicketPaxSummaryPlaceholder);
+            CenterDateItem = new DateCardItem(_windowStartDate.AddDays(1), AppResource.TicketPaxSummaryPlaceholder);
+            RightDateItem = new DateCardItem(_windowStartDate.AddDays(2), AppResource.TicketPaxSummaryPlaceholder);
 
             SelectedDateItem = selectedDate.Date == LeftDateItem.Date.Date
                 ? LeftDateItem

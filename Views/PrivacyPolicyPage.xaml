@@ -3,9 +3,10 @@
                 xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 xmlns:controls="clr-namespace:AirIQ.Controls"
+                xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                 xmlns:views="clr-namespace:AirIQ.Views"
                 IsWalletVisible="False"
-                PageTitle="Privacy Policy">
+                PageTitle="{x:Static resx:AppResource.PrivacyPolicy}">
     <views:BasePage.PageContent>
 
         <ScrollView>
@@ -13,29 +14,29 @@
                                  Spacing="16">
                 <!-- Main Heading -->
                 <Label
-                    Text="Air IQ’s commitment to privacy"
+                    Text="{x:Static resx:AppResource.PrivacyPolicyHeading1}"
                     FontSize="20"
                     FontAttributes="Bold"
                     TextColor="#111111"/>
 
-                <controls:BulletLabel Text="At Air IQ, your security and privacy are fundamental. We protect your Personal Information with strong encryption and lay strict policies that govern how all data is handled."/>
-                <controls:BulletLabel Text="The only objective of all information that we gather and store from you is to make things convenient for you, to enable us to deliver and improve our services better and faster and to conduct our business."/>
-                <controls:BulletLabel Text="We make it very transparent as to what information we collect and why. All of your data is in your control. We make it clear for you to understand exactly what’s going to happen to your Personal Information."/>
-                <controls:BulletLabel Text="You can decide what information you would like to store. And changing these preferences are quick and easy."/>
-                <controls:BulletLabel Text="We never indulge in any promotional or ad communication without your permission. You have absolute control over all optional communication that you receive from our end."/>
-                <controls:BulletLabel Text="Most importantly, we don’t and will never “monetize” the information you store with us by selling or renting it to any third party and while we inevitably care about your privacy, we ensure that steps towards tight privacy do not come in the way of simplicity. That all steps towards security still ensure an unobstructed user experience."/>
-                <controls:BulletLabel Text="Our commitment to protecting your privacy comes from a profound desire to maintain the timeless value of privacy and preserve the ability for you to control your data. We know that your trust doesn’t come easy. That’s why we always work as hard as we can to earn and keep it."/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.PrivacyPolicyPara1}"/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.PrivacyPolicyPara2}"/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.PrivacyPolicyPara3}"/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.PrivacyPolicyPara4}"/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.PrivacyPolicyPara5}"/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.PrivacyPolicyPara6}"/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.PrivacyPolicyPara7}"/>
 
                 <Label
-                    Text="Air IQ’s Privacy Policy"
+                    Text="{x:Static resx:AppResource.PrivacyPolicyHeading2}"
                     FontSize="20"
                     FontAttributes="Bold"
                     TextColor="#111111"
                     Margin="0,10,0,0"/>
 
-                <controls:BulletLabel Text="The following Privacy Policy is applicable to the websites of Air IQ (hereby referred to as “Air IQ”, “we”, “our”, or “us”) including the desktop and mobile sites, smartphone and desktop apps, email and text messages (collectively hereby referred to as “platforms”)."/>
-                <controls:BulletLabel Text="The following Privacy Policy explains what personal data we collect from you and how we store, use, transfer and disclose it."/>
-                <controls:BulletLabel Text="By browsing, visiting, accessing and/or using the services on our platforms or searching for any of the pages on our platforms, the visitor or customer (hereby referred to as “Customers”, “you” or “your”) explicitly acknowledges and agrees to this Privacy Policy."/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.PrivacyPolicyPara8}"/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.PrivacyPolicyPara9}"/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.PrivacyPolicyPara10}"/>
 
 
             </VerticalStackLayout>

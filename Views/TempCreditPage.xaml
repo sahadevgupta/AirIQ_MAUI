@@ -4,11 +4,12 @@
                 x:Class="AirIQ_MAUI.Views.TempCreditPage"
                 xmlns:controls="clr-namespace:AirIQ.Controls"
                 xmlns:models="clr-namespace:AirIQ.Models"
+                xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                 xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
                 x:DataType="vm:TempCreditPageViewModel"
-                PageTitle="Sales Temporary Credit"
+                PageTitle="{x:Static resx:AppResource.SalesTemporaryCredit}"
                 NavigationMode="Hamburger">
     <views:BasePage.PageContent>
         <Grid Padding="16"
@@ -88,7 +89,7 @@
                                       Padding="12"
                                       RowSpacing="20"
                                       ColumnSpacing="0">
-                                    <Label Text="Entry Date"
+                                    <Label Text="{x:Static resx:AppResource.EntryDate}"
                                            Grid.Row="0"
                                            Style="{StaticResource Label16MediumGrayStyle}"/>
 
@@ -98,7 +99,7 @@
                                            Style="{StaticResource Label16Medium}"
                                            TextColor="Black"/>
 
-                                    <Label Text="Particular"
+                                    <Label Text="{x:Static resx:AppResource.Particular}"
                                            Grid.Row="1"
                                            Style="{StaticResource Label16MediumGrayStyle}"/>
 
@@ -122,7 +123,7 @@
                   BackgroundColor="{StaticResource PrimaryColor}"
                   Margin="-16">
 
-                <Label Text="Total"
+                <Label Text="{x:Static resx:AppResource.Total}"
                        Style="{StaticResource Label16Medium}"
                        VerticalTextAlignment="Center"
                        TextColor="White"/>

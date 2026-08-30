@@ -4,6 +4,7 @@
                   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                   xmlns:helpers="clr-namespace:AirIQ.Extensions"
+                  xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                   x:Class="AirIQ.Controls.CalendarView"
                   CloseWhenBackgroundIsClicked="True"
                   BackgroundColor="{StaticResource PopupBackground}">
@@ -52,7 +53,7 @@
                                          Color="{StaticResource PrimaryColor}"/>
                     </ImageButton.Source>
                 </ImageButton>
-                <Label Text="Novmeber 2025"
+                <Label Text="{x:Static resx:AppResource.MonthYearDefaultLabel}"
                        Grid.Column="1"
                        Style="{StaticResource Label18SemiBold}"
                        TextColor="Black"
@@ -74,24 +75,24 @@
             <Grid ColumnDefinitions="*,*,*,*,*,*,*"
                   Grid.Row="1"
                   ColumnSpacing="5">
-                <Label Text="Sun"
+                <Label Text="{x:Static resx:AppResource.DaySun}"
                        Style="{StaticResource Label14StyleBlack}"/>
-                <Label Text="Mon"
+                <Label Text="{x:Static resx:AppResource.DayMon}"
                        Style="{StaticResource Label14StyleBlack}"
                        Grid.Column="1"/>
-                <Label Text="Tue"
+                <Label Text="{x:Static resx:AppResource.DayTue}"
                        Style="{StaticResource Label14StyleBlack}"
                        Grid.Column="2"/>
-                <Label Text="Wed"
+                <Label Text="{x:Static resx:AppResource.DayWed}"
                        Style="{StaticResource Label14StyleBlack}"
                        Grid.Column="3"/>
-                <Label Text="Thu"
+                <Label Text="{x:Static resx:AppResource.DayThu}"
                        Style="{StaticResource Label14StyleBlack}"
                        Grid.Column="4"/>
-                <Label Text="Fri"
+                <Label Text="{x:Static resx:AppResource.DayFri}"
                        Style="{StaticResource Label14StyleBlack}"
                        Grid.Column="5"/>
-                <Label Text="Sat"
+                <Label Text="{x:Static resx:AppResource.DaySat}"
                        Style="{StaticResource Label14StyleBlack}"
                        Grid.Column="6"/>
             </Grid>

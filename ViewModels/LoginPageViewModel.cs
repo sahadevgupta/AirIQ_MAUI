@@ -2,6 +2,7 @@
 using AirIQ.Configurations;
 using AirIQ.Constants;
 using AirIQ.Models.Response;
+using AirIQ.Resources.Strings;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
 using AirIQ.Views;
@@ -64,7 +65,7 @@ namespace AirIQ.ViewModels
 
             if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
             {
-                await ShowAlertAsync("Please enter both username and password.");
+                await ShowAlertAsync(AppResource.PleaseEnterUsernameAndPassword);
                 return;
             }
 
@@ -111,7 +112,7 @@ namespace AirIQ.ViewModels
             catch (ApiException apiEx)
             {
                 Console.WriteLine("[Login] ApiException during login: " + apiEx);
-                string message = "Login failed. Please try again.";
+                string message = AppResource.LoginFailedTryAgain;
                 try
                 {
                     var content = string.IsNullOrWhiteSpace(apiEx.Content)

@@ -3,12 +3,13 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 x:Class="AirIQ_MAUI.Views.MyAccountPage"
                 xmlns:helpers="clr-namespace:AirIQ.Extensions"
+                xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                 xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
                 x:DataType="vm:MyAccountPageViewModel"
                 NavigationMode="Hamburger"
-                PageTitle="Account">
+                PageTitle="{x:Static resx:AppResource.Account}">
 
     <views:BasePage.Resources>
         <ResourceDictionary>
@@ -87,7 +88,7 @@
                 <Border Style="{StaticResource DefaultBorderStyle}"
                         Padding="16,12">
                     <VerticalStackLayout>
-                        <Label Text="Profile"
+                        <Label Text="{x:Static resx:AppResource.Profile}"
                                Style="{StaticResource TitleStyleBlackBold}"
                                Margin="0,0,0,4"/>
 
@@ -99,7 +100,7 @@
                                    Text="{x:Static helpers:FontAwesomeIcons.User}"
                                    Style="{StaticResource ImageStyle}"/>
                             <Label Grid.Column="1"
-                                   Text="Personal Information"
+                                   Text="{x:Static resx:AppResource.PersonalInformationHeading}"
                                    Style="{StaticResource Label14MediumGray90Style}"
                                    VerticalOptions="Center"/>
                             <Label Grid.Column="2"
@@ -124,7 +125,7 @@
                                    Text="{x:Static helpers:FontAwesomeIcons.Envelope}"
                                    Style="{StaticResource ImageStyle}"/>
                             <Label Grid.Column="1"
-                                   Text="Email"
+                                   Text="{x:Static resx:AppResource.Email}"
                                    Style="{StaticResource Label14MediumGray90Style}"
                                    VerticalOptions="Center"/>
                             <Label Grid.Column="2"
@@ -155,7 +156,7 @@
                                    Text="{x:Static helpers:FontAwesomeIcons.PhoneAlt}"
                                    Style="{StaticResource ImageStyle}"/>
                             <Label Grid.Column="1"
-                                   Text="Mobile Number"
+                                   Text="{x:Static resx:AppResource.MobileNumber}"
                                    Style="{StaticResource Label14MediumGray90Style}"
                                    VerticalOptions="Center"/>
                             <Label Grid.Column="2"
@@ -181,7 +182,7 @@
                 <Border Style="{StaticResource DefaultBorderStyle}"
                         Padding="16,12">
                     <VerticalStackLayout>
-                        <Label Text="Security"
+                        <Label Text="{x:Static resx:AppResource.Security}"
                                Style="{StaticResource TitleStyleBlackBold}"
                                Margin="0,0,0,4"/>
 
@@ -193,11 +194,11 @@
                                    Text="{x:Static helpers:FontAwesomeIcons.Fingerprint}"
                                    Style="{StaticResource ImageStyle}"/>
                             <Label Grid.Column="1"
-                                   Text="Biometric Login"
+                                   Text="{x:Static resx:AppResource.BiometricLogin}"
                                    Style="{StaticResource Label14MediumGray90Style}"
                                    VerticalOptions="Center"/>
                             <Label Grid.Column="2"
-                                   Text="Enabled"
+                                   Text="{x:Static resx:AppResource.Enabled}"
                                    Style="{StaticResource Label14Regular}"
                                    TextColor="{StaticResource Green}"
                                    VerticalOptions="Center"/>
@@ -224,7 +225,7 @@
                                    Text="{x:Static helpers:FontAwesomeIcons.Lock}"
                                    Style="{StaticResource ImageStyle}"/>
                             <Label Grid.Column="1"
-                                   Text="Change Password"
+                                   Text="{x:Static resx:AppResource.ChangePassword}"
                                    Style="{StaticResource Label14MediumGray90Style}"
                                    VerticalOptions="Center"/>
                             <Label Grid.Column="2"
@@ -249,7 +250,7 @@
                                    Text="{x:Static helpers:FontAwesomeIcons.ShieldAlt}"
                                    Style="{StaticResource ImageStyle}"/>
                             <Label Grid.Column="1"
-                                   Text="Security Questions"
+                                   Text="{x:Static resx:AppResource.SecurityQuestions}"
                                    Style="{StaticResource Label14MediumGray90Style}"
                                    VerticalOptions="Center"/>
                             <Label Grid.Column="2"
@@ -269,7 +270,7 @@
                 <Border Style="{StaticResource DefaultBorderStyle}"
                         Padding="16,12">
                     <VerticalStackLayout>
-                        <Label Text="Preferences"
+                        <Label Text="{x:Static resx:AppResource.Preferences}"
                                Style="{StaticResource TitleStyleBlackBold}"
                                Margin="0,0,0,4"/>
 
@@ -281,7 +282,7 @@
                                    Text="{x:Static helpers:FontAwesomeIcons.Bell}"
                                    Style="{StaticResource ImageStyle}"/>
                             <Label Grid.Column="1"
-                                   Text="Notification Preferences"
+                                   Text="{x:Static resx:AppResource.NotificationPreferences}"
                                    Style="{StaticResource Label14MediumGray90Style}"
                                    VerticalOptions="Center"/>
                             <Label Grid.Column="2"
@@ -306,11 +307,11 @@
                                    Text="{x:Static helpers:FontAwesomeIcons.Globe}"
                                    Style="{StaticResource ImageStyle}"/>
                             <Label Grid.Column="1"
-                                   Text="Language"
+                                   Text="{x:Static resx:AppResource.Language}"
                                    Style="{StaticResource Label14MediumGray90Style}"
                                    VerticalOptions="Center"/>
                             <Label Grid.Column="2"
-                                   Text="English"
+                                   Text="{x:Static resx:AppResource.English}"
                                    Style="{StaticResource Label14Regular}"
                                    TextColor="{StaticResource Gray50}"
                                    VerticalOptions="Center"/>
@@ -337,10 +338,10 @@
                                    Text="{x:Static helpers:FontAwesomeIcons.Moon}"
                                    Style="{StaticResource ImageStyle}"/>
                             <Label Grid.Column="1"
-                                   Text="Theme"
+                                   Text="{x:Static resx:AppResource.Theme}"
                                    VerticalOptions="Center"/>
                             <Label Grid.Column="2"
-                                   Text="System Default"
+                                   Text="{x:Static resx:AppResource.SystemDefault}"
                                    Style="{StaticResource Label14Regular}"
                                    TextColor="{StaticResource Gray50}"
                                    VerticalOptions="Center"/>
@@ -362,7 +363,7 @@
                 <Border Style="{StaticResource DefaultBorderStyle}"
                         Padding="16,12">
                     <VerticalStackLayout>
-                        <Label Text="About"
+                        <Label Text="{x:Static resx:AppResource.About}"
                                Style="{StaticResource TitleStyleBlackBold}"
                                Margin="0,0,0,4"/>
 
@@ -374,7 +375,7 @@
                                    Text="{x:Static helpers:FontAwesomeIcons.InfoCircle}"
                                    Style="{StaticResource ImageStyle}"/>
                             <Label Grid.Column="1"
-                                   Text="About App"
+                                   Text="{x:Static resx:AppResource.AboutApp}"
                                    Style="{StaticResource Label14MediumGray90Style}"
                                    VerticalOptions="Center"/>
                             <Label Grid.Column="2"
@@ -399,7 +400,7 @@
                                    Text="{x:Static helpers:FontAwesomeIcons.FileAlt}"
                                    Style="{StaticResource ImageStyle}"/>
                             <Label Grid.Column="1"
-                                   Text="Terms &amp; Conditions"
+                                   Text="{x:Static resx:AppResource.TermsAndConditions}"
                                    Style="{StaticResource Label14MediumGray90Style}"
                                    VerticalOptions="Center"/>
                             <Label Grid.Column="2"
@@ -424,7 +425,7 @@
                                    Text="{x:Static helpers:FontAwesomeIcons.ShieldAlt}"
                                    Style="{StaticResource ImageStyle}"/>
                             <Label Grid.Column="1"
-                                   Text="Privacy Policy"
+                                   Text="{x:Static resx:AppResource.PrivacyPolicy}"
                                    Style="{StaticResource Label14MediumGray90Style}"
                                    VerticalOptions="Center"/>
                             <Label Grid.Column="2"
@@ -453,7 +454,7 @@
                                FontSize="16"
                                TextColor="{StaticResource Red}"
                                VerticalOptions="Center"/>
-                        <Label Text="Logout"
+                        <Label Text="{x:Static resx:AppResource.Logout}"
                                Style="{StaticResource Label16SemiBold}"
                                TextColor="{StaticResource Red}"
                                VerticalOptions="Center"/>

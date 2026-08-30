@@ -5,11 +5,12 @@
              xmlns:controls="clr-namespace:AirIQ.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:vm="clr-namespace:AirIQ.ViewModels"
+             xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
              BackgroundColor="White"
              x:DataType="vm:SignupPageViewModel">
     <VerticalStackLayout Spacing="10">
 
-        <Label Text="Personal Information"
+        <Label Text="{x:Static resx:AppResource.PersonalInformationHeading}"
                Style="{StaticResource Label18Medium}"
                TextColor="{StaticResource PrimaryColor}"
                LineHeight="1.2"
@@ -17,92 +18,92 @@
                CharacterSpacing="1.2"
                Margin="0,8,0,0"/>
 
-        <controls:ExtendedEntry Title="Company Name"
+        <controls:ExtendedEntry Title="{x:Static resx:AppResource.CompanyName}"
                                 SuffixText="*"
-                                PlaceholderText="Enter Company Name"
+                                PlaceholderText="{x:Static resx:AppResource.EnterCompanyName}"
                                 Text="{Binding CompanyName}"
                                 IsErrorViewVisible="{Binding IsCompanyNameErrorVisible}"
-                                ErrorText="Company name cannot be empty"/>
-        <controls:ExtendedEntry Title="Full Name"
+                                ErrorText="{x:Static resx:AppResource.CompanyNameCannotBeEmpty}"/>
+        <controls:ExtendedEntry Title="{x:Static resx:AppResource.FullName}"
                                 SuffixText="*"
-                                PlaceholderText="Enter Full Name"
+                                PlaceholderText="{x:Static resx:AppResource.EnterFullName}"
                                 Text="{Binding FullName}"
                                 IsErrorViewVisible="{Binding IsFullNameErrorVisible}"
-                                ErrorText="Please enter first and last name separated by one space."/>
-        <controls:ExtendedEntry Title="Phone Number"
+                                ErrorText="{x:Static resx:AppResource.FullNameFormatValidation}"/>
+        <controls:ExtendedEntry Title="{x:Static resx:AppResource.PhoneNumber}"
                                 SuffixText="*"
-                                PlaceholderText="Enter Phone Number"
+                                PlaceholderText="{x:Static resx:AppResource.EnterPhoneNumber}"
                                 Text="{Binding PhoneNumber}"
                                 IsErrorViewVisible="{Binding IsPhoneNumberErrorVisible}"
-                                ErrorText="Please enter a valid 10-digit Indian mobile number."
+                                ErrorText="{x:Static resx:AppResource.PhoneNumberValidation}"
                                 EntryKeyboard="Telephone"/>
-        <controls:ExtendedEntry Title="WhatsApp Number"
+        <controls:ExtendedEntry Title="{x:Static resx:AppResource.WhatsAppNumber}"
                                 SuffixText="*"
-                                PlaceholderText="Enter WhatsApp Number"
+                                PlaceholderText="{x:Static resx:AppResource.EnterWhatsAppNumber}"
                                 Text="{Binding WhatsAppNumber}"
                                 IsErrorViewVisible="{Binding IsWhatsAppNumberErrorVisible}"
-                                ErrorText="WhatsApp number cannot be empty"
+                                ErrorText="{x:Static resx:AppResource.WhatsAppNumberCannotBeEmpty}"
                                 EntryKeyboard="Telephone"/>
-        <controls:ExtendedEntry Title="Email Address"
+        <controls:ExtendedEntry Title="{x:Static resx:AppResource.EmailAddress}"
                                 SuffixText="*"
-                                PlaceholderText="Enter Email Address"
+                                PlaceholderText="{x:Static resx:AppResource.EnterEmailAddress}"
                                 Text="{Binding EmailAddress}"
                                 IsErrorViewVisible="{Binding IsEmailErrorVisible}"
-                                ErrorText="Email address cannot be empty"/>
-        <controls:ExtendedDropdown Title="Referred By"
+                                ErrorText="{x:Static resx:AppResource.EmailAddressCannotBeEmpty}"/>
+        <controls:ExtendedDropdown Title="{x:Static resx:AppResource.ReferredBy}"
                                    SuffixText="*"
-                                   PlaceholderText="Enter Referred By"
+                                   PlaceholderText="{x:Static resx:AppResource.EnterReferredBy}"
                                    IsError="{Binding IsReferredByErrorVisible}"
                                    SelectedItem="{Binding ReferredBy}"
-                                   ErrorText="Referred by cannot be empty">
+                                   ErrorText="{x:Static resx:AppResource.ReferredByCannotBeEmpty}">
             <controls:ExtendedDropdown.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
-                    <x:String>TTF</x:String>
-                    <x:String>OTM</x:String>
-                    <x:String>Satte</x:String>
-                    <x:String>Google</x:String>
-                    <x:String>Facebook</x:String>
-                    <x:String>Instagram</x:String>
-                    <x:String>Promotional SMS</x:String>
-                    <x:String>Promotional Email</x:String>
-                    <x:String>Promotional WhatsApp</x:String>
-                    <x:String>Sales Person</x:String>
+                    <x:String>{x:Static resx:AppResource.ReferredByTTF}</x:String>
+                    <x:String>{x:Static resx:AppResource.ReferredByOTM}</x:String>
+                    <x:String>{x:Static resx:AppResource.ReferredBySatte}</x:String>
+                    <x:String>{x:Static resx:AppResource.ReferredByGoogle}</x:String>
+                    <x:String>{x:Static resx:AppResource.ReferredByFacebook}</x:String>
+                    <x:String>{x:Static resx:AppResource.ReferredByInstagram}</x:String>
+                    <x:String>{x:Static resx:AppResource.ReferredByPromotionalSMS}</x:String>
+                    <x:String>{x:Static resx:AppResource.ReferredByPromotionalEmail}</x:String>
+                    <x:String>{x:Static resx:AppResource.ReferredByPromotionalWhatsApp}</x:String>
+                    <x:String>{x:Static resx:AppResource.SalesPerson}</x:String>
                 </x:Array>
             </controls:ExtendedDropdown.ItemsSource>
         </controls:ExtendedDropdown>
 
-        <controls:ExtendedEntry Title="Sales Person"
+        <controls:ExtendedEntry Title="{x:Static resx:AppResource.SalesPerson}"
                                 SuffixText="*"
-                                PlaceholderText="Enter Sales Person Name"
+                                PlaceholderText="{x:Static resx:AppResource.EnterSalesPersonName}"
                                 Text="{Binding SalesPersonName}"
                                 IsVisible="False">
             <controls:ExtendedEntry.Triggers>
                 <DataTrigger TargetType="controls:ExtendedEntry"
                              Binding="{Binding ReferredBy}"
-                             Value="Sales Person">
+                             Value="{x:Static resx:AppResource.SalesPerson}">
                     <Setter Property="IsVisible"
                             Value="True"/>
                 </DataTrigger>
             </controls:ExtendedEntry.Triggers>
         </controls:ExtendedEntry>
 
-        <controls:ExtendedEntry Title="Password"
+        <controls:ExtendedEntry Title="{x:Static resx:AppResource.Password}"
                                 SuffixText="*"
-                                PlaceholderText="Enter Password"
+                                PlaceholderText="{x:Static resx:AppResource.EnterPasswordField}"
                                 Text="{Binding Password}"
                                 IsErrorViewVisible="{Binding IsPasswordErrorVisible}"
-                                ErrorText="Password cannot be empty"
+                                ErrorText="{x:Static resx:AppResource.PasswordCannotBeEmpty}"
                                 IsPassword="True"/>
 
-        <controls:ExtendedEntry Title="Confirmed Password"
+        <controls:ExtendedEntry Title="{x:Static resx:AppResource.ConfirmedPasswordLabel}"
                                 SuffixText="*"
-                                PlaceholderText="Enter Confirm Password"
+                                PlaceholderText="{x:Static resx:AppResource.EnterConfirmPassword}"
                                 Text="{Binding ConfirmPassword}"
                                 IsErrorViewVisible="{Binding IsConfirmPasswordErrorVisible}"
-                                ErrorText="Confirm password is required and must match"
+                                ErrorText="{x:Static resx:AppResource.ConfirmPasswordValidation}"
                                 IsPassword="True"/>
 
-        <Button Text="Next"
+        <Button Text="{x:Static resx:AppResource.Next}"
                 Margin="0,20,0,0"
                 TextColor="White"
                 BackgroundColor="{StaticResource PrimaryColor}"

@@ -47,7 +47,7 @@
                 <Span Text="{Binding CurrentUser.ContactPerson}"
                       Style="{StaticResource Label16Bold}"
                       TextColor="Black"/>
-                <Span Text="! "
+                <Span Text="{x:Static resx:AppResource.ExclamationSuffix}"
                       Style="{StaticResource Label16Bold}"
                       TextColor="Black"/>
               </FormattedString.Spans>
@@ -65,14 +65,14 @@
                     Style="{StaticResource Label32Bold}"
                     FontSize="34"/>
               <Span Text=" &#10;"/>
-              <Span Text="with "
+              <Span Text="{x:Static resx:AppResource.WithLabel}"
                     Style="{StaticResource Label32Bold}"
                     FontSize="34"/>
-              <Span Text="AIR "
+              <Span Text="{x:Static resx:AppResource.AirUppercase}"
                     TextColor="{StaticResource PrimaryColor}"
                     Style="{StaticResource Label32Bold}"
                     FontSize="34"/>
-              <Span Text="iQ"
+              <Span Text="{x:Static resx:AppResource.IqLowercase}"
                     TextColor="red"
                     Style="{StaticResource Label32Bold}"
                     FontSize="34"/>
@@ -147,7 +147,7 @@
                      Style="{StaticResource Label14RegularGray50Style}"
                      VerticalOptions="Center"/>
 
-              <Label Text="{Binding Source={x:Reference stepper},Path=Value,StringFormat='{0} Person(s)'}"
+              <Label Text="{Binding Source={x:Reference stepper},Path=Value,StringFormat={x:Static resx:AppResource.PersonsCountFormat}}"
                      Grid.Row="1"
                      Style="{StaticResource Label20MediumOnyxStyle}"
                      TextColor="{StaticResource Gray90}"

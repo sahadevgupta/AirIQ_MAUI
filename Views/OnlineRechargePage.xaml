@@ -5,11 +5,12 @@
                 xmlns:controls="clr-namespace:AirIQ.Controls"
                 xmlns:helpers="clr-namespace:AirIQ.Extensions"
                 xmlns:models="clr-namespace:AirIQ.Models"
+                xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
                 x:DataType="vm:OnlineRechargePageViewModel"
                 NavigationMode="Hamburger"
-                PageTitle="Online Recharge">
+                PageTitle="{x:Static resx:AppResource.OnlineRecharge}">
 
     <views:BasePage.PageContent>
         <ScrollView>
@@ -65,7 +66,7 @@
 
                         <!-- ==================== PAYMENT OPTIONS ==================== -->
                         <VerticalStackLayout Spacing="10">
-                            <Label Text="Choose payment option"
+                            <Label Text="{x:Static resx:AppResource.ChoosePaymentOption}"
                                    Style="{StaticResource TitleStyleBlackBold}"/>
 
                             <Grid ColumnDefinitions="*,*,*,*,*"
@@ -305,8 +306,8 @@
                         </VerticalStackLayout>
 
                         <!-- ==================== AMOUNT ==================== -->
-                        <controls:ExtendedEntry Title="Enter Amount"
-                                                PlaceholderText="0.00"
+                        <controls:ExtendedEntry Title="{x:Static resx:AppResource.EnterAmount}"
+                                                PlaceholderText="{x:Static resx:AppResource.AmountPlaceholder}"
                                                 Text="{Binding Amount}"
                                                 EntryKeyboard="Numeric"
                                                 LeadingIconType="Font"
@@ -315,13 +316,13 @@
                                                 LeadingIconSize="16"/>
 
                         <!-- ==================== PAYMENT METHOD ==================== -->
-                        <controls:ExtendedDropdown Title="Payment Method"
-                                                   PlaceholderText="Choose an Option"
+                        <controls:ExtendedDropdown Title="{x:Static resx:AppResource.PaymentMethod}"
+                                                   PlaceholderText="{x:Static resx:AppResource.ChooseAnOption}"
                                                    ItemsSource="{Binding PaymentMethods}"
                                                    SelectedItem="{Binding SelectedPaymentMethod}"/>
 
                         <!-- ==================== CONTINUE PAYMENT ==================== -->
-                        <Button Text="Continue Payment"
+                        <Button Text="{x:Static resx:AppResource.ContinuePayment}"
                                 Style="{StaticResource ButtonCorneredStyle}"
                                 HorizontalOptions="Fill"
                                 Command="{Binding ContinuePaymentCommand}"/>

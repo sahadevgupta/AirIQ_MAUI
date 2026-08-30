@@ -2,11 +2,12 @@
 <views:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 x:Class="AirIQ_MAUI.Views.BankDetailsPage"
+                xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
                 xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
                 x:DataType="vm:BankDetailsPageViewModel"
-                PageTitle="Bank Details"
+                PageTitle="{x:Static resx:AppResource.BankDetails}"
                 NavigationMode="Hamburger">
 
     <views:BasePage.PageContent>
@@ -24,7 +25,7 @@
                                              Padding="0,16"
                                              Spacing="6">
 
-                            <Button Text="ICICI Bank Limited"
+                            <Button Text="{x:Static resx:AppResource.ICICIBankLimited}"
                                     Style="{StaticResource BorderlessButton}"
                                     TextColor="Black"
                                     FontAttributes="Bold"
@@ -35,7 +36,7 @@
                                     Padding="0"
                                     MinimumHeightRequest="0"
                                     BackgroundColor="Transparent"/>
-                            <Label Text="IMPS / NEFT / RTGS"
+                            <Label Text="{x:Static resx:AppResource.ImpsNeftRtgs}"
                                    Style="{StaticResource Label14Regular}"/>
                         </VerticalStackLayout>
 
@@ -52,7 +53,7 @@
                                Padding="0,12">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Account Name"
+                                    <Span Text="{x:Static resx:AppResource.AccountName}"
                                           Style="{StaticResource Span16RegularGray50Style}"/>
                                     <Span Text="&#10;AIR IQ Savings"
                                           Style="{StaticResource Span16MediumBlacStyle}"/>
@@ -72,7 +73,7 @@
                                Grid.Row="4">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Account Number"
+                                    <Span Text="{x:Static resx:AppResource.AccountNumber}"
                                           Style="{StaticResource Span16RegularGray50Style}"/>
                                     <Span Text="&#10;AQVI61065"
                                           Style="{StaticResource Span16MediumBlacStyle}"/>
@@ -93,7 +94,7 @@
                                Grid.Row="6">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Account Name"
+                                    <Span Text="{x:Static resx:AppResource.AccountName}"
                                           Style="{StaticResource Span16RegularGray50Style}"/>
                                     <Span Text="&#10;AIR IQ Savings"
                                           Style="{StaticResource Span16MediumBlacStyle}"/>
@@ -114,9 +115,11 @@
                                Grid.Row="8">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Account Type"
+                                    <Span Text="{x:Static resx:AppResource.AccountType}"
                                           Style="{StaticResource Span16RegularGray50Style}"/>
-                                    <Span Text="&#10;Current Account"
+                                    <Span Text="&#10;"
+                                          Style="{StaticResource Span16MediumBlacStyle}"/>
+                                    <Span Text="{x:Static resx:AppResource.CurrentAccount}"
                                           Style="{StaticResource Span16MediumBlacStyle}"/>
                                 </FormattedString>
                             </Label.FormattedText>
@@ -135,7 +138,7 @@
                                Grid.Row="10">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="IFSC Code"
+                                    <Span Text="{x:Static resx:AppResource.IFSCCode}"
                                           Style="{StaticResource Span16RegularGray50Style}"/>
                                     <Span Text="&#10;ICIC00000104"
                                           Style="{StaticResource Span16MediumBlacStyle}"/>
@@ -151,7 +154,7 @@
                                     Margin="16,12"
                                     StrokeThickness="0"
                                     Padding="10,8">
-                                <Label Text="Note: If using ICICI Bank, Please use “Other Bank” option to add AIR IQ as beneficiary"
+                                <Label Text="{x:Static resx:AppResource.ICICIBeneficiaryNote}"
                                        Style="{StaticResource Label14MediumGray90Style}"
                                        TextColor="{StaticResource Gray70}"/>
                             </Border>
@@ -161,11 +164,11 @@
                             <Label Padding="16,12">
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="Scan QR code"
+                                        <Span Text="{x:Static resx:AppResource.ScanQRCode}"
                                               Style="{StaticResource Span16BoldPrimaryStyle}"
                                               TextColor="Black"/>
                                         <Span Text="&#10;"/>
-                                        <Span Text="scan the Qr code to pay"
+                                        <Span Text="{x:Static resx:AppResource.ScanQrCodeToPay}"
                                               Style="{StaticResource Span12RegularGray50Style}"
                                               FontSize="14"/>
                                     </FormattedString>
@@ -183,13 +186,13 @@
                                         Format="QrCode"
                                         Margin="3"/>
 
-                                    <Label Text="ID: airiq@icici"
+                                    <Label Text="{x:Static resx:AppResource.UpiIdDisplay}"
                                            VerticalOptions="Center"
                                            Style="{StaticResource Label14Bold}"
                                            Margin="10,0,0,5"
                                            Grid.Row="1"/>
 
-                                    <Button Text="Copy"
+                                    <Button Text="{x:Static resx:AppResource.Copy}"
                                             Grid.Row="1"
                                             HorizontalOptions="End"
                                             VerticalOptions="Center"
@@ -210,11 +213,11 @@
                             <Label Padding="16,12">
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="UPI Apps"
+                                        <Span Text="{x:Static resx:AppResource.UPIApps}"
                                               Style="{StaticResource Span16BoldPrimaryStyle}"
                                               TextColor="Black"/>
                                         <Span Text="&#10;"/>
-                                        <Span Text="Pay using UPI app"
+                                        <Span Text="{x:Static resx:AppResource.PayUsingUpiApp}"
                                               Style="{StaticResource Span12RegularGray50Style}"
                                               FontSize="14"/>
                                     </FormattedString>
@@ -243,7 +246,7 @@
                                                TranslationX="10"
                                                HorizontalOptions="Center"
                                                Aspect="AspectFit"/>
-                                        <Label Text="Google Pay"
+                                        <Label Text="{x:Static resx:AppResource.GooglePay}"
                                                Style="{StaticResource Label14SemiBold}"
                                                TextColor="#4F5B76"
                                                HorizontalTextAlignment="Center"/>
@@ -269,7 +272,7 @@
                                                WidthRequest="42"
                                                HorizontalOptions="Center"
                                                Aspect="AspectFit"/>
-                                        <Label Text="PhonePe"
+                                        <Label Text="{x:Static resx:AppResource.PhonePe}"
                                                Style="{StaticResource Label14SemiBold}"
                                                TextColor="#4F5B76"
                                                HorizontalTextAlignment="Center"/>
@@ -295,7 +298,7 @@
                                                WidthRequest="74"
                                                HorizontalOptions="Center"
                                                Aspect="AspectFit"/>
-                                        <Label Text="Paytm"
+                                        <Label Text="{x:Static resx:AppResource.Paytm}"
                                                Style="{StaticResource Label14SemiBold}"
                                                TextColor="#4F5B76"
                                                HorizontalTextAlignment="Center"/>
@@ -321,7 +324,7 @@
                                                WidthRequest="58"
                                                HorizontalOptions="Center"
                                                Aspect="AspectFit"/>
-                                        <Label Text="BHIM"
+                                        <Label Text="{x:Static resx:AppResource.BHIM}"
                                                Style="{StaticResource Label14SemiBold}"
                                                TextColor="#4F5B76"
                                                HorizontalTextAlignment="Center"/>
@@ -343,7 +346,7 @@
                                              Padding="0,16"
                                              Spacing="6">
 
-                            <Button Text="ICICI Bank Limited"
+                            <Button Text="{x:Static resx:AppResource.ICICIBankLimited}"
                                     Style="{StaticResource BorderlessButton}"
                                     TextColor="Black"
                                     FontAttributes="Bold"
@@ -354,7 +357,7 @@
                                     Padding="0"
                                     MinimumHeightRequest="0"
                                     BackgroundColor="Transparent"/>
-                            <Label Text="IMPS / NEFT / RTGS / Cash Deposit"
+                            <Label Text="{x:Static resx:AppResource.ImpsNeftRtgsCashDeposit}"
                                    Style="{StaticResource Label14Regular}"/>
                         </VerticalStackLayout>
 
@@ -370,7 +373,7 @@
                                Padding="0,12">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Account Name"
+                                    <Span Text="{x:Static resx:AppResource.AccountName}"
                                           Style="{StaticResource Span16RegularGray50Style}"/>
                                     <Span Text="&#10;AIR IQ 365 Limited"
                                           Style="{StaticResource Span16MediumBlacStyle}"/>
@@ -390,7 +393,7 @@
                                Grid.Row="4">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Account Number"
+                                    <Span Text="{x:Static resx:AppResource.AccountNumber}"
                                           Style="{StaticResource Span16RegularGray50Style}"/>
                                     <Span Text="&#10;777705666135"
                                           Style="{StaticResource Span16MediumBlacStyle}"/>
@@ -411,9 +414,11 @@
                                Grid.Row="6">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Account Type"
+                                    <Span Text="{x:Static resx:AppResource.AccountType}"
                                           Style="{StaticResource Span16RegularGray50Style}"/>
-                                    <Span Text="&#10;Current Account"
+                                    <Span Text="&#10;"
+                                          Style="{StaticResource Span16MediumBlacStyle}"/>
+                                    <Span Text="{x:Static resx:AppResource.CurrentAccount}"
                                           Style="{StaticResource Span16MediumBlacStyle}"/>
                                 </FormattedString>
                             </Label.FormattedText>
@@ -432,7 +437,7 @@
                                Grid.Row="8">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="IFSC Code"
+                                    <Span Text="{x:Static resx:AppResource.IFSCCode}"
                                           Style="{StaticResource Span16RegularGray50Style}"/>
                                     <Span Text="&#10;ICIC00000208"
                                           Style="{StaticResource Span16MediumBlacStyle}"/>
@@ -446,7 +451,7 @@
                                 Margin="16,12"
                                 StrokeThickness="0"
                                 Padding="10,8">
-                            <Label Text="Note: If using ICICI Bank, Please use “Other Bank” option to add AIR IQ as beneficiary"
+                            <Label Text="{x:Static resx:AppResource.ICICIBeneficiaryNote}"
                                    Style="{StaticResource Label14MediumGray90Style}"
                                    TextColor="{StaticResource Gray70}"/>
                         </Border>
@@ -467,7 +472,7 @@
                                Style="{StaticResource Label14Regular}"
                                TextColor="{StaticResource Gray90}">
                             <Label.Text>
-                                We don't accept cash deposit over Rs. 1,90,000 in one day. If you deposit more than this, the extra amount will be lost and won't be added to your account.
+                                <x:Static Member="resx:AppResource.CashDepositLimitWarning"/>
                             </Label.Text>
                         </Label>
                     </VerticalStackLayout>

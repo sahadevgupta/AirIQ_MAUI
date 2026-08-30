@@ -4,6 +4,7 @@
              x:Class="AirIQ.Controls.EntryWithTitleImage"
              xmlns:local="clr-namespace:AirIQ.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
              x:Name="thisControl">
 
        <Border Padding="16,15"
@@ -45,7 +46,7 @@
                                            Grid.Column="1"
                                            FontSize="20"/>
 
-                     <Label Text="DD/MM/YYYY"
+                     <Label Text="{x:Static resx:AppResource.DateFormatPlaceholder}"
                             x:Name="datelbl"
                             IsVisible="{Binding IsDateViewVisible,Source={x:Reference thisControl}}"
                             VerticalTextAlignment="Center"

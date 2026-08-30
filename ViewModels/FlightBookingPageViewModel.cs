@@ -6,6 +6,7 @@ using AirIQ.Constants;
 using AirIQ.Enums;
 using AirIQ.Models;
 using AirIQ.Models.Request;
+using AirIQ.Resources.Strings;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -70,7 +71,7 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
                         var passenger = new Passenger
                         {
                             Id = i,
-                            Header = $"{PassengerType.Adult} #{i}",
+                            Header = string.Format(AppResource.PassengerHeaderFormat, AppResource.Adult, i),
                             Type = PassengerType.Adult,
                             IsSectionOpen = i == 1 ? true : false
                         };
@@ -118,13 +119,13 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
         // 1️⃣ Adult already has an infant → Not allowed
         if (adult.AssignedInfant != null)
         {
-            return $"Adult {adult.Header} already has one infant assigned.";
+            return string.Format(AppResource.AdultAlreadyHasInfantAssignedFormat, adult.Header);
         }
 
         // 2️⃣ Infant already assigned → Not allowed
         if (infant.AssignedAdultId < 0)
         {
-            return $"Infant {infant.Header} is already assigned to an adult.";
+            return string.Format(AppResource.InfantAlreadyAssignedToAdultFormat, infant.Header);
         }
 
         // 3️⃣ Assignment is valid → Assign both sides
@@ -176,7 +177,7 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
         if (hasIncompletePassenger || termsNotAccepted)
             return;
 
-        var response = await DialogService.DisplayAlertAsync("AirIQ", "Do you want to confirm this booking ?", "OK", "Cancel");
+        var response = await DialogService.DisplayAlertAsync(AppResource.AirIqDialogTitle, AppResource.ConfirmBookingPrompt, AppResource.OK, AppResource.Cancel);
 
         if (response)
         {
@@ -235,7 +236,7 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
                 Debug.WriteLine("Flight booking json : " + a);
 
                 var result = await flightService.ConfirmBookingAsync(bookingRequest);
-                await DialogService.DisplayAlertAsync("AirIQ", result, "OK");
+                await DialogService.DisplayAlertAsync(AppResource.AirIqDialogTitle, result, AppResource.OK);
 
             }
         }
@@ -248,7 +249,7 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
         var newInfant = new Infant
         {
             Id = infantId++,
-            Header = $"{nameof(PassengerType.Infant)} #{Passengers.Count}",
+            Header = string.Format(AppResource.PassengerHeaderFormat, AppResource.Infant, Passengers.Count),
             Type = PassengerType.Infant,
         };
 

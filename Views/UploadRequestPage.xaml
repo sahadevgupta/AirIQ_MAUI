@@ -3,48 +3,49 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 x:Class="AirIQ_MAUI.Views.UploadRequestPage"
                 xmlns:controls="clr-namespace:AirIQ.Controls"
+                xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
                 x:DataType="vm:UploadRequestPageViewModel"
-                PageTitle="Upload Request"
+                PageTitle="{x:Static resx:AppResource.UploadRequest}"
                 NavigationMode="Hamburger">
     <views:BasePage.PageContent>
         <ScrollView>
 
             <VerticalStackLayout Padding="16"
                                  Spacing="0">
-                <controls:ExtendedEntry Title="Amount"
+                <controls:ExtendedEntry Title="{x:Static resx:AppResource.Amount}"
                                         SuffixText="*"
-                                        PlaceholderText="Enter Amount"
+                                        PlaceholderText="{x:Static resx:AppResource.EnterAmount}"
                                         Text="{Binding Amount}"
                                         IsErrorViewVisible="{Binding IsAmountErrorVisible}"
-                                        ErrorText="Amount should be greater than 0"/>
-                <controls:ExtendedEntry Title="Reference Number"
+                                        ErrorText="{x:Static resx:AppResource.AmountGreaterThanZero}"/>
+                <controls:ExtendedEntry Title="{x:Static resx:AppResource.ReferenceNumber}"
                                         Margin="0,20,0,0"
                                         SuffixText="*"
-                                        PlaceholderText="Enter reference number"
+                                        PlaceholderText="{x:Static resx:AppResource.EnterReferenceNumber}"
                                         Text="{Binding ReferenceNumber}"
                                         IsErrorViewVisible="{Binding IsReferenceNumberErrorVisible}"
-                                        ErrorText="Please enter reference number"/>
-                <controls:ExtendedDropdown Title="Select Payment Mode"
+                                        ErrorText="{x:Static resx:AppResource.PleaseEnterReferenceNumber}"/>
+                <controls:ExtendedDropdown Title="{x:Static resx:AppResource.SelectPaymentMode}"
                                            SuffixText="*"
-                                           PlaceholderText="Select an option"
+                                           PlaceholderText="{x:Static resx:AppResource.SelectAnOption}"
                                            SelectedItem="{Binding SelectedPaymentMode}"
                                            IsError="{Binding IsPaymentModeErrorVisible}"
-                                           ErrorText="Please select payment mode"
+                                           ErrorText="{x:Static resx:AppResource.PleaseSelectPaymentMode}"
                                            Margin="0,20,0,0">
                     <controls:ExtendedDropdown.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
-                            <x:String>Bank Transfer</x:String>
-                            <x:String>IMPS</x:String>
-                            <x:String>NEFT</x:String>
-                            <x:String>RTGS</x:String>
-                            <x:String>Cash Deposit</x:String>
-                            <x:String>Credit Request</x:String>
+                            <x:Static Member="resx:AppResource.BankTransfer"/>
+                            <x:Static Member="resx:AppResource.IMPS"/>
+                            <x:Static Member="resx:AppResource.NEFT"/>
+                            <x:Static Member="resx:AppResource.RTGS"/>
+                            <x:Static Member="resx:AppResource.CashDeposit"/>
+                            <x:Static Member="resx:AppResource.CreditRequest"/>
                         </x:Array>
                     </controls:ExtendedDropdown.ItemsSource>
                 </controls:ExtendedDropdown>
-                <Label Text="Upload File"
+                <Label Text="{x:Static resx:AppResource.UploadFile}"
                        Style="{StaticResource TitleStyleBlackBold}"
                        Margin="0,20,0,0"/>
                 <Border StrokeShape="RoundRectangle 8"
@@ -74,7 +75,7 @@
                     </Grid>
                 </Border>
 
-                <Label Text="Message"
+                <Label Text="{x:Static resx:AppResource.Message}"
                        Style="{StaticResource TitleStyleBlackBold}"
                        Margin="0,20,0,0"/>
                 <Border StrokeShape="RoundRectangle 8"
@@ -85,12 +86,12 @@
                         Margin="0,5,0,0">
                     <controls:BorderlessEditor HeightRequest="150"
                                                AutoSize="Disabled"
-                                               Placeholder="Enter Message"
+                                               Placeholder="{x:Static resx:AppResource.EnterMessage}"
                                                Text="{Binding Message}"
                                                VerticalOptions="Start"/>
                 </Border>
 
-                <Button Text="Submit"
+                <Button Text="{x:Static resx:AppResource.Submit}"
                         Margin="0,20,0,0"
                         Style="{StaticResource DefaultButtonStyle}"
                         Command="{Binding SubmitCommand}"/>

@@ -10,7 +10,7 @@
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
                 NavigationMode="Hamburger"
-                PageTitle="Group Query"
+                PageTitle="{x:Static resx:AppResource.GroupQuery}"
                 x:DataType="vm:GroupQueryPageViewModel">
     <views:BasePage.PageContent>
         <Grid RowDefinitions="Auto,*"
@@ -88,11 +88,11 @@
                           RowSpacing="16">
 
                         <HorizontalStackLayout Spacing="12">
-                            <Label Text="One Way"
+                            <Label Text="{x:Static resx:AppResource.OneWay}"
                                    VerticalTextAlignment="Center"/>
                             <Image Source="toggle_on"/>
                             <!-- <Switch VerticalOptions="Start"/> -->
-                            <Label Text="Round Trip"
+                            <Label Text="{x:Static resx:AppResource.RoundTrip}"
                                    VerticalTextAlignment="Center"/>
                         </HorizontalStackLayout>
 
@@ -101,26 +101,26 @@
                               RowDefinitions="Auto,Auto"
                               Grid.Row="1">
 
-                            <controls:ExtendedEntry Title="Sector Onward"
+                            <controls:ExtendedEntry Title="{x:Static resx:AppResource.SectorOnward}"
                                                     SuffixText="*"
-                                                    PlaceholderText="___-___"
+                                                    PlaceholderText="{x:Static resx:AppResource.SectorPlaceholder}"
                                                     LeadingIconType="Font"
                                                     LeadingIcon="{x:Static helpers:FontAwesomeIcons.MapMarkerAlt}"
                                                     LeadingIconColor="{StaticResource Gray50}"
                                                     LeadingIconSize="16"/>
 
-                            <controls:ExtendedEntry Title="Travel Date"
+                            <controls:ExtendedEntry Title="{x:Static resx:AppResource.TravelDate}"
                                                     SuffixText="*"
-                                                    PlaceholderText="DD/MM/YYYY"
+                                                    PlaceholderText="{x:Static resx:AppResource.DateFormatPlaceholder}"
                                                     LeadingIconType="Font"
                                                     LeadingIcon="{x:Static helpers:FontAwesomeIcons.CalendarAlt}"
                                                     LeadingIconColor="{StaticResource Gray50}"
                                                     LeadingIconSize="16"
                                                     Grid.Column="1"/>
 
-                            <controls:ExtendedEntry Title="Sector Return"
+                            <controls:ExtendedEntry Title="{x:Static resx:AppResource.SectorReturn}"
                                                     SuffixText="*"
-                                                    PlaceholderText="___-___"
+                                                    PlaceholderText="{x:Static resx:AppResource.SectorPlaceholder}"
                                                     LeadingIconType="Font"
                                                     LeadingIcon="{x:Static helpers:FontAwesomeIcons.MapMarkerAlt}"
                                                     LeadingIconColor="{StaticResource Gray50}"
@@ -139,9 +139,9 @@
                                 </controls:ExtendedEntry.Triggers>
                             </controls:ExtendedEntry>
 
-                            <controls:ExtendedEntry Title="Return Travel Date"
+                            <controls:ExtendedEntry Title="{x:Static resx:AppResource.ReturnTravelDate}"
                                                     SuffixText="*"
-                                                    PlaceholderText="DD/MM/YYYY"
+                                                    PlaceholderText="{x:Static resx:AppResource.DateFormatPlaceholder}"
                                                     LeadingIconType="Font"
                                                     LeadingIcon="{x:Static helpers:FontAwesomeIcons.CalendarAlt}"
                                                     LeadingIconColor="{StaticResource Gray50}"
@@ -171,40 +171,40 @@
                         </Grid>
 
                         <VerticalStackLayout Grid.Row="2">
-                            <controls:ExtendedEntry Title="No. of Pax"
-                                                    PlaceholderText="Enter number of Pax"
+                            <controls:ExtendedEntry Title="{x:Static resx:AppResource.NoOfPax}"
+                                                    PlaceholderText="{x:Static resx:AppResource.EnterNumberOfPax}"
                                                     LeadingIconType="Font"
                                                     LeadingIcon="{x:Static helpers:FontAwesomeIcons.Users}"
                                                     LeadingIconColor="{StaticResource Gray50}"
                                                     LeadingIconSize="16"/>
-                            <controls:ExtendedEntry Title="Expected Fare"
+                            <controls:ExtendedEntry Title="{x:Static resx:AppResource.ExpectedFare}"
                                                     SuffixText="*"
                                                     Margin="0,16,0,0"
-                                                    PlaceholderText="Enter Expected Fare"
+                                                    PlaceholderText="{x:Static resx:AppResource.EnterExpectedFare}"
                                                     LeadingIconType="Font"
                                                     LeadingIcon="{x:Static helpers:FontAwesomeIcons.RupeeSign}"
                                                     LeadingIconSize="16"
                                                     LeadingIconColor="{StaticResource Gray50}"/>
-                            <controls:ExtendedEntry Title="Preferred Airline"
+                            <controls:ExtendedEntry Title="{x:Static resx:AppResource.PreferredAirline}"
                                                     SuffixText="*"
                                                     Margin="0,16,0,0"
-                                                    PlaceholderText="Enter Preferred Airline"
+                                                    PlaceholderText="{x:Static resx:AppResource.EnterPreferredAirline}"
                                                     LeadingIcon="{x:Static helpers:FontAwesomeIcons.PaperPlane}"
                                                     LeadingIconColor="{StaticResource Gray50}"
                                                     LeadingIconSize="16"
                                                     LeadingIconType="Font"/>
-                            <controls:ExtendedEntry Title="Contact No."
+                            <controls:ExtendedEntry Title="{x:Static resx:AppResource.ContactNo}"
                                                     SuffixText="*"
                                                     Margin="0,16,0,0"
                                                     LeadingIconType="Font"
-                                                    PlaceholderText="Enter 10 digit mobile number"
+                                                    PlaceholderText="{x:Static resx:AppResource.Enter10DigitMobileNumber}"
                                                     LeadingIcon="{x:Static helpers:FontAwesomeIcons.PhoneAlt}"
                                                     LeadingIconColor="{StaticResource Gray50}"
                                                     LeadingIconSize="16"/>
                             <Label x:Name="TitleLabel"
                                    Grid.Row="0"
                                    Style="{StaticResource TitleStyleBlackBold}"
-                                   Text="Add Note"
+                                   Text="{x:Static resx:AppResource.AddNote}"
                                    Margin="0,16,0,0"/>
                             <Border StrokeShape="RoundRectangle 8"
                                     Grid.Row="1"
@@ -214,7 +214,7 @@
                                     Margin="0,5,0,0">
                                 <controls:BorderlessEditor HeightRequest="150"
                                                            AutoSize="Disabled"
-                                                           Placeholder="Include any extra details that may help us assist you better......"
+                                                           Placeholder="{x:Static resx:AppResource.IncludeExtraDetailsPlaceholder}"
                                                            Text="{Binding Message}"
                                                            VerticalOptions="Start"/>
                             </Border>

@@ -38,7 +38,7 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
     private void PopuplateMenuOptions()
     {
 
-        BuildNumber = $"App Version: {AppInfo.Current.VersionString}";
+        BuildNumber = string.Format(AppResource.AppVersionLabelFormat, AppInfo.Current.VersionString);
         Menus = new ObservableCollection<MenuOption>
         {
             new MenuOption{Title=AppResource.Flights, IconSource="flight", MenuType = MenuType.Flight },

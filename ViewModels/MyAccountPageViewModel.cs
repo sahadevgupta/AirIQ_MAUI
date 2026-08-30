@@ -1,4 +1,5 @@
 using AirIQ.Enums;
+using AirIQ.Resources.Strings;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
 using AirIQ.Views;
@@ -14,7 +15,7 @@ namespace AirIQ.ViewModels
         [RelayCommand]
         private void NotAvailable()
         {
-            ShowToast("This feature is coming soon.");
+            ShowToast(AppResource.FeatureComingSoon);
         }
 
         [RelayCommand]
@@ -38,7 +39,7 @@ namespace AirIQ.ViewModels
         [RelayCommand]
         private async Task AboutApp()
         {
-            await ShowAlertAsync($"AirIQ\nVersion {AppInfo.Current.VersionString}", AlertType.Success);
+            await ShowAlertAsync(string.Format(AppResource.AppNameVersionFormat, AppInfo.Current.VersionString), AlertType.Success);
         }
 
         [RelayCommand]

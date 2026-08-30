@@ -1,4 +1,5 @@
 using AirIQ.Constants;
+using AirIQ.Resources.Strings;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -32,7 +33,7 @@ namespace AirIQ.ViewModels
                     return;
 
                 var result = await _upiAppLaunchService.LaunchAsync(appKey);
-                var displayName = appKey == "GooglePay" ? "Google Pay" : appKey;
+                var displayName = appKey == "GooglePay" ? AppResource.GooglePay : appKey;
 
                 switch (result.Status)
                 {
@@ -40,25 +41,25 @@ namespace AirIQ.ViewModels
                         return;
 
                     case UpiAppLaunchStatus.NotInstalled:
-                        await DialogService.DisplayAlertAsync("App not found", $"{displayName} is not installed on this device.", "OK");
+                        await DialogService.DisplayAlertAsync(AppResource.AppNotFoundTitle, string.Format(AppResource.AppNotInstalledOnDeviceFormat, displayName), AppResource.OK);
                         return;
 
                     case UpiAppLaunchStatus.InvalidApp:
-                        await DialogService.DisplayAlertAsync("Unsupported app", "This UPI app is not supported yet.", "OK");
+                        await DialogService.DisplayAlertAsync(AppResource.UnsupportedAppTitle, AppResource.UpiAppNotSupportedYet, AppResource.OK);
                         return;
 
                     case UpiAppLaunchStatus.LaunchFailed:
-                        await DialogService.DisplayAlertAsync("Unable to open app", result.ErrorMessage ?? "Please try again.", "OK");
+                        await DialogService.DisplayAlertAsync(AppResource.UnableToOpenAppTitle, result.ErrorMessage ?? AppResource.PleaseTryAgain, AppResource.OK);
                         return;
 
                     default:
-                        await DialogService.DisplayAlertAsync("Unable to open app", "Please try again.", "OK");
+                        await DialogService.DisplayAlertAsync(AppResource.UnableToOpenAppTitle, AppResource.PleaseTryAgain, AppResource.OK);
                         return;
                 }
             }
             catch (Exception)
             {
-                await DialogService.DisplayAlertAsync("Unable to open app", "Please try again.", "OK");
+                await DialogService.DisplayAlertAsync(AppResource.UnableToOpenAppTitle, AppResource.PleaseTryAgain, AppResource.OK);
             }
         }
 
@@ -88,23 +89,23 @@ namespace AirIQ.ViewModels
             switch (callbackData.Status)
             {
                 case UpiPaymentStatus.Success:
-                    await DialogService.DisplayAlertAsync("Payment successful", "Payment completed successfully.", "OK");
+                    await DialogService.DisplayAlertAsync(AppResource.PaymentSuccessfulTitle, AppResource.PaymentCompletedSuccessfully, AppResource.OK);
                     break;
 
                 case UpiPaymentStatus.Failure:
-                    await DialogService.DisplayAlertAsync("Payment failed", "Payment was not completed. Please try again.", "OK");
+                    await DialogService.DisplayAlertAsync(AppResource.PaymentFailedTitle, AppResource.PaymentNotCompletedTryAgain, AppResource.OK);
                     break;
 
                 case UpiPaymentStatus.Submitted:
-                    await DialogService.DisplayAlertAsync("Payment pending", "Payment is submitted and pending confirmation.", "OK");
+                    await DialogService.DisplayAlertAsync(AppResource.PaymentPendingTitle, AppResource.PaymentSubmittedPendingConfirmation, AppResource.OK);
                     break;
 
                 case UpiPaymentStatus.Cancelled:
-                    await DialogService.DisplayAlertAsync("Payment cancelled", "Payment was cancelled.", "OK");
+                    await DialogService.DisplayAlertAsync(AppResource.PaymentCancelledTitle, AppResource.PaymentWasCancelled, AppResource.OK);
                     break;
 
                 default:
-                    await DialogService.DisplayAlertAsync("Payment status", "Returned from UPI app.", "OK");
+                    await DialogService.DisplayAlertAsync(AppResource.PaymentStatusTitle, AppResource.ReturnedFromUpiApp, AppResource.OK);
                     break;
             }
         }

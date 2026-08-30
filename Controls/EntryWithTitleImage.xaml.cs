@@ -2,6 +2,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Input;
 using AirIQ.Helpers;
+using AirIQ.Resources.Strings;
 using Mopups.Interfaces;
 
 namespace AirIQ.Controls;
@@ -109,7 +110,7 @@ public partial class EntryWithTitleImage : ContentView
 		   }
 		   else if (newValue == null)
 		   {
-			   control.datelbl.Text = "DD/MM/YYYY";
+			   control.datelbl.Text = AppResource.DateFormatPlaceholder;
 		   }
 	   });
 
