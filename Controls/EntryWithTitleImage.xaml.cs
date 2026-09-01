@@ -255,8 +255,8 @@ public partial class EntryWithTitleImage : ContentView
 			var popupNavigation = ServiceHelper.GetService<IPopupNavigation>();
 			if (popupNavigation != null)
 			{
-				var popup = new CalendarView();
-				popup.SetBinding(CalendarView.AllowedDatesProperty,
+				var popup = new CalendarViewV2();
+				popup.SetBinding(CalendarViewV2.AllowedDatesProperty,
 						new Binding(nameof(AllowedDates), BindingMode.TwoWay, source: this));
 				popup.DatePicked += (arg) =>
 				{
