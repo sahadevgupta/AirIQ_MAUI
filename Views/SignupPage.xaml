@@ -8,6 +8,7 @@
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
                 xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                 IsNavBarVisible="True"
+                IsWalletVisible="False"
                 x:DataType="vm:SignupPageViewModel"
                 PageTitle="{x:Static resx:AppResource.SignUp}"
                 BackgroundColor="White">
@@ -22,10 +23,10 @@
                                           <Span Text="{x:Static resx:AppResource.FieldsMarkedWithAsterisk}"
                                                 FontAttributes="Italic"/>
                                           <Span Text="{x:Static resx:AppResource.AsteriskSymbol}"
-                                                        TextColor="Red"
-                                                        FontAttributes="Italic"/>
+                                                TextColor="Red"
+                                                FontAttributes="Italic"/>
                                           <Span Text="{x:Static resx:AppResource.AreMandatory}"
-                                                        FontAttributes="Italic"/>
+                                                FontAttributes="Italic"/>
                                    </FormattedString>
                             </Label.FormattedText>
                      </Label>

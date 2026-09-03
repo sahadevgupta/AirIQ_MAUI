@@ -1,5 +1,6 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using AirIQ.Configurations;
 using AirIQ.Constants;
 using AirIQ.Enums;
 using AirIQ.Extensions;
@@ -40,16 +41,20 @@ IPopupNavigation popupNavigation) : IAuthService
                 await MainThread.InvokeOnMainThreadAsync(async () =>
                 {
                     await popupNavigation.PushAsync(sessionExpiryPopup);
-                    bool result = await vm.SessionResponseTask;
-
+                    await vm.SessionResponseTask;
                 });
-
-
-                //bool result = await vm.SessionResponseTask;
 
                 var updatedToken = await secureStorageService.GetAsync(PreferenceKeyConstants.AuthKey);
                 _authInfo = ReadToken(updatedToken);
 
+                // The session-expiry popup never authenticates inline - it redirects to the
+                // Login/ForgotPassword flow or is dismissed. If the token in storage is still
+                // missing/expired at this point, there's no valid session to hand back, so
+                // callers must not be given a stale token to reach protected endpoints with.
+                if (_authInfo == null || !IsAuthInfoValid(_authInfo))
+                {
+                    return default;
+                }
             }
 
             return _authInfo;
@@ -79,6 +84,14 @@ IPopupNavigation popupNavigation) : IAuthService
         Console.WriteLine($"IsAuthInfoValid [{ret}]");
 
         return ret;
+    }
+
+    public void Logout()
+    {
+        secureStorageService.RemoveAll();
+        Preferences.Clear();
+        AppConfiguration.IsLoggedInUser = false;
+        AppConfiguration.CurrentUser = null;
     }
 
     public AuthInfoDto ReadToken(string accessToken)

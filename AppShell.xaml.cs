@@ -53,6 +53,7 @@ public partial class AppShell : Shell
 		Routing.RegisterRoute(nameof(TermsAndConditionsPage), typeof(TermsAndConditionsPage));
 		Routing.RegisterRoute(nameof(PrivacyPolicyPage), typeof(PrivacyPolicyPage));
 		Routing.RegisterRoute(nameof(MyAccountPage), typeof(MyAccountPage));
+		Routing.RegisterRoute(nameof(AirportSearchPage), typeof(AirportSearchPage));
 
 		Navigated += OnShellNavigated;
 	}

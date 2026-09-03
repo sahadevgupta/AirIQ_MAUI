@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace AirIQ.ViewModels
 {
-    public partial class MyAccountPageViewModel(IViewModelParameters viewModelParameters) : BaseViewModel(viewModelParameters)
+    public partial class MyAccountPageViewModel(IViewModelParameters viewModelParameters, IAuthService authService) : BaseViewModel(viewModelParameters)
     {
         #region [ Commands ]
 
@@ -45,8 +45,7 @@ namespace AirIQ.ViewModels
         [RelayCommand]
         private async Task Logout()
         {
-            SecureStorage.RemoveAll();
-            Preferences.Clear();
+            authService.Logout();
 
             if (Shell.Current != null)
                 await MainThread.InvokeOnMainThreadAsync(() => Shell.Current.GoToAsync("//LoginPage"));

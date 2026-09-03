@@ -132,6 +132,12 @@
   <data name="SearchDestinationAirport" xml:space="preserve">
     <value>Search Destination Airport</value>
   </data>
+  <data name="SelectDepartureAirport" xml:space="preserve">
+    <value>Select Departure Airport</value>
+  </data>
+  <data name="SelectArrivalAirport" xml:space="preserve">
+    <value>Select Arrival Airport</value>
+  </data>
   <data name="TravelDate" xml:space="preserve">
     <value>Travel Date</value>
   </data>
@@ -183,8 +189,23 @@
   <data name="InformationRequired" xml:space="preserve">
     <value>Information Required</value>
   </data>
+  <data name="SessionExpiredTitle" xml:space="preserve">
+    <value>Session Expired</value>
+  </data>
   <data name="SessionExpired" xml:space="preserve">
-    <value>Your session has expired, please enter your password to continue.</value>
+    <value>Your session has expired. Please sign in again to continue.</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="SignInDifferentAccount" xml:space="preserve">
+    <value>Sign in with a different account</value>
+  </data>
+  <data name="NotNow" xml:space="preserve">
+    <value>Not Now</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>or</value>
   </data>
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>

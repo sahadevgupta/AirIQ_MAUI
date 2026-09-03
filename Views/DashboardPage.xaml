@@ -4,6 +4,7 @@
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:controls="clr-namespace:AirIQ.Controls"
+  xmlns:enums="clr-namespace:AirIQ.Enums"
   xmlns:helpers="clr-namespace:AirIQ.Constants"
   xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
   xmlns:template="clr-namespace:AirIQ.Views.ContentViews"
@@ -63,19 +64,19 @@
             <FormattedString>
               <Span Text="{x:Static resx:AppResource.BookYourFlight}"
                     Style="{StaticResource Label32Bold}"
-                    FontSize="34"/>
+                    FontSize="28"/>
               <Span Text=" &#10;"/>
               <Span Text="{x:Static resx:AppResource.WithLabel}"
                     Style="{StaticResource Label32Bold}"
-                    FontSize="34"/>
+                    FontSize="28"/>
               <Span Text="{x:Static resx:AppResource.AirUppercase}"
                     TextColor="{StaticResource PrimaryColor}"
                     Style="{StaticResource Label32Bold}"
-                    FontSize="34"/>
+                    FontSize="28"/>
               <Span Text="{x:Static resx:AppResource.IqLowercase}"
                     TextColor="red"
                     Style="{StaticResource Label32Bold}"
-                    FontSize="34"/>
+                    FontSize="28"/>
             </FormattedString>
           </Label.FormattedText>
         </Label>
@@ -100,23 +101,23 @@
           <controls:EntryWithTitleImage MaximumHeightRequest="100"
                                         Icon="flight_departure"
                                         Title="{x:Static resx:AppResource.From}"
-                                        ItemsSource="{Binding SourceAirports}"
                                         PlaceholderText="{x:Static resx:AppResource.SearchDepartureAirport}"
                                         SelectedItem="{Binding SelectedSourceAirport}"
-                                        TextChangeCommand="{Binding SearchSourceAirportsCommand}"
                                         DisplayMemberPath="OriginRoute"
-                                        CanEdit="True"/>
+                                        IsNavigationField="True"
+                                        NavigationCommand="{Binding OpenAirportSearchCommand}"
+                                        NavigationCommandParameter="{x:Static enums:AirportFieldType.Source}"/>
 
           <controls:EntryWithTitleImage MaximumHeightRequest="100"
                                         Grid.Row="1"
                                         Icon="flight_arrival"
                                         Title="{x:Static resx:AppResource.To}"
-                                        ItemsSource="{Binding DestinationAirports}"
                                         PlaceholderText="{x:Static resx:AppResource.SearchDestinationAirport}"
                                         SelectedItem="{Binding SelectedDestinationAirport}"
-                                        TextChangeCommand="{Binding SearchDestinationAirportsCommand}"
                                         DisplayMemberPath="DestinationRoute"
-                                        CanEdit="True"/>
+                                        IsNavigationField="True"
+                                        NavigationCommand="{Binding OpenAirportSearchCommand}"
+                                        NavigationCommandParameter="{x:Static enums:AirportFieldType.Destination}"/>
 
           <controls:EntryWithTitleImage Grid.Row="2"
                                         IsDateViewVisible="True"
@@ -150,6 +151,7 @@
               <Label Text="{Binding Source={x:Reference stepper},Path=Value,StringFormat={x:Static resx:AppResource.PersonsCountFormat}}"
                      Grid.Row="1"
                      Style="{StaticResource Label20MediumOnyxStyle}"
+                     FontSize="16"
                      TextColor="{StaticResource Gray90}"
                      VerticalOptions="Center"
                      Grid.Column="1"/>

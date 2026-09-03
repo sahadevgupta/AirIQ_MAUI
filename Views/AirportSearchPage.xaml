@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePage
+  x:Class="AirIQ.Views.AirportSearchPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:controls="clr-namespace:AirIQ.Controls"
+  xmlns:models="clr-namespace:AirIQ.Models"
+  xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
+  xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+  xmlns:views="clr-namespace:AirIQ.Views"
+  xmlns:viewmodel="clr-namespace:AirIQ.ViewModels"
+  x:Name="pageRoot"
+  x:DataType="viewmodel:AirportSearchPageViewModel"
+  PageTitle="{Binding PageTitle}">
+
+  <views:BasePage.PageContent>
+
+    <Grid Padding="16"
+          RowDefinitions="Auto,*"
+          RowSpacing="16"
+          BackgroundColor="{StaticResource BackgroundColor}">
+
+      <controls:SearchView x:Name="searchView"
+                           IsFilterVisible="False"
+                           IsDownloadVisible="False"
+                           PlaceholderText="{Binding SearchPlaceholder}"
+                           SearchText="{Binding SearchText}"/>
+
+      <CollectionView Grid.Row="1"
+                      ItemsSource="{Binding FilteredAirports}">
+        <CollectionView.ItemsLayout>
+          <LinearItemsLayout ItemSpacing="10"
+                             Orientation="Vertical"/>
+        </CollectionView.ItemsLayout>
+
+        <CollectionView.ItemTemplate>
+          <DataTemplate x:DataType="models:AirportListItem">
+            <Border Style="{StaticResource DefaultBorderStyle}">
+              <Border.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding BindingContext.SelectAirportCommand,Source={x:Reference pageRoot}}"
+                                      CommandParameter="{Binding .}"/>
+              </Border.GestureRecognizers>
+
+              <Grid ColumnDefinitions="Auto,*"
+                    ColumnSpacing="12">
+                <Image Source="circle_location"
+                       HeightRequest="24"
+                       WidthRequest="24"
+                       VerticalOptions="Center"/>
+
+                <VerticalStackLayout Grid.Column="1"
+                    Spacing="0">
+                  <Label VerticalTextAlignment="Center">
+                    <Label.FormattedText>
+                      <FormattedString>
+                        <Span Text="{Binding Name}"
+                              Style="{StaticResource Span16MediumBlacStyle}"/>
+                        <Span Text=" ("
+                              Style="{StaticResource Span16MediumBlacStyle}"/>
+                        <Span Text="{Binding Code}"
+                              Style="{StaticResource Span16MediumBlacStyle}"/>
+                        <Span Text=")"
+                              Style="{StaticResource Span16MediumBlacStyle}"/>
+                      </FormattedString>
+                    </Label.FormattedText>
+                  </Label>
+
+                  <Label Text="{Binding Location}"
+                         IsVisible="{Binding Location,Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"
+                         Style="{StaticResource Span12RegularGray50Style}"/>
+                </VerticalStackLayout>
+
+
+              </Grid>
+            </Border>
+          </DataTemplate>
+        </CollectionView.ItemTemplate>
+
+        <CollectionView.EmptyView>
+          <Border Style="{StaticResource DefaultBorderStyle}"
+                  Stroke="{StaticResource BorderColor}"
+                  StrokeThickness="1"
+                  VerticalOptions="Start">
+            <Label Text="{x:Static resx:AppResource.NoResultAvailable}"
+                   HorizontalOptions="Center"
+                   Style="{StaticResource Label14RegularGray50Style}"/>
+          </Border>
+        </CollectionView.EmptyView>
+      </CollectionView>
+    </Grid>
+
+  </views:BasePage.PageContent>
+</views:BasePage>

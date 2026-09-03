@@ -16,7 +16,7 @@ using Mopups.Services;
 
 namespace AirIQ.ViewModels.Common;
 
-public partial class MenuPageViewModel(IViewModelParameters viewModelParameters) : BaseViewModel(viewModelParameters)
+public partial class MenuPageViewModel(IViewModelParameters viewModelParameters, IAuthService authService) : BaseViewModel(viewModelParameters)
 {
     #region [ Properties ]
 
@@ -74,8 +74,7 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
     private async Task Logout()
     {
         ClosePopup();
-        SecureStorage.RemoveAll();
-        Preferences.Clear();
+        authService.Logout();
 
         if (Shell.Current != null)
             await MainThread.InvokeOnMainThreadAsync(() => Shell.Current.GoToAsync("//LoginPage"));

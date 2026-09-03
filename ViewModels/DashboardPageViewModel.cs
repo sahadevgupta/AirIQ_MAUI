@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using AirIQ.Configurations.Mapper;
 using AirIQ.Constants;
+using AirIQ.Enums;
 using AirIQ.Helpers;
 using AirIQ.Models;
 using AirIQ.Popups;
@@ -13,13 +14,15 @@ using Mopups.Interfaces;
 
 namespace AirIQ.ViewModels
 {
+    [QueryProperty(nameof(AirportSelectionResult), NavigationParamConstants.AirportSelectionResult)]
     public partial class DashboardPageViewModel(IViewModelParameters viewModelParameters,
         IFlightService flightService) : BaseViewModel(viewModelParameters)
     {
         #region [ Properties ]
         private IEnumerable<FlightRoute>? Airports;
-        private List<FlightRoute>? sourceTemp;
-        private List<FlightRoute>? destTemp;
+
+        [ObservableProperty]
+        private AirportSelectionResult? _airportSelectionResult;
 
         [ObservableProperty]
         private ObservableCollection<FlightRoute>? _sourceAirports;
@@ -53,6 +56,19 @@ namespace AirIQ.ViewModels
             GetDestinationAirports();
         }
 
+        partial void OnAirportSelectionResultChanged(AirportSelectionResult? value)
+        {
+            if (value?.SelectedAirport is null)
+                return;
+
+            if (value.FieldType == AirportFieldType.Source)
+                SelectedSourceAirport = value.SelectedAirport;
+            else
+                SelectedDestinationAirport = value.SelectedAirport;
+
+            AirportSelectionResult = null;
+        }
+
         partial void OnSelectedDestinationAirportChanged(FlightRoute? oldValue, FlightRoute? newValue)
         {
             SelectedTravelDate = null;
@@ -78,8 +94,6 @@ namespace AirIQ.ViewModels
                     SourceAirports = new ObservableCollection<FlightRoute>(Airports.Where(x => !string.IsNullOrEmpty(x.Origin))
                                                                                     .GroupBy(x => x.Origin)
                                                                                     .Select(g => g.First()));
-
-                    sourceTemp = new List<FlightRoute>(SourceAirports);
                 }
             }
             catch (Exception exception)
@@ -92,52 +106,22 @@ namespace AirIQ.ViewModels
         {
             DestinationAirports = new ObservableCollection<FlightRoute>(Airports!.Where(x => x.Origin == SelectedSourceAirport?.Origin && !string.IsNullOrEmpty(x.Destination))
                                                                            .Distinct());
-            destTemp = new List<FlightRoute>(DestinationAirports);
-        }
-
-        private void FilterListByQuery(string searchKey, string param)
-        {
-            if (param.Equals("destination"))
-            {
-                if (!string.IsNullOrEmpty(searchKey))
-                {
-                    DestinationAirports = new ObservableCollection<FlightRoute>(destTemp?.Where(x => x.DestinationRoute.Contains(searchKey.ToLower(), StringComparison.OrdinalIgnoreCase))!);
-                }
-                else
-                {
-                    DestinationAirports = new ObservableCollection<FlightRoute>(destTemp!);
-                }
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(searchKey))
-                {
-                    SourceAirports = new ObservableCollection<FlightRoute>(sourceTemp?.Where(x => x.OriginRoute.Contains(searchKey.ToLower(), StringComparison.OrdinalIgnoreCase))!);
-                }
-                else
-                {
-                    SourceAirports = new ObservableCollection<FlightRoute>(sourceTemp!);
-                }
-            }
         }
 
         #endregion
 
         #region [ Commands ]
 
-
-
         [RelayCommand]
-        private void SearchSourceAirports(string searchKey)
+        private async Task OpenAirportSearch(AirportFieldType fieldType)
         {
-            FilterListByQuery(searchKey, "source");
-        }
+            var airports = fieldType == AirportFieldType.Source ? SourceAirports : DestinationAirports;
 
-        [RelayCommand]
-        private void SearchDestinationAirports(string searchKey)
-        {
-            if (destTemp != null && destTemp.Any())
-                FilterListByQuery(searchKey, "destination");
+            await ShellNavigationService.Navigate<AirportSearchPage>(parameters: new Dictionary<string, object>
+            {
+                { NavigationParamConstants.AirportFieldType, fieldType },
+                { NavigationParamConstants.AirportList, airports ?? new ObservableCollection<FlightRoute>() },
+            });
         }
 
         [RelayCommand]

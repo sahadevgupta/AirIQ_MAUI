@@ -104,6 +104,24 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("SearchDestinationAirport", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Select Departure Airport.
+        /// </summary>
+        internal static string SelectDepartureAirport {
+            get {
+                return ResourceManager.GetString("SelectDepartureAirport", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Select Arrival Airport.
+        /// </summary>
+        internal static string SelectArrivalAirport {
+            get {
+                return ResourceManager.GetString("SelectArrivalAirport", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Travel Date.
@@ -259,14 +277,59 @@ namespace AirIQ.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your session has expired, please enter your password to continue..
+        ///   Looks up a localized string similar to Session Expired.
+        /// </summary>
+        internal static string SessionExpiredTitle {
+            get {
+                return ResourceManager.GetString("SessionExpiredTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Your session has expired. Please sign in again to continue..
         /// </summary>
         internal static string SessionExpired {
             get {
                 return ResourceManager.GetString("SessionExpired", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Sign In.
+        /// </summary>
+        internal static string SignIn {
+            get {
+                return ResourceManager.GetString("SignIn", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Sign in with a different account.
+        /// </summary>
+        internal static string SignInDifferentAccount {
+            get {
+                return ResourceManager.GetString("SignInDifferentAccount", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Not Now.
+        /// </summary>
+        internal static string NotNow {
+            get {
+                return ResourceManager.GetString("NotNow", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to or.
+        /// </summary>
+        internal static string Or {
+            get {
+                return ResourceManager.GetString("Or", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
