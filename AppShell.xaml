@@ -58,13 +58,12 @@
         Shell.TabBarIsVisible="False"
         Shell.FlyoutItemIsVisible="False"/>
 
-    <ShellContent Title="{x:Static resx:AppResource.Flights}"
+    <!-- <ShellContent Title="{x:Static resx:AppResource.Flights}"
                   ContentTemplate="{DataTemplate local:DashboardPage}"
                   Route="home"
-                  Icon="flight"/>
+                  Icon="flight"/> -->
 
-    <TabBar Route="app"
-            IsVisible="False">
+    <TabBar Route="app">
         <ShellContent Title="{x:Static resx:AppResource.Flights}"
                       ContentTemplate="{DataTemplate local:DashboardPage}"
                       Route="home"
@@ -80,7 +79,7 @@
             </ShellContent.Icon>
         </ShellContent>
         <ShellContent Title="{x:Static resx:AppResource.Account}"
-                      ContentTemplate="{DataTemplate local:AccountsPage}"
+                      ContentTemplate="{DataTemplate local:MyAccountPage}"
                       Route="AccountPage">
             <ShellContent.Icon>
                 <FontImageSource

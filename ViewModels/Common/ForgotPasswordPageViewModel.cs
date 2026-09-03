@@ -32,34 +32,47 @@ public partial class ForgotPasswordPageViewModel(IViewModelParameters viewModelP
         if (string.IsNullOrWhiteSpace(Username))
             return;
 
-        using (LoadingService.Show())
+        try
         {
-            transactionKey = await authenticationService.ForgotPasswordAsync(Username);
-        }
+            using (LoadingService.Show())
+            {
+                transactionKey = await authenticationService.ForgotPasswordAsync(Username);
+            }
 
-        if (!string.IsNullOrWhiteSpace(transactionKey))
-            IsForgotVerificationViewVisible = true;
+            if (!string.IsNullOrWhiteSpace(transactionKey))
+                IsForgotVerificationViewVisible = true;
+        }
+        catch (Exception exception)
+        {
+            HandleException(exception);
+        }
     }
 
     [RelayCommand(AllowConcurrentExecutions = false)]
     private async Task Verify()
     {
-        bool response = false;
-
-        using (LoadingService.Show())
+        try
         {
-            response = await authenticationService.VerifyOtpAsync(transactionKey, OtpValue);
-        }
+            bool response;
 
-        if (response)
-        {
-            await ShellNavigationService.Navigate<ChangePasswordPage>(parameters: new Dictionary<string, object>
+            using (LoadingService.Show())
             {
-                { NavigationParamConstants.TransactionKey, transactionKey },
-                { NavigationParamConstants.Value, OtpValue },
-            });
-        }
+                response = await authenticationService.VerifyOtpAsync(transactionKey, OtpValue);
+            }
 
+            if (response)
+            {
+                await ShellNavigationService.Navigate<ChangePasswordPage>(parameters: new Dictionary<string, object>
+                {
+                    { NavigationParamConstants.TransactionKey, transactionKey },
+                    { NavigationParamConstants.Value, OtpValue },
+                });
+            }
+        }
+        catch (Exception exception)
+        {
+            HandleException(exception);
+        }
     }
 
     #endregion

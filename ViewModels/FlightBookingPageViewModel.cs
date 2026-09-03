@@ -262,7 +262,7 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
 
     #region [ Overrides ]
 
-    public override async Task LoadDataWhenNavigatedTo()
+    public override async Task LoadDataWhenNavigatedTo(CancellationToken cancellationToken = default)
     {
         _ = InitializeData();
     }

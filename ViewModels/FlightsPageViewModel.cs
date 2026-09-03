@@ -122,7 +122,7 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
 
     #region [ Overrides ]
 
-    public override async Task LoadDataWhenNavigatedTo()
+    public override async Task LoadDataWhenNavigatedTo(CancellationToken cancellationToken = default)
     {
         await IniatializeDataAsync();
     }

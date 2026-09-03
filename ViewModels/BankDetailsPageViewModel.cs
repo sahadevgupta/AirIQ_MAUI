@@ -63,7 +63,7 @@ namespace AirIQ.ViewModels
             }
         }
 
-        public override Task LoadDataWhenOnAppearing()
+        public override Task LoadDataWhenOnAppearing(CancellationToken cancellationToken = default)
         {
             if (_upiPaymentCallbackService.TryConsumePending(out var callbackData) && callbackData != null)
             {

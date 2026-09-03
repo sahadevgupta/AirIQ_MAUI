@@ -1,7 +1,7 @@
 using AirIQ.ViewModels;
 using AirIQ.Views;
 
-namespace AirIQ_MAUI.Views;
+namespace AirIQ.Views;
 
 public partial class MyAccountPage : BasePage
 {

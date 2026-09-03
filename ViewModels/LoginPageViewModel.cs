@@ -101,7 +101,7 @@ namespace AirIQ.ViewModels
                         AppConfiguration.CurrentUser = userDto;
 
                         Console.WriteLine("[Login] Navigating to Home.");
-                        await Shell.Current.GoToAsync("///home");
+                        await Shell.Current.GoToAsync("//app/home");
                     });
                 }
                 else

@@ -39,17 +39,25 @@ public partial class SessionExpiryPopupViewModel : BaseViewModel
     private async Task SignIn()
     {
         await ClosePopupAsync();
-        var userDto = await _loginService.LoginAsync(AppConfiguration.CurrentUser?.MobileNumber!, Password!);
-        if (userDto != default)
+        try
         {
-            _sessionResponseTcs.TrySetResult(true);
+            var userDto = await _loginService.LoginAsync(AppConfiguration.CurrentUser?.MobileNumber!, Password!);
+            if (userDto != default)
+            {
+                _sessionResponseTcs.TrySetResult(true);
+                return;
+            }
+        }
+        catch (Exception exception)
+        {
+            // Must still resolve SessionResponseTask below even on failure - AuthService awaits
+            // it as an app-wide gate before any API call, so an unhandled throw here would hang
+            // every subsequent request in the app, not just this retry.
+            Console.WriteLine("[SessionExpiry] SignIn failed: " + exception);
+        }
 
-        }
-        else
-        {
-            await ShellNavigationService.Navigate<LoginPage>(isRootPage: true);
-            _sessionResponseTcs.TrySetResult(false);
-        }
+        await ShellNavigationService.Navigate<LoginPage>(isRootPage: true);
+        _sessionResponseTcs.TrySetResult(false);
     }
 
     [RelayCommand]

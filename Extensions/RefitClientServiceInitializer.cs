@@ -15,10 +15,16 @@ namespace AirIQ.Extensions
             builder.Services.AddTransient<HttpMessageLogHandler>();
             Uri defaultUri = new Uri(configuration.BaseUrl);
 
+            // Without an explicit Timeout, HttpClient defaults to 100 seconds - long enough that
+            // a stalled request (or one behind LoadingService.Show()'s blocking overlay) reads as
+            // a frozen app rather than a fast, recoverable failure that HandleException can toast.
+            var requestTimeout = TimeSpan.FromSeconds(30);
+
             builder.Services.AddRefitClient<IAppBackendService>()
             .ConfigureHttpClient(j =>
             {
                 j.BaseAddress = defaultUri;
+                j.Timeout = requestTimeout;
             });
             //.AddHttpMessageHandler<HttpMessageLogHandler>();
 
@@ -26,6 +32,7 @@ namespace AirIQ.Extensions
             .ConfigureHttpClient(j =>
             {
                 j.BaseAddress = defaultUri;
+                j.Timeout = requestTimeout;
             });
 
             builder.Services
@@ -35,6 +42,7 @@ namespace AirIQ.Extensions
                         client.BaseAddress = new Uri("https://live.zoop.one");
                         client.DefaultRequestHeaders.Add("app-id", configuration.ZoopAppId);
                         client.DefaultRequestHeaders.Add("api-key", configuration.ZoopApiKey);
+                        client.Timeout = requestTimeout;
                     });
 
             return builder;

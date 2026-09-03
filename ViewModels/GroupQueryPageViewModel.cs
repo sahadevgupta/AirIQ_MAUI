@@ -59,7 +59,7 @@ namespace AirIQ.ViewModels
 
         #region [ Override Method ]
 
-        public override Task LoadDataWhenNavigatedTo()
+        public override Task LoadDataWhenNavigatedTo(CancellationToken cancellationToken = default)
         {
             InitData();
             return base.LoadDataWhenNavigatedTo();

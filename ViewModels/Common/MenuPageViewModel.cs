@@ -117,7 +117,7 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters,
                 await ShellNavigationService.NavigateToFlyoutPage<OnlineRechargePage>();
                 break;
             case MenuType.Flight:
-                await Shell.Current.GoToAsync("///home");
+                await Shell.Current.GoToAsync("//app/home");
                 break;
         }
     }
@@ -126,7 +126,7 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters,
 
     #region [ override Methods ]
 
-    public override Task LoadDataWhenNavigatedTo()
+    public override Task LoadDataWhenNavigatedTo(CancellationToken cancellationToken = default)
     {
         InitializeData();
         return base.LoadDataWhenNavigatedTo();

@@ -18,6 +18,7 @@ public abstract class BasePage : ContentPage
 	private Color StatusBarColor => (Color)(Application.Current?.Resources["PrimaryColor"] ?? Colors.Black);
 	private readonly ContentView _content;
 	private readonly NavigationBarControl _navBar;
+	private CancellationTokenSource? _lifecycleCts;
 	protected BasePage()
 	{
 		Shell.SetNavBarIsVisible(this, false);
@@ -163,6 +164,36 @@ public abstract class BasePage : ContentPage
 			}
 		}
 	}
+
+	// Cancels whichever lifecycle load (if any) is still in flight and hands the new one a
+	// fresh token, so a slow OnAppearing load can't race a subsequent OnNavigatedTo/OnDisappearing.
+	private CancellationToken RenewLifecycleToken()
+	{
+		_lifecycleCts?.Cancel();
+		_lifecycleCts?.Dispose();
+		_lifecycleCts = new CancellationTokenSource();
+		return _lifecycleCts.Token;
+	}
+
+	// Lifecycle hooks are invoked fire-and-forget (OnNavigatedTo/OnAppearing/OnDisappearing
+	// can't be async), so an unobserved fault in a page's data-load used to vanish silently -
+	// this ensures it's always logged instead of hanging or crashing the app unnoticed.
+	private static async void SafeFireAndForget(Task loadTask)
+	{
+		try
+		{
+			await loadTask;
+		}
+		catch (OperationCanceledException)
+		{
+		}
+		catch (Exception exception)
+		{
+			Console.WriteLine("[BasePage] Unhandled exception from page data-load: " + exception);
+			SentrySdk.CaptureException(exception);
+		}
+	}
+
 	#endregion
 
 	#region [ Override Methods ]
@@ -176,7 +207,7 @@ public abstract class BasePage : ContentPage
 			(args.NavigationType == NavigationType.Push ||
 			 args.NavigationType == NavigationType.Replace))
 		{
-			_ = vm.LoadDataWhenNavigatedTo();
+			SafeFireAndForget(vm.LoadDataWhenNavigatedTo(RenewLifecycleToken()));
 		}
 	}
 
@@ -194,7 +225,7 @@ public abstract class BasePage : ContentPage
 		base.OnAppearing();
 		if (this.BindingContext is BaseViewModel vm)
 		{
-			_ = vm.LoadDataWhenOnAppearing();
+			SafeFireAndForget(vm.LoadDataWhenOnAppearing(RenewLifecycleToken()));
 		}
 #if ANDROID
 		if (Platform.CurrentActivity is MainActivity activity)
@@ -211,7 +242,10 @@ public abstract class BasePage : ContentPage
 		base.OnDisappearing();
 		if (this.BindingContext is BaseViewModel vm)
 		{
-			_ = vm.LoadDataWhenOnDisappearing();
+			// Renewing here cancels any load still in flight from OnNavigatedTo/OnAppearing
+			// (the page is leaving, so a stale load's result is no longer needed) before
+			// starting the disappearing hook on its own, uncancelled token.
+			SafeFireAndForget(vm.LoadDataWhenOnDisappearing(RenewLifecycleToken()));
 		}
 	}
 
