@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopup:PopupPage x:Class="AirIQ.Popups.TravelersPopup"
+                 xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:controls="clr-namespace:AirIQ.Controls"
+                 xmlns:helpers="clr-namespace:AirIQ.Extensions"
+                 xmlns:mopup="clr-namespace:Mopups.Pages;assembly=Mopups"
+                 xmlns:mopupsanim="clr-namespace:Mopups.Animations;assembly=Mopups"
+                 xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
+                 x:Name="travelersPopup"
+                 BackgroundColor="{StaticResource PopupBackground}">
+
+    <mopup:PopupPage.Animation>
+        <mopupsanim:MoveAnimation
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinIn"
+            EasingOut="SinOut"
+            PositionIn="Bottom"
+            PositionOut="Bottom"/>
+    </mopup:PopupPage.Animation>
+
+    <Border VerticalOptions="End"
+            Padding="20,12,20,20"
+            BackgroundColor="White"
+            StrokeShape="RoundRectangle 20,20,0,0">
+        <VerticalStackLayout Spacing="18">
+
+            <BoxView WidthRequest="36"
+                     HeightRequest="4"
+                     CornerRadius="2"
+                     Color="{StaticResource Gray100}"
+                     HorizontalOptions="Center"/>
+
+            <VerticalStackLayout Spacing="2">
+                <Label Text="{x:Static resx:AppResource.Travelers}"
+                       Style="{StaticResource Label20Bold}"
+                       TextColor="{StaticResource Onyx}"/>
+                <Label Text="{x:Static resx:AppResource.SelectPassengers}"
+                       Style="{StaticResource Label14RegularGray50Style}"/>
+            </VerticalStackLayout>
+
+            <!-- ADULTS -->
+            <Grid ColumnDefinitions="*,Auto">
+                <VerticalStackLayout Spacing="2"
+                                     VerticalOptions="Center">
+                    <Label Text="{x:Static resx:AppResource.Adults}"
+                           Style="{StaticResource Label16SemiBold}"
+                           TextColor="{StaticResource Onyx}"/>
+                    <Label Text="{x:Static resx:AppResource.AdultsAgeRange}"
+                           Style="{StaticResource Label12Regular}"
+                           TextColor="{StaticResource Gray50}"/>
+                </VerticalStackLayout>
+                <controls:CustomStepper Grid.Column="1"
+                                        MinValue="1"
+                                        Value="{Binding AdultCount, Source={x:Reference travelersPopup}}"
+                                        VerticalOptions="Center"/>
+            </Grid>
+
+            <BoxView HeightRequest="1"
+                     Color="{StaticResource Gray100}"/>
+
+            <!-- CHILDREN -->
+            <Grid ColumnDefinitions="*,Auto">
+                <VerticalStackLayout Spacing="2"
+                                     VerticalOptions="Center">
+                    <Label Text="{x:Static resx:AppResource.Children}"
+                           Style="{StaticResource Label16SemiBold}"
+                           TextColor="{StaticResource Onyx}"/>
+                    <Label Text="{x:Static resx:AppResource.ChildrenAgeRange}"
+                           Style="{StaticResource Label12Regular}"
+                           TextColor="{StaticResource Gray50}"/>
+                </VerticalStackLayout>
+                <controls:CustomStepper Grid.Column="1"
+                                        MinValue="0"
+                                        Value="{Binding ChildCount, Source={x:Reference travelersPopup}}"
+                                        VerticalOptions="Center"/>
+            </Grid>
+
+            <BoxView HeightRequest="1"
+                     Color="{StaticResource Gray100}"/>
+
+            <!-- INFANTS -->
+            <Grid ColumnDefinitions="*,Auto">
+                <VerticalStackLayout Spacing="2"
+                                     VerticalOptions="Center">
+                    <Label Text="{x:Static resx:AppResource.Infants}"
+                           Style="{StaticResource Label16SemiBold}"
+                           TextColor="{StaticResource Onyx}"/>
+                    <Label Text="{x:Static resx:AppResource.InfantsAgeRange}"
+                           Style="{StaticResource Label12Regular}"
+                           TextColor="{StaticResource Gray50}"/>
+                </VerticalStackLayout>
+                <controls:CustomStepper Grid.Column="1"
+                                        MinValue="0"
+                                        Value="{Binding InfantCount, Source={x:Reference travelersPopup}}"
+                                        VerticalOptions="Center"/>
+            </Grid>
+
+            <!-- INFO NOTICE -->
+            <Border BackgroundColor="{StaticResource Primary0}"
+                    Stroke="{StaticResource PrimaryColor}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 10"
+                    Padding="12">
+                <Grid ColumnDefinitions="Auto,*"
+                      ColumnSpacing="10">
+                    <Label Text="{x:Static helpers:FontAwesomeIcons.InfoCircle}"
+                           FontFamily="MyFont"
+                           FontSize="16"
+                           TextColor="{StaticResource PrimaryColor}"
+                           VerticalOptions="Start"/>
+                    <VerticalStackLayout Grid.Column="1"
+                                         Spacing="2">
+                        <Label Text="{x:Static resx:AppResource.InfantsNoSeatNotice}"
+                               Style="{StaticResource Label12Regular}"
+                               TextColor="{StaticResource Gray90}"/>
+                        <Label Text="{x:Static resx:AppResource.LapInfantBookingNotice}"
+                               Style="{StaticResource Label12Regular}"
+                               TextColor="{StaticResource Gray90}"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <BoxView HeightRequest="1"
+                     Color="{StaticResource Gray100}"/>
+
+            <!-- FOOTER -->
+            <Grid ColumnDefinitions="*,Auto"
+                  ColumnSpacing="16">
+                <VerticalStackLayout VerticalOptions="Center"
+                                     Spacing="2">
+                    <Label Text="{x:Static resx:AppResource.Total}"
+                           Style="{StaticResource Label12Regular}"
+                           TextColor="{StaticResource Gray50}"/>
+                    <Label Text="{Binding TotalTravelers, Source={x:Reference travelersPopup}, StringFormat={x:Static resx:AppResource.TravelerCountFormat}}"
+                           Style="{StaticResource Label18Bold}"
+                           TextColor="{StaticResource Onyx}"/>
+                </VerticalStackLayout>
+                <Button Grid.Column="1"
+                        Text="{x:Static resx:AppResource.Done}"
+                        Style="{StaticResource ButtonCorneredStyle}"
+                        WidthRequest="140"
+                        HeightRequest="48"
+                        TextTransform="Default"
+                        CharacterSpacing="0"
+                        Clicked="DoneClicked"/>
+            </Grid>
+
+        </VerticalStackLayout>
+    </Border>
+
+</mopup:PopupPage>

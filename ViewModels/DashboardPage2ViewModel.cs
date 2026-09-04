@@ -46,11 +46,26 @@ namespace AirIQ.ViewModels
         private int _paxSize = 1;
 
         [ObservableProperty]
+        private int _adultCount = 1;
+
+        [ObservableProperty]
+        private int _childCount;
+
+        [ObservableProperty]
+        private int _infantCount;
+
+        [ObservableProperty]
         private ObservableCollection<FlightRoute>? _popularDestinations;
 
         #endregion
 
         #region [ Methods & Service Calls ]
+
+        partial void OnAdultCountChanged(int oldValue, int newValue) => PaxSize = AdultCount + ChildCount + InfantCount;
+
+        partial void OnChildCountChanged(int oldValue, int newValue) => PaxSize = AdultCount + ChildCount + InfantCount;
+
+        partial void OnInfantCountChanged(int oldValue, int newValue) => PaxSize = AdultCount + ChildCount + InfantCount;
 
         partial void OnSelectedSourceAirportChanged(FlightRoute? oldValue, FlightRoute? newValue)
         {
@@ -148,13 +163,13 @@ namespace AirIQ.ViewModels
                     DepartureDate = SelectedTravelDate != null ?
                                     SelectedTravelDate.Value.ToString("yyyy/MM/dd") :
                                     string.Empty,
-                    Adult = PaxSize,
+                    Adult = AdultCount,
                     SourceAirport = SelectedSourceAirport,
                     DestinationAirport = SelectedDestinationAirport,
                     OriginAirportName = SelectedSourceAirport?.OriginAiportName,
                     DestinationAirportName = SelectedDestinationAirport?.DestinationAiportName,
-                    Child = 0,
-                    Infant = 0,
+                    Child = ChildCount,
+                    Infant = InfantCount,
                     AirlineCode = null
                 };
 

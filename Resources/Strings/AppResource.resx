@@ -1516,4 +1516,34 @@ Version {0}</value>
   <data name="Economy" xml:space="preserve">
     <value>Economy</value>
   </data>
+  <data name="SelectPassengers" xml:space="preserve">
+    <value>Select passengers</value>
+  </data>
+  <data name="Adults" xml:space="preserve">
+    <value>Adults</value>
+  </data>
+  <data name="Children" xml:space="preserve">
+    <value>Children</value>
+  </data>
+  <data name="Infants" xml:space="preserve">
+    <value>Infants</value>
+  </data>
+  <data name="AdultsAgeRange" xml:space="preserve">
+    <value>12+ years</value>
+  </data>
+  <data name="ChildrenAgeRange" xml:space="preserve">
+    <value>2 - 11 years</value>
+  </data>
+  <data name="InfantsAgeRange" xml:space="preserve">
+    <value>0 - 1 year</value>
+  </data>
+  <data name="InfantsNoSeatNotice" xml:space="preserve">
+    <value>Infants will not occupy a separate seat.</value>
+  </data>
+  <data name="LapInfantBookingNotice" xml:space="preserve">
+    <value>Lap infant must be added in the booking.</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
 </root>

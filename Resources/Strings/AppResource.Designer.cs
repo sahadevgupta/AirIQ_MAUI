@@ -4253,5 +4253,95 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("Economy", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Select passengers.
+        /// </summary>
+        internal static string SelectPassengers {
+            get {
+                return ResourceManager.GetString("SelectPassengers", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Adults.
+        /// </summary>
+        internal static string Adults {
+            get {
+                return ResourceManager.GetString("Adults", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Children.
+        /// </summary>
+        internal static string Children {
+            get {
+                return ResourceManager.GetString("Children", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Infants.
+        /// </summary>
+        internal static string Infants {
+            get {
+                return ResourceManager.GetString("Infants", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to 12+ years.
+        /// </summary>
+        internal static string AdultsAgeRange {
+            get {
+                return ResourceManager.GetString("AdultsAgeRange", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to 2 - 11 years.
+        /// </summary>
+        internal static string ChildrenAgeRange {
+            get {
+                return ResourceManager.GetString("ChildrenAgeRange", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to 0 - 1 year.
+        /// </summary>
+        internal static string InfantsAgeRange {
+            get {
+                return ResourceManager.GetString("InfantsAgeRange", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Infants will not occupy a separate seat..
+        /// </summary>
+        internal static string InfantsNoSeatNotice {
+            get {
+                return ResourceManager.GetString("InfantsNoSeatNotice", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Lap infant must be added in the booking..
+        /// </summary>
+        internal static string LapInfantBookingNotice {
+            get {
+                return ResourceManager.GetString("LapInfantBookingNotice", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Done.
+        /// </summary>
+        internal static string Done {
+            get {
+                return ResourceManager.GetString("Done", resourceCulture);
+            }
+        }
     }
 }

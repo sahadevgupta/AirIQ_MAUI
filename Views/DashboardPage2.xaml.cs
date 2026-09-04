@@ -1,5 +1,6 @@
 using AirIQ.Controls;
 using AirIQ.Helpers;
+using AirIQ.Popups;
 using AirIQ.ViewModels;
 using Mopups.Interfaces;
 
@@ -38,6 +39,27 @@ public partial class DashboardPage2 : BasePage
 
 	void TravelersTapped(object sender, EventArgs e)
 	{
-		//travelersStepper.IsVisible = !travelersStepper.IsVisible;
+		if (BindingContext is not DashboardPage2ViewModel viewModel)
+			return;
+
+		var popupNavigation = ServiceHelper.GetService<IPopupNavigation>();
+		if (popupNavigation is null)
+			return;
+
+		var popup = new TravelersPopup
+		{
+			AdultCount = viewModel.AdultCount,
+			ChildCount = viewModel.ChildCount,
+			InfantCount = viewModel.InfantCount
+		};
+
+		popup.Confirmed += (adults, children, infants) =>
+		{
+			viewModel.AdultCount = adults;
+			viewModel.ChildCount = children;
+			viewModel.InfantCount = infants;
+		};
+
+		popupNavigation.PushAsync(popup);
 	}
 }

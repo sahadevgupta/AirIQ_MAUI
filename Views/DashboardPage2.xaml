@@ -370,12 +370,11 @@
                     <Label Text="{Binding PaxSize, StringFormat={x:Static resx:AppResource.TravelerCountFormat}}"
                            Style="{StaticResource Label16Bold}"
                            TextColor="{StaticResource Onyx}"/>
-                    <!-- <controls:CustomStepper x:Name="travelersStepper"
-                                            IsVisible="True"
-                                            Value="{Binding PaxSize}"
-                                            Margin="0,4,0,0"/> -->
-
                   </VerticalStackLayout>
+
+                  <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TravelersTapped"/>
+                  </Grid.GestureRecognizers>
                 </Grid>
 
               </Grid>
