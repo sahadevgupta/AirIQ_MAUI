@@ -28,6 +28,12 @@ namespace AirIQ.Configurations
             set => Preferences.Set(nameof(UserDetails), value);
         }
 
+        public static bool IsBiometricLoginEnabled
+        {
+            get => Preferences.Get(nameof(IsBiometricLoginEnabled), false);
+            set => Preferences.Set(nameof(IsBiometricLoginEnabled), value);
+        }
+
         public string BaseUrl { get; private set; }
 
         public string ApiKey { get; private set; }

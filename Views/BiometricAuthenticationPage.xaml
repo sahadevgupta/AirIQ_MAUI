@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                x:Class="AirIQ.Views.BiometricAuthenticationPage"
+                xmlns:helpers="clr-namespace:AirIQ.Extensions"
+                xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
+                xmlns:views="clr-namespace:AirIQ.Views"
+                xmlns:vm="clr-namespace:AirIQ.ViewModels"
+                x:DataType="vm:BiometricAuthenticationPageViewModel"
+                PageTitle="{x:Static resx:AppResource.BiometricAuthentication}"
+                IsBackVisible="{Binding CanGoBack}"
+                IsWalletVisible="False">
+
+       <views:BasePage.Resources>
+              <ResourceDictionary>
+                     <Style TargetType="Label"
+                            x:Key="RowIconStyle">
+                            <Setter Property="FontFamily"
+                                    Value="MyFont"/>
+                            <Setter Property="FontSize"
+                                    Value="16"/>
+                            <Setter Property="TextColor"
+                                    Value="{StaticResource PrimaryColor}"/>
+                            <Setter Property="VerticalOptions"
+                                    Value="Start"/>
+                            <Setter Property="Margin"
+                                    Value="0,2,0,0"/>
+                     </Style>
+              </ResourceDictionary>
+       </views:BasePage.Resources>
+
+       <views:BasePage.PageContent>
+              <ScrollView>
+                     <VerticalStackLayout Padding="16"
+                                          Spacing="20"
+                                          BackgroundColor="{StaticResource BackgroundColor}">
+
+                            <!-- ==================== ICON ==================== -->
+                            <Border Style="{StaticResource IconCircleStyle}"
+                                    Margin="0,24,0,0">
+                                   <Label Text="{x:Static helpers:FontAwesomeIcons.Fingerprint}"
+                                          FontFamily="MyFont"
+                                          FontSize="48"
+                                          TextColor="{StaticResource PrimaryColor}"
+                                          HorizontalOptions="Center"
+                                          VerticalOptions="Center"/>
+                            </Border>
+
+                            <!-- ==================== HEADING ==================== -->
+                            <Label Text="{x:Static resx:AppResource.UnlockWithBiometrics}"
+                                   Style="{StaticResource Label20MediumOnyxStyle}"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center"/>
+
+                            <Label Text="{x:Static resx:AppResource.BiometricAuthDescription}"
+                                   Style="{StaticResource Label14RegularGray50Style}"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center"
+                                   Margin="0,-12,0,0"/>
+
+                            <!-- ==================== INFO CARD ==================== -->
+                            <Border Style="{StaticResource DefaultBorderStyle}"
+                                    Padding="16,4">
+                                   <VerticalStackLayout>
+
+                                          <Grid ColumnDefinitions="24,*"
+                                                ColumnSpacing="12"
+                                                Padding="0,12">
+                                                 <Label Grid.Column="0"
+                                                        Text="{x:Static helpers:FontAwesomeIcons.ShieldAlt}"
+                                                        Style="{StaticResource RowIconStyle}"/>
+                                                 <VerticalStackLayout Grid.Column="1"
+                                                                      Spacing="2">
+                                                        <Label Text="{x:Static resx:AppResource.SecureAndPrivateTitle}"
+                                                               Style="{StaticResource Label14MediumGray90Style}"/>
+                                                        <Label Text="{x:Static resx:AppResource.SecureAndPrivateDescription}"
+                                                               Style="{StaticResource Label14RegularGray50Style}"
+                                                               LineHeight="1.2"/>
+                                                 </VerticalStackLayout>
+                                          </Grid>
+
+                                          <BoxView Color="{StaticResource BorderColor}"
+                                                   HeightRequest="1"/>
+
+                                          <Grid ColumnDefinitions="24,*"
+                                                ColumnSpacing="12"
+                                                Padding="0,12">
+                                                 <Label Grid.Column="0"
+                                                        Text="{x:Static helpers:FontAwesomeIcons.Bolt}"
+                                                        Style="{StaticResource RowIconStyle}"/>
+                                                 <VerticalStackLayout Grid.Column="1"
+                                                                      Spacing="2">
+                                                        <Label Text="{x:Static resx:AppResource.QuickAccessTitle}"
+                                                               Style="{StaticResource Label14MediumGray90Style}"/>
+                                                        <Label Text="{x:Static resx:AppResource.QuickAccessDescription}"
+                                                               Style="{StaticResource Label14RegularGray50Style}"
+                                                               LineHeight="1.2"/>
+                                                 </VerticalStackLayout>
+                                          </Grid>
+                                   </VerticalStackLayout>
+                            </Border>
+
+                            <!-- ==================== AUTHENTICATING ==================== -->
+                            <HorizontalStackLayout Spacing="8"
+                                                   HorizontalOptions="Center"
+                                                   IsVisible="{Binding IsAuthenticating}">
+                                   <ActivityIndicator IsRunning="{Binding IsAuthenticating}"
+                                                      Color="{StaticResource PrimaryColor}"/>
+                                   <Label Text="{x:Static resx:AppResource.Authenticating}"
+                                          Style="{StaticResource Label14RegularGray50Style}"
+                                          VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+
+                            <!-- ==================== FAILED / UNAVAILABLE MESSAGE ==================== -->
+                            <Label Text="{Binding StatusMessage}"
+                                   IsVisible="{Binding IsFailed}"
+                                   Style="{StaticResource ErrorStyleBlackRegular}"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center"/>
+
+                            <Label Text="{Binding StatusMessage}"
+                                   IsVisible="{Binding IsUnavailable}"
+                                   Style="{StaticResource Label14RegularGray50Style}"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center"/>
+
+                            <!-- ==================== ACTIONS ==================== -->
+                            <Button Text="{x:Static resx:AppResource.Authenticate}"
+                                    Style="{StaticResource ButtonCorneredStyle}"
+                                    Command="{Binding AuthenticateCommand}"
+                                    IsVisible="{Binding IsAvailable}"
+                                    AutomationProperties.Name="{x:Static resx:AppResource.Authenticate}"/>
+
+                            <Button Text="{x:Static resx:AppResource.UsePasscodeInstead}"
+                                    Style="{StaticResource ButtonOutlinedStyle}"
+                                    Command="{Binding UsePasscodeInsteadCommand}"
+                                    AutomationProperties.Name="{x:Static resx:AppResource.UsePasscodeInstead}"/>
+
+                            <Label Text="{x:Static resx:AppResource.ChangeInSettingsFooter}"
+                                   Style="{StaticResource Label12Regular}"
+                                   TextColor="{StaticResource Gray50}"
+                                   HorizontalOptions="Center"
+                                   Margin="0,0,0,16"/>
+
+                     </VerticalStackLayout>
+              </ScrollView>
+       </views:BasePage.PageContent>
+
+</views:BasePage>

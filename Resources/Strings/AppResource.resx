@@ -951,6 +951,51 @@
   <data name="Enabled" xml:space="preserve">
     <value>Enabled</value>
   </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="BiometricAuthentication" xml:space="preserve">
+    <value>Biometric Authentication</value>
+  </data>
+  <data name="UnlockWithBiometrics" xml:space="preserve">
+    <value>Unlock with Biometrics</value>
+  </data>
+  <data name="BiometricAuthDescription" xml:space="preserve">
+    <value>Use your fingerprint or Face ID to securely access your account.</value>
+  </data>
+  <data name="SecureAndPrivateTitle" xml:space="preserve">
+    <value>Secure &amp; Private</value>
+  </data>
+  <data name="SecureAndPrivateDescription" xml:space="preserve">
+    <value>Your biometric data is encrypted and never stored on our servers.</value>
+  </data>
+  <data name="QuickAccessTitle" xml:space="preserve">
+    <value>Quick Access</value>
+  </data>
+  <data name="QuickAccessDescription" xml:space="preserve">
+    <value>Authenticate in a second and get access to your app.</value>
+  </data>
+  <data name="Authenticate" xml:space="preserve">
+    <value>Authenticate</value>
+  </data>
+  <data name="UsePasscodeInstead" xml:space="preserve">
+    <value>Use Passcode Instead</value>
+  </data>
+  <data name="Authenticating" xml:space="preserve">
+    <value>Authenticating...</value>
+  </data>
+  <data name="BiometricAuthFailedMessage" xml:space="preserve">
+    <value>Biometric authentication failed. Please try again or use your passcode.</value>
+  </data>
+  <data name="BiometricAuthLockedOutMessage" xml:space="preserve">
+    <value>Too many attempts. Please try again later or use your passcode.</value>
+  </data>
+  <data name="BiometricNotAvailableMessage" xml:space="preserve">
+    <value>Biometric authentication is not available on this device.</value>
+  </data>
+  <data name="ChangeInSettingsFooter" xml:space="preserve">
+    <value>You can change this later in Settings.</value>
+  </data>
   <data name="SecurityQuestions" xml:space="preserve">
     <value>Security Questions</value>
   </data>

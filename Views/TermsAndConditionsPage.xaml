@@ -6,7 +6,8 @@
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                 IsWalletVisible="False"
-                PageTitle="{x:Static resx:AppResource.TermsAndConditions}">
+                PageTitle="{x:Static resx:AppResource.TermsAndConditions}"
+                Shell.TabBarIsVisible="False">
 
     <views:BasePage.PageContent>
 

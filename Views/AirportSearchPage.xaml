@@ -11,6 +11,7 @@
   xmlns:viewmodel="clr-namespace:AirIQ.ViewModels"
   x:Name="pageRoot"
   x:DataType="viewmodel:AirportSearchPageViewModel"
+  Shell.TabBarIsVisible="False"
   PageTitle="{Binding PageTitle}">
 
   <views:BasePage.PageContent>
@@ -49,7 +50,7 @@
                        VerticalOptions="Center"/>
 
                 <VerticalStackLayout Grid.Column="1"
-                    Spacing="0">
+                                     Spacing="0">
                   <Label VerticalTextAlignment="Center">
                     <Label.FormattedText>
                       <FormattedString>

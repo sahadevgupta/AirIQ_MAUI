@@ -6,7 +6,8 @@
                 xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                 xmlns:views="clr-namespace:AirIQ.Views"
                 IsWalletVisible="False"
-                PageTitle="{x:Static resx:AppResource.PrivacyPolicy}">
+                PageTitle="{x:Static resx:AppResource.PrivacyPolicy}"
+                Shell.TabBarIsVisible="False">
     <views:BasePage.PageContent>
 
         <ScrollView>

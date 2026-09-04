@@ -196,7 +196,7 @@ namespace AirIQ.Controls
 
         protected virtual View CreateNewItem(object item)
         {
-            View view = null;
+            View? view = null;
             if (ItemTemplate != null)
             {
                 var content = ItemTemplate.CreateContent();
@@ -209,7 +209,7 @@ namespace AirIQ.Controls
                     view.GestureRecognizers.Add(new TapGestureRecognizer { Command = TapCommand, CommandParameter = item });
                 }
             }
-            return view;
+            return view!;
         }
 
         HorizontalStackLayout _mainContentLayout = new HorizontalStackLayout() { Spacing = 10 };

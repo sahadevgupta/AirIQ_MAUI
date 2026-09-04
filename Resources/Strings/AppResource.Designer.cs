@@ -2561,7 +2561,142 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("Enabled", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        internal static string Disabled {
+            get {
+                return ResourceManager.GetString("Disabled", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Biometric Authentication.
+        /// </summary>
+        internal static string BiometricAuthentication {
+            get {
+                return ResourceManager.GetString("BiometricAuthentication", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Unlock with Biometrics.
+        /// </summary>
+        internal static string UnlockWithBiometrics {
+            get {
+                return ResourceManager.GetString("UnlockWithBiometrics", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Use your fingerprint or Face ID to securely access your account..
+        /// </summary>
+        internal static string BiometricAuthDescription {
+            get {
+                return ResourceManager.GetString("BiometricAuthDescription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Secure &amp; Private.
+        /// </summary>
+        internal static string SecureAndPrivateTitle {
+            get {
+                return ResourceManager.GetString("SecureAndPrivateTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Your biometric data is encrypted and never stored on our servers..
+        /// </summary>
+        internal static string SecureAndPrivateDescription {
+            get {
+                return ResourceManager.GetString("SecureAndPrivateDescription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Quick Access.
+        /// </summary>
+        internal static string QuickAccessTitle {
+            get {
+                return ResourceManager.GetString("QuickAccessTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Authenticate in a second and get access to your app..
+        /// </summary>
+        internal static string QuickAccessDescription {
+            get {
+                return ResourceManager.GetString("QuickAccessDescription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Authenticate.
+        /// </summary>
+        internal static string Authenticate {
+            get {
+                return ResourceManager.GetString("Authenticate", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Use Passcode Instead.
+        /// </summary>
+        internal static string UsePasscodeInstead {
+            get {
+                return ResourceManager.GetString("UsePasscodeInstead", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Authenticating....
+        /// </summary>
+        internal static string Authenticating {
+            get {
+                return ResourceManager.GetString("Authenticating", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Biometric authentication failed. Please try again or use your passcode..
+        /// </summary>
+        internal static string BiometricAuthFailedMessage {
+            get {
+                return ResourceManager.GetString("BiometricAuthFailedMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Too many attempts. Please try again later or use your passcode..
+        /// </summary>
+        internal static string BiometricAuthLockedOutMessage {
+            get {
+                return ResourceManager.GetString("BiometricAuthLockedOutMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Biometric authentication is not available on this device..
+        /// </summary>
+        internal static string BiometricNotAvailableMessage {
+            get {
+                return ResourceManager.GetString("BiometricNotAvailableMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to You can change this later in Settings..
+        /// </summary>
+        internal static string ChangeInSettingsFooter {
+            get {
+                return ResourceManager.GetString("ChangeInSettingsFooter", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Security Questions.
         /// </summary>

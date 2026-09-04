@@ -301,7 +301,7 @@ public partial class EntryWithTitleImage : ContentView
 		if (SelectedItem != null)
 		{
 			selectedText = string.IsNullOrEmpty(DisplayMemberPath)
-				? SelectedItem.ToString()
+				? SelectedItem.ToString() ?? string.Empty
 				: SelectedItem.GetType().GetProperty(DisplayMemberPath)?.GetValue(SelectedItem)?.ToString() ?? string.Empty;
 		}
 

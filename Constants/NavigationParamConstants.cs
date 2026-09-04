@@ -12,4 +12,5 @@ public static class NavigationParamConstants
     public const string AirportFieldType = nameof(AirportFieldType);
     public const string AirportList = nameof(AirportList);
     public const string AirportSelectionResult = nameof(AirportSelectionResult);
+    public const string IsPostLoginBiometricPrompt = nameof(IsPostLoginBiometricPrompt);
 }

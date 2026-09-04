@@ -198,9 +198,9 @@
                                                         Style="{StaticResource Label14MediumGray90Style}"
                                                         VerticalOptions="Center"/>
                                                  <Label Grid.Column="2"
-                                                        Text="{x:Static resx:AppResource.Enabled}"
+                                                        Text="{Binding BiometricStatusText}"
                                                         Style="{StaticResource Label14Regular}"
-                                                        TextColor="{StaticResource Green}"
+                                                        TextColor="{Binding BiometricStatusColor}"
                                                         VerticalOptions="Center"/>
                                                  <Label Grid.Column="3"
                                                         Text="{x:Static helpers:FontAwesomeIcons.ChevronRight}"
@@ -210,7 +210,7 @@
                                                         VerticalOptions="Center"
                                                         Margin="8,0,0,0"/>
                                                  <Grid.GestureRecognizers>
-                                                        <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                                                        <TapGestureRecognizer Command="{Binding OpenBiometricAuthenticationCommand}"/>
                                                  </Grid.GestureRecognizers>
                                           </Grid>
 
@@ -267,7 +267,7 @@
                             </Border>
 
                             <!-- ==================== PREFERENCES ==================== -->
-                            <Border Style="{StaticResource DefaultBorderStyle}"
+                            <!-- <Border Style="{StaticResource DefaultBorderStyle}"
                                     Padding="16,12">
                                    <VerticalStackLayout>
                                           <Label Text="{x:Static resx:AppResource.Preferences}"
@@ -357,7 +357,7 @@
                                                  </Grid.GestureRecognizers>
                                           </Grid>
                                    </VerticalStackLayout>
-                            </Border>
+                            </Border> -->
 
                             <!-- ==================== ABOUT ==================== -->
                             <Border Style="{StaticResource DefaultBorderStyle}"
@@ -440,6 +440,59 @@
                                           </Grid>
                                    </VerticalStackLayout>
                             </Border>
+
+                            <Border Style="{StaticResource DefaultBorderStyle}"
+                                    BackgroundColor="#F8F9FA"
+                                    Stroke="#FF6B6B"
+                                    StrokeThickness="1"
+                                    Padding="16,12">
+
+                                   <VerticalStackLayout Spacing="8">
+                                          <Label Text="🔐 Account Deletion Request"
+                                                 Style="{StaticResource Label14MediumGray90Style}"
+                                                 AutomationProperties.Name="Account Deletion"/>
+                                          <Label Text="If you would like to request deletion of your account or have questions regarding your personal information, please contact our Data Protection Officer."
+                                                 Style="{StaticResource Label14Regular}"
+                                                 LineHeight="1.2"/>
+
+                                          <Grid ColumnDefinitions="*,*"
+                                                ColumnSpacing="12"
+                                                Margin="0,4,0,0">
+                                                 <Button Grid.Column="0"
+                                                         Text="Email"
+                                                         BorderWidth="1"
+                                                         Style="{StaticResource SmallBorderButtonStyle}"
+                                                         BackgroundColor="White"
+                                                         BorderColor="{StaticResource PrimaryColor}"
+                                                         AutomationProperties.Name="Email Privacy Team"
+                                                         Command="{Binding RequestAccountDeletionByEmailCommand}">
+                                                        <Button.ImageSource>
+                                                               <FontImageSource FontFamily="MyFont"
+                                                                                Glyph="{x:Static helpers:FontAwesomeIcons.Envelope}"
+                                                                                Color="{StaticResource PrimaryColor}"
+                                                                                Size="18"/>
+                                                        </Button.ImageSource>
+                                                 </Button>
+
+                                                 <Button Grid.Column="1"
+                                                         Text="Call"
+                                                         BorderWidth="1"
+                                                         Style="{StaticResource SmallBorderButtonStyle}"
+                                                         BackgroundColor="White"
+                                                         BorderColor="{StaticResource PrimaryColor}"
+                                                         AutomationProperties.Name="Call Privacy Team"
+                                                         Command="{Binding RequestAccountDeletionByPhoneCommand}">
+                                                        <Button.ImageSource>
+                                                               <FontImageSource FontFamily="MyFont"
+                                                                                Glyph="{x:Static helpers:FontAwesomeIcons.PhoneAlt}"
+                                                                                Color="{StaticResource PrimaryColor}"
+                                                                                Size="18"/>
+                                                        </Button.ImageSource>
+                                                 </Button>
+                                          </Grid>
+                                   </VerticalStackLayout>
+                            </Border>
+
 
                             <!-- ==================== LOGOUT ==================== -->
                             <Border BackgroundColor="#FDEDEC"

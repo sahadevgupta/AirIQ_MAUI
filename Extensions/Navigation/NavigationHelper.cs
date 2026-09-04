@@ -4,7 +4,7 @@
     {
         public static object GetPageModel(this IServiceProvider provider, Type T)
         {
-            object context = null;
+            object? context = null;
             try
             {
                 context = provider.GetService(T);

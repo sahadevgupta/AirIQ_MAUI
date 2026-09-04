@@ -18,6 +18,7 @@ namespace AirIQ.ViewModels
     {
         readonly IAuthenticationService _loginService;
         readonly IPopupNavigation _popupNavigation;
+        readonly IBiometricAuthenticationService _biometricService;
 
         [ObservableProperty]
         private string? _username = string.Empty; //"9380715388"; //string.Empty; //"9382915717";
@@ -27,10 +28,12 @@ namespace AirIQ.ViewModels
 
         public LoginPageViewModel(IViewModelParameters viewModelParameters,
             IAuthenticationService loginService,
-            IPopupNavigation popupNavigation) : base(viewModelParameters)
+            IPopupNavigation popupNavigation,
+            IBiometricAuthenticationService biometricService) : base(viewModelParameters)
         {
             _loginService = loginService;
             _popupNavigation = popupNavigation;
+            _biometricService = biometricService;
 
             // Keep the Login button's enabled state (and re-entrancy guard) in sync with IsBusy.
             // IsBusy is declared on BaseViewModel, so it can't be hooked via a generated
@@ -94,14 +97,31 @@ namespace AirIQ.ViewModels
 
                 if (userDto is not null)
                 {
+                    AppConfiguration.IsLoggedInUser = true;
+                    AppConfiguration.UserDetails = JsonSerializer.Serialize(userDto);
+                    AppConfiguration.CurrentUser = userDto;
+
+                    // Offer to turn biometric login on only if it isn't already enabled and the
+                    // device actually supports it - no point interrupting login with a prompt
+                    // the user can't act on.
+                    var offerBiometricPrompt = !AppConfiguration.IsBiometricLoginEnabled
+                        && await _biometricService.CheckAvailabilityAsync() == BiometricAvailability.Available;
+
                     await MainThread.InvokeOnMainThreadAsync(async () =>
                     {
-                        AppConfiguration.IsLoggedInUser = true;
-                        AppConfiguration.UserDetails = JsonSerializer.Serialize(userDto);
-                        AppConfiguration.CurrentUser = userDto;
-
-                        Console.WriteLine("[Login] Navigating to Home.");
-                        await Shell.Current.GoToAsync("//app/home");
+                        if (offerBiometricPrompt)
+                        {
+                            Console.WriteLine("[Login] Navigating to biometric opt-in prompt.");
+                            await ShellNavigationService.Navigate<BiometricAuthenticationPage>(parameters: new Dictionary<string, object>
+                            {
+                                { NavigationParamConstants.IsPostLoginBiometricPrompt, true }
+                            });
+                        }
+                        else
+                        {
+                            Console.WriteLine("[Login] Navigating to Home.");
+                            await Shell.Current.GoToAsync("//app/home");
+                        }
                     });
                 }
                 else

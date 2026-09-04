@@ -21,7 +21,7 @@ namespace AirIQ.ViewModels
         #region [ Properties ]
 
         [ObservableProperty]
-        private AirportFieldType _fieldType;
+        private AirportFieldType? _fieldType;
 
         [ObservableProperty]
         private ObservableCollection<FlightRoute>? _airports;
@@ -42,7 +42,7 @@ namespace AirIQ.ViewModels
 
         #region [ Methods ]
 
-        partial void OnFieldTypeChanged(AirportFieldType value)
+        partial void OnFieldTypeChanged(AirportFieldType? value)
         {
             PageTitle = value == AirportFieldType.Source ? AppResource.SelectDepartureAirport : AppResource.SelectArrivalAirport;
             SearchPlaceholder = value == AirportFieldType.Source ? AppResource.SearchDepartureAirport : AppResource.SearchDestinationAirport;
@@ -120,7 +120,7 @@ namespace AirIQ.ViewModels
             {
                 {
                     NavigationParamConstants.AirportSelectionResult,
-                    new AirportSelectionResult { FieldType = FieldType, SelectedAirport = item.Route }
+                    new AirportSelectionResult { FieldType = FieldType.GetValueOrDefault(), SelectedAirport = item.Route }
                 }
             });
         }
