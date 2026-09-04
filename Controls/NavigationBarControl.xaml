@@ -61,29 +61,55 @@
                                HorizontalOptions="End"
                                VerticalOptions="Center">
 
-            <Border Padding="8,6"
-                    StrokeShape="RoundRectangle 4"
-                    BackgroundColor="#E5F3FE"
-                    StrokeThickness="0"
-                    IsVisible="{Binding IsWalletVisible, Source={x:Reference navigationBarControl}}">
-                <Label>
+            <Border Padding="10,4"
+                    StrokeShape="RoundRectangle 20"
+                    BackgroundColor="{StaticResource PrimaryColor}"
+                    StrokeThickness="1"
+                    IsVisible="{Binding IsWalletVisible, Source={x:Reference navigationBarControl}}"
+                    Stroke="White">
+
+                <HorizontalStackLayout Spacing="0">
+
+                    <Label Text="₹"
+                           Style="{StaticResource Label16Regular}"
+                           TextColor="White"
+                           VerticalTextAlignment="Center"/>
+                    <Label x:Name="amountSpan"
+                           Style="{StaticResource Label14Medium}"
+                           TextColor="White"
+                           VerticalTextAlignment="Center"
+                           Margin="4,0,8,0"/>
+                    <Image Source="wallet_outline"
+                           HeightRequest="20"/>
+                </HorizontalStackLayout>
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnWalletTapped"/>
+                </Border.GestureRecognizers>
+
+                <!-- <Button ImageSource="wallet_outline"
+                    BorderWidth="1"
+                    BorderColor="White"
+                    Padding="4,2"
+                    BackgroundColor="Transparent"
+                    Style="{StaticResource SmallBorderButtonStyle}"
+                    x:Name="amountSpan"/> -->
+
+                <!-- <Label>
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="{x:Static resx:AppResource.BalanceLabel}"
-                                  Style="{StaticResource Span16BoldPrimaryStyle}"
-                                  FontSize="{ext:ScaleFontSize Size=12}"
-                                  TextColor="{StaticResource PrimaryColor}"/>
+                            
                             <Span Text="&#x20B9; "
                                   Style="{StaticResource Span16BoldPrimaryStyle}"
                                   TextColor="{StaticResource PrimaryColor}"
                                   FontSize="{ext:ScaleFontSize Size=12}"/>
-                            <Span Text="{Binding Amount,Source={x:Reference navigationBarControl}}"
+                            <Span x:Name="amountSpan"
                                   Style="{StaticResource Span16BoldPrimaryStyle}"
                                   TextColor="{StaticResource PrimaryColor}"
                                   FontSize="{ext:ScaleFontSize Size=12}"/>
                         </FormattedString>
                     </Label.FormattedText>
-                </Label>
+                </Label> -->
             </Border>
 
             <ImageButton

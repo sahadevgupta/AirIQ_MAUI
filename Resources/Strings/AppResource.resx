@@ -1366,6 +1366,48 @@ Version {0}</value>
   <data name="BalanceLabel" xml:space="preserve">
     <value>Balance: </value>
   </data>
+  <data name="AvailableBalance" xml:space="preserve">
+    <value>Available Balance</value>
+  </data>
+  <data name="WalletIdFormat" xml:space="preserve">
+    <value>Wallet ID: {0}</value>
+  </data>
+  <data name="TotalCredits" xml:space="preserve">
+    <value>Total Credits</value>
+  </data>
+  <data name="TotalDebits" xml:space="preserve">
+    <value>Total Debits</value>
+  </data>
+  <data name="AddMoney" xml:space="preserve">
+    <value>Add Money</value>
+  </data>
+  <data name="Withdraw" xml:space="preserve">
+    <value>Withdraw</value>
+  </data>
+  <data name="TransactionHistory" xml:space="preserve">
+    <value>Transaction History</value>
+  </data>
+  <data name="PaymentMethods" xml:space="preserve">
+    <value>Payment Methods</value>
+  </data>
+  <data name="SecurePaymentsMessage" xml:space="preserve">
+    <value>Your payments are secure with 256-bit encryption.</value>
+  </data>
+  <data name="RecentTransactions" xml:space="preserve">
+    <value>Recent Transactions</value>
+  </data>
+  <data name="ViewAll" xml:space="preserve">
+    <value>View All</value>
+  </data>
+  <data name="NeedHelp" xml:space="preserve">
+    <value>Need Help?</value>
+  </data>
+  <data name="ContactSupportForWalletQueries" xml:space="preserve">
+    <value>Contact support for wallet related queries.</value>
+  </data>
+  <data name="WalletIdCopiedMessage" xml:space="preserve">
+    <value>Wallet ID copied to clipboard</value>
+  </data>
   <data name="SearchHerePlaceholder" xml:space="preserve">
     <value>Search here..</value>
   </data>

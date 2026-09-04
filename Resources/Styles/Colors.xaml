@@ -95,6 +95,15 @@
                       Offset="1.0"/>
     </LinearGradientBrush>
 
+    <LinearGradientBrush StartPoint="0,0"
+                         x:Key="WalletIconGradient"
+                         EndPoint="1,1">
+        <GradientStop Color="#4DA3E0"
+                      Offset="0.0"/>
+        <GradientStop Color="#0A5C96"
+                      Offset="1.0"/>
+    </LinearGradientBrush>
+
     <!-- ==================== -->
     <!--   DARK THEME COLORS  -->
     <!-- ==================== -->

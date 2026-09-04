@@ -3803,7 +3803,133 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("BalanceLabel", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Available Balance.
+        /// </summary>
+        internal static string AvailableBalance {
+            get {
+                return ResourceManager.GetString("AvailableBalance", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Wallet ID: {0}.
+        /// </summary>
+        internal static string WalletIdFormat {
+            get {
+                return ResourceManager.GetString("WalletIdFormat", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Total Credits.
+        /// </summary>
+        internal static string TotalCredits {
+            get {
+                return ResourceManager.GetString("TotalCredits", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Total Debits.
+        /// </summary>
+        internal static string TotalDebits {
+            get {
+                return ResourceManager.GetString("TotalDebits", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Add Money.
+        /// </summary>
+        internal static string AddMoney {
+            get {
+                return ResourceManager.GetString("AddMoney", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Withdraw.
+        /// </summary>
+        internal static string Withdraw {
+            get {
+                return ResourceManager.GetString("Withdraw", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction History.
+        /// </summary>
+        internal static string TransactionHistory {
+            get {
+                return ResourceManager.GetString("TransactionHistory", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Methods.
+        /// </summary>
+        internal static string PaymentMethods {
+            get {
+                return ResourceManager.GetString("PaymentMethods", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Your payments are secure with 256-bit encryption..
+        /// </summary>
+        internal static string SecurePaymentsMessage {
+            get {
+                return ResourceManager.GetString("SecurePaymentsMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Recent Transactions.
+        /// </summary>
+        internal static string RecentTransactions {
+            get {
+                return ResourceManager.GetString("RecentTransactions", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to View All.
+        /// </summary>
+        internal static string ViewAll {
+            get {
+                return ResourceManager.GetString("ViewAll", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Need Help?.
+        /// </summary>
+        internal static string NeedHelp {
+            get {
+                return ResourceManager.GetString("NeedHelp", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Contact support for wallet related queries..
+        /// </summary>
+        internal static string ContactSupportForWalletQueries {
+            get {
+                return ResourceManager.GetString("ContactSupportForWalletQueries", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Wallet ID copied to clipboard.
+        /// </summary>
+        internal static string WalletIdCopiedMessage {
+            get {
+                return ResourceManager.GetString("WalletIdCopiedMessage", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Search here...
         /// </summary>
