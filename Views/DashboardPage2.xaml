@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePage
+  x:Class="AirIQ.Views.DashboardPage2"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:controls="clr-namespace:AirIQ.Controls"
+  xmlns:enums="clr-namespace:AirIQ.Enums"
+  xmlns:helpers="clr-namespace:AirIQ.Extensions"
+  xmlns:models="clr-namespace:AirIQ.Models"
+  xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
+  xmlns:viewmodel="clr-namespace:AirIQ.ViewModels"
+  xmlns:views="clr-namespace:AirIQ.Views"
+  x:Name="thisPage"
+  x:DataType="viewmodel:DashboardPage2ViewModel"
+  IsNavBarVisible="False">
+
+  <views:BasePage.Resources>
+    <ResourceDictionary>
+
+      <Style TargetType="Border"
+             x:Key="RouteIconStyle">
+        <Setter Property="WidthRequest"
+                Value="40"/>
+        <Setter Property="HeightRequest"
+                Value="40"/>
+        <Setter Property="StrokeShape"
+                Value="RoundRectangle 20"/>
+        <Setter Property="StrokeThickness"
+                Value="1"/>
+        <Setter Property="Stroke"
+                Value="{StaticResource PrimaryColor}"/>
+        <Setter Property="BackgroundColor"
+                Value="{StaticResource Primary0}"/>
+        <Setter Property="HorizontalOptions"
+                Value="Center"/>
+      </Style>
+
+      <Style TargetType="Label"
+             x:Key="RouteIconLabelStyle">
+        <Setter Property="FontFamily"
+                Value="MyFont"/>
+        <Setter Property="FontSize"
+                Value="16"/>
+        <Setter Property="TextColor"
+                Value="{StaticResource PrimaryColor}"/>
+        <Setter Property="HorizontalOptions"
+                Value="Center"/>
+        <Setter Property="VerticalOptions"
+                Value="Center"/>
+      </Style>
+
+      <Style TargetType="Label"
+             x:Key="RouteEyebrowStyle">
+        <Setter Property="FontFamily"
+                Value="RobotoSemiBold"/>
+        <Setter Property="FontSize"
+                Value="11"/>
+        <Setter Property="CharacterSpacing"
+                Value="0.5"/>
+        <Setter Property="TextColor"
+                Value="{StaticResource PrimaryColor}"/>
+        <Setter Property="TextTransform"
+                Value="Uppercase"/>
+      </Style>
+
+      <Style TargetType="BoxView"
+             x:Key="RouteDotStyle">
+        <Setter Property="WidthRequest"
+                Value="3"/>
+        <Setter Property="HeightRequest"
+                Value="3"/>
+        <Setter Property="CornerRadius"
+                Value="1.5"/>
+        <Setter Property="Color"
+                Value="{StaticResource Gray300}"/>
+        <Setter Property="HorizontalOptions"
+                Value="Start"/>
+      </Style>
+
+      <Style TargetType="Border"
+             x:Key="TrustBadgeIconStyle">
+        <Setter Property="WidthRequest"
+                Value="44"/>
+        <Setter Property="HeightRequest"
+                Value="44"/>
+        <Setter Property="StrokeShape"
+                Value="RoundRectangle 22"/>
+        <Setter Property="StrokeThickness"
+                Value="0"/>
+        <Setter Property="BackgroundColor"
+                Value="White"/>
+        <Setter Property="HorizontalOptions"
+                Value="Center"/>
+        <Setter Property="Shadow">
+          <Shadow Brush="Black"
+                  Offset="0,2"
+                  Radius="6"
+                  Opacity="0.08"/>
+        </Setter>
+      </Style>
+
+      <Style TargetType="Label"
+             x:Key="TrustBadgeIconLabelStyle">
+        <Setter Property="FontFamily"
+                Value="MyFont"/>
+        <Setter Property="FontSize"
+                Value="16"/>
+        <Setter Property="TextColor"
+                Value="{StaticResource PrimaryColor}"/>
+        <Setter Property="HorizontalOptions"
+                Value="Center"/>
+        <Setter Property="VerticalOptions"
+                Value="Center"/>
+      </Style>
+
+    </ResourceDictionary>
+  </views:BasePage.Resources>
+
+  <views:BasePage.PageContent>
+
+    <Grid RowDefinitions="Auto,*">
+      <Image Source="background_image.png"
+             Grid.RowSpan="2"
+             Aspect="AspectFill"/>
+
+      <VerticalStackLayout Margin="20,16,20,0"
+                           Spacing="18">
+
+        <!-- ==================== TOP BAR ==================== -->
+        <Grid ColumnDefinitions="Auto,*,Auto">
+          <Image Source="menu"
+                 WidthRequest="24"
+                 HorizontalOptions="Start"
+                 VerticalOptions="Center">
+            <Image.GestureRecognizers>
+              <TapGestureRecognizer Command="{Binding OpenMenuCommand}"/>
+            </Image.GestureRecognizers>
+          </Image>
+
+          <Label Grid.Column="1"
+                 HorizontalOptions="Start"
+                 VerticalOptions="Center"
+                 Margin="16,0">
+            <Label.FormattedText>
+              <FormattedString>
+                <Span Text="{x:Static resx:AppResource.AirUppercase}"
+                      Style="{StaticResource Label24Bold}"
+                      TextColor="{StaticResource PrimaryColor}"/>
+                <Span Text=""/>
+                <Span Text="{x:Static resx:AppResource.IqLowercase}"
+                      Style="{StaticResource Label24Bold}"
+                      TextColor="Red"/>
+              </FormattedString>
+            </Label.FormattedText>
+          </Label>
+
+          <Grid Grid.Column="2"
+                WidthRequest="24"
+                HeightRequest="24"
+                HorizontalOptions="End"
+                VerticalOptions="Center">
+            <Image Source="notifications"
+                   WidthRequest="22"
+                   HeightRequest="22"/>
+            <BoxView Color="Red"
+                     WidthRequest="8"
+                     HeightRequest="8"
+                     CornerRadius="4"
+                     HorizontalOptions="End"
+                     VerticalOptions="Start"/>
+            <Grid.GestureRecognizers>
+              <TapGestureRecognizer Command="{Binding OpenMenuCommand}"/>
+            </Grid.GestureRecognizers>
+          </Grid>
+        </Grid>
+
+        <!-- ==================== HEADLINE ==================== -->
+        <VerticalStackLayout Spacing="6">
+          <Label Text="Where will you"
+                 Style="{StaticResource Label24Bold}"
+                 TextColor="{StaticResource Onyx}"
+                 LineBreakMode="WordWrap"/>
+          <Label Text="fly today?"
+                 Style="{StaticResource Label24Bold}"
+                 TextColor="{StaticResource Onyx}"
+                 LineBreakMode="WordWrap"/>
+          <Label Text="{x:Static resx:AppResource.FindBestFlightsAtBestPrices}"
+                 Style="{StaticResource Label14RegularGray50Style}"/>
+        </VerticalStackLayout>
+
+      </VerticalStackLayout>
+
+      <ScrollView Grid.Row="1"
+                  Margin="0,80,0,0">
+        <VerticalStackLayout Padding="20,0,20,24"
+                             Spacing="24">
+
+          <!-- ==================== SEARCH CARD ==================== -->
+          <Border Padding="20"
+                  BackgroundColor="White"
+                  StrokeShape="RoundRectangle 18"
+                  StrokeThickness="0">
+            <Border.Shadow>
+              <Shadow Brush="Black"
+                      Offset="0,8"
+                      Radius="20"
+                      Opacity="0.10"/>
+            </Border.Shadow>
+
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
+                  ColumnDefinitions="*,Auto">
+
+              <!-- FROM -->
+              <Grid Grid.Row="0"
+                    ColumnDefinitions="Auto,*"
+                    ColumnSpacing="14">
+                <Border Style="{StaticResource RouteIconStyle}">
+                  <Label Text="{x:Static helpers:FontAwesomeIcons.PlaneDeparture}"
+                         Style="{StaticResource RouteIconLabelStyle}"/>
+                </Border>
+                <VerticalStackLayout Grid.Column="1"
+                                     Spacing="2"
+                                     VerticalOptions="Center">
+                  <Label Text="{x:Static resx:AppResource.From}"
+                         Style="{StaticResource RouteEyebrowStyle}"
+                         TextTransform="Uppercase"/>
+                  <Label Text="{Binding SelectedSourceAirport.OriginRoute, FallbackValue={x:Static resx:AppResource.SearchDepartureAirport}}"
+                         Style="{StaticResource Label16Bold}"
+                         TextColor="{StaticResource Onyx}"
+                         LineBreakMode="TailTruncation"/>
+                  <Label Text="{x:Static resx:AppResource.DepartureAirport}"
+                         Style="{StaticResource Label12Regular}"
+                         TextColor="{StaticResource Gray50}"/>
+                </VerticalStackLayout>
+                <Grid.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding OpenAirportSearchCommand}"
+                                        CommandParameter="{x:Static enums:AirportFieldType.Source}"/>
+                </Grid.GestureRecognizers>
+              </Grid>
+
+              <!-- CONNECTOR -->
+              <Grid Grid.Row="1"
+                    ColumnDefinitions="Auto,*">
+                <Line X1="0"
+                      Y1="50"
+                      X2="0"
+                      Y2="0"
+                      Margin="19,0"
+                      Stroke="{StaticResource Gray300}"
+                      StrokeThickness="2"
+                      StrokeDashArray="4,1"/>
+
+                <BoxView Grid.Column="1"
+                         HeightRequest="1"
+                         Margin="0,20"
+                         Color="#EEEEEE"/>
+
+              </Grid>
+
+              <!-- TO -->
+              <Grid Grid.Row="2"
+                    Margin="0,4,0,0"
+                    ColumnDefinitions="Auto,*"
+                    ColumnSpacing="14">
+                <Border Style="{StaticResource RouteIconStyle}">
+                  <Label Text="{x:Static helpers:FontAwesomeIcons.PlaneArrival}"
+                         Style="{StaticResource RouteIconLabelStyle}"/>
+                </Border>
+                <VerticalStackLayout Grid.Column="1"
+                                     Spacing="2"
+                                     VerticalOptions="Center">
+                  <Label Text="{x:Static resx:AppResource.To}"
+                         Style="{StaticResource RouteEyebrowStyle}"
+                         TextTransform="Uppercase"/>
+                  <Label Text="{Binding SelectedDestinationAirport.DestinationRoute, FallbackValue={x:Static resx:AppResource.SearchDestinationAirport}}"
+                         Style="{StaticResource Label16Bold}"
+                         TextColor="{StaticResource Onyx}"
+                         LineBreakMode="TailTruncation"/>
+                  <Label Text="{x:Static resx:AppResource.DestinationAirportLabel}"
+                         Style="{StaticResource Label12Regular}"
+                         TextColor="{StaticResource Gray50}"/>
+                </VerticalStackLayout>
+                <Grid.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding OpenAirportSearchCommand}"
+                                        CommandParameter="{x:Static enums:AirportFieldType.Destination}"/>
+                </Grid.GestureRecognizers>
+              </Grid>
+
+              <!-- SWAP BUTTON -->
+              <Border Grid.Row="0"
+                      Grid.RowSpan="3"
+                      Grid.Column="1"
+                      WidthRequest="36"
+                      HeightRequest="36"
+                      Padding="0"
+                      VerticalOptions="Center"
+                      BackgroundColor="{StaticResource PrimaryColor}"
+                      StrokeShape="RoundRectangle 18"
+                      Stroke="{StaticResource StrokeColor}"
+                      StrokeThickness="1">
+                <Border.Shadow>
+                  <Shadow Brush="Black"
+                          Offset="0,2"
+                          Radius="6"
+                          Opacity="0.10"/>
+                </Border.Shadow>
+                <ImageButton Source="swap"
+                             Padding="0"
+                             BackgroundColor="Transparent"
+                             Command="{Binding SwapSourceDestinationCommand}"/>
+              </Border>
+
+              <BoxView Grid.Row="3"
+                       Grid.ColumnSpan="2"
+                       HeightRequest="1"
+                       Margin="0,20"
+                       Color="#EEEEEE"/>
+
+              <!-- <Line Grid.Row="3"
+                       Grid.ColumnSpan="2"
+                       Margin="0,18"
+                       BackgroundColor="Red"/> -->
+
+              <!-- DEPARTURE / TRAVELERS -->
+              <Grid Grid.Row="4"
+                    Grid.ColumnSpan="2"
+                    ColumnSpacing="10"
+                    ColumnDefinitions="*,*">
+
+                <Grid ColumnDefinitions="Auto,Auto"
+                      VerticalOptions="Start"
+                      ColumnSpacing="10">
+
+                  <Border Style="{StaticResource RouteIconStyle}">
+                    <Label Text="{x:Static helpers:FontAwesomeIcons.CalendarAlt}"
+                           FontSize="20"
+                           Style="{StaticResource RouteIconLabelStyle}"/>
+                  </Border>
+
+                  <VerticalStackLayout Grid.Column="1"
+                                       BackgroundColor="Transparent">
+                    <Label Text="{x:Static resx:AppResource.Departure}"
+                           Style="{StaticResource RouteEyebrowStyle}"/>
+                    <Label Text="{Binding SelectedTravelDate, StringFormat='{0:dd MMM yyyy}', FallbackValue={x:Static resx:AppResource.DateFormatPlaceholder}, TargetNullValue={x:Static resx:AppResource.DateFormatPlaceholder}}"
+                           Style="{StaticResource Label16Bold}"
+                           TextColor="{StaticResource Onyx}"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                      <TapGestureRecognizer Tapped="DepartureTapped"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                  </VerticalStackLayout>
+
+                </Grid>
+
+
+                <Grid ColumnDefinitions="Auto,Auto"
+                      ColumnSpacing="10"
+                      Grid.Column="1">
+
+                  <Border Style="{StaticResource RouteIconStyle}"
+                          VerticalOptions="Start">
+                    <Label Text="{x:Static helpers:FontAwesomeIcons.User}"
+                           FontSize="20"
+                           Style="{StaticResource RouteIconLabelStyle}"/>
+                  </Border>
+
+                  <VerticalStackLayout Grid.Column="1"
+                                       BackgroundColor="Transparent">
+                    <Label Text="{x:Static resx:AppResource.Travelers}"
+                           Style="{StaticResource RouteEyebrowStyle}"/>
+                    <Label Text="{Binding PaxSize, StringFormat={x:Static resx:AppResource.TravelerCountFormat}}"
+                           Style="{StaticResource Label16Bold}"
+                           TextColor="{StaticResource Onyx}"/>
+                    <!-- <controls:CustomStepper x:Name="travelersStepper"
+                                            IsVisible="True"
+                                            Value="{Binding PaxSize}"
+                                            Margin="0,4,0,0"/> -->
+
+                  </VerticalStackLayout>
+                </Grid>
+
+              </Grid>
+
+              <Button Grid.Row="5"
+                      Grid.ColumnSpan="2"
+                      Style="{StaticResource ButtonCorneredStyle}"
+                      Margin="0,30,0,0"
+                      Text="{x:Static resx:AppResource.SearchFlights}"
+                      Command="{Binding SearchFlightsCommand}"
+                      HeightRequest="45"
+                      TextTransform="Default"
+                      CharacterSpacing="0"/>
+
+            </Grid>
+          </Border>
+
+          <!-- ==================== POPULAR DESTINATIONS ==================== -->
+          <VerticalStackLayout Spacing="14"
+                               IsVisible="false">
+            <Grid ColumnDefinitions="*,Auto">
+              <Label Text="{x:Static resx:AppResource.PopularDestinations}"
+                     Style="{StaticResource Label18Bold}"
+                     TextColor="{StaticResource Onyx}"/>
+              <Label Grid.Column="1"
+                     Text="{x:Static resx:AppResource.ViewAll}"
+                     Style="{StaticResource Label14SemiBold}"
+                     TextColor="{StaticResource PrimaryColor}">
+                <Label.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding ViewAllDestinationsCommand}"/>
+                </Label.GestureRecognizers>
+              </Label>
+            </Grid>
+
+            <CollectionView ItemsSource="{Binding PopularDestinations}"
+                            HeightRequest="150">
+              <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal"
+                                   ItemSpacing="14"/>
+              </CollectionView.ItemsLayout>
+              <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:FlightRoute">
+                  <Border StrokeThickness="0"
+                          Padding="0"
+                          WidthRequest="150"
+                          StrokeShape="RoundRectangle 14"
+                          BackgroundColor="White">
+                    <Border.Shadow>
+                      <Shadow Brush="Black"
+                              Offset="0,4"
+                              Radius="10"
+                              Opacity="0.08"/>
+                    </Border.Shadow>
+
+                    <Grid RowDefinitions="96,Auto">
+                      <Border StrokeThickness="0"
+                              StrokeShape="RoundRectangle 14,14,0,0"
+                              Background="{StaticResource WalletIconGradient}">
+                        <Label Text="{x:Static helpers:FontAwesomeIcons.PlaneDeparture}"
+                               FontFamily="MyFont"
+                               FontSize="26"
+                               TextColor="White"
+                               Opacity="0.85"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                      </Border>
+
+                      <VerticalStackLayout Grid.Row="1"
+                                           Padding="10,8"
+                                           Spacing="2">
+                        <Label Text="{Binding DestinationAiportName}"
+                               Style="{StaticResource Label12Regular}"
+                               FontFamily="RobotoSemiBold"
+                               TextColor="{StaticResource Gray90}"
+                               LineBreakMode="TailTruncation"/>
+                        <Label Text="{Binding Destination}"
+                               Style="{StaticResource Label12Regular}"
+                               TextColor="{StaticResource PrimaryColor}"/>
+                      </VerticalStackLayout>
+                    </Grid>
+
+                    <Border.GestureRecognizers>
+                      <TapGestureRecognizer Command="{Binding Source={x:Reference thisPage}, Path=BindingContext.SelectPopularDestinationCommand}"
+                                            CommandParameter="{Binding .}"/>
+                    </Border.GestureRecognizers>
+                  </Border>
+                </DataTemplate>
+              </CollectionView.ItemTemplate>
+            </CollectionView>
+          </VerticalStackLayout>
+
+          <!-- ==================== TRUST BADGES ==================== -->
+          <Grid ColumnDefinitions="*,*,*"
+                IsVisible="false">
+            <VerticalStackLayout Spacing="8">
+              <Border Style="{StaticResource TrustBadgeIconStyle}">
+                <Label Text="{x:Static helpers:FontAwesomeIcons.ShieldAlt}"
+                       Style="{StaticResource TrustBadgeIconLabelStyle}"/>
+              </Border>
+              <Label Text="{x:Static resx:AppResource.SecureBooking}"
+                     Style="{StaticResource Label12Regular}"
+                     FontFamily="RobotoSemiBold"
+                     TextColor="{StaticResource Gray90}"
+                     HorizontalOptions="Center"
+                     HorizontalTextAlignment="Center"/>
+              <Label Text="{x:Static resx:AppResource.SecureBookingDescription}"
+                     Style="{StaticResource Label12Regular}"
+                     TextColor="{StaticResource Gray50}"
+                     HorizontalOptions="Center"
+                     HorizontalTextAlignment="Center"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="1"
+                                 Spacing="8">
+              <Border Style="{StaticResource TrustBadgeIconStyle}">
+                <Label Text="{x:Static helpers:FontAwesomeIcons.Tag}"
+                       Style="{StaticResource TrustBadgeIconLabelStyle}"/>
+              </Border>
+              <Label Text="{x:Static resx:AppResource.BestPrices}"
+                     Style="{StaticResource Label12Regular}"
+                     FontFamily="RobotoSemiBold"
+                     TextColor="{StaticResource Gray90}"
+                     HorizontalOptions="Center"
+                     HorizontalTextAlignment="Center"/>
+              <Label Text="{x:Static resx:AppResource.BestPricesDescription}"
+                     Style="{StaticResource Label12Regular}"
+                     TextColor="{StaticResource Gray50}"
+                     HorizontalOptions="Center"
+                     HorizontalTextAlignment="Center"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="2"
+                                 Spacing="8">
+              <Border Style="{StaticResource TrustBadgeIconStyle}">
+                <Label Text="{x:Static helpers:FontAwesomeIcons.Headset}"
+                       Style="{StaticResource TrustBadgeIconLabelStyle}"/>
+              </Border>
+              <Label Text="{x:Static resx:AppResource.Support247}"
+                     Style="{StaticResource Label12Regular}"
+                     FontFamily="RobotoSemiBold"
+                     TextColor="{StaticResource Gray90}"
+                     HorizontalOptions="Center"
+                     HorizontalTextAlignment="Center"/>
+              <Label Text="{x:Static resx:AppResource.Support247Description}"
+                     Style="{StaticResource Label12Regular}"
+                     TextColor="{StaticResource Gray50}"
+                     HorizontalOptions="Center"
+                     HorizontalTextAlignment="Center"/>
+            </VerticalStackLayout>
+          </Grid>
+
+        </VerticalStackLayout>
+      </ScrollView>
+    </Grid>
+
+  </views:BasePage.PageContent>
+</views:BasePage>

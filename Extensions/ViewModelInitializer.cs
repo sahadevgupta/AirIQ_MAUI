@@ -9,6 +9,7 @@ namespace AirIQ.Extensions
         {
             builder.Services.AddTransient<ChangePasswordPageViewModel>()
                             .AddTransient<DashboardPageViewModel>()
+                            .AddTransient<DashboardPage2ViewModel>()
                             .AddTransient<FlightsPageViewModel>()
                             .AddTransient<FlightBookingPageViewModel>()
                             .AddTransient<ForgotPasswordPageViewModel>()

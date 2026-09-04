@@ -65,7 +65,7 @@
 
     <TabBar Route="app">
         <ShellContent Title="{x:Static resx:AppResource.Flights}"
-                      ContentTemplate="{DataTemplate local:DashboardPage}"
+                      ContentTemplate="{DataTemplate local:DashboardPage2}"
                       Route="home"
                       Icon="flight"/>
         <ShellContent Title="{x:Static resx:AppResource.Hotels}"

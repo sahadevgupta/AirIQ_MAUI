@@ -4136,5 +4136,122 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("Loading", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Find the best flights at the best prices.
+        /// </summary>
+        internal static string FindBestFlightsAtBestPrices {
+            get {
+                return ResourceManager.GetString("FindBestFlightsAtBestPrices", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Popular destinations.
+        /// </summary>
+        internal static string PopularDestinations {
+            get {
+                return ResourceManager.GetString("PopularDestinations", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Secure Booking.
+        /// </summary>
+        internal static string SecureBooking {
+            get {
+                return ResourceManager.GetString("SecureBooking", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to 100% Safe &amp; Secure.
+        /// </summary>
+        internal static string SecureBookingDescription {
+            get {
+                return ResourceManager.GetString("SecureBookingDescription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Best Prices.
+        /// </summary>
+        internal static string BestPrices {
+            get {
+                return ResourceManager.GetString("BestPrices", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to We guarantee.
+        /// </summary>
+        internal static string BestPricesDescription {
+            get {
+                return ResourceManager.GetString("BestPricesDescription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to 24/7 Support.
+        /// </summary>
+        internal static string Support247 {
+            get {
+                return ResourceManager.GetString("Support247", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to We are here.
+        /// </summary>
+        internal static string Support247Description {
+            get {
+                return ResourceManager.GetString("Support247Description", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Where will you fly today?.
+        /// </summary>
+        internal static string WhereWillYouFlyToday {
+            get {
+                return ResourceManager.GetString("WhereWillYouFlyToday", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Departure airport.
+        /// </summary>
+        internal static string DepartureAirport {
+            get {
+                return ResourceManager.GetString("DepartureAirport", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Destination airport.
+        /// </summary>
+        internal static string DestinationAirportLabel {
+            get {
+                return ResourceManager.GetString("DestinationAirportLabel", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Traveler(s).
+        /// </summary>
+        internal static string TravelerCountFormat {
+            get {
+                return ResourceManager.GetString("TravelerCountFormat", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Economy.
+        /// </summary>
+        internal static string Economy {
+            get {
+                return ResourceManager.GetString("Economy", resourceCulture);
+            }
+        }
     }
 }

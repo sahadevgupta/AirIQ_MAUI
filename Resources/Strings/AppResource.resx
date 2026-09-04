@@ -1477,4 +1477,43 @@ Version {0}</value>
   <data name="Loading" xml:space="preserve">
     <value>Loading</value>
   </data>
+  <data name="FindBestFlightsAtBestPrices" xml:space="preserve">
+    <value>Find the best flights at the best prices</value>
+  </data>
+  <data name="PopularDestinations" xml:space="preserve">
+    <value>Popular destinations</value>
+  </data>
+  <data name="SecureBooking" xml:space="preserve">
+    <value>Secure Booking</value>
+  </data>
+  <data name="SecureBookingDescription" xml:space="preserve">
+    <value>100% Safe &amp; Secure</value>
+  </data>
+  <data name="BestPrices" xml:space="preserve">
+    <value>Best Prices</value>
+  </data>
+  <data name="BestPricesDescription" xml:space="preserve">
+    <value>We guarantee</value>
+  </data>
+  <data name="Support247" xml:space="preserve">
+    <value>24/7 Support</value>
+  </data>
+  <data name="Support247Description" xml:space="preserve">
+    <value>We are here</value>
+  </data>
+  <data name="WhereWillYouFlyToday" xml:space="preserve">
+    <value>Where will you fly today?</value>
+  </data>
+  <data name="DepartureAirport" xml:space="preserve">
+    <value>Departure airport</value>
+  </data>
+  <data name="DestinationAirportLabel" xml:space="preserve">
+    <value>Destination airport</value>
+  </data>
+  <data name="TravelerCountFormat" xml:space="preserve">
+    <value>{0} Traveler(s)</value>
+  </data>
+  <data name="Economy" xml:space="preserve">
+    <value>Economy</value>
+  </data>
 </root>
