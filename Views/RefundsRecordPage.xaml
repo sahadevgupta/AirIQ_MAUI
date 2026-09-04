@@ -4,11 +4,12 @@
                 x:Class="AirIQ_MAUI.Views.RefundsRecordPage"
                 xmlns:controls="clr-namespace:AirIQ.Controls"
                 xmlns:models="clr-namespace:AirIQ.Models"
+                xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                 xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
                 x:DataType="vm:RefundsRecordPageViewModel"
-                PageTitle="Refund Tickets"
+                PageTitle="{x:Static resx:AppResource.RefundTickets}"
                 NavigationMode="Hamburger">
     <views:BasePage.PageContent>
         <Grid Padding="16"
@@ -92,7 +93,7 @@
                                       Padding="12"
                                       RowSpacing="20"
                                       ColumnSpacing="0">
-                                    <Label Text="Ticket ID"
+                                    <Label Text="{x:Static resx:AppResource.TicketID}"
                                            Grid.Row="0"
                                            Style="{StaticResource Label16MediumGrayStyle}"/>
 
@@ -102,7 +103,7 @@
                                            Style="{StaticResource Label16Medium}"
                                            TextColor="Black"/>
 
-                                    <Label Text="Entry Date"
+                                    <Label Text="{x:Static resx:AppResource.EntryDate}"
                                            Grid.Row="1"
                                            Style="{StaticResource Label16MediumGrayStyle}"/>
 
@@ -112,7 +113,7 @@
                                            Style="{StaticResource Label16Medium}"
                                            TextColor="Black"/>
 
-                                    <Label Text="Destination"
+                                    <Label Text="{x:Static resx:AppResource.Destination}"
                                            Grid.Row="2"
                                            Style="{StaticResource Label16MediumGrayStyle}"/>
 
@@ -122,7 +123,7 @@
                                            Style="{StaticResource Label16Medium}"
                                            TextColor="Black"/>
 
-                                    <Label Text="PNR:"
+                                    <Label Text="{x:Static resx:AppResource.PNRLabel}"
                                            Grid.Row="3"
                                            Style="{StaticResource Label16MediumGrayStyle}"/>
 
@@ -132,7 +133,7 @@
                                            Style="{StaticResource Label16Medium}"
                                            TextColor="Black"/>
 
-                                    <Label Text="Travel DateTime"
+                                    <Label Text="{x:Static resx:AppResource.TravelDateTime}"
                                            Grid.Row="4"
                                            Style="{StaticResource Label16MediumGrayStyle}"/>
 
@@ -142,7 +143,7 @@
                                            Style="{StaticResource Label16Medium}"
                                            TextColor="Black"/>
 
-                                    <Label Text="Qty"
+                                    <Label Text="{x:Static resx:AppResource.Qty}"
                                            Grid.Row="5"
                                            Style="{StaticResource Label16MediumGrayStyle}"/>
 
@@ -152,7 +153,7 @@
                                            Style="{StaticResource Label16Medium}"
                                            TextColor="Black"/>
 
-                                    <Label Text="XXLN"
+                                    <Label Text="{x:Static resx:AppResource.XXLN}"
                                            Grid.Row="6"
                                            Style="{StaticResource Label16MediumGrayStyle}"/>
 
@@ -162,7 +163,7 @@
                                            Style="{StaticResource Label16Medium}"
                                            TextColor="Black"/>
 
-                                    <Label Text="Refund Amount"
+                                    <Label Text="{x:Static resx:AppResource.RefundAmount}"
                                            Grid.Row="7"
                                            Style="{StaticResource Label16MediumGrayStyle}"/>
 
@@ -172,7 +173,7 @@
                                            Style="{StaticResource Label16Medium}"
                                            TextColor="Black"/>
 
-                                    <Label Text="Action"
+                                    <Label Text="{x:Static resx:AppResource.Action}"
                                            Grid.Row="8"
                                            Style="{StaticResource Label16MediumGrayStyle}"
                                            VerticalOptions="Center"/>
@@ -186,7 +187,7 @@
                                         </Image.Behaviors>
                                     </Image>
 
-                                    <Label Text="Download Invoice"
+                                    <Label Text="{x:Static resx:AppResource.DownloadInvoice}"
                                            Style="{StaticResource Label16Medium}"
                                            TextColor="{StaticResource PrimaryColor}"
                                            Grid.Row="8"

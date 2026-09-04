@@ -2,6 +2,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Input;
 using AirIQ.Helpers;
+using AirIQ.Resources.Strings;
 using Mopups.Interfaces;
 
 namespace AirIQ.Controls;
@@ -14,6 +15,12 @@ public partial class EntryWithTitleImage : ContentView
 
 		dropdown.SetBinding(CustomDropdown.ShowDropdownProperty,
 					new Binding(nameof(OnLoadShowDropdown), BindingMode.TwoWay, source: this));
+
+		Loaded += (_, _) =>
+		{
+			UpdateFieldVisibility();
+			RefreshNavigationLabel();
+		};
 	}
 
 	/// <summary>
@@ -97,7 +104,31 @@ public partial class EntryWithTitleImage : ContentView
 
 	public static readonly BindableProperty IsDateViewVisibleProperty =
 			BindableProperty.Create(nameof(IsDateViewVisible), typeof(bool), typeof(EntryWithTitleImage), false,
-				BindingMode.TwoWay);
+				BindingMode.TwoWay, propertyChanged: (bindable, _, _) => ((EntryWithTitleImage)bindable).UpdateFieldVisibility());
+
+	/// <summary>
+	///     Identifies the <see cref="IsNavigationField" /> bindable property.
+	/// </summary>
+	public static readonly BindableProperty IsNavigationFieldProperty =
+		BindableProperty.Create(nameof(IsNavigationField), typeof(bool), typeof(EntryWithTitleImage), false,
+			propertyChanged: (bindable, _, _) =>
+			{
+				var control = (EntryWithTitleImage)bindable;
+				control.UpdateFieldVisibility();
+				control.RefreshNavigationLabel();
+			});
+
+	/// <summary>
+	///     Identifies the <see cref="NavigationCommand" /> bindable property.
+	/// </summary>
+	public static readonly BindableProperty NavigationCommandProperty =
+		BindableProperty.Create(nameof(NavigationCommand), typeof(ICommand), typeof(EntryWithTitleImage));
+
+	/// <summary>
+	///     Identifies the <see cref="NavigationCommandParameter" /> bindable property.
+	/// </summary>
+	public static readonly BindableProperty NavigationCommandParameterProperty =
+		BindableProperty.Create(nameof(NavigationCommandParameter), typeof(object), typeof(EntryWithTitleImage));
 	public static readonly BindableProperty DateProperty =
 	   BindableProperty.Create(propertyName: nameof(Date), returnType: typeof(DateTime?), declaringType: typeof(EntryWithTitleImage), null, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
 	   {
@@ -109,7 +140,7 @@ public partial class EntryWithTitleImage : ContentView
 		   }
 		   else if (newValue == null)
 		   {
-			   control.datelbl.Text = "DD/MM/YYYY";
+			   control.datelbl.Text = AppResource.DateFormatPlaceholder;
 		   }
 	   });
 
@@ -217,6 +248,24 @@ public partial class EntryWithTitleImage : ContentView
 		set => SetValue(TextChangeCommandProperty, value);
 	}
 
+	public bool IsNavigationField
+	{
+		get => (bool)GetValue(IsNavigationFieldProperty);
+		set => SetValue(IsNavigationFieldProperty, value);
+	}
+
+	public ICommand NavigationCommand
+	{
+		get => (ICommand)GetValue(NavigationCommandProperty);
+		set => SetValue(NavigationCommandProperty, value);
+	}
+
+	public object NavigationCommandParameter
+	{
+		get => GetValue(NavigationCommandParameterProperty);
+		set => SetValue(NavigationCommandParameterProperty, value);
+	}
+
 	#region Events
 
 
@@ -228,23 +277,44 @@ public partial class EntryWithTitleImage : ContentView
 	private static void OnSelectedItemChanged(BindableObject bindable, object oldValue, object newValue)
 	{
 		var control = bindable as EntryWithTitleImage;
-		if (newValue != null)
-		{
-			string selectedText = string.Empty;
-			if (string.IsNullOrEmpty(control.DisplayMemberPath))
-			{
-				selectedText = newValue.ToString();
-			}
-			else
-			{
-				selectedText = newValue?.GetType().GetProperty(control.DisplayMemberPath)?.GetValue(newValue)?.ToString() ?? "";
-			}
-		}
+		control?.RefreshNavigationLabel();
 	}
 
 	void LifecycleEffectLoaded(object sender, EventArgs e)
 	{
 		dropdown.ShowDropdown = OnLoadShowDropdown;
+	}
+
+	void UpdateFieldVisibility()
+	{
+		dropdown.IsVisible = !IsDateViewVisible && !IsNavigationField;
+		datelbl.IsVisible = IsDateViewVisible;
+		navigationLabel.IsVisible = IsNavigationField;
+	}
+
+	void RefreshNavigationLabel()
+	{
+		if (!IsNavigationField)
+			return;
+
+		string selectedText = string.Empty;
+		if (SelectedItem != null)
+		{
+			selectedText = string.IsNullOrEmpty(DisplayMemberPath)
+				? SelectedItem.ToString() ?? string.Empty
+				: SelectedItem.GetType().GetProperty(DisplayMemberPath)?.GetValue(SelectedItem)?.ToString() ?? string.Empty;
+		}
+
+		if (string.IsNullOrEmpty(selectedText))
+		{
+			navigationLabel.Text = PlaceholderText;
+			navigationLabel.TextColor = (Color)Application.Current!.Resources["Gray50"];
+		}
+		else
+		{
+			navigationLabel.Text = selectedText;
+			navigationLabel.TextColor = (Color)Application.Current!.Resources["Gray90"];
+		}
 	}
 
 	void TapGestureRecognizerTapped(object sender, EventArgs e)
@@ -254,14 +324,21 @@ public partial class EntryWithTitleImage : ContentView
 			var popupNavigation = ServiceHelper.GetService<IPopupNavigation>();
 			if (popupNavigation != null)
 			{
-				var popup = new CalendarView();
-				popup.SetBinding(CalendarView.AllowedDatesProperty,
+				var popup = new CalendarViewV2();
+				popup.SetBinding(CalendarViewV2.AllowedDatesProperty,
 						new Binding(nameof(AllowedDates), BindingMode.TwoWay, source: this));
 				popup.DatePicked += (arg) =>
 				{
 					Date = arg;
 				};
 				popupNavigation?.PushAsync(popup);
+			}
+		}
+		else if (IsNavigationField)
+		{
+			if (NavigationCommand?.CanExecute(NavigationCommandParameter) == true)
+			{
+				NavigationCommand.Execute(NavigationCommandParameter);
 			}
 		}
 		else

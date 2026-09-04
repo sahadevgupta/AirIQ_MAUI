@@ -4,11 +4,12 @@
                 x:Class="AirIQ_MAUI.Views.AccountLedgerRecordPage"
                 xmlns:controls="clr-namespace:AirIQ.Controls"
                 xmlns:models="clr-namespace:AirIQ.Models"
+                xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                 xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
                 x:DataType="vm:AccountLedgerRecordPageViewModel"
-                PageTitle="Account Ledger"
+                PageTitle="{x:Static resx:AppResource.AccountLedgerTitle}"
                 NavigationMode="Hamburger">
     <views:BasePage.PageContent>
         <Grid Padding="16"
@@ -29,7 +30,7 @@
                            FontSize="24"/>
                     <BoxView Color="#E8E8E8"
                              HeightRequest="1"/>
-                    <Label Text="Balance"
+                    <Label Text="{x:Static resx:AppResource.Balance}"
                            FontSize="13"
                            VerticalOptions="End"
                            HorizontalOptions="Center"
@@ -51,7 +52,7 @@
                            FontSize="24"/>
                     <BoxView Color="#E8E8E8"
                              HeightRequest="1"/>
-                    <Label Text="Ledger Balance"
+                    <Label Text="{x:Static resx:AppResource.LedgerBalance}"
                            HorizontalTextAlignment="Center"
                            Padding="12,8"
                            FontSize="13"/>
@@ -72,7 +73,7 @@
                            TextColor="White"/>
                     <BoxView Color="{StaticResource Primary10}"
                              HeightRequest="1"/>
-                    <Label Text="Credit Due"
+                    <Label Text="{x:Static resx:AppResource.CreditDue}"
                            FontSize="13"
                            HorizontalOptions="Center"
                            TextColor="White"
@@ -156,7 +157,7 @@
                                       RowSpacing="20"
                                       ColumnSpacing="0">
 
-                                    <Label Text="Entry Date"
+                                    <Label Text="{x:Static resx:AppResource.EntryDate}"
                                            Grid.Row="0"
                                            Style="{StaticResource Label16MediumGrayStyle}"/>
 
@@ -166,7 +167,7 @@
                                            Style="{StaticResource Label16Medium}"
                                            TextColor="Black"/>
 
-                                    <Label Text="Particular"
+                                    <Label Text="{x:Static resx:AppResource.Particular}"
                                            Grid.Row="1"
                                            Style="{StaticResource Label16MediumGrayStyle}"/>
 
@@ -176,7 +177,7 @@
                                            Style="{StaticResource Label16Medium}"
                                            TextColor="Black"/>
 
-                                    <Label Text="Destination"
+                                    <Label Text="{x:Static resx:AppResource.Destination}"
                                            Grid.Row="2"
                                            Style="{StaticResource Label16MediumGrayStyle}"/>
 
@@ -186,7 +187,7 @@
                                            Style="{StaticResource Label16Medium}"
                                            TextColor="Black"/>
 
-                                    <Label Text="Travel DateTime"
+                                    <Label Text="{x:Static resx:AppResource.TravelDateTime}"
                                            Grid.Row="3"
                                            Style="{StaticResource Label16MediumGrayStyle}"/>
 
@@ -196,7 +197,7 @@
                                            Style="{StaticResource Label16Medium}"
                                            TextColor="Black"/>
 
-                                    <Label Text="Amount"
+                                    <Label Text="{x:Static resx:AppResource.Amount}"
                                            Grid.Row="4"
                                            Style="{StaticResource Label16MediumGrayStyle}"/>
 
@@ -206,7 +207,7 @@
                                            Style="{StaticResource Label16Medium}"
                                            TextColor="Black"/>
 
-                                    <Label Text="Ledger Balance"
+                                    <Label Text="{x:Static resx:AppResource.LedgerBalance}"
                                            Grid.Row="5"
                                            Style="{StaticResource Label16MediumGrayStyle}"/>
 

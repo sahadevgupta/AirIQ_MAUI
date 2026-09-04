@@ -28,6 +28,8 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Use Face ID to securely and quickly sign in to your account.</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

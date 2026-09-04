@@ -4,6 +4,7 @@
                  x:Class="AirIQ_MAUI.Popups.CustomAlertPopup"
                  xmlns:mopup="clr-namespace:Mopups.Pages;assembly=Mopups"
                  xmlns:mopupsanim="clr-namespace:Mopups.Animations;assembly=Mopups"
+                 xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                  BackgroundColor="{StaticResource PopupBackground}"
                  CloseWhenBackgroundIsClicked="False"
                  x:Name="customAlertDialog">
@@ -39,7 +40,7 @@
                    HorizontalTextAlignment="Center"
                    FontSize="Body"/>
 
-            <Button Text="Ok"
+            <Button Text="{x:Static resx:AppResource.OkButton}"
                     TextColor="White"
                     BackgroundColor="Black"
                     Clicked="Button_Clicked"

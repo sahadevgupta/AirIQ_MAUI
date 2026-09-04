@@ -3,13 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirIQ.Views.ContentViews.ContactInformationView"
              xmlns:controls="clr-namespace:AirIQ.Controls"
+             xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
         <Grid RowDefinitions="Auto,*"
               RowSpacing="10">
 
                 <VerticalStackLayout Spacing="10">
-                        <Label Text="Contact Information"
+                        <Label Text="{x:Static resx:AppResource.ContactInformationHeading}"
                                Style="{StaticResource Label18Medium}"
                                TextColor="{StaticResource PrimaryColor}"
                                LineHeight="1.2"
@@ -17,66 +18,66 @@
                                CharacterSpacing="1.2"
                                Margin="0,8,0,0"/>
 
-                        <controls:ExtendedDropdown Title="Country"
+                        <controls:ExtendedDropdown Title="{x:Static resx:AppResource.Country}"
                                                    SuffixText="*"
-                                                   PlaceholderText="Select Country"
+                                                   PlaceholderText="{x:Static resx:AppResource.SelectCountry}"
                                                    ItemsSource="{Binding Countries}"
                                                    SelectedItem="{Binding SelectedCountry}"
                                                    IsError="{Binding IsCountryErrorVisible}"
-                                                   ErrorText="Country is required"
+                                                   ErrorText="{x:Static resx:AppResource.CountryIsRequired}"
                                                    DisplayMemberPath="Name"/>
-                        <controls:ExtendedDropdown Title="State"
+                        <controls:ExtendedDropdown Title="{x:Static resx:AppResource.State}"
                                                    SuffixText="*"
-                                                   PlaceholderText="Select State"
+                                                   PlaceholderText="{x:Static resx:AppResource.SelectState}"
                                                    ItemsSource="{Binding States}"
                                                    SelectedItem="{Binding SelectedState}"
                                                    IsError="{Binding IsStateErrorVisible}"
-                                                   ErrorText="State is required"
+                                                   ErrorText="{x:Static resx:AppResource.StateIsRequired}"
                                                    DisplayMemberPath="Name"
                                                    IsEnabled="{Binding SelectedCountry, Converter={toolkit:IsNotNullConverter}}"/>
-                        <controls:ExtendedDropdown Title="District"
+                        <controls:ExtendedDropdown Title="{x:Static resx:AppResource.District}"
                                                    SuffixText="*"
-                                                   PlaceholderText="Select District"
+                                                   PlaceholderText="{x:Static resx:AppResource.SelectDistrict}"
                                                    ItemsSource="{Binding Districts}"
                                                    SelectedItem="{Binding SelectedDistrict}"
                                                    IsError="{Binding IsDistrictErrorVisible}"
-                                                   ErrorText="District is required"
+                                                   ErrorText="{x:Static resx:AppResource.DistrictIsRequired}"
                                                    DisplayMemberPath="Name"
                                                    IsEnabled="{Binding SelectedState, Converter={toolkit:IsNotNullConverter}}"/>
-                        <controls:ExtendedDropdown Title="City"
+                        <controls:ExtendedDropdown Title="{x:Static resx:AppResource.City}"
                                                    SuffixText="*"
-                                                   PlaceholderText="Select City"
+                                                   PlaceholderText="{x:Static resx:AppResource.SelectCity}"
                                                    ItemsSource="{Binding Cities}"
                                                    SelectedItem="{Binding SelectedCity}"
                                                    IsError="{Binding IsCityErrorVisible}"
-                                                   ErrorText="City is required"
+                                                   ErrorText="{x:Static resx:AppResource.CityIsRequired}"
                                                    DisplayMemberPath="CityName"
                                                    IsEnabled="{Binding SelectedDistrict, Converter={toolkit:IsNotNullConverter}}"/>
-                        <controls:ExtendedEntry Title="Pin Code"
+                        <controls:ExtendedEntry Title="{x:Static resx:AppResource.PinCode}"
                                                 SuffixText="*"
-                                                PlaceholderText="Enter Pincode"
+                                                PlaceholderText="{x:Static resx:AppResource.EnterPincode}"
                                                 Text="{Binding Signup.PinCode}"/>
-                        <controls:ExtendedEntry Title="Address"
+                        <controls:ExtendedEntry Title="{x:Static resx:AppResource.Address}"
                                                 SuffixText="*"
-                                                PlaceholderText="Enter Address"
+                                                PlaceholderText="{x:Static resx:AppResource.EnterAddress}"
                                                 Text="{Binding Signup.Add1}"/>
-                        <controls:ExtendedEntry Title="Specify your Locality"
+                        <controls:ExtendedEntry Title="{x:Static resx:AppResource.SpecifyYourLocality}"
                                                 SuffixText="*"
-                                                PlaceholderText="Enter Locality"
+                                                PlaceholderText="{x:Static resx:AppResource.EnterLocality}"
                                                 Text="{Binding Signup.Add2}"/>
 
-                        <controls:ExtendedDropdown Title="Nearest Airport"
+                        <controls:ExtendedDropdown Title="{x:Static resx:AppResource.NearestAirport}"
                                                    SuffixText="*"
-                                                   PlaceholderText="Select Nearest Airport"
+                                                   PlaceholderText="{x:Static resx:AppResource.SelectNearestAirport}"
                                                    ItemsSource="{Binding NearestAirport}"
                                                    SelectedItem="{Binding SelectedAirport}"
                                                    IsError="{Binding IsNearestAirportErrorVisible}"
-                                                   ErrorText="Nearest airport is required"
+                                                   ErrorText="{x:Static resx:AppResource.NearestAirportIsRequired}"
                                                    DisplayMemberPath="Name"
                                                    IsEnabled="{Binding SelectedCity, Converter={toolkit:IsNotNullConverter}}"/>
                 </VerticalStackLayout>
 
-                <Button Text="Back"
+                <Button Text="{x:Static resx:AppResource.Back}"
                         Grid.Row="1"
                         Margin="0,0,0,20"
                         TextColor="{StaticResource PrimaryColor}"
@@ -87,7 +88,7 @@
                         Style="{StaticResource SmallBorderButtonStyle}"/>
 
 
-                <Button Text="Next"
+                <Button Text="{x:Static resx:AppResource.Next}"
                         Grid.Row="1"
                         Margin="0,0,0,20"
                         TextColor="White"

@@ -6,11 +6,12 @@
                 xmlns:controls="clr-namespace:AirIQ.Controls"
                 xmlns:models="clr-namespace:AirIQ.Models"
                 xmlns:respModel="clr-namespace:AirIQ.Models.Response"
+                xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                 xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
                 x:DataType="vm:PaxCalendarPageViewModel"
-                PageTitle="PAX Calendar"
+                PageTitle="{x:Static resx:AppResource.PaxCalendar}"
                 NavigationMode="Hamburger">
 
     <views:BasePage.Resources>
@@ -61,10 +62,10 @@
 
             <Grid ColumnDefinitions="*,*"
                   ColumnSpacing="16">
-                <Button Text="Self Care"
+                <Button Text="{x:Static resx:AppResource.SelfCare}"
                         Style="{StaticResource SmallBorderButtonStyle}"
                         MinimumHeightRequest="30"/>
-                <Button Text="Advance Booking"
+                <Button Text="{x:Static resx:AppResource.AdvanceBooking}"
                         MinimumHeightRequest="30"
                         Grid.Column="1"/>
             </Grid>
@@ -77,7 +78,7 @@
 
                     <controls:SearchView IsFilterVisible="False"
                                          IsDownloadVisible="False"
-                                         PlaceholderText="Search here"
+                                         PlaceholderText="{x:Static resx:AppResource.SearchHere}"
                                          SearchText="{Binding SearchText}"
                                          SearchCommand="{Binding SearchCommand}"/>
 
@@ -90,7 +91,7 @@
                                   BackgroundColor="Transparent"/>
 
                         <Label Grid.Column="1"
-                               Text="CC BOOKING"
+                               Text="{x:Static resx:AppResource.CCBooking}"
                                VerticalOptions="Center"
                                FontSize="14"
                                FontAttributes="Bold"
@@ -292,7 +293,7 @@
                                                         <Span Text="{Binding FlightNumber, StringFormat=' ({0})'}"
                                                               Style="{StaticResource Label14RegularGray50Style}"/>
                                                         <Span Text="&#10;"/>
-                                                        <Span Text="Airline"/>
+                                                        <Span Text="{x:Static resx:AppResource.Airline}"/>
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
@@ -301,15 +302,29 @@
                                                    VerticalTextAlignment="Center">
                                                 <Label.FormattedText>
                                                     <FormattedString>
-                                                        <Span Text="{Binding PAX_Qty, StringFormat='{0} Adult(s)'}"
-                                                              Style="{StaticResource Label20MediumOnyxStyle}"
-                                                              TextColor="Black"/>
+                                                        <Span Style="{StaticResource Label20MediumOnyxStyle}"
+                                                              TextColor="Black">
+                                                            <Span.Text>
+                                                                <Binding Path="PAX_Qty">
+                                                                    <Binding.StringFormat>
+                                                                        <x:Static Member="resx:AppResource.AdultsCountFormat"/>
+                                                                    </Binding.StringFormat>
+                                                                </Binding>
+                                                            </Span.Text>
+                                                        </Span>
                                                         <Span Text=", "/>
-                                                        <Span Text="{Binding InfantCount, StringFormat='{0} Infant(s)'}"
-                                                              Style="{StaticResource Label20MediumOnyxStyle}"
-                                                              TextColor="Black"/>
+                                                        <Span Style="{StaticResource Label20MediumOnyxStyle}"
+                                                              TextColor="Black">
+                                                            <Span.Text>
+                                                                <Binding Path="InfantCount">
+                                                                    <Binding.StringFormat>
+                                                                        <x:Static Member="resx:AppResource.InfantsCountFormat"/>
+                                                                    </Binding.StringFormat>
+                                                                </Binding>
+                                                            </Span.Text>
+                                                        </Span>
                                                         <Span Text="&#10;"/>
-                                                        <Span Text="Passengers"/>
+                                                        <Span Text="{x:Static resx:AppResource.Passengers}"/>
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
@@ -329,7 +344,7 @@
                                                     HeightRequest="20"
                                                     ContentLayout="Right,8"/>
 
-                                                <Label Text="PNR"
+                                                <Label Text="{x:Static resx:AppResource.PNRCaption}"
                                                        HorizontalOptions="End"/>
 
                                             </VerticalStackLayout>
@@ -345,7 +360,7 @@
                                                       Style="{StaticResource Label20MediumOnyxStyle}"
                                                       TextColor="Black"/>
                                                 <Span Text="&#10; "/>
-                                                <Span Text="Departure"
+                                                <Span Text="{x:Static resx:AppResource.Departure}"
                                                       Style="{StaticResource Label14RegularGray50Style}"/>
                                             </FormattedString>
                                         </Label.FormattedText>
@@ -367,7 +382,7 @@
                                                       Style="{StaticResource Label20MediumOnyxStyle}"
                                                       TextColor="Black"/>
                                                 <Span Text="&#10; "/>
-                                                <Span Text="Arrival"
+                                                <Span Text="{x:Static resx:AppResource.Arrival}"
                                                       Style="{StaticResource Label14RegularGray50Style}"/>
                                             </FormattedString>
                                         </Label.FormattedText>
@@ -377,11 +392,11 @@
                                           Grid.Row="3"
                                           ColumnSpacing="10"
                                           Grid.ColumnSpan="3">
-                                        <Button Text="Show Names"
+                                        <Button Text="{x:Static resx:AppResource.ShowNames}"
                                                 Style="{StaticResource SmallBorderButtonStyle}"
                                                 MinimumHeightRequest="40"
                                                 BackgroundColor="Transparent"/>
-                                        <Button Text="Check In"
+                                        <Button Text="{x:Static resx:AppResource.CheckIn}"
                                                 MinimumHeightRequest="40"
                                                 Grid.Column="1"/>
                                     </Grid>

@@ -132,6 +132,12 @@
   <data name="SearchDestinationAirport" xml:space="preserve">
     <value>Search Destination Airport</value>
   </data>
+  <data name="SelectDepartureAirport" xml:space="preserve">
+    <value>Select Departure Airport</value>
+  </data>
+  <data name="SelectArrivalAirport" xml:space="preserve">
+    <value>Select Arrival Airport</value>
+  </data>
   <data name="TravelDate" xml:space="preserve">
     <value>Travel Date</value>
   </data>
@@ -183,8 +189,23 @@
   <data name="InformationRequired" xml:space="preserve">
     <value>Information Required</value>
   </data>
+  <data name="SessionExpiredTitle" xml:space="preserve">
+    <value>Session Expired</value>
+  </data>
   <data name="SessionExpired" xml:space="preserve">
-    <value>Your session has expired, please enter your password to continue.</value>
+    <value>Your session has expired. Please sign in again to continue.</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="SignInDifferentAccount" xml:space="preserve">
+    <value>Sign in with a different account</value>
+  </data>
+  <data name="NotNow" xml:space="preserve">
+    <value>Not Now</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>or</value>
   </data>
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
@@ -389,5 +410,1140 @@
   </data>
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>
+  </data>
+  <data name="NoteLabel" xml:space="preserve">
+    <value>Note: </value>
+  </data>
+  <data name="FieldsMarkedWithAsterisk" xml:space="preserve">
+    <value>Fields marked with an asterisk </value>
+  </data>
+  <data name="AsteriskSymbol" xml:space="preserve">
+    <value>(*) </value>
+  </data>
+  <data name="AreMandatory" xml:space="preserve">
+    <value>are mandatory.</value>
+  </data>
+  <data name="ForgotPasswordTitle" xml:space="preserve">
+    <value>Forgot Password</value>
+  </data>
+  <data name="ForgotPasswordInstructions" xml:space="preserve">
+    <value>Enter your email or phone number to reset your password. We'll send you an OTP.</value>
+  </data>
+  <data name="EmailOrPhone" xml:space="preserve">
+    <value>Email or Phone</value>
+  </data>
+  <data name="EnterEmailIdOrPhone" xml:space="preserve">
+    <value>Enter your Email Id or Phone</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="GoBackToPrefix" xml:space="preserve">
+    <value>Go back to </value>
+  </data>
+  <data name="LoginPageLink" xml:space="preserve">
+    <value>Login Page</value>
+  </data>
+  <data name="OtpVerification" xml:space="preserve">
+    <value>OTP Verification</value>
+  </data>
+  <data name="OtpSentTo" xml:space="preserve">
+    <value>A One Time Password has been sent to 9876543212</value>
+  </data>
+  <data name="Verify" xml:space="preserve">
+    <value>Verify</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="EnterPasswordDetails" xml:space="preserve">
+    <value>Enter password details</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Old Password</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="PleaseEnterUsernameAndPassword" xml:space="preserve">
+    <value>Please enter both username and password.</value>
+  </data>
+  <data name="LoginFailedTryAgain" xml:space="preserve">
+    <value>Login failed. Please try again.</value>
+  </data>
+  <data name="ExclamationSuffix" xml:space="preserve">
+    <value>! </value>
+  </data>
+  <data name="WithLabel" xml:space="preserve">
+    <value>with </value>
+  </data>
+  <data name="AirUppercase" xml:space="preserve">
+    <value>AIR </value>
+  </data>
+  <data name="IqLowercase" xml:space="preserve">
+    <value>iQ</value>
+  </data>
+  <data name="PersonsCountFormat" xml:space="preserve">
+    <value>{0} Person(s)</value>
+  </data>
+  <data name="SelectFlight" xml:space="preserve">
+    <value>Select Flight</value>
+  </data>
+  <data name="FlightsCountFormat" xml:space="preserve">
+    <value>{0} Flights</value>
+  </data>
+  <data name="CopySeatsButton" xml:space="preserve">
+    <value>Copy {0} seats</value>
+  </data>
+  <data name="TravelDetails" xml:space="preserve">
+    <value>Travel Details</value>
+  </data>
+  <data name="DetailsCopied" xml:space="preserve">
+    <value>Details are copied</value>
+  </data>
+  <data name="HotelsPageTitle" xml:space="preserve">
+    <value>HotelsPage</value>
+  </data>
+  <data name="FindYourPerfectStay" xml:space="preserve">
+    <value>Find Your Perfect Stay</value>
+  </data>
+  <data name="SearchDestinationPlaceholder" xml:space="preserve">
+    <value>Search destination...</value>
+  </data>
+  <data name="Destination" xml:space="preserve">
+    <value>Destination</value>
+  </data>
+  <data name="EnterCityOrHotel" xml:space="preserve">
+    <value>Enter city or hotel</value>
+  </data>
+  <data name="CheckInCheckOut" xml:space="preserve">
+    <value>Check-in / Check-out</value>
+  </data>
+  <data name="Guests" xml:space="preserve">
+    <value>Guests</value>
+  </data>
+  <data name="GuestsPlaceholderExample" xml:space="preserve">
+    <value>2 Adults, 1 Child</value>
+  </data>
+  <data name="SearchHotels" xml:space="preserve">
+    <value>Search Hotels</value>
+  </data>
+  <data name="PricePerNightFormat" xml:space="preserve">
+    <value>${0}/night</value>
+  </data>
+  <data name="Online" xml:space="preserve">
+    <value>ONLINE</value>
+  </data>
+  <data name="Subtotal" xml:space="preserve">
+    <value>Subtotal</value>
+  </data>
+  <data name="Discount" xml:space="preserve">
+    <value>Discount</value>
+  </data>
+  <data name="TravellersHeader" xml:space="preserve">
+    <value>TRAVELLERS</value>
+  </data>
+  <data name="PaymentDueMessage" xml:space="preserve">
+    <value>Confirm received commodity, $181.94 is included in this month bills.</value>
+  </data>
+  <data name="PayNow" xml:space="preserve">
+    <value>Pay now</value>
+  </data>
+  <data name="OneWay" xml:space="preserve">
+    <value>One Way</value>
+  </data>
+  <data name="RoundTrip" xml:space="preserve">
+    <value>Round Trip</value>
+  </data>
+  <data name="SectorOnward" xml:space="preserve">
+    <value>Sector Onward</value>
+  </data>
+  <data name="SectorPlaceholder" xml:space="preserve">
+    <value>___-___</value>
+  </data>
+  <data name="DateFormatPlaceholder" xml:space="preserve">
+    <value>DD/MM/YYYY</value>
+  </data>
+  <data name="SectorReturn" xml:space="preserve">
+    <value>Sector Return</value>
+  </data>
+  <data name="ReturnTravelDate" xml:space="preserve">
+    <value>Return Travel Date</value>
+  </data>
+  <data name="NoOfPax" xml:space="preserve">
+    <value>No. of Pax</value>
+  </data>
+  <data name="EnterNumberOfPax" xml:space="preserve">
+    <value>Enter number of Pax</value>
+  </data>
+  <data name="ExpectedFare" xml:space="preserve">
+    <value>Expected Fare</value>
+  </data>
+  <data name="EnterExpectedFare" xml:space="preserve">
+    <value>Enter Expected Fare</value>
+  </data>
+  <data name="PreferredAirline" xml:space="preserve">
+    <value>Preferred Airline</value>
+  </data>
+  <data name="EnterPreferredAirline" xml:space="preserve">
+    <value>Enter Preferred Airline</value>
+  </data>
+  <data name="ContactNo" xml:space="preserve">
+    <value>Contact No.</value>
+  </data>
+  <data name="Enter10DigitMobileNumber" xml:space="preserve">
+    <value>Enter 10 digit mobile number</value>
+  </data>
+  <data name="AddNote" xml:space="preserve">
+    <value>Add Note</value>
+  </data>
+  <data name="IncludeExtraDetailsPlaceholder" xml:space="preserve">
+    <value>Include any extra details that may help us assist you better......</value>
+  </data>
+  <data name="DetailsTab" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="HistoryTab" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="SelfCare" xml:space="preserve">
+    <value>Self Care</value>
+  </data>
+  <data name="AdvanceBooking" xml:space="preserve">
+    <value>Advance Booking</value>
+  </data>
+  <data name="SearchHere" xml:space="preserve">
+    <value>Search here</value>
+  </data>
+  <data name="CCBooking" xml:space="preserve">
+    <value>CC BOOKING</value>
+  </data>
+  <data name="Airline" xml:space="preserve">
+    <value>Airline</value>
+  </data>
+  <data name="Passengers" xml:space="preserve">
+    <value>Passengers</value>
+  </data>
+  <data name="PNRCaption" xml:space="preserve">
+    <value>PNR</value>
+  </data>
+  <data name="Arrival" xml:space="preserve">
+    <value>Arrival</value>
+  </data>
+  <data name="ShowNames" xml:space="preserve">
+    <value>Show Names</value>
+  </data>
+  <data name="CheckIn" xml:space="preserve">
+    <value>Check In</value>
+  </data>
+  <data name="AdultsCountFormat" xml:space="preserve">
+    <value>{0} Adult(s)</value>
+  </data>
+  <data name="InfantsCountFormat" xml:space="preserve">
+    <value>{0} Infant(s)</value>
+  </data>
+  <data name="TicketPaxSummaryPlaceholder" xml:space="preserve">
+    <value>2 TKT-4PAX</value>
+  </data>
+  <data name="ChoosePaymentOption" xml:space="preserve">
+    <value>Choose payment option</value>
+  </data>
+  <data name="EnterAmount" xml:space="preserve">
+    <value>Enter Amount</value>
+  </data>
+  <data name="AmountPlaceholder" xml:space="preserve">
+    <value>0.00</value>
+  </data>
+  <data name="PaymentMethod" xml:space="preserve">
+    <value>Payment Method</value>
+  </data>
+  <data name="ChooseAnOption" xml:space="preserve">
+    <value>Choose an Option</value>
+  </data>
+  <data name="ContinuePayment" xml:space="preserve">
+    <value>Continue Payment</value>
+  </data>
+  <data name="DebitCard" xml:space="preserve">
+    <value>Debit Card</value>
+  </data>
+  <data name="CreditCard" xml:space="preserve">
+    <value>Credit Card</value>
+  </data>
+  <data name="NetBanking" xml:space="preserve">
+    <value>Net Banking</value>
+  </data>
+  <data name="Wallet" xml:space="preserve">
+    <value>Wallet</value>
+  </data>
+  <data name="EzBuzzProviderTitle" xml:space="preserve">
+    <value>EZBUZZ</value>
+  </data>
+  <data name="CashfreeProviderTitle" xml:space="preserve">
+    <value>CASHFREE</value>
+  </data>
+  <data name="UpiPaymentOption" xml:space="preserve">
+    <value>UPI</value>
+  </data>
+  <data name="RuPayPaymentOption" xml:space="preserve">
+    <value>RuPay</value>
+  </data>
+  <data name="MastercardPaymentOption" xml:space="preserve">
+    <value>Mastercard</value>
+  </data>
+  <data name="VisaPaymentOption" xml:space="preserve">
+    <value>Visa</value>
+  </data>
+  <data name="RechargeProcessingMessageFormat" xml:space="preserve">
+    <value>Recharge of ₹{0} via {1} will be processed through {2}.</value>
+  </data>
+  <data name="Passenger" xml:space="preserve">
+    <value>Passenger</value>
+  </data>
+  <data name="EntryDate" xml:space="preserve">
+    <value>Entry Date</value>
+  </data>
+  <data name="PNRLabel" xml:space="preserve">
+    <value>PNR:</value>
+  </data>
+  <data name="TravelDateTime" xml:space="preserve">
+    <value>Travel DateTime</value>
+  </data>
+  <data name="Qty" xml:space="preserve">
+    <value>Qty</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="RefundTickets" xml:space="preserve">
+    <value>Refund Tickets</value>
+  </data>
+  <data name="TicketID" xml:space="preserve">
+    <value>Ticket ID</value>
+  </data>
+  <data name="XXLN" xml:space="preserve">
+    <value>XXLN</value>
+  </data>
+  <data name="RefundAmount" xml:space="preserve">
+    <value>Refund Amount</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="DownloadInvoice" xml:space="preserve">
+    <value>Download Invoice</value>
+  </data>
+  <data name="AccountLedgerTitle" xml:space="preserve">
+    <value>Account Ledger</value>
+  </data>
+  <data name="Balance" xml:space="preserve">
+    <value>Balance</value>
+  </data>
+  <data name="LedgerBalance" xml:space="preserve">
+    <value>Ledger Balance</value>
+  </data>
+  <data name="CreditDue" xml:space="preserve">
+    <value>Credit Due</value>
+  </data>
+  <data name="Particular" xml:space="preserve">
+    <value>Particular</value>
+  </data>
+  <data name="SalesTemporaryCredit" xml:space="preserve">
+    <value>Sales Temporary Credit</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="ICICIBankLimited" xml:space="preserve">
+    <value>ICICI Bank Limited</value>
+  </data>
+  <data name="ImpsNeftRtgs" xml:space="preserve">
+    <value>IMPS / NEFT / RTGS</value>
+  </data>
+  <data name="ImpsNeftRtgsCashDeposit" xml:space="preserve">
+    <value>IMPS / NEFT / RTGS / Cash Deposit</value>
+  </data>
+  <data name="AccountName" xml:space="preserve">
+    <value>Account Name</value>
+  </data>
+  <data name="AccountNumber" xml:space="preserve">
+    <value>Account Number</value>
+  </data>
+  <data name="AccountType" xml:space="preserve">
+    <value>Account Type</value>
+  </data>
+  <data name="CurrentAccount" xml:space="preserve">
+    <value>Current Account</value>
+  </data>
+  <data name="IFSCCode" xml:space="preserve">
+    <value>IFSC Code</value>
+  </data>
+  <data name="ICICIBeneficiaryNote" xml:space="preserve">
+    <value>Note: If using ICICI Bank, Please use "Other Bank" option to add AIR IQ as beneficiary</value>
+  </data>
+  <data name="ScanQRCode" xml:space="preserve">
+    <value>Scan QR code</value>
+  </data>
+  <data name="ScanQrCodeToPay" xml:space="preserve">
+    <value>scan the Qr code to pay</value>
+  </data>
+  <data name="UpiIdDisplay" xml:space="preserve">
+    <value>ID: airiq@icici</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="UPIApps" xml:space="preserve">
+    <value>UPI Apps</value>
+  </data>
+  <data name="PayUsingUpiApp" xml:space="preserve">
+    <value>Pay using UPI app</value>
+  </data>
+  <data name="GooglePay" xml:space="preserve">
+    <value>Google Pay</value>
+  </data>
+  <data name="PhonePe" xml:space="preserve">
+    <value>PhonePe</value>
+  </data>
+  <data name="Paytm" xml:space="preserve">
+    <value>Paytm</value>
+  </data>
+  <data name="BHIM" xml:space="preserve">
+    <value>BHIM</value>
+  </data>
+  <data name="CashDepositLimitWarning" xml:space="preserve">
+    <value>We don't accept cash deposit over Rs. 1,90,000 in one day. If you deposit more than this, the extra amount will be lost and won't be added to your account.</value>
+  </data>
+  <data name="AppNotFoundTitle" xml:space="preserve">
+    <value>App not found</value>
+  </data>
+  <data name="AppNotInstalledOnDeviceFormat" xml:space="preserve">
+    <value>{0} is not installed on this device.</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="UnsupportedAppTitle" xml:space="preserve">
+    <value>Unsupported app</value>
+  </data>
+  <data name="UpiAppNotSupportedYet" xml:space="preserve">
+    <value>This UPI app is not supported yet.</value>
+  </data>
+  <data name="UnableToOpenAppTitle" xml:space="preserve">
+    <value>Unable to open app</value>
+  </data>
+  <data name="PleaseTryAgain" xml:space="preserve">
+    <value>Please try again.</value>
+  </data>
+  <data name="PaymentSuccessfulTitle" xml:space="preserve">
+    <value>Payment successful</value>
+  </data>
+  <data name="PaymentCompletedSuccessfully" xml:space="preserve">
+    <value>Payment completed successfully.</value>
+  </data>
+  <data name="PaymentFailedTitle" xml:space="preserve">
+    <value>Payment failed</value>
+  </data>
+  <data name="PaymentNotCompletedTryAgain" xml:space="preserve">
+    <value>Payment was not completed. Please try again.</value>
+  </data>
+  <data name="PaymentPendingTitle" xml:space="preserve">
+    <value>Payment pending</value>
+  </data>
+  <data name="PaymentSubmittedPendingConfirmation" xml:space="preserve">
+    <value>Payment is submitted and pending confirmation.</value>
+  </data>
+  <data name="PaymentCancelledTitle" xml:space="preserve">
+    <value>Payment cancelled</value>
+  </data>
+  <data name="PaymentWasCancelled" xml:space="preserve">
+    <value>Payment was cancelled.</value>
+  </data>
+  <data name="PaymentStatusTitle" xml:space="preserve">
+    <value>Payment status</value>
+  </data>
+  <data name="ReturnedFromUpiApp" xml:space="preserve">
+    <value>Returned from UPI app.</value>
+  </data>
+  <data name="AmountGreaterThanZero" xml:space="preserve">
+    <value>Amount should be greater than 0</value>
+  </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>Reference Number</value>
+  </data>
+  <data name="EnterReferenceNumber" xml:space="preserve">
+    <value>Enter reference number</value>
+  </data>
+  <data name="PleaseEnterReferenceNumber" xml:space="preserve">
+    <value>Please enter reference number</value>
+  </data>
+  <data name="SelectPaymentMode" xml:space="preserve">
+    <value>Select Payment Mode</value>
+  </data>
+  <data name="SelectAnOption" xml:space="preserve">
+    <value>Select an option</value>
+  </data>
+  <data name="PleaseSelectPaymentMode" xml:space="preserve">
+    <value>Please select payment mode</value>
+  </data>
+  <data name="BankTransfer" xml:space="preserve">
+    <value>Bank Transfer</value>
+  </data>
+  <data name="IMPS" xml:space="preserve">
+    <value>IMPS</value>
+  </data>
+  <data name="NEFT" xml:space="preserve">
+    <value>NEFT</value>
+  </data>
+  <data name="RTGS" xml:space="preserve">
+    <value>RTGS</value>
+  </data>
+  <data name="CashDeposit" xml:space="preserve">
+    <value>Cash Deposit</value>
+  </data>
+  <data name="CreditRequest" xml:space="preserve">
+    <value>Credit Request</value>
+  </data>
+  <data name="UploadFile" xml:space="preserve">
+    <value>Upload File</value>
+  </data>
+  <data name="EnterMessage" xml:space="preserve">
+    <value>Enter Message</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="NoFileChosen" xml:space="preserve">
+    <value>No file chosen</value>
+  </data>
+  <data name="SelectFilePickerTitle" xml:space="preserve">
+    <value>Select File</value>
+  </data>
+  <data name="AccountsPageTitle" xml:space="preserve">
+    <value>AccountsPage</value>
+  </data>
+  <data name="SettingsPageTitle" xml:space="preserve">
+    <value>SettingsPage</value>
+  </data>
+  <data name="WelcomeToNetMaui" xml:space="preserve">
+    <value>Welcome to .NET MAUI!</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="PersonalInformationHeading" xml:space="preserve">
+    <value>Personal Information</value>
+  </data>
+  <data name="MobileNumber" xml:space="preserve">
+    <value>Mobile Number</value>
+  </data>
+  <data name="Security" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="BiometricLogin" xml:space="preserve">
+    <value>Biometric Login</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="BiometricAuthentication" xml:space="preserve">
+    <value>Biometric Authentication</value>
+  </data>
+  <data name="UnlockWithBiometrics" xml:space="preserve">
+    <value>Unlock with Biometrics</value>
+  </data>
+  <data name="BiometricAuthDescription" xml:space="preserve">
+    <value>Use your fingerprint or Face ID to securely access your account.</value>
+  </data>
+  <data name="SecureAndPrivateTitle" xml:space="preserve">
+    <value>Secure &amp; Private</value>
+  </data>
+  <data name="SecureAndPrivateDescription" xml:space="preserve">
+    <value>Your biometric data is encrypted and never stored on our servers.</value>
+  </data>
+  <data name="QuickAccessTitle" xml:space="preserve">
+    <value>Quick Access</value>
+  </data>
+  <data name="QuickAccessDescription" xml:space="preserve">
+    <value>Authenticate in a second and get access to your app.</value>
+  </data>
+  <data name="Authenticate" xml:space="preserve">
+    <value>Authenticate</value>
+  </data>
+  <data name="UsePasscodeInstead" xml:space="preserve">
+    <value>Use Passcode Instead</value>
+  </data>
+  <data name="Authenticating" xml:space="preserve">
+    <value>Authenticating...</value>
+  </data>
+  <data name="BiometricAuthFailedMessage" xml:space="preserve">
+    <value>Biometric authentication failed. Please try again or use your passcode.</value>
+  </data>
+  <data name="BiometricAuthLockedOutMessage" xml:space="preserve">
+    <value>Too many attempts. Please try again later or use your passcode.</value>
+  </data>
+  <data name="BiometricNotAvailableMessage" xml:space="preserve">
+    <value>Biometric authentication is not available on this device.</value>
+  </data>
+  <data name="ChangeInSettingsFooter" xml:space="preserve">
+    <value>You can change this later in Settings.</value>
+  </data>
+  <data name="SecurityQuestions" xml:space="preserve">
+    <value>Security Questions</value>
+  </data>
+  <data name="Preferences" xml:space="preserve">
+    <value>Preferences</value>
+  </data>
+  <data name="NotificationPreferences" xml:space="preserve">
+    <value>Notification Preferences</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="SystemDefault" xml:space="preserve">
+    <value>System Default</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="AboutApp" xml:space="preserve">
+    <value>About App</value>
+  </data>
+  <data name="FeatureComingSoon" xml:space="preserve">
+    <value>This feature is coming soon.</value>
+  </data>
+  <data name="AppNameVersionFormat" xml:space="preserve">
+    <value>AirIQ
+Version {0}</value>
+  </data>
+  <data name="PrivacyPolicyHeading1" xml:space="preserve">
+    <value>Air IQ's commitment to privacy</value>
+  </data>
+  <data name="PrivacyPolicyPara1" xml:space="preserve">
+    <value>At Air IQ, your security and privacy are fundamental. We protect your Personal Information with strong encryption and lay strict policies that govern how all data is handled.</value>
+  </data>
+  <data name="PrivacyPolicyPara2" xml:space="preserve">
+    <value>The only objective of all information that we gather and store from you is to make things convenient for you, to enable us to deliver and improve our services better and faster and to conduct our business.</value>
+  </data>
+  <data name="PrivacyPolicyPara3" xml:space="preserve">
+    <value>We make it very transparent as to what information we collect and why. All of your data is in your control. We make it clear for you to understand exactly what's going to happen to your Personal Information.</value>
+  </data>
+  <data name="PrivacyPolicyPara4" xml:space="preserve">
+    <value>You can decide what information you would like to store. And changing these preferences are quick and easy.</value>
+  </data>
+  <data name="PrivacyPolicyPara5" xml:space="preserve">
+    <value>We never indulge in any promotional or ad communication without your permission. You have absolute control over all optional communication that you receive from our end.</value>
+  </data>
+  <data name="PrivacyPolicyPara6" xml:space="preserve">
+    <value>Most importantly, we don't and will never "monetize" the information you store with us by selling or renting it to any third party and while we inevitably care about your privacy, we ensure that steps towards tight privacy do not come in the way of simplicity. That all steps towards security still ensure an unobstructed user experience.</value>
+  </data>
+  <data name="PrivacyPolicyPara7" xml:space="preserve">
+    <value>Our commitment to protecting your privacy comes from a profound desire to maintain the timeless value of privacy and preserve the ability for you to control your data. We know that your trust doesn't come easy. That's why we always work as hard as we can to earn and keep it.</value>
+  </data>
+  <data name="PrivacyPolicyHeading2" xml:space="preserve">
+    <value>Air IQ's Privacy Policy</value>
+  </data>
+  <data name="PrivacyPolicyPara8" xml:space="preserve">
+    <value>The following Privacy Policy is applicable to the websites of Air IQ (hereby referred to as "Air IQ", "we", "our", or "us") including the desktop and mobile sites, smartphone and desktop apps, email and text messages (collectively hereby referred to as "platforms").</value>
+  </data>
+  <data name="PrivacyPolicyPara9" xml:space="preserve">
+    <value>The following Privacy Policy explains what personal data we collect from you and how we store, use, transfer and disclose it.</value>
+  </data>
+  <data name="PrivacyPolicyPara10" xml:space="preserve">
+    <value>By browsing, visiting, accessing and/or using the services on our platforms or searching for any of the pages on our platforms, the visitor or customer (hereby referred to as "Customers", "you" or "your") explicitly acknowledges and agrees to this Privacy Policy.</value>
+  </data>
+  <data name="TermsHeading1" xml:space="preserve">
+    <value>Terms of Use &amp; Service</value>
+  </data>
+  <data name="TermsPara1" xml:space="preserve">
+    <value>This web site (the "Site") is published and maintained by AIR IQ ("airiq.in"), a company incorporated and existing in accordance with the laws of the Republic of India.</value>
+  </data>
+  <data name="TermsPara2" xml:space="preserve">
+    <value>When you access, browse or use this Site you accept, without limitation or qualification, the terms and conditions set forth below.</value>
+  </data>
+  <data name="TermsPara3" xml:space="preserve">
+    <value>When you access any sub-site (whether belonging to an "associate" of airiq.in or otherwise) through this site, then such sub-site may have its own terms and conditions of use which is specific to such sub-site.</value>
+  </data>
+  <data name="TermsPara4" xml:space="preserve">
+    <value>Sub-sites may contain such additional terms and conditions of use as may be set out in such sub-site.</value>
+  </data>
+  <data name="TermsPara5" xml:space="preserve">
+    <value>These Terms and Conditions of Use and any additional terms posted on this Site together constitute the entire agreement between airiq.in and you with respect to your use of this Site.</value>
+  </data>
+  <data name="TermsHeading2" xml:space="preserve">
+    <value>Site and Its Contents</value>
+  </data>
+  <data name="TermsPara6" xml:space="preserve">
+    <value>This Site is only for your personal use. You shall not distribute, exchange, modify, sell or transmit anything you copy from this Site, including but not limited to any text, images, audio and video, for any business, commercial or public purpose.</value>
+  </data>
+  <data name="TermsPara7" xml:space="preserve">
+    <value>As long as you comply with the terms of these Terms and Conditions of Use, airiq.in grants you a non-exclusive, non-transferable, limited right to enter, view and use this Site. You agree not to interrupt or attempt to interrupt the operation of this Site in any way.</value>
+  </data>
+  <data name="TermsPara8" xml:space="preserve">
+    <value>Access to certain areas of the Site may only be available to registered members. To become a registered member, you may be required to answer certain questions. Answers to such questions may be mandatory and/or optional. You represent and warrant that all information you supply to us, about yourself, and others, is true and accurate.</value>
+  </data>
+  <data name="Child" xml:space="preserve">
+    <value>Child</value>
+  </data>
+  <data name="IncomeRangeBelow5Lacs" xml:space="preserve">
+    <value>Below 5 Lacs</value>
+  </data>
+  <data name="IncomeRange5To10Lacs" xml:space="preserve">
+    <value>5 - 10 Lacs</value>
+  </data>
+  <data name="IncomeRange10To20Lacs" xml:space="preserve">
+    <value>10 - 20 Lacs</value>
+  </data>
+  <data name="IncomeRange20To30Lacs" xml:space="preserve">
+    <value>20 - 30 Lacs</value>
+  </data>
+  <data name="IncomeRange30To40Lacs" xml:space="preserve">
+    <value>30 - 40 Lacs</value>
+  </data>
+  <data name="IncomeRange40To50Lacs" xml:space="preserve">
+    <value>40 - 50 Lacs</value>
+  </data>
+  <data name="IncomeRange50To75Lacs" xml:space="preserve">
+    <value>50 - 75 Lacs</value>
+  </data>
+  <data name="IncomeRange75LacsTo1Crore" xml:space="preserve">
+    <value>75 - 1 Crore</value>
+  </data>
+  <data name="IncomeRangeAbove1Crore" xml:space="preserve">
+    <value>Above 1 Crore</value>
+  </data>
+  <data name="SelectSecondaryBusinessTypeLower" xml:space="preserve">
+    <value>Select secondary business type</value>
+  </data>
+  <data name="ContactInformationHeading" xml:space="preserve">
+    <value>Contact Information</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="SelectCountry" xml:space="preserve">
+    <value>Select Country</value>
+  </data>
+  <data name="CountryIsRequired" xml:space="preserve">
+    <value>Country is required</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="SelectState" xml:space="preserve">
+    <value>Select State</value>
+  </data>
+  <data name="StateIsRequired" xml:space="preserve">
+    <value>State is required</value>
+  </data>
+  <data name="District" xml:space="preserve">
+    <value>District</value>
+  </data>
+  <data name="SelectDistrict" xml:space="preserve">
+    <value>Select District</value>
+  </data>
+  <data name="DistrictIsRequired" xml:space="preserve">
+    <value>District is required</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="SelectCity" xml:space="preserve">
+    <value>Select City</value>
+  </data>
+  <data name="CityIsRequired" xml:space="preserve">
+    <value>City is required</value>
+  </data>
+  <data name="PinCode" xml:space="preserve">
+    <value>Pin Code</value>
+  </data>
+  <data name="EnterPincode" xml:space="preserve">
+    <value>Enter Pincode</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="EnterAddress" xml:space="preserve">
+    <value>Enter Address</value>
+  </data>
+  <data name="SpecifyYourLocality" xml:space="preserve">
+    <value>Specify your Locality</value>
+  </data>
+  <data name="EnterLocality" xml:space="preserve">
+    <value>Enter Locality</value>
+  </data>
+  <data name="NearestAirport" xml:space="preserve">
+    <value>Nearest Airport</value>
+  </data>
+  <data name="SelectNearestAirport" xml:space="preserve">
+    <value>Select Nearest Airport</value>
+  </data>
+  <data name="NearestAirportIsRequired" xml:space="preserve">
+    <value>Nearest airport is required</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="TravelWith" xml:space="preserve">
+    <value>Travel With</value>
+  </data>
+  <data name="DateOfBirth" xml:space="preserve">
+    <value>Date of Birth</value>
+  </data>
+  <data name="CompanyName" xml:space="preserve">
+    <value>Company Name</value>
+  </data>
+  <data name="EnterCompanyName" xml:space="preserve">
+    <value>Enter Company Name</value>
+  </data>
+  <data name="CompanyNameCannotBeEmpty" xml:space="preserve">
+    <value>Company name cannot be empty</value>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>Full Name</value>
+  </data>
+  <data name="EnterFullName" xml:space="preserve">
+    <value>Enter Full Name</value>
+  </data>
+  <data name="FullNameFormatValidation" xml:space="preserve">
+    <value>Please enter first and last name separated by one space.</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Phone Number</value>
+  </data>
+  <data name="EnterPhoneNumber" xml:space="preserve">
+    <value>Enter Phone Number</value>
+  </data>
+  <data name="PhoneNumberValidation" xml:space="preserve">
+    <value>Please enter a valid 10-digit Indian mobile number.</value>
+  </data>
+  <data name="WhatsAppNumber" xml:space="preserve">
+    <value>WhatsApp Number</value>
+  </data>
+  <data name="EnterWhatsAppNumber" xml:space="preserve">
+    <value>Enter WhatsApp Number</value>
+  </data>
+  <data name="WhatsAppNumberCannotBeEmpty" xml:space="preserve">
+    <value>WhatsApp number cannot be empty</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>Email Address</value>
+  </data>
+  <data name="EnterEmailAddress" xml:space="preserve">
+    <value>Enter Email Address</value>
+  </data>
+  <data name="EmailAddressCannotBeEmpty" xml:space="preserve">
+    <value>Email address cannot be empty</value>
+  </data>
+  <data name="ReferredBy" xml:space="preserve">
+    <value>Referred By</value>
+  </data>
+  <data name="EnterReferredBy" xml:space="preserve">
+    <value>Enter Referred By</value>
+  </data>
+  <data name="ReferredByCannotBeEmpty" xml:space="preserve">
+    <value>Referred by cannot be empty</value>
+  </data>
+  <data name="ReferredByTTF" xml:space="preserve">
+    <value>TTF</value>
+  </data>
+  <data name="ReferredByOTM" xml:space="preserve">
+    <value>OTM</value>
+  </data>
+  <data name="ReferredBySatte" xml:space="preserve">
+    <value>Satte</value>
+  </data>
+  <data name="ReferredByGoogle" xml:space="preserve">
+    <value>Google</value>
+  </data>
+  <data name="ReferredByFacebook" xml:space="preserve">
+    <value>Facebook</value>
+  </data>
+  <data name="ReferredByInstagram" xml:space="preserve">
+    <value>Instagram</value>
+  </data>
+  <data name="ReferredByPromotionalSMS" xml:space="preserve">
+    <value>Promotional SMS</value>
+  </data>
+  <data name="ReferredByPromotionalEmail" xml:space="preserve">
+    <value>Promotional Email</value>
+  </data>
+  <data name="ReferredByPromotionalWhatsApp" xml:space="preserve">
+    <value>Promotional WhatsApp</value>
+  </data>
+  <data name="SalesPerson" xml:space="preserve">
+    <value>Sales Person</value>
+  </data>
+  <data name="EnterSalesPersonName" xml:space="preserve">
+    <value>Enter Sales Person Name</value>
+  </data>
+  <data name="EnterPasswordField" xml:space="preserve">
+    <value>Enter Password</value>
+  </data>
+  <data name="PasswordCannotBeEmpty" xml:space="preserve">
+    <value>Password cannot be empty</value>
+  </data>
+  <data name="ConfirmedPasswordLabel" xml:space="preserve">
+    <value>Confirmed Password</value>
+  </data>
+  <data name="EnterConfirmPassword" xml:space="preserve">
+    <value>Enter Confirm Password</value>
+  </data>
+  <data name="ConfirmPasswordValidation" xml:space="preserve">
+    <value>Confirm password is required and must match</value>
+  </data>
+  <data name="SearchCityOrAirport" xml:space="preserve">
+    <value>Search City or Airport</value>
+  </data>
+  <data name="BookFlightsHeading" xml:space="preserve">
+    <value>Book Flights</value>
+  </data>
+  <data name="OneWayUpper" xml:space="preserve">
+    <value>ONE WAY</value>
+  </data>
+  <data name="RoundTripUpper" xml:space="preserve">
+    <value>ROUND TRIP</value>
+  </data>
+  <data name="SupportEmailAddress" xml:space="preserve">
+    <value>info@airiq.in</value>
+  </data>
+  <data name="ContactNumberLabel" xml:space="preserve">
+    <value>Contact Number</value>
+  </data>
+  <data name="SupportPhoneNumber" xml:space="preserve">
+    <value>+ 91 9555 202 202</value>
+  </data>
+  <data name="SupportOfficeAddress" xml:space="preserve">
+    <value>2nd Floor, Sevoke Road, Siliguri 734001, West Bengal, India</value>
+  </data>
+  <data name="OkButton" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="CopyrightAirIq" xml:space="preserve">
+    <value>© 2026 AirIQ</value>
+  </data>
+  <data name="MonthYearDefaultLabel" xml:space="preserve">
+    <value>Novmeber 2025</value>
+  </data>
+  <data name="DaySun" xml:space="preserve">
+    <value>Sun</value>
+  </data>
+  <data name="DayMon" xml:space="preserve">
+    <value>Mon</value>
+  </data>
+  <data name="DayTue" xml:space="preserve">
+    <value>Tue</value>
+  </data>
+  <data name="DayWed" xml:space="preserve">
+    <value>Wed</value>
+  </data>
+  <data name="DayThu" xml:space="preserve">
+    <value>Thu</value>
+  </data>
+  <data name="DayFri" xml:space="preserve">
+    <value>Fri</value>
+  </data>
+  <data name="DaySat" xml:space="preserve">
+    <value>Sat</value>
+  </data>
+  <data name="BalanceLabel" xml:space="preserve">
+    <value>Balance: </value>
+  </data>
+  <data name="AvailableBalance" xml:space="preserve">
+    <value>Available Balance</value>
+  </data>
+  <data name="WalletIdFormat" xml:space="preserve">
+    <value>Wallet ID: {0}</value>
+  </data>
+  <data name="TotalCredits" xml:space="preserve">
+    <value>Total Credits</value>
+  </data>
+  <data name="TotalDebits" xml:space="preserve">
+    <value>Total Debits</value>
+  </data>
+  <data name="AddMoney" xml:space="preserve">
+    <value>Add Money</value>
+  </data>
+  <data name="Withdraw" xml:space="preserve">
+    <value>Withdraw</value>
+  </data>
+  <data name="TransactionHistory" xml:space="preserve">
+    <value>Transaction History</value>
+  </data>
+  <data name="PaymentMethods" xml:space="preserve">
+    <value>Payment Methods</value>
+  </data>
+  <data name="SecurePaymentsMessage" xml:space="preserve">
+    <value>Your payments are secure with 256-bit encryption.</value>
+  </data>
+  <data name="RecentTransactions" xml:space="preserve">
+    <value>Recent Transactions</value>
+  </data>
+  <data name="ViewAll" xml:space="preserve">
+    <value>View All</value>
+  </data>
+  <data name="NeedHelp" xml:space="preserve">
+    <value>Need Help?</value>
+  </data>
+  <data name="ContactSupportForWalletQueries" xml:space="preserve">
+    <value>Contact support for wallet related queries.</value>
+  </data>
+  <data name="WalletIdCopiedMessage" xml:space="preserve">
+    <value>Wallet ID copied to clipboard</value>
+  </data>
+  <data name="SearchHerePlaceholder" xml:space="preserve">
+    <value>Search here..</value>
+  </data>
+  <data name="Infant" xml:space="preserve">
+    <value>Infant</value>
+  </data>
+  <data name="PassengerHeaderFormat" xml:space="preserve">
+    <value>{0} #{1}</value>
+  </data>
+  <data name="AdultAlreadyHasInfantAssignedFormat" xml:space="preserve">
+    <value>Adult {0} already has one infant assigned.</value>
+  </data>
+  <data name="InfantAlreadyAssignedToAdultFormat" xml:space="preserve">
+    <value>Infant {0} is already assigned to an adult.</value>
+  </data>
+  <data name="AirIqDialogTitle" xml:space="preserve">
+    <value>AirIQ</value>
+  </data>
+  <data name="ConfirmBookingPrompt" xml:space="preserve">
+    <value>Do you want to confirm this booking ?</value>
+  </data>
+  <data name="PersonalStepName" xml:space="preserve">
+    <value>Personal</value>
+  </data>
+  <data name="ContactStepName" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="BusinessStepName" xml:space="preserve">
+    <value>Business</value>
+  </data>
+  <data name="FillMandatoryFieldsCorrectly" xml:space="preserve">
+    <value>Please fill all mandatory fields correctly before submitting.</value>
+  </data>
+  <data name="RegistrationSubmittedSuccessMessage" xml:space="preserve">
+    <value>Thank you for registering. Your details have been received and are under review. We'll notify you by email once your account has been verified and activated. You can sign in after receiving the approval email.</value>
+  </data>
+  <data name="OwnerNamePanNameMismatch" xml:space="preserve">
+    <value>Owner name and person's name on PAN Card should be same.</value>
+  </data>
+  <data name="CompanyNamePanNameMismatch" xml:space="preserve">
+    <value>The company name and the name on the PAN should be same.</value>
+  </data>
+  <data name="AppVersionLabelFormat" xml:space="preserve">
+    <value>App Version: {0}</value>
+  </data>
+  <data name="NoInternetConnectivityAvailable" xml:space="preserve">
+    <value>No Internet connectivity available</value>
+  </data>
+  <data name="NoResultAvailable" xml:space="preserve">
+    <value>No Result Available</value>
+  </data>
+  <data name="TitleMr" xml:space="preserve">
+    <value>Mr.</value>
+  </data>
+  <data name="TitleMrs" xml:space="preserve">
+    <value>Mrs.</value>
+  </data>
+  <data name="TitleMs" xml:space="preserve">
+    <value>Ms.</value>
+  </data>
+  <data name="TitleMstr" xml:space="preserve">
+    <value>Mstr.</value>
+  </data>
+  <data name="TitleMiss" xml:space="preserve">
+    <value>Miss</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading</value>
+  </data>
+  <data name="FindBestFlightsAtBestPrices" xml:space="preserve">
+    <value>Find the best flights at the best prices</value>
+  </data>
+  <data name="PopularDestinations" xml:space="preserve">
+    <value>Popular destinations</value>
+  </data>
+  <data name="SecureBooking" xml:space="preserve">
+    <value>Secure Booking</value>
+  </data>
+  <data name="SecureBookingDescription" xml:space="preserve">
+    <value>100% Safe &amp; Secure</value>
+  </data>
+  <data name="BestPrices" xml:space="preserve">
+    <value>Best Prices</value>
+  </data>
+  <data name="BestPricesDescription" xml:space="preserve">
+    <value>We guarantee</value>
+  </data>
+  <data name="Support247" xml:space="preserve">
+    <value>24/7 Support</value>
+  </data>
+  <data name="Support247Description" xml:space="preserve">
+    <value>We are here</value>
+  </data>
+  <data name="WhereWillYouFlyToday" xml:space="preserve">
+    <value>Where will you fly today?</value>
+  </data>
+  <data name="DepartureAirport" xml:space="preserve">
+    <value>Departure airport</value>
+  </data>
+  <data name="DestinationAirportLabel" xml:space="preserve">
+    <value>Destination airport</value>
+  </data>
+  <data name="TravelerCountFormat" xml:space="preserve">
+    <value>{0} Traveler(s)</value>
+  </data>
+  <data name="Economy" xml:space="preserve">
+    <value>Economy</value>
+  </data>
+  <data name="SelectPassengers" xml:space="preserve">
+    <value>Select passengers</value>
+  </data>
+  <data name="Adults" xml:space="preserve">
+    <value>Adults</value>
+  </data>
+  <data name="Children" xml:space="preserve">
+    <value>Children</value>
+  </data>
+  <data name="Infants" xml:space="preserve">
+    <value>Infants</value>
+  </data>
+  <data name="AdultsAgeRange" xml:space="preserve">
+    <value>12+ years</value>
+  </data>
+  <data name="ChildrenAgeRange" xml:space="preserve">
+    <value>2 - 11 years</value>
+  </data>
+  <data name="InfantsAgeRange" xml:space="preserve">
+    <value>0 - 1 year</value>
+  </data>
+  <data name="InfantsNoSeatNotice" xml:space="preserve">
+    <value>Infants will not occupy a separate seat.</value>
+  </data>
+  <data name="LapInfantBookingNotice" xml:space="preserve">
+    <value>Lap infant must be added in the booking.</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
   </data>
 </root>

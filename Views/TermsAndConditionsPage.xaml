@@ -4,8 +4,10 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 xmlns:controls="clr-namespace:AirIQ.Controls"
                 xmlns:views="clr-namespace:AirIQ.Views"
+                xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                 IsWalletVisible="False"
-                PageTitle="Terms &amp; Conditions">
+                PageTitle="{x:Static resx:AppResource.TermsAndConditions}"
+                Shell.TabBarIsVisible="False">
 
     <views:BasePage.PageContent>
 
@@ -14,28 +16,28 @@
                                  Spacing="16">
                 <!-- Main Heading -->
                 <Label
-                    Text="Terms of Use &amp; Service"
+                    Text="{x:Static resx:AppResource.TermsHeading1}"
                     FontSize="20"
                     FontAttributes="Bold"
                     TextColor="#111111"/>
 
-                <controls:BulletLabel Text="This web site (the &quot;Site&quot;) is published and maintained by AIR IQ (&quot;airiq.in&quot;), a company incorporated and existing in accordance with the laws of the Republic of India."/>
-                <controls:BulletLabel Text="When you access, browse or use this Site you accept, without limitation or qualification, the terms and conditions set forth below."/>
-                <controls:BulletLabel Text="When you access any sub-site (whether belonging to an “associate” of airiq.in or otherwise) through this site, then such sub-site may have its own terms and conditions of use which is specific to such sub-site."/>
-                <controls:BulletLabel Text="Sub-sites may contain such additional terms and conditions of use as may be set out in such sub-site."/>
-                <controls:BulletLabel Text="These Terms and Conditions of Use and any additional terms posted on this Site together constitute the entire agreement between airiq.in and you with respect to your use of this Site."/>
-                <controls:BulletLabel Text="These Terms and Conditions of Use and any additional terms posted on this Site together constitute the entire agreement between airiq.in and you with respect to your use of this Site."/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.TermsPara1}"/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.TermsPara2}"/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.TermsPara3}"/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.TermsPara4}"/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.TermsPara5}"/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.TermsPara5}"/>
 
                 <Label
-                    Text="Site and Its Contents"
+                    Text="{x:Static resx:AppResource.TermsHeading2}"
                     FontSize="20"
                     FontAttributes="Bold"
                     TextColor="#111111"
                     Margin="0,10,0,0"/>
 
-                <controls:BulletLabel Text="This Site is only for your personal use. You shall not distribute, exchange, modify, sell or transmit anything you copy from this Site, including but not limited to any text, images, audio and video, for any business, commercial or public purpose."/>
-                <controls:BulletLabel Text="As long as you comply with the terms of these Terms and Conditions of Use, airiq.in grants you a non-exclusive, non-transferable, limited right to enter, view and use this Site. You agree not to interrupt or attempt to interrupt the operation of this Site in any way."/>
-                <controls:BulletLabel Text="Access to certain areas of the Site may only be available to registered members. To become a registered member, you may be required to answer certain questions. Answers to such questions may be mandatory and/or optional. You represent and warrant that all information you supply to us, about yourself, and others, is true and accurate."/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.TermsPara6}"/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.TermsPara7}"/>
+                <controls:BulletLabel Text="{x:Static resx:AppResource.TermsPara8}"/>
 
 
             </VerticalStackLayout>

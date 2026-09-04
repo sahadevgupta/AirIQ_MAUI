@@ -124,9 +124,9 @@ namespace AirIQ.Platforms.Handlers
 
         private void VirtualView_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == CustomDropdown.ItemSourceProperty.PropertyName)
+            if (e.PropertyName == CustomDropdown.ItemSourceProperty.PropertyName && sender is CustomDropdown dropdownSender)
             {
-                var items = ((CustomDropdown)sender).ItemSource;
+                var items = dropdownSender.ItemSource;
                 if (items != null && items.Count == 0)
                 {
                     var itemType = items.GetType().GetGenericArguments().FirstOrDefault();
@@ -304,7 +304,7 @@ namespace AirIQ.Platforms.Handlers
 
         private void HideKeyboard(View view)
         {
-            var imm = (InputMethodManager)MauiApplication.Current.GetSystemService(Context.InputMethodService);
+            var imm = MauiApplication.Current.GetSystemService(Context.InputMethodService) as InputMethodManager;
 
             if (imm != null)
             {

@@ -16,7 +16,7 @@ using Mopups.Services;
 
 namespace AirIQ.ViewModels.Common;
 
-public partial class MenuPageViewModel(IViewModelParameters viewModelParameters) : BaseViewModel(viewModelParameters)
+public partial class MenuPageViewModel(IViewModelParameters viewModelParameters, IAuthService authService) : BaseViewModel(viewModelParameters)
 {
     #region [ Properties ]
 
@@ -38,7 +38,7 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
     private void PopuplateMenuOptions()
     {
 
-        BuildNumber = $"App Version: {AppInfo.Current.VersionString}";
+        BuildNumber = string.Format(AppResource.AppVersionLabelFormat, AppInfo.Current.VersionString);
         Menus = new ObservableCollection<MenuOption>
         {
             new MenuOption{Title=AppResource.Flights, IconSource="flight", MenuType = MenuType.Flight },
@@ -74,8 +74,7 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
     private async Task Logout()
     {
         ClosePopup();
-        SecureStorage.RemoveAll();
-        Preferences.Clear();
+        authService.Logout();
 
         if (Shell.Current != null)
             await MainThread.InvokeOnMainThreadAsync(() => Shell.Current.GoToAsync("//LoginPage"));
@@ -118,7 +117,7 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
                 await ShellNavigationService.NavigateToFlyoutPage<OnlineRechargePage>();
                 break;
             case MenuType.Flight:
-                await Shell.Current.GoToAsync("///home");
+                await Shell.Current.GoToAsync("//app/home");
                 break;
         }
     }
@@ -127,7 +126,7 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
 
     #region [ override Methods ]
 
-    public override Task LoadDataWhenNavigatedTo()
+    public override Task LoadDataWhenNavigatedTo(CancellationToken cancellationToken = default)
     {
         InitializeData();
         return base.LoadDataWhenNavigatedTo();

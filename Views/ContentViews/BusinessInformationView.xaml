@@ -21,105 +21,105 @@
                                CharacterSpacing="1.2"
                                Margin="0,8,0,0"/>
 
-                        <controls:ExtendedDropdown Title="Primary Business"
+                        <controls:ExtendedDropdown Title="{x:Static resx:AppResource.PrimaryBusiness}"
                                                    SuffixText="*"
-                                                   PlaceholderText="Select Primary Business Type"
+                                                   PlaceholderText="{x:Static resx:AppResource.SelectPrimaryBusinessType}"
                                                    ItemsSource="{Binding PrimaryBusinessTypes}"
                                                    SelectedItem="{Binding SelectedPrimaryBusinessType}"
                                                    IsError="{Binding IsPrimaryBusinessTypeErrorVisible}"
-                                                   ErrorText="Primary business type is required"
+                                                   ErrorText="{x:Static resx:AppResource.PrimaryMonthlyTypeIsRequired}"
                                                    DisplayMemberPath="Name"/>
 
-                        <controls:ExtendedDropdown Title="Monthly Business"
+                        <controls:ExtendedDropdown Title="{x:Static resx:AppResource.MonthlyBusiness}"
                                                    SuffixText="*"
-                                                   PlaceholderText="Select Monthly Business Type"
+                                                   PlaceholderText="{x:Static resx:AppResource.SelectMonthlyBusinessType}"
                                                    IsError="{Binding IsPrimaryMonthlyIncomeErrorVisible}"
-                                                   ErrorText="Primary monthly business is required"
+                                                   ErrorText="{x:Static resx:AppResource.PrimaryMonthlyBusinessIsRequired}"
                                                    SelectedItem="{Binding PrimaryMonthlyIncome}">
                                 <controls:ExtendedDropdown.ItemsSource>
                                         <x:Array Type="{x:Type x:String}">
-                                                <x:String>Below 5 Lacs</x:String>
-                                                <x:String>5 - 10 Lacs</x:String>
-                                                <x:String>10 - 20 Lacs</x:String>
-                                                <x:String>20 - 30 Lacs</x:String>
-                                                <x:String>30 - 40 Lacs</x:String>
-                                                <x:String>40 - 50 Lacs</x:String>
-                                                <x:String>50 - 75 Lacs</x:String>
-                                                <x:String>75 - 1 Crore</x:String>
-                                                <x:String>Above 1 Crore</x:String>
+                                                <x:String>{x:Static resx:AppResource.IncomeRangeBelow5Lacs}</x:String>
+                                                <x:String>{x:Static resx:AppResource.IncomeRange5To10Lacs}</x:String>
+                                                <x:String>{x:Static resx:AppResource.IncomeRange10To20Lacs}</x:String>
+                                                <x:String>{x:Static resx:AppResource.IncomeRange20To30Lacs}</x:String>
+                                                <x:String>{x:Static resx:AppResource.IncomeRange30To40Lacs}</x:String>
+                                                <x:String>{x:Static resx:AppResource.IncomeRange40To50Lacs}</x:String>
+                                                <x:String>{x:Static resx:AppResource.IncomeRange50To75Lacs}</x:String>
+                                                <x:String>{x:Static resx:AppResource.IncomeRange75LacsTo1Crore}</x:String>
+                                                <x:String>{x:Static resx:AppResource.IncomeRangeAbove1Crore}</x:String>
                                         </x:Array>
                                 </controls:ExtendedDropdown.ItemsSource>
                         </controls:ExtendedDropdown>
 
-                        <controls:ExtendedDropdown Title="Secondary Business"
+                        <controls:ExtendedDropdown Title="{x:Static resx:AppResource.SecondaryBusiness}"
                                                    SuffixText="*"
-                                                   PlaceholderText="Select Secondary Business Type"
+                                                   PlaceholderText="{x:Static resx:AppResource.SelectSecondaryBusinessType}"
                                                    ItemsSource="{Binding SecondaryBusinessTypes}"
                                                    SelectedItem="{Binding SelectedSecondaryBusinessType}"
                                                    IsError="{Binding IsSecondaryBusinessTypeErrorVisible}"
-                                                   ErrorText="Select secondary business type"
+                                                   ErrorText="{x:Static resx:AppResource.SelectSecondaryBusinessTypeLower}"
                                                    DisplayMemberPath="Name"
                                                    IsEnabled="{Binding SelectedPrimaryBusinessType, Converter={toolkit:IsNotNullConverter}}"/>
 
-                        <controls:ExtendedDropdown Title="Monthly Business"
+                        <controls:ExtendedDropdown Title="{x:Static resx:AppResource.MonthlyBusiness}"
                                                    SuffixText="*"
-                                                   PlaceholderText="Select Monthly Business Type"
+                                                   PlaceholderText="{x:Static resx:AppResource.SelectMonthlyBusinessType}"
                                                    IsError="{Binding IsSecondaryMonthlyIncomeErrorVisible}"
-                                                   ErrorText="Select secondary monthly business"
+                                                   ErrorText="{x:Static resx:AppResource.SelectSecondaryMonthlyBusiness}"
                                                    SelectedItem="{Binding SecondaryMonthlyIncome}">
                                 <controls:ExtendedDropdown.ItemsSource>
                                         <x:Array Type="{x:Type x:String}">
-                                                <x:String>Below 5 Lacs</x:String>
-                                                <x:String>5 - 10 Lacs</x:String>
-                                                <x:String>10 - 20 Lacs</x:String>
-                                                <x:String>20 - 30 Lacs</x:String>
-                                                <x:String>30 - 40 Lacs</x:String>
-                                                <x:String>40 - 50 Lacs</x:String>
-                                                <x:String>50 - 75 Lacs</x:String>
-                                                <x:String>75 - 1 Crore</x:String>
-                                                <x:String>Above 1 Crore</x:String>
+                                                <x:String>{x:Static resx:AppResource.IncomeRangeBelow5Lacs}</x:String>
+                                                <x:String>{x:Static resx:AppResource.IncomeRange5To10Lacs}</x:String>
+                                                <x:String>{x:Static resx:AppResource.IncomeRange10To20Lacs}</x:String>
+                                                <x:String>{x:Static resx:AppResource.IncomeRange20To30Lacs}</x:String>
+                                                <x:String>{x:Static resx:AppResource.IncomeRange30To40Lacs}</x:String>
+                                                <x:String>{x:Static resx:AppResource.IncomeRange40To50Lacs}</x:String>
+                                                <x:String>{x:Static resx:AppResource.IncomeRange50To75Lacs}</x:String>
+                                                <x:String>{x:Static resx:AppResource.IncomeRange75LacsTo1Crore}</x:String>
+                                                <x:String>{x:Static resx:AppResource.IncomeRangeAbove1Crore}</x:String>
                                         </x:Array>
                                 </controls:ExtendedDropdown.ItemsSource>
                         </controls:ExtendedDropdown>
 
-                        <controls:ExtendedEntry Title="PAN No"
-                                                PlaceholderText="Enter PAN No"
+                        <controls:ExtendedEntry Title="{x:Static resx:AppResource.PANNo}"
+                                                PlaceholderText="{x:Static resx:AppResource.EnterPANNo}"
                                                 Text="{Binding Signup.PanNo}"/>
 
-                        <Button Text="Verify"
+                        <Button Text="{x:Static resx:AppResource.Verify}"
                                 HorizontalOptions="Start"
                                 TextColor="{StaticResource PrimaryColor}"
                                 BackgroundColor="White"
                                 Style="{StaticResource SmallBorderButtonStyle}"
                                 Command="{Binding ValidatePanCommand}"/>
 
-                        <controls:ExtendedEntry Title="Company GST No"
-                                                PlaceholderText="Enter Company GST No"
+                        <controls:ExtendedEntry Title="{x:Static resx:AppResource.CompanyGSTNo}"
+                                                PlaceholderText="{x:Static resx:AppResource.EnterCompanyGSTNo}"
                                                 Text="{Binding Signup.GstNo}"/>
 
-                        <Button Text="Verify"
+                        <Button Text="{x:Static resx:AppResource.Verify}"
                                 HorizontalOptions="Start"
                                 TextColor="{StaticResource PrimaryColor}"
                                 BackgroundColor="White"
                                 Style="{StaticResource SmallBorderButtonStyle}"
                                 Command="{Binding ValidateGstCommand}"/>
 
-                        <controls:ExtendedEntry Title="Online OTAs you are working with ?"
+                        <controls:ExtendedEntry Title="{x:Static resx:AppResource.OnlineOtasWorkingWith}"
                                                 SuffixText="*"
-                                                PlaceholderText="Online OTA 1"
+                                                PlaceholderText="{x:Static resx:AppResource.OnlineOTA1}"
                                                 Text="{Binding Signup.OnlineOta1}"/>
-                        <controls:ExtendedEntry PlaceholderText="Online OTA 1"
+                        <controls:ExtendedEntry PlaceholderText="{x:Static resx:AppResource.OnlineOTA1}"
                                                 Text="{Binding Signup.OnlineOta2}"/>
-                        <controls:ExtendedEntry Title="Series OTAs you are working with ?"
+                        <controls:ExtendedEntry Title="{x:Static resx:AppResource.SeriesOtasWorkingWith}"
                                                 SuffixText="*"
-                                                PlaceholderText="Series OTA 1"
+                                                PlaceholderText="{x:Static resx:AppResource.SeriesOTA1}"
                                                 Text="{Binding Signup.SeriesOta1}"/>
-                        <controls:ExtendedEntry PlaceholderText="Series OTA 1"
+                        <controls:ExtendedEntry PlaceholderText="{x:Static resx:AppResource.SeriesOTA1}"
                                                 Text="{Binding Signup.SeriesOta2}"/>
 
                 </VerticalStackLayout>
 
-                <Button Text="Cancel"
+                <Button Text="{x:Static resx:AppResource.Cancel}"
                         Grid.Row="1"
                         Grid.Column="0"
                         Margin="0,0,0,20"
@@ -131,7 +131,7 @@
                         Style="{StaticResource ButtonCorneredStyle}"/>
 
 
-                <Button Text="Submit"
+                <Button Text="{x:Static resx:AppResource.Submit}"
                         Grid.Row="1"
                         Margin="0,0,0,20"
                         Grid.Column="1"

@@ -6,9 +6,11 @@
                 xmlns:stepBar="clr-namespace:AirIQ.Controls.StepBar"
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
+                xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                 IsNavBarVisible="True"
+                IsWalletVisible="False"
                 x:DataType="vm:SignupPageViewModel"
-                PageTitle="Sign Up"
+                PageTitle="{x:Static resx:AppResource.SignUp}"
                 BackgroundColor="White">
        <views:BasePage.PageContent>
 
@@ -16,15 +18,15 @@
                      <Label Padding="10,5,0,0">
                             <Label.FormattedText>
                                    <FormattedString>
-                                          <Span Text="Note: "
+                                          <Span Text="{x:Static resx:AppResource.NoteLabel}"
                                                 FontAttributes="Bold"/>
-                                          <Span Text="Fields marked with an asterisk "
+                                          <Span Text="{x:Static resx:AppResource.FieldsMarkedWithAsterisk}"
                                                 FontAttributes="Italic"/>
-                                          <Span Text="(*) "
-                                                        TextColor="Red"
-                                                        FontAttributes="Italic"/>
-                                          <Span Text="are mandatory."
-                                                        FontAttributes="Italic"/>
+                                          <Span Text="{x:Static resx:AppResource.AsteriskSymbol}"
+                                                TextColor="Red"
+                                                FontAttributes="Italic"/>
+                                          <Span Text="{x:Static resx:AppResource.AreMandatory}"
+                                                FontAttributes="Italic"/>
                                    </FormattedString>
                             </Label.FormattedText>
                      </Label>

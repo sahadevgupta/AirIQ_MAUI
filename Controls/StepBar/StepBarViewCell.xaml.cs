@@ -63,7 +63,9 @@ public partial class StepBarViewCell : ContentView
 	}
 	private async void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
 	{
-		var model = (StepBarModel)sender;
+		if (sender is not StepBarModel model)
+			return;
+
 		if (e.PropertyName == nameof(StepBarModel.Status))
 		{
 			switch (model.Status)

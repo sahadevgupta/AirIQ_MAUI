@@ -7,6 +7,7 @@ namespace AirIQ.Extensions
     public static class AirportExtensions
     {
         private static List<Airport>? _airports;
+        private static Dictionary<string, Airport>? _airportsByIata;
 
         /// <summary>
         /// Load airports.json from Resources/Raw.
@@ -21,6 +22,15 @@ namespace AirIQ.Extensions
 
             _airports = await JsonSerializer.DeserializeAsync<List<Airport>>(stream)
                          ?? new List<Airport>();
+
+            // Indexed once so IATA lookups (used on every Airport Search Page navigation) are O(1)
+            // instead of scanning the full ~7.7k-entry list per lookup.
+            _airportsByIata = new Dictionary<string, Airport>(StringComparer.OrdinalIgnoreCase);
+            foreach (var airport in _airports)
+            {
+                if (!string.IsNullOrEmpty(airport.Iata))
+                    _airportsByIata.TryAdd(airport.Iata, airport);
+            }
         }
 
         /// <summary>
@@ -61,8 +71,21 @@ namespace AirIQ.Extensions
         /// </summary>
         public static string? GetCountry(this string iataCode)
         {
-            return _airports!.FirstOrDefault(x =>
-                    string.Equals(x.Iata, iataCode, StringComparison.OrdinalIgnoreCase))?.Country;
+            return iataCode.GetAirportByIata()?.Country;
+        }
+
+        /// <summary>
+        /// Returns the airport matching the Iata Code.
+        /// </summary>
+        public static Airport? GetAirportByIata(this string? iataCode)
+        {
+            if (_airportsByIata == null)
+                throw new InvalidOperationException("AirportExtensions.InitializeAsync() must be called first.");
+
+            if (string.IsNullOrWhiteSpace(iataCode))
+                return null;
+
+            return _airportsByIata.GetValueOrDefault(iataCode);
         }
     }
 }

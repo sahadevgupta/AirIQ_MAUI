@@ -1,20 +1,48 @@
+using AirIQ.Configurations;
 using AirIQ.Enums;
+using AirIQ.Resources.Strings;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
 using AirIQ.Views;
 
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace AirIQ.ViewModels
 {
-    public partial class MyAccountPageViewModel(IViewModelParameters viewModelParameters) : BaseViewModel(viewModelParameters)
+    public partial class MyAccountPageViewModel(IViewModelParameters viewModelParameters, IAuthService authService) : BaseViewModel(viewModelParameters)
     {
+        [ObservableProperty]
+        private string _biometricStatusText = string.Empty;
+
+        [ObservableProperty]
+        private Color _biometricStatusColor = Colors.Gray;
+
+        public override Task LoadDataWhenOnAppearing(CancellationToken cancellationToken = default)
+        {
+            RefreshBiometricStatus();
+            return base.LoadDataWhenOnAppearing(cancellationToken);
+        }
+
+        private void RefreshBiometricStatus()
+        {
+            var isEnabled = AppConfiguration.IsBiometricLoginEnabled;
+            BiometricStatusText = isEnabled ? AppResource.Enabled : AppResource.Disabled;
+            BiometricStatusColor = (Color)Application.Current?.Resources[isEnabled ? "Green" : "Gray50"]!;
+        }
+
         #region [ Commands ]
 
         [RelayCommand]
         private void NotAvailable()
         {
-            ShowToast("This feature is coming soon.");
+            ShowToast(AppResource.FeatureComingSoon);
+        }
+
+        [RelayCommand]
+        private async Task OpenBiometricAuthentication()
+        {
+            await ShellNavigationService.Navigate<BiometricAuthenticationPage>();
         }
 
         [RelayCommand]
@@ -38,14 +66,13 @@ namespace AirIQ.ViewModels
         [RelayCommand]
         private async Task AboutApp()
         {
-            await ShowAlertAsync($"AirIQ\nVersion {AppInfo.Current.VersionString}", AlertType.Success);
+            await ShowAlertAsync(string.Format(AppResource.AppNameVersionFormat, AppInfo.Current.VersionString), AlertType.Success);
         }
 
         [RelayCommand]
         private async Task Logout()
         {
-            SecureStorage.RemoveAll();
-            Preferences.Clear();
+            authService.Logout();
 
             if (Shell.Current != null)
                 await MainThread.InvokeOnMainThreadAsync(() => Shell.Current.GoToAsync("//LoginPage"));

@@ -43,7 +43,7 @@
         </DataTemplate>
     </Shell.FlyoutContentTemplate>
 
-    <ShellContent Title="Loading"
+    <ShellContent Title="{x:Static resx:AppResource.Loading}"
                   ContentTemplate="{DataTemplate controls:LoadingIndicatorView}"
                   Route="loading"
                   Shell.TabBarIsVisible="False"
@@ -52,24 +52,23 @@
 
     <!-- ROUTE: login - User authentication -->
     <ShellContent
-        Title="Login"
+        Title="{x:Static resx:AppResource.Login}"
         ContentTemplate="{DataTemplate local:LoginPage}"
         Route="LoginPage"
         Shell.TabBarIsVisible="False"
         Shell.FlyoutItemIsVisible="False"/>
 
-    <ShellContent Title="Flights"
+    <!-- <ShellContent Title="{x:Static resx:AppResource.Flights}"
                   ContentTemplate="{DataTemplate local:DashboardPage}"
                   Route="home"
-                  Icon="flight"/>
+                  Icon="flight"/> -->
 
-    <TabBar Route="app"
-            IsVisible="False">
-        <ShellContent Title="Flights"
-                      ContentTemplate="{DataTemplate local:DashboardPage}"
+    <TabBar Route="app">
+        <ShellContent Title="{x:Static resx:AppResource.Flights}"
+                      ContentTemplate="{DataTemplate local:DashboardPage2}"
                       Route="home"
                       Icon="flight"/>
-        <ShellContent Title="Hotels"
+        <ShellContent Title="{x:Static resx:AppResource.Hotels}"
                       ContentTemplate="{DataTemplate local:HotelsPage}"
                       Route="HotelsPage">
             <ShellContent.Icon>
@@ -79,8 +78,8 @@
                     Size="24"/>
             </ShellContent.Icon>
         </ShellContent>
-        <ShellContent Title="Account"
-                      ContentTemplate="{DataTemplate local:AccountsPage}"
+        <ShellContent Title="{x:Static resx:AppResource.Account}"
+                      ContentTemplate="{DataTemplate local:MyAccountPage}"
                       Route="AccountPage">
             <ShellContent.Icon>
                 <FontImageSource
@@ -89,7 +88,7 @@
                     Size="24"/>
             </ShellContent.Icon>
         </ShellContent>
-        <ShellContent Title="Settings"
+        <ShellContent Title="{x:Static resx:AppResource.Settings}"
                       ContentTemplate="{DataTemplate local:SettingsPage}"
                       Route="SettingsPage">
             <ShellContent.Icon>

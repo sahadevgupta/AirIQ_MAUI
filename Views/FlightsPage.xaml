@@ -9,7 +9,7 @@
     xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
     xmlns:viewmodels="clr-namespace:AirIQ.ViewModels"
     xmlns:views="clr-namespace:AirIQ.Views"
-    PageTitle="Select Flight"
+    PageTitle="{x:Static resx:AppResource.SelectFlight}"
     x:DataType="viewmodels:FlightsPageViewModel">
 
     <views:BasePage.PageContent>
@@ -72,19 +72,19 @@
                                            Grid.Row="1"
                                            Grid.ColumnSpan="3"/>
 
-                    <Button Text="AIR IQ"
+                    <Button Text="{x:Static resx:AppResource.AIRIQ}"
                             Grid.Row="2"
                             Grid.Column="0"
                             Style="{StaticResource SmallBorderButtonStyle}"/>
 
-                    <Button Text="MARKETPLACE"
+                    <Button Text="{x:Static resx:AppResource.MARKETPLACE}"
                             Grid.Row="2"
                             HorizontalOptions="Start"
                             Style="{StaticResource SmallBorderButtonStyle}"
                             Grid.Column="1"/>
 
 
-                    <Label Text="{Binding AvailableFlights.Count,TargetNullValue=0,StringFormat='{0} Flights'}"
+                    <Label Text="{Binding AvailableFlights.Count,TargetNullValue=0,StringFormat={x:Static resx:AppResource.FlightsCountFormat}}"
                            Style="{StaticResource Label16Bold}"
                            Grid.Row="2"
                            Grid.Column="2"
@@ -244,7 +244,7 @@
                                     </Label.FormattedText>
                                 </Label>
 
-                                <Button Text="{Binding Pax, StringFormat='Copy {0} seats'}"
+                                <Button Text="{Binding Pax, StringFormat={x:Static resx:AppResource.CopySeatsButton}}"
                                         Command="{Binding BindingContext.CopyFlightDetailCommand,Source={x:Reference flightsCollectionView}}"
                                         Grid.Row="3"
                                         BorderColor="{StaticResource Gray30}"

@@ -9,6 +9,7 @@ namespace AirIQ.Extensions
         {
             builder.Services.AddTransient<ChangePasswordPageViewModel>()
                             .AddTransient<DashboardPageViewModel>()
+                            .AddTransient<DashboardPage2ViewModel>()
                             .AddTransient<FlightsPageViewModel>()
                             .AddTransient<FlightBookingPageViewModel>()
                             .AddTransient<ForgotPasswordPageViewModel>()
@@ -27,7 +28,10 @@ namespace AirIQ.Extensions
                             .AddTransient<PaxCalendarPageViewModel>()
                             .AddTransient<BankDetailsPageViewModel>()
                             .AddTransient<MyAccountPageViewModel>()
-                            .AddTransient<LegalViewModel>();
+                            .AddTransient<LegalViewModel>()
+                            .AddTransient<AirportSearchPageViewModel>()
+                            .AddTransient<BiometricAuthenticationPageViewModel>()
+                            .AddTransient<WalletPageViewModel>();
 
             return builder;
         }

@@ -214,7 +214,6 @@ public partial class CalendarView : PopupPage
         // clear binding context & event handlers to reduce references
         DatePicked = null;
         BindingContext = null;
-        GC.Collect();
     }
 }
 

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using AirIQ.Models;
+using AirIQ.Resources.Strings;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -34,8 +35,8 @@ namespace AirIQ.ViewModels
         {
             Tabs = new ObservableCollection<TabModel>
             {
-                new TabModel{ Name = "Details", Icon ="detail_icon", IsSelected=true},
-                new TabModel{ Name = "History", Icon="history"}
+                new TabModel{ Name = AppResource.DetailsTab, Icon ="detail_icon", IsSelected=true},
+                new TabModel{ Name = AppResource.HistoryTab, Icon="history"}
             };
         }
 
@@ -58,7 +59,7 @@ namespace AirIQ.ViewModels
 
         #region [ Override Method ]
 
-        public override Task LoadDataWhenNavigatedTo()
+        public override Task LoadDataWhenNavigatedTo(CancellationToken cancellationToken = default)
         {
             InitData();
             return base.LoadDataWhenNavigatedTo();

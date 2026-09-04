@@ -84,18 +84,18 @@
                     </controls:ExtendedDropdown.Behaviors>
                     <controls:ExtendedDropdown.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
-                            <x:String>Adult</x:String>
-                            <x:String>Child</x:String>
+                            <x:String>{x:Static resx:AppResource.Adult}</x:String>
+                            <x:String>{x:Static resx:AppResource.Child}</x:String>
                         </x:Array>
                     </controls:ExtendedDropdown.ItemsSource>
                 </controls:ExtendedDropdown>
 
                 <controls:ExtendedDropdown
-                    Title="Travel With"
+                    Title="{x:Static resx:AppResource.TravelWith}"
                     HasPadding="True"
                     Grid.Column="1"
                     ItemsSource="{Binding BindingContext.InfantTravelPartners, Source={x:Reference infantview}}"
-                    PlaceholderText="Title"
+                    PlaceholderText="{x:Static resx:AppResource.Title}"
                     SelectedItem="{Binding TravelWith}"/>
 
                 <controls:ExtendedEntry Title="{x:Static resx:AppResource.FirstName}"
@@ -122,7 +122,7 @@
                 </controls:ExtendedEntry>
 
                 <controls:ExtendedDatePicker Grid.Row="3"
-                                             Title="Date of Birth"
+                                             Title="{x:Static resx:AppResource.DateOfBirth}"
                                              Date="{Binding BirthDate}"
                                              Grid.ColumnSpan="2">
                     <controls:ExtendedDatePicker.Behaviors>
