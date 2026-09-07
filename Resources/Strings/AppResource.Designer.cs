@@ -3733,6 +3733,24 @@ namespace AirIQ.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Today.
+        /// </summary>
+        internal static string Today {
+            get {
+                return ResourceManager.GetString("Today", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Holiday(s).
+        /// </summary>
+        internal static string HolidaysCountFormat {
+            get {
+                return ResourceManager.GetString("HolidaysCountFormat", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Sun.
         /// </summary>
         internal static string DaySun {

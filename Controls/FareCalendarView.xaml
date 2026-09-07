@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:AirIQ.Extensions"
+             x:Class="AirIQ.Controls.FareCalendarView"
+             x:Name="Root">
+
+    <Grid RowDefinitions="Auto,Auto,Auto"
+          RowSpacing="16">
+
+        <!-- Month title, holiday badge and prev/next navigation -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="*,Auto"
+              ColumnSpacing="8">
+
+            <HorizontalStackLayout Grid.Column="0"
+                                   Spacing="10"
+                                   VerticalOptions="Center">
+                <Label x:Name="monthLabel"
+                       Style="{StaticResource Label18SemiBold}"
+                       TextColor="{StaticResource Gray900}"
+                       VerticalOptions="Center"/>
+
+                <Border x:Name="holidayBadge"
+                        IsVisible="False"
+                        StrokeShape="RoundRectangle 12"
+                        StrokeThickness="0"
+                        BackgroundColor="{StaticResource CalendarHighlightBackground}"
+                        Padding="10,4"
+                        VerticalOptions="Center">
+                    <Label x:Name="holidayBadgeLabel"
+                           Style="{StaticResource Label12Medium}"
+                           TextColor="{StaticResource CalendarHighlightText}"/>
+                </Border>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Grid.Column="1"
+                                   Spacing="4"
+                                   VerticalOptions="Center">
+                <ImageButton x:Name="leftArrow"
+                             Aspect="Center"
+                             WidthRequest="36"
+                             HeightRequest="36"
+                             BackgroundColor="Transparent"
+                             Clicked="LeftArrow_Clicked">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="{x:Static helpers:FontAwesomeIcons.ArrowLeft}"
+                                         FontFamily="MyFont"
+                                         Size="14"
+                                         Color="{StaticResource Gray500}"/>
+                    </ImageButton.Source>
+                </ImageButton>
+
+                <ImageButton x:Name="rightArrow"
+                             Aspect="Center"
+                             WidthRequest="36"
+                             HeightRequest="36"
+                             BackgroundColor="Transparent"
+                             Clicked="RightArrow_Clicked">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="{x:Static helpers:FontAwesomeIcons.ArrowRight}"
+                                         FontFamily="MyFont"
+                                         Size="14"
+                                         Color="{StaticResource Gray500}"/>
+                    </ImageButton.Source>
+                </ImageButton>
+            </HorizontalStackLayout>
+        </Grid>
+
+        <!-- Weekday header -->
+        <Grid x:Name="WeekdayHeaderGrid"
+              Grid.Row="1"
+              ColumnDefinitions="*,*,*,*,*,*,*"/>
+
+        <!-- Calendar grid: pooled cells created in code-behind -->
+        <Grid x:Name="CalendarGrid"
+              Grid.Row="2"
+              ColumnDefinitions="*,*,*,*,*,*,*"
+              RowSpacing="4"/>
+
+    </Grid>
+</ContentView>

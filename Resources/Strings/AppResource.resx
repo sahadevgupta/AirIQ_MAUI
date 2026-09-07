@@ -1363,6 +1363,12 @@ Version {0}</value>
   <data name="DaySat" xml:space="preserve">
     <value>Sat</value>
   </data>
+  <data name="Today" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="HolidaysCountFormat" xml:space="preserve">
+    <value>{0} Holiday(s)</value>
+  </data>
   <data name="BalanceLabel" xml:space="preserve">
     <value>Balance: </value>
   </data>
