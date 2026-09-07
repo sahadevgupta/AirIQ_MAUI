@@ -6,62 +6,65 @@
              x:Name="Root">
 
     <Grid RowDefinitions="Auto,Auto,Auto"
-          RowSpacing="16">
+          RowSpacing="18"
+          BackgroundColor="White"
+          HorizontalOptions="Fill"
+          VerticalOptions="Start">
 
-        <!-- Month title, holiday badge and prev/next navigation -->
+        <Grid.GestureRecognizers>
+            <SwipeGestureRecognizer Direction="Left"
+                                     Swiped="OnSwipedLeft"/>
+            <SwipeGestureRecognizer Direction="Right"
+                                     Swiped="OnSwipedRight"/>
+        </Grid.GestureRecognizers>
+
+        <!-- Month title, "Next" hint and prev/next month navigation. Swiping the grid also changes months. -->
         <Grid Grid.Row="0"
               ColumnDefinitions="*,Auto"
               ColumnSpacing="8">
 
             <HorizontalStackLayout Grid.Column="0"
-                                   Spacing="10"
+                                   Spacing="8"
                                    VerticalOptions="Center">
                 <Label x:Name="monthLabel"
-                       Style="{StaticResource Label18SemiBold}"
+                       Style="{StaticResource Label20Bold}"
                        TextColor="{StaticResource Gray900}"
                        VerticalOptions="Center"/>
 
-                <Border x:Name="holidayBadge"
-                        IsVisible="False"
-                        StrokeShape="RoundRectangle 12"
-                        StrokeThickness="0"
-                        BackgroundColor="{StaticResource CalendarHighlightBackground}"
-                        Padding="10,4"
-                        VerticalOptions="Center">
-                    <Label x:Name="holidayBadgeLabel"
-                           Style="{StaticResource Label12Medium}"
-                           TextColor="{StaticResource CalendarHighlightText}"/>
-                </Border>
+                <Label x:Name="nextMonthLabel"
+                       Style="{StaticResource Label14Regular}"
+                       TextColor="{StaticResource Gray400}"
+                       VerticalOptions="Center"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout Grid.Column="1"
-                                   Spacing="4"
+                                   Spacing="8"
                                    VerticalOptions="Center">
                 <ImageButton x:Name="leftArrow"
                              Aspect="Center"
-                             WidthRequest="36"
-                             HeightRequest="36"
+                             WidthRequest="24"
+                             HeightRequest="24"
                              BackgroundColor="Transparent"
                              Clicked="LeftArrow_Clicked">
                     <ImageButton.Source>
-                        <FontImageSource Glyph="{x:Static helpers:FontAwesomeIcons.ArrowLeft}"
+                        <FontImageSource Glyph="{x:Static helpers:FontAwesomeIcons.ChevronLeft}"
                                          FontFamily="MyFont"
                                          Size="14"
-                                         Color="{StaticResource Gray500}"/>
+                                         Color="{StaticResource Gray400}"/>
                     </ImageButton.Source>
                 </ImageButton>
 
                 <ImageButton x:Name="rightArrow"
                              Aspect="Center"
-                             WidthRequest="36"
-                             HeightRequest="36"
+                             WidthRequest="24"
+                             HeightRequest="24"
                              BackgroundColor="Transparent"
                              Clicked="RightArrow_Clicked">
                     <ImageButton.Source>
-                        <FontImageSource Glyph="{x:Static helpers:FontAwesomeIcons.ArrowRight}"
+                        <FontImageSource Glyph="{x:Static helpers:FontAwesomeIcons.ChevronRight}"
                                          FontFamily="MyFont"
                                          Size="14"
-                                         Color="{StaticResource Gray500}"/>
+                                         Color="{StaticResource Gray400}"/>
                     </ImageButton.Source>
                 </ImageButton>
             </HorizontalStackLayout>
@@ -70,13 +73,16 @@
         <!-- Weekday header -->
         <Grid x:Name="WeekdayHeaderGrid"
               Grid.Row="1"
-              ColumnDefinitions="*,*,*,*,*,*,*"/>
+              ColumnDefinitions="*,*,*,*,*,*,*"
+              RowDefinitions="Auto"/>
 
         <!-- Calendar grid: pooled cells created in code-behind -->
         <Grid x:Name="CalendarGrid"
               Grid.Row="2"
               ColumnDefinitions="*,*,*,*,*,*,*"
-              RowSpacing="4"/>
+              RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
+              RowSpacing="10"
+              ColumnSpacing="4"/>
 
     </Grid>
 </ContentView>

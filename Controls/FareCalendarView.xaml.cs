@@ -9,9 +9,8 @@ using Microsoft.Maui.Controls.Shapes;
 namespace AirIQ.Controls;
 
 /// <summary>
-///     Standalone monthly fare-calendar control (month grid with a per-day subtitle,
-///     holiday badge and Today indicator). Independent of <see cref="CalendarView"/> and
-///     <see cref="CalendarViewV2"/> - does not inherit from or modify either.
+///     Standalone monthly calendar control for picking a departure date. Independent of
+///     <see cref="CalendarView"/> and <see cref="CalendarViewV2"/> - does not inherit from or modify either.
 /// </summary>
 public partial class FareCalendarView : ContentView
 {
@@ -19,11 +18,11 @@ public partial class FareCalendarView : ContentView
     const int COLS = 7;
 
     readonly Border[,] _cells = new Border[ROWS, COLS];
-    readonly Label[,] _tagLabels = new Label[ROWS, COLS];
+    readonly Label[,] _captionLabels = new Label[ROWS, COLS];
     readonly Label[,] _dayLabels = new Label[ROWS, COLS];
-    readonly Label[,] _subtitleLabels = new Label[ROWS, COLS];
     readonly DateTime[,] _cellDates = new DateTime[ROWS, COLS];
     readonly Dictionary<DateTime, CalendarDayInfo> _dayInfoMap = new();
+    readonly HashSet<DateTime> _allowedSet = new();
 
     DateTime _displayMonth;
     bool _isBuilt;
@@ -70,6 +69,21 @@ public partial class FareCalendarView : ContentView
     {
         get => (DateTime)GetValue(MaximumDateProperty);
         set => SetValue(MaximumDateProperty, value);
+    }
+
+    /// <summary>
+    ///     Dates the user is allowed to pick. When set, every date not in this list is
+    ///     rendered and treated as disabled - mirrors <see cref="CalendarViewV2.AllowedDates"/>.
+    ///     When left null, selectability falls back to the <see cref="MinimumDate"/>/<see cref="MaximumDate"/> range.
+    /// </summary>
+    public static readonly BindableProperty AllowedDatesProperty =
+        BindableProperty.Create(nameof(AllowedDates), typeof(IList<DateTime>), typeof(FareCalendarView), null,
+            BindingMode.TwoWay, propertyChanged: OnAllowedDatesChanged);
+
+    public IList<DateTime> AllowedDates
+    {
+        get => (IList<DateTime>)GetValue(AllowedDatesProperty);
+        set => SetValue(AllowedDatesProperty, value);
     }
 
     public static readonly BindableProperty DayInfosProperty =
@@ -125,6 +139,41 @@ public partial class FareCalendarView : ContentView
         var control = (FareCalendarView)bindable;
         if (control._isBuilt)
             control.UpdateMonth(control._displayMonth);
+    }
+
+    static void OnAllowedDatesChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var control = (FareCalendarView)bindable;
+
+        if (oldValue is INotifyCollectionChanged oldNotifying)
+            oldNotifying.CollectionChanged -= control.OnAllowedDatesCollectionChanged;
+
+        if (newValue is INotifyCollectionChanged newNotifying)
+            newNotifying.CollectionChanged += control.OnAllowedDatesCollectionChanged;
+
+        control.RebuildAllowedSet();
+
+        if (control._isBuilt)
+            control.UpdateMonth(control._displayMonth);
+    }
+
+    void OnAllowedDatesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        RebuildAllowedSet();
+
+        if (_isBuilt)
+            UpdateMonth(_displayMonth);
+    }
+
+    void RebuildAllowedSet()
+    {
+        _allowedSet.Clear();
+
+        if (AllowedDates == null)
+            return;
+
+        foreach (var date in AllowedDates)
+            _allowedSet.Add(date.Date);
     }
 
     static void OnDayInfosChanged(BindableObject bindable, object oldValue, object newValue)
@@ -187,46 +236,35 @@ public partial class FareCalendarView : ContentView
         {
             for (int c = 0; c < COLS; c++)
             {
-                var tagLabel = new Label
+                var captionLabel = new Label
                 {
-                    FontSize = 10,
-                    FontFamily = "RobotoMedium",
+                    Text = AppResource.Depart.ToUpper(CultureInfo.CurrentCulture),
+                    FontSize = 9,
+                    FontFamily = "RobotoSemiBold",
                     HorizontalTextAlignment = TextAlignment.Center,
-                    LineBreakMode = LineBreakMode.TailTruncation,
-                    MaxLines = 1
+                    IsVisible = false
                 };
 
                 var dayLabel = new Label
                 {
-                    FontSize = 15,
+                    FontSize = 16,
                     FontFamily = "RobotoSemiBold",
                     HorizontalTextAlignment = TextAlignment.Center
                 };
 
-                var subtitleLabel = new Label
+                // A VerticalStackLayout is cheaper to measure/arrange than a Grid, and with 42 of
+                // these nested inside the outer 6x7 grid the difference is what made the page feel slow to open.
+                var content = new VerticalStackLayout
                 {
-                    FontSize = 11,
-                    FontFamily = "RobotoRegular",
-                    HorizontalTextAlignment = TextAlignment.Center
+                    Spacing = 1,
+                    VerticalOptions = LayoutOptions.Center
                 };
-
-                var content = new Grid
-                {
-                    RowDefinitions =
-                    {
-                        new RowDefinition(GridLength.Auto),
-                        new RowDefinition(GridLength.Auto),
-                        new RowDefinition(GridLength.Auto)
-                    },
-                    RowSpacing = 2
-                };
-                content.Add(tagLabel, 0, 0);
-                content.Add(dayLabel, 0, 1);
-                content.Add(subtitleLabel, 0, 2);
+                content.Children.Add(captionLabel);
+                content.Children.Add(dayLabel);
 
                 var cell = new Border
                 {
-                    StrokeShape = new RoundRectangle { CornerRadius = 10 },
+                    StrokeShape = new RoundRectangle { CornerRadius = 16 },
                     StrokeThickness = 0,
                     BackgroundColor = Colors.Transparent,
                     Padding = new Thickness(2, 6),
@@ -241,9 +279,8 @@ public partial class FareCalendarView : ContentView
                 cell.GestureRecognizers.Add(tap);
 
                 _cells[r, c] = cell;
-                _tagLabels[r, c] = tagLabel;
+                _captionLabels[r, c] = captionLabel;
                 _dayLabels[r, c] = dayLabel;
-                _subtitleLabels[r, c] = subtitleLabel;
 
                 CalendarGrid.Add(cell, c, r);
             }
@@ -257,13 +294,14 @@ public partial class FareCalendarView : ContentView
         for (int i = 0; i < COLS; i++)
         {
             var day = (DayOfWeek)(((int)FirstDayOfWeek + i) % 7);
+            bool isWeekend = day == DayOfWeek.Saturday || day == DayOfWeek.Sunday;
 
             var label = new Label
             {
                 Text = DayAbbreviation(day).ToUpper(CultureInfo.CurrentCulture),
                 FontSize = 12,
                 FontFamily = "RobotoMedium",
-                TextColor = ResColor("Gray500"),
+                TextColor = isWeekend ? ResColor("CalendarWeekendText") : ResColor("Gray500"),
                 HorizontalTextAlignment = TextAlignment.Center
             };
 
@@ -312,11 +350,11 @@ public partial class FareCalendarView : ContentView
     {
         _displayMonth = new DateTime(month.Year, month.Month, 1);
 
-        monthLabel.Text = _displayMonth.ToString("MMM yyyy", CultureInfo.CurrentCulture);
+        monthLabel.Text = _displayMonth.ToString("MMMM yyyy", CultureInfo.CurrentCulture);
+        nextMonthLabel.Text = string.Format(AppResource.NextMonthFormat, _displayMonth.AddMonths(1).ToString("MMM yyyy", CultureInfo.CurrentCulture));
         SetDisplayedMonthValue(_displayMonth);
 
         var gridStart = GridStart(_displayMonth, FirstDayOfWeek);
-        int holidayCount = 0;
 
         for (int r = 0; r < ROWS; r++)
         {
@@ -327,16 +365,9 @@ public partial class FareCalendarView : ContentView
 
                 bool isCurrentMonth = cellDate.Month == _displayMonth.Month && cellDate.Year == _displayMonth.Year;
 
-                if (isCurrentMonth && _dayInfoMap.TryGetValue(cellDate.Date, out var info) && info.IsHoliday)
-                    holidayCount++;
-
                 ApplyCellVisual(r, c, cellDate, isCurrentMonth);
             }
         }
-
-        holidayBadge.IsVisible = holidayCount > 0;
-        if (holidayCount > 0)
-            holidayBadgeLabel.Text = string.Format(AppResource.HolidaysCountFormat, holidayCount);
 
         var minNavigableMonth = new DateTime(MinimumDate.Year, MinimumDate.Month, 1);
         var maxNavigableMonth = new DateTime(MaximumDate.Year, MaximumDate.Month, 1);
@@ -347,17 +378,15 @@ public partial class FareCalendarView : ContentView
     void ApplyCellVisual(int row, int col, DateTime cellDate, bool isCurrentMonth)
     {
         var cell = _cells[row, col];
-        var tagLabel = _tagLabels[row, col];
+        var captionLabel = _captionLabels[row, col];
         var dayLabel = _dayLabels[row, col];
-        var subtitleLabel = _subtitleLabels[row, col];
 
         if (!isCurrentMonth)
         {
             cell.Opacity = 0;
             cell.InputTransparent = true;
-            tagLabel.Text = string.Empty;
+            captionLabel.IsVisible = false;
             dayLabel.Text = string.Empty;
-            subtitleLabel.Text = string.Empty;
             return;
         }
 
@@ -365,41 +394,40 @@ public partial class FareCalendarView : ContentView
 
         _dayInfoMap.TryGetValue(cellDate.Date, out var info);
 
-        bool isToday = cellDate.Date == DateTime.Today;
         bool isSelected = SelectedDate.HasValue && SelectedDate.Value.Date == cellDate.Date;
-        bool isDisabled = cellDate.Date < MinimumDate.Date || cellDate.Date > MaximumDate.Date || (info?.IsDisabled ?? false);
-        bool isHighlighted = info != null && (info.IsHoliday || info.IsHighlighted);
+        // AllowedDates, when supplied, is the sole authority on selectability (matches CalendarViewV2).
+        // Otherwise selectability falls back to the MinimumDate/MaximumDate range.
+        bool isAllowed = AllowedDates != null
+            ? _allowedSet.Contains(cellDate.Date)
+            : cellDate.Date >= MinimumDate.Date && cellDate.Date <= MaximumDate.Date;
+        bool isDisabled = !isAllowed || (info?.IsDisabled ?? false);
+        bool isWeekend = cellDate.DayOfWeek == DayOfWeek.Saturday || cellDate.DayOfWeek == DayOfWeek.Sunday;
 
         cell.InputTransparent = isDisabled;
 
         dayLabel.Text = cellDate.Day.ToString();
-        subtitleLabel.Text = info?.Subtitle ?? string.Empty;
-        tagLabel.Text = isToday ? AppResource.Today : info?.Tag ?? string.Empty;
-        tagLabel.TextColor = isToday ? ResColor("PrimaryColor") : ResColor("CalendarHighlightText");
+        captionLabel.IsVisible = isSelected;
 
         if (isSelected)
         {
             cell.BackgroundColor = ResColor("PrimaryColor");
+            captionLabel.TextColor = Colors.White;
             dayLabel.TextColor = Colors.White;
-            subtitleLabel.TextColor = Colors.White;
         }
         else if (isDisabled)
         {
             cell.BackgroundColor = Colors.Transparent;
             dayLabel.TextColor = ResColor("Gray300");
-            subtitleLabel.TextColor = ResColor("Gray300");
         }
-        else if (isHighlighted)
+        else if (isWeekend)
         {
-            cell.BackgroundColor = ResColor("CalendarHighlightBackground");
-            dayLabel.TextColor = ResColor("Gray900");
-            subtitleLabel.TextColor = ResColor("Gray500");
+            cell.BackgroundColor = Colors.Transparent;
+            dayLabel.TextColor = ResColor("CalendarWeekendText");
         }
         else
         {
             cell.BackgroundColor = Colors.Transparent;
             dayLabel.TextColor = ResColor("Gray900");
-            subtitleLabel.TextColor = ResColor("Gray500");
         }
     }
 
@@ -427,6 +455,10 @@ public partial class FareCalendarView : ContentView
         SelectedDate = picked;
         DateSelected?.Invoke(this, picked);
     }
+
+    void OnSwipedLeft(object sender, SwipedEventArgs e) => NavigateToMonth(_displayMonth.AddMonths(1));
+
+    void OnSwipedRight(object sender, SwipedEventArgs e) => NavigateToMonth(_displayMonth.AddMonths(-1));
 
     void LeftArrow_Clicked(object sender, EventArgs e) => NavigateToMonth(_displayMonth.AddMonths(-1));
 

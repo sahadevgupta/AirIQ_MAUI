@@ -115,6 +115,15 @@ namespace AirIQ.Resources.Strings {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Select Departure Date.
+        /// </summary>
+        internal static string SelectDepartureDate {
+            get {
+                return ResourceManager.GetString("SelectDepartureDate", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Select Arrival Airport.
         /// </summary>
         internal static string SelectArrivalAirport {
@@ -3733,20 +3742,20 @@ namespace AirIQ.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Today.
+        ///   Looks up a localized string similar to Depart.
         /// </summary>
-        internal static string Today {
+        internal static string Depart {
             get {
-                return ResourceManager.GetString("Today", resourceCulture);
+                return ResourceManager.GetString("Depart", resourceCulture);
             }
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to {0} Holiday(s).
+        ///   Looks up a localized string similar to Next: {0}.
         /// </summary>
-        internal static string HolidaysCountFormat {
+        internal static string NextMonthFormat {
             get {
-                return ResourceManager.GetString("HolidaysCountFormat", resourceCulture);
+                return ResourceManager.GetString("NextMonthFormat", resourceCulture);
             }
         }
 

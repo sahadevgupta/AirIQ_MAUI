@@ -15,6 +15,7 @@ using Mopups.Interfaces;
 namespace AirIQ.ViewModels
 {
     [QueryProperty(nameof(AirportSelectionResult), NavigationParamConstants.AirportSelectionResult)]
+    [QueryProperty(nameof(SelectedTravelDateResult), NavigationParamConstants.SelectedTravelDateResult)]
     public partial class DashboardPage2ViewModel(IViewModelParameters viewModelParameters,
         IFlightService flightService) : BaseViewModel(viewModelParameters)
     {
@@ -23,6 +24,9 @@ namespace AirIQ.ViewModels
 
         [ObservableProperty]
         private AirportSelectionResult? _airportSelectionResult;
+
+        [ObservableProperty]
+        private DateTime? _selectedTravelDateResult;
 
         [ObservableProperty]
         private ObservableCollection<FlightRoute>? _sourceAirports;
@@ -87,6 +91,15 @@ namespace AirIQ.ViewModels
             AirportSelectionResult = null;
         }
 
+        partial void OnSelectedTravelDateResultChanged(DateTime? value)
+        {
+            if (value is null)
+                return;
+
+            SelectedTravelDate = value;
+            SelectedTravelDateResult = null;
+        }
+
         partial void OnSelectedDestinationAirportChanged(FlightRoute? oldValue, FlightRoute? newValue)
         {
             SelectedTravelDate = null;
@@ -144,6 +157,15 @@ namespace AirIQ.ViewModels
             {
                 { NavigationParamConstants.AirportFieldType, fieldType },
                 { NavigationParamConstants.AirportList, airports ?? new ObservableCollection<FlightRoute>() },
+            });
+        }
+
+        [RelayCommand]
+        private async Task OpenDepartureDatePicker()
+        {
+            await ShellNavigationService.Navigate<DepartureDatePage>(parameters: new Dictionary<string, object>
+            {
+                { NavigationParamConstants.TravelAllowedDates, AllowedDates },
             });
         }
 

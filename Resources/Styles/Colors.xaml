@@ -89,8 +89,7 @@
     <!-- ==================== -->
     <!-- FARE CALENDAR COLORS -->
     <!-- ==================== -->
-    <Color x:Key="CalendarHighlightBackground">#FCE8D2</Color>
-    <Color x:Key="CalendarHighlightText">#D9822B</Color>
+    <Color x:Key="CalendarWeekendText">#D9822B</Color>
 
     <LinearGradientBrush StartPoint="0,0"
                          x:Key="BrandGradient"

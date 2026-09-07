@@ -135,6 +135,9 @@
   <data name="SelectDepartureAirport" xml:space="preserve">
     <value>Select Departure Airport</value>
   </data>
+  <data name="SelectDepartureDate" xml:space="preserve">
+    <value>Select Departure Date</value>
+  </data>
   <data name="SelectArrivalAirport" xml:space="preserve">
     <value>Select Arrival Airport</value>
   </data>
@@ -1363,11 +1366,11 @@ Version {0}</value>
   <data name="DaySat" xml:space="preserve">
     <value>Sat</value>
   </data>
-  <data name="Today" xml:space="preserve">
-    <value>Today</value>
+  <data name="Depart" xml:space="preserve">
+    <value>Depart</value>
   </data>
-  <data name="HolidaysCountFormat" xml:space="preserve">
-    <value>{0} Holiday(s)</value>
+  <data name="NextMonthFormat" xml:space="preserve">
+    <value>Next: {0}</value>
   </data>
   <data name="BalanceLabel" xml:space="preserve">
     <value>Balance: </value>

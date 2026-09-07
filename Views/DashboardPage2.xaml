@@ -345,7 +345,7 @@
                            Style="{StaticResource Label16Bold}"
                            TextColor="{StaticResource Onyx}"/>
                     <VerticalStackLayout.GestureRecognizers>
-                      <TapGestureRecognizer Tapped="DepartureTapped"/>
+                      <TapGestureRecognizer Command="{Binding OpenDepartureDatePickerCommand}"/>
                     </VerticalStackLayout.GestureRecognizers>
                   </VerticalStackLayout>
 
