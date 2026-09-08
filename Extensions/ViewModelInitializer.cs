@@ -31,6 +31,7 @@ namespace AirIQ.Extensions
                             .AddTransient<LegalViewModel>()
                             .AddTransient<AirportSearchPageViewModel>()
                             .AddTransient<DepartureDatePageViewModel>()
+                            .AddTransient<TravelDatesPageViewModel>()
                             .AddTransient<BiometricAuthenticationPageViewModel>()
                             .AddTransient<WalletPageViewModel>();
 

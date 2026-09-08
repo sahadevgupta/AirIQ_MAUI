@@ -16,6 +16,10 @@ public class FlightSearchRequest
     [JsonPropertyName("departure_date")]
     public string? DepartureDate { get; set; }
 
+    [JsonPropertyName("return_date")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? ReturnDate { get; set; }
+
     [JsonPropertyName("adult")]
     public int Adult { get; set; }
 

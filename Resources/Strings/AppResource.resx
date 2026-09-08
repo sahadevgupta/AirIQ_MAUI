@@ -1555,4 +1555,16 @@ Version {0}</value>
   <data name="Done" xml:space="preserve">
     <value>Done</value>
   </data>
+  <data name="WhensYourTrip" xml:space="preserve">
+    <value>When's your trip?</value>
+  </data>
+  <data name="Return" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="SelectReturnDate" xml:space="preserve">
+    <value>Select return date</value>
+  </data>
+  <data name="AddReturnDate" xml:space="preserve">
+    <value>+ Add return date</value>
+  </data>
 </root>

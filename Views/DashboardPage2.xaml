@@ -4,6 +4,7 @@
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:controls="clr-namespace:AirIQ.Controls"
+  xmlns:converter="clr-namespace:AirIQ.Converter"
   xmlns:enums="clr-namespace:AirIQ.Enums"
   xmlns:helpers="clr-namespace:AirIQ.Extensions"
   xmlns:models="clr-namespace:AirIQ.Models"
@@ -16,6 +17,8 @@
 
   <views:BasePage.Resources>
     <ResourceDictionary>
+
+      <converter:NotNullToBoolConverter x:Key="NotNullToBoolConverter"/>
 
       <Style TargetType="Border"
              x:Key="RouteIconStyle">
@@ -207,7 +210,7 @@
                       Opacity="0.10"/>
             </Border.Shadow>
 
-            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
                   ColumnDefinitions="*,Auto">
 
               <!-- FROM -->
@@ -379,10 +382,48 @@
 
               </Grid>
 
-              <Button Grid.Row="5"
+              <!-- RETURN (optional) -->
+              <Grid Grid.Row="5"
+                    Grid.ColumnSpan="2"
+                    Margin="0,14,0,0"
+                    ColumnDefinitions="Auto,*,Auto"
+                    ColumnSpacing="10">
+
+                <Border Style="{StaticResource RouteIconStyle}">
+                  <Label Text="{x:Static helpers:FontAwesomeIcons.CalendarAlt}"
+                         FontSize="20"
+                         Style="{StaticResource RouteIconLabelStyle}"/>
+                </Border>
+
+                <VerticalStackLayout Grid.Column="1"
+                                     BackgroundColor="Transparent"
+                                     VerticalOptions="Center">
+                  <Label Text="{x:Static resx:AppResource.Return}"
+                         Style="{StaticResource RouteEyebrowStyle}"/>
+                  <Label Text="{Binding ReturnDate, StringFormat='{0:dd MMM yyyy}', TargetNullValue={x:Static resx:AppResource.AddReturnDate}}"
+                         Style="{StaticResource Label16Bold}"
+                         TextColor="{StaticResource Onyx}"/>
+                </VerticalStackLayout>
+
+                <ImageButton Grid.Column="2"
+                             Source="close"
+                             WidthRequest="16"
+                             HeightRequest="16"
+                             Padding="0"
+                             VerticalOptions="Center"
+                             BackgroundColor="Transparent"
+                             IsVisible="{Binding ReturnDate, Converter={StaticResource NotNullToBoolConverter}}"
+                             Command="{Binding ClearReturnDateCommand}"/>
+
+                <Grid.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding OpenReturnDatePickerCommand}"/>
+                </Grid.GestureRecognizers>
+              </Grid>
+
+              <Button Grid.Row="6"
                       Grid.ColumnSpan="2"
                       Style="{StaticResource ButtonCorneredStyle}"
-                      Margin="0,30,0,0"
+                      Margin="0,20,0,0"
                       Text="{x:Static resx:AppResource.SearchFlights}"
                       Command="{Binding SearchFlightsCommand}"
                       HeightRequest="45"

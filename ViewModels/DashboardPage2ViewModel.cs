@@ -16,6 +16,7 @@ namespace AirIQ.ViewModels
 {
     [QueryProperty(nameof(AirportSelectionResult), NavigationParamConstants.AirportSelectionResult)]
     [QueryProperty(nameof(SelectedTravelDateResult), NavigationParamConstants.SelectedTravelDateResult)]
+    [QueryProperty(nameof(SelectedReturnDateResult), NavigationParamConstants.SelectedReturnDateResult)]
     public partial class DashboardPage2ViewModel(IViewModelParameters viewModelParameters,
         IFlightService flightService) : BaseViewModel(viewModelParameters)
     {
@@ -27,6 +28,9 @@ namespace AirIQ.ViewModels
 
         [ObservableProperty]
         private DateTime? _selectedTravelDateResult;
+
+        [ObservableProperty]
+        private DateTime? _selectedReturnDateResult;
 
         [ObservableProperty]
         private ObservableCollection<FlightRoute>? _sourceAirports;
@@ -45,6 +49,9 @@ namespace AirIQ.ViewModels
 
         [ObservableProperty]
         private DateTime? _selectedTravelDate;
+
+        [ObservableProperty]
+        private DateTime? _returnDate;
 
         [ObservableProperty]
         private int _paxSize = 1;
@@ -75,6 +82,7 @@ namespace AirIQ.ViewModels
         {
             SelectedDestinationAirport = null;
             SelectedTravelDate = null;
+            ReturnDate = null;
             GetDestinationAirports();
         }
 
@@ -100,9 +108,19 @@ namespace AirIQ.ViewModels
             SelectedTravelDateResult = null;
         }
 
+        partial void OnSelectedReturnDateResultChanged(DateTime? value)
+        {
+            if (value is null)
+                return;
+
+            ReturnDate = value;
+            SelectedReturnDateResult = null;
+        }
+
         partial void OnSelectedDestinationAirportChanged(FlightRoute? oldValue, FlightRoute? newValue)
         {
             SelectedTravelDate = null;
+            ReturnDate = null;
             if (!string.IsNullOrWhiteSpace(SelectedSourceAirport?.Origin) && !string.IsNullOrWhiteSpace(SelectedDestinationAirport?.Destination))
                 _ = GetAvailableBookingDatesAsync();
         }
@@ -161,12 +179,29 @@ namespace AirIQ.ViewModels
         }
 
         [RelayCommand]
-        private async Task OpenDepartureDatePicker()
+        private async Task OpenDepartureDatePicker() => await OpenTravelDatesPicker(DateSelectionStage.Departure);
+
+        [RelayCommand]
+        private async Task OpenReturnDatePicker() => await OpenTravelDatesPicker(DateSelectionStage.Return);
+
+        [RelayCommand]
+        private void ClearReturnDate() => ReturnDate = null;
+
+        private async Task OpenTravelDatesPicker(DateSelectionStage stage)
         {
-            await ShellNavigationService.Navigate<DepartureDatePage>(parameters: new Dictionary<string, object>
+            var parameters = new Dictionary<string, object>
             {
                 { NavigationParamConstants.TravelAllowedDates, AllowedDates },
-            });
+                { NavigationParamConstants.DateSelectionStage, stage },
+            };
+
+            if (SelectedTravelDate.HasValue)
+                parameters[NavigationParamConstants.InitialDepartureDate] = SelectedTravelDate.Value;
+
+            if (ReturnDate.HasValue)
+                parameters[NavigationParamConstants.InitialReturnDate] = ReturnDate.Value;
+
+            await ShellNavigationService.Navigate<TravelDatesPage>(parameters: parameters);
         }
 
         [RelayCommand]
@@ -185,6 +220,7 @@ namespace AirIQ.ViewModels
                     DepartureDate = SelectedTravelDate != null ?
                                     SelectedTravelDate.Value.ToString("yyyy/MM/dd") :
                                     string.Empty,
+                    ReturnDate = ReturnDate?.ToString("yyyy/MM/dd"),
                     Adult = AdultCount,
                     SourceAirport = SelectedSourceAirport,
                     DestinationAirport = SelectedDestinationAirport,

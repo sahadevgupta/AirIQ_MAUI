@@ -4370,5 +4370,41 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("Done", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to When's your trip?.
+        /// </summary>
+        internal static string WhensYourTrip {
+            get {
+                return ResourceManager.GetString("WhensYourTrip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Return.
+        /// </summary>
+        internal static string Return {
+            get {
+                return ResourceManager.GetString("Return", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Select return date.
+        /// </summary>
+        internal static string SelectReturnDate {
+            get {
+                return ResourceManager.GetString("SelectReturnDate", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to + Add return date.
+        /// </summary>
+        internal static string AddReturnDate {
+            get {
+                return ResourceManager.GetString("AddReturnDate", resourceCulture);
+            }
+        }
     }
 }

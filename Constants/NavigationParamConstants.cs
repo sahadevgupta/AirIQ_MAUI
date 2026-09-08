@@ -13,5 +13,9 @@ public static class NavigationParamConstants
     public const string AirportList = nameof(AirportList);
     public const string AirportSelectionResult = nameof(AirportSelectionResult);
     public const string SelectedTravelDateResult = nameof(SelectedTravelDateResult);
+    public const string SelectedReturnDateResult = nameof(SelectedReturnDateResult);
+    public const string InitialDepartureDate = nameof(InitialDepartureDate);
+    public const string InitialReturnDate = nameof(InitialReturnDate);
+    public const string DateSelectionStage = nameof(DateSelectionStage);
     public const string IsPostLoginBiometricPrompt = nameof(IsPostLoginBiometricPrompt);
 }

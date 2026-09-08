@@ -9,7 +9,8 @@ namespace AirIQ.Extensions
             builder.Services.AddTransient<LoginPage>()
                             .AddTransient<DashboardPage>()
                             .AddTransient<DashboardPage2>()
-                            .AddTransient<DepartureDatePage>();
+                            .AddTransient<DepartureDatePage>()
+                            .AddTransient<TravelDatesPage>();
 
             return builder;
         }
