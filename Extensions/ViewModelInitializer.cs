@@ -31,7 +31,10 @@ namespace AirIQ.Extensions
                             .AddTransient<LegalViewModel>()
                             .AddTransient<AirportSearchPageViewModel>()
                             .AddTransient<DepartureDatePageViewModel>()
-                            .AddTransient<TravelDatesPageViewModel>()
+                            // Singleton: kept alive and pre-warmed by DashboardPage2ViewModel so
+                            // opening the date picker only has to assign a few properties on an
+                            // already-built calendar instead of constructing everything from scratch.
+                            .AddSingleton<TravelDatesPageViewModel>()
                             .AddTransient<BiometricAuthenticationPageViewModel>()
                             .AddTransient<WalletPageViewModel>();
 

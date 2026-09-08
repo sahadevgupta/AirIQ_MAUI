@@ -181,6 +181,7 @@
 
             <!-- ==================== CALENDAR (scrolls behind the fixed Done button) ==================== -->
             <CollectionView Grid.Row="3"
+                            IsVisible="True"
                             ItemsSource="{Binding Months}"
                             ItemSizingStrategy="MeasureFirstItem"
                             RemainingItemsThreshold="2"
@@ -192,6 +193,17 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
+            <!-- <ScrollView Grid.Row="3">
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Months}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:CalendarMonth">
+                            <controls:CalendarMonthView Month="{Binding .}"
+                                                        DayTappedCommand="{Binding Source={x:Reference thisPage}, Path=BindingContext.SelectDayCommand}"/>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </ScrollView> -->
 
             <!-- ==================== DONE (fixed) ==================== -->
             <Button Grid.Row="4"
@@ -205,4 +217,5 @@
 
         </Grid>
     </views:BasePage.PageContent>
+
 </views:BasePage>

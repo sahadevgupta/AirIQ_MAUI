@@ -43,7 +43,7 @@ namespace AirIQ
                     // Debug messages are written to stdout with Console.Writeline,
                     // and are viewable in your IDE's debug console or with 'adb logcat', etc.
                     // This option is not recommended when deploying your application.
-                    options.Debug = true;
+                    options.Debug = false;
 
                     // Other Sentry options can be set here.
                 });

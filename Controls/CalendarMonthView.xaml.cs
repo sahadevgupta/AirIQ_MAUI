@@ -1,34 +1,55 @@
+using System.ComponentModel;
 using System.Windows.Input;
 
-using AirIQ.Converter;
 using AirIQ.Models;
 
-using Microsoft.Maui.Controls.Shapes;
+using SkiaSharp;
+using SkiaSharp.Views.Maui;
 
 namespace AirIQ.Controls;
 
 /// <summary>
-///     Renders one month of AirIQ.Views.TravelDatesPage's calendar as a fixed 6x7 grid of pooled
-///     cells built once in the constructor - mirroring the pooled-cell technique <see cref="FareCalendarView"/>
-///     and <see cref="CalendarViewV2"/> already use in this codebase. As the outer CollectionView
-///     recycles this view across months, only <see cref="Month"/> changes; each pooled cell's
-///     BindingContext is swapped to the new month's corresponding <see cref="CalendarDay"/> and its
-///     already-configured bindings do the rest, so a month never has to rebuild its visual tree.
+///     Renders one month of AirIQ.Views.TravelDatesPage's calendar as a single SkiaSharp-drawn
+///     canvas instead of composing a MAUI Border/Label/BoxView per day cell.
+///
+///     Earlier versions of this control pooled ~168 MAUI native views per month (a Grid, a selection
+///     pill Border, a today-dot BoxView and a Label per cell) and reused those C# objects across
+///     month recycling, and separately made the whole TravelDatesPage a DI singleton so it would
+///     never be reconstructed. Neither eliminated a multi-second delay every time the page opened -
+///     timestamped logs showed the delay recurred identically even when nothing was reconstructed in
+///     C#. The reason: Android tears down and recreates a page's underlying native view handlers
+///     every time it's (re)attached to the window, regardless of whether the C# VisualElement graph
+///     behind them is reused. Collapsing the whole grid into one canvas reduces the native view count
+///     for a month from ~168 to 1, which is what actually removes that recurring cost.
 /// </summary>
 public partial class CalendarMonthView : ContentView
 {
     const int Rows = 6;
     const int Cols = 7;
+    const int CellCount = Rows * Cols;
+    const float PillRadius = 20f;
+    const float TodayDotRadius = 2f;
+    const float TodayDotOffset = 16f;
 
-    static readonly RangeShapeToVisibilityConverter RangeVisibilityConverter = new();
-    static readonly RangeShapeToCornerRadiusConverter RangeCornerRadiusConverter = new();
+    // Approximates the app's "RobotoSemiBold" (registered as a MAUI font alias, not something
+    // SkiaSharp can resolve by that name) with the platform's semi-bold system font.
+    static readonly SKTypeface DayTypeface =
+        SKTypeface.FromFamilyName(null, SKFontStyleWeight.SemiBold, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright);
 
-    readonly Grid[] _cellRoots = new Grid[Rows * Cols];
+    readonly PropertyChangedEventHandler _onDayChanged;
+    readonly List<CalendarDay> _subscribedDays = new(CellCount);
+
+    SKColor _onyx;
+    SKColor _gray300;
+    SKColor _primaryColor;
+
+    CalendarMonth? _month;
 
     public CalendarMonthView()
     {
         InitializeComponent();
-        BuildGrid();
+        CacheColors();
+        _onDayChanged = (_, __) => canvasView.InvalidateSurface();
     }
 
     #region [ Bindable Properties ]
@@ -61,109 +82,104 @@ public partial class CalendarMonthView : ContentView
 
     void ApplyMonth(CalendarMonth? month)
     {
+        foreach (var subscribedDay in _subscribedDays)
+            subscribedDay.PropertyChanged -= _onDayChanged;
+        _subscribedDays.Clear();
+
         monthLabel.Text = month?.MonthLabel ?? string.Empty;
+        _month = month;
 
-        var days = month?.Days;
-        for (int i = 0; i < _cellRoots.Length; i++)
+        if (month is not null)
         {
-            _cellRoots[i].BindingContext = days != null && i < days.Count ? days[i] : null;
-        }
-    }
-
-    void BuildGrid()
-    {
-        for (int r = 0; r < Rows; r++)
-        {
-            for (int c = 0; c < Cols; c++)
+            foreach (var day in month.Days)
             {
-                int index = (r * Cols) + c;
-
-                var rangeBackground = new Border
-                {
-                    StrokeThickness = 0,
-                    BackgroundColor = ResColor("Primary0"),
-                    Margin = new Thickness(0, 3)
-                };
-                rangeBackground.SetBinding(Border.IsVisibleProperty, new Binding(nameof(CalendarDay.RangeShape), converter: RangeVisibilityConverter));
-                rangeBackground.SetBinding(Border.StrokeShapeProperty, new Binding(nameof(CalendarDay.RangeShape), converter: RangeCornerRadiusConverter));
-
-                var pill = new Border
-                {
-                    StrokeThickness = 0,
-                    WidthRequest = 40,
-                    HeightRequest = 40,
-                    BackgroundColor = ResColor("PrimaryColor"),
-                    StrokeShape = new RoundRectangle { CornerRadius = 20 }
-                };
-                pill.SetBinding(Border.IsVisibleProperty, nameof(CalendarDay.IsSelectedEndpoint));
-
-                var todayDot = new BoxView
-                {
-                    WidthRequest = 4,
-                    HeightRequest = 4,
-                    CornerRadius = 2,
-                    Color = ResColor("PrimaryColor"),
-                    VerticalOptions = LayoutOptions.End,
-                    HorizontalOptions = LayoutOptions.Center,
-                    Margin = new Thickness(0, 0, 0, 4)
-                };
-                todayDot.SetBinding(BoxView.IsVisibleProperty, nameof(CalendarDay.IsToday));
-
-                var dayLabel = new Label
-                {
-                    FontFamily = "RobotoSemiBold",
-                    FontSize = 15,
-                    TextColor = ResColor("Onyx"),
-                    HorizontalOptions = LayoutOptions.Center,
-                    VerticalOptions = LayoutOptions.Center,
-                    InputTransparent = true
-                };
-                dayLabel.SetBinding(Label.TextProperty, nameof(CalendarDay.DayNumber));
-
-                var disabledTrigger = new DataTrigger(typeof(Label))
-                {
-                    Binding = new Binding(nameof(CalendarDay.IsDisabled)),
-                    Value = true
-                };
-                disabledTrigger.Setters.Add(new Setter { Property = Label.TextColorProperty, Value = ResColor("Gray300") });
-                dayLabel.Triggers.Add(disabledTrigger);
-
-                var selectedTrigger = new DataTrigger(typeof(Label))
-                {
-                    Binding = new Binding(nameof(CalendarDay.IsSelectedEndpoint)),
-                    Value = true
-                };
-                selectedTrigger.Setters.Add(new Setter { Property = Label.TextColorProperty, Value = Colors.White });
-                dayLabel.Triggers.Add(selectedTrigger);
-
-                // Every visual for the day is gated on IsCurrentMonth: a leading/trailing filler cell
-                // shares its Date with the "real" cell shown on that date's own month page, so without
-                // this gate a selected/in-range date would also paint a stray pill on the month it's
-                // merely padding out.
-                var content = new Grid { HeightRequest = 46, WidthRequest = 44 };
-                content.SetBinding(Grid.IsVisibleProperty, nameof(CalendarDay.IsCurrentMonth));
-                content.Add(rangeBackground);
-                content.Add(pill);
-                content.Add(todayDot);
-                content.Add(dayLabel);
-
-                var cellRoot = new Grid { HeightRequest = 46, WidthRequest = 44 };
-                cellRoot.Add(content);
-
-                var tap = new TapGestureRecognizer();
-                tap.Tapped += (s, _) =>
-                {
-                    if (((Grid)s!).BindingContext is CalendarDay day && DayTappedCommand?.CanExecute(day) == true)
-                        DayTappedCommand.Execute(day);
-                };
-                cellRoot.GestureRecognizers.Add(tap);
-
-                _cellRoots[index] = cellRoot;
-
-                CalendarGrid.Add(cellRoot, c, r);
+                day.PropertyChanged += _onDayChanged;
+                _subscribedDays.Add(day);
             }
         }
+
+        canvasView.InvalidateSurface();
     }
+
+    void OnPaintSurface(object? sender, SKPaintSurfaceEventArgs e)
+    {
+        var canvas = e.Surface.Canvas;
+        canvas.Clear(SKColors.Transparent);
+
+        var days = _month?.Days;
+        if (days is null)
+            return;
+
+        float cellWidth = e.Info.Width / (float)Cols;
+        float cellHeight = e.Info.Height / (float)Rows;
+
+        using var pillPaint = new SKPaint { Color = _primaryColor, IsAntialias = true, Style = SKPaintStyle.Fill };
+        using var dotPaint = new SKPaint { Color = _primaryColor, IsAntialias = true, Style = SKPaintStyle.Fill };
+        using var textPaint = new SKPaint { IsAntialias = true };
+        using var font = new SKFont(DayTypeface, cellHeight * 0.34f);
+        var fontMetrics = font.Metrics;
+
+        for (int i = 0; i < CellCount && i < days.Count; i++)
+        {
+            var day = days[i];
+            if (!day.IsCurrentMonth)
+                continue;
+
+            int row = i / Cols;
+            int col = i % Cols;
+            float cx = (col + 0.5f) * cellWidth;
+            float cy = (row + 0.5f) * cellHeight;
+
+            if (day.IsSelectedEndpoint)
+                canvas.DrawCircle(cx, cy, PillRadius, pillPaint);
+
+            textPaint.Color = day.IsSelectedEndpoint ? SKColors.White : day.IsDisabled ? _gray300 : _onyx;
+
+            string text = day.DayNumber.ToString();
+            float textY = cy - ((fontMetrics.Ascent + fontMetrics.Descent) / 2f);
+            canvas.DrawText(text, cx, textY, SKTextAlign.Center, font, textPaint);
+
+            if (day.IsToday && !day.IsSelectedEndpoint)
+                canvas.DrawCircle(cx, cy + TodayDotOffset, TodayDotRadius, dotPaint);
+        }
+    }
+
+    void OnCanvasTapped(object? sender, TappedEventArgs e)
+    {
+        var days = _month?.Days;
+        if (days is null || canvasView.Width <= 0 || canvasView.Height <= 0)
+            return;
+
+        var position = e.GetPosition(canvasView);
+        if (position is null)
+            return;
+
+        int col = (int)(position.Value.X / (canvasView.Width / Cols));
+        int row = (int)(position.Value.Y / (canvasView.Height / Rows));
+
+        if (col < 0 || col >= Cols || row < 0 || row >= Rows)
+            return;
+
+        int index = (row * Cols) + col;
+        if (index >= days.Count)
+            return;
+
+        var day = days[index];
+        if (day.IsDisabled || DayTappedCommand?.CanExecute(day) != true)
+            return;
+
+        DayTappedCommand.Execute(day);
+    }
+
+    void CacheColors()
+    {
+        _onyx = ToSkColor(ResColor("Onyx"));
+        _gray300 = ToSkColor(ResColor("Gray300"));
+        _primaryColor = ToSkColor(ResColor("PrimaryColor"));
+    }
+
+    static SKColor ToSkColor(Color color) =>
+        new((byte)(color.Red * 255), (byte)(color.Green * 255), (byte)(color.Blue * 255), (byte)(color.Alpha * 255));
 
     static Color ResColor(string key) => (Color)Application.Current!.Resources[key];
 }

@@ -221,13 +221,58 @@ public partial class TravelDatesPageViewModel(IViewModelParameters viewModelPara
 
     #endregion
 
+    #region [ Public API ]
+
+    /// <summary>
+    ///     Builds the initial batch of months if this hasn't happened yet. Safe to call more than
+    ///     once. This view model is registered as a singleton and pre-warmed from
+    ///     DashboardPage2ViewModel precisely so this heavier, one-time setup runs ahead of time -
+    ///     while the dashboard is loading - rather than while the user is waiting for the picker to
+    ///     open.
+    /// </summary>
+    public void Preload()
+    {
+        if (_isInitialized)
+            return;
+
+        _isInitialized = true;
+        RebuildAllowedDateSet();
+        AppendMonths(InitialMonthBatch);
+    }
+
+    /// <summary>
+    ///     Resets this (reused, singleton) instance for a fresh trip to the picker: assigns the
+    ///     current departure date and route's allowed dates directly, instead of round-tripping them
+    ///     through Shell navigation query parameters. Called by DashboardPage2ViewModel right before
+    ///     navigating in, so opening the picker only ever means updating a few properties on an
+    ///     already-built calendar.
+    /// </summary>
+    public void PrepareForSelection(DateTime? departureDate, ObservableCollection<DateTime> allowedDates, DateSelectionStage stage)
+    {
+        Preload();
+
+        AllowedDates = allowedDates;
+        DepartureDate = departureDate;
+
+        // One-way only for now - see the round-trip comments in SelectDay/Done/SelectReturnStageCommand below.
+        // ReturnDate = returnDate;
+
+        SetStage(stage);
+    }
+
+    #endregion
+
     #region [ Commands ]
 
     [RelayCommand]
     private void SelectDepartureStage() => SetStage(DateSelectionStage.Departure);
 
-    [RelayCommand]
-    private void SelectReturnStage() => SetStage(DateSelectionStage.Return);
+    // One-way only for now - round-trip support is commented out rather than removed, so it can be
+    // re-enabled later without rebuilding it. To bring it back: uncomment this command, the
+    // round-trip branch in SelectDay below, the return-date block in Done() below, and the
+    // Departure/Return tab selector in TravelDatesPage.xaml (and the Dashboard return-date row).
+    // [RelayCommand]
+    // private void SelectReturnStage() => SetStage(DateSelectionStage.Return);
 
     [RelayCommand]
     private void SelectDay(CalendarDay day)
@@ -235,19 +280,23 @@ public partial class TravelDatesPageViewModel(IViewModelParameters viewModelPara
         if (day is null || day.IsDisabled)
             return;
 
-        if (IsSelectingDeparture)
-        {
-            DepartureDate = day.Date;
+        // One-way only for now - always sets the departure date. See the SelectReturnStageCommand
+        // comment above for how to restore round-trip selection.
+        DepartureDate = day.Date;
 
-            if (ReturnDate.HasValue && ReturnDate.Value.Date <= day.Date)
-                ReturnDate = null;
-
-            SetStage(DateSelectionStage.Return);
-        }
-        else
-        {
-            ReturnDate = day.Date;
-        }
+        // if (IsSelectingDeparture)
+        // {
+        //     DepartureDate = day.Date;
+        //
+        //     if (ReturnDate.HasValue && ReturnDate.Value.Date <= day.Date)
+        //         ReturnDate = null;
+        //
+        //     SetStage(DateSelectionStage.Return);
+        // }
+        // else
+        // {
+        //     ReturnDate = day.Date;
+        // }
     }
 
     [RelayCommand]
@@ -264,8 +313,9 @@ public partial class TravelDatesPageViewModel(IViewModelParameters viewModelPara
             { NavigationParamConstants.SelectedTravelDateResult, DepartureDate.Value }
         };
 
-        if (ReturnDate.HasValue)
-            parameters[NavigationParamConstants.SelectedReturnDateResult] = ReturnDate.Value;
+        // One-way only for now - round-trip support commented out (see SelectReturnStageCommand above).
+        // if (ReturnDate.HasValue)
+        //     parameters[NavigationParamConstants.SelectedReturnDateResult] = ReturnDate.Value;
 
         await ShellNavigationService.NavigateBack(parameters: parameters);
     }
@@ -279,13 +329,12 @@ public partial class TravelDatesPageViewModel(IViewModelParameters viewModelPara
 
     public override Task LoadDataWhenNavigatedTo(CancellationToken cancellationToken = default)
     {
-        if (!_isInitialized)
-        {
-            _isInitialized = true;
-            RebuildAllowedDateSet();
-            AppendMonths(InitialMonthBatch);
-            SetStage(RequestedStage);
-        }
+        // Normally a no-op: DashboardPage2ViewModel already warmed this up via Preload() and
+        // configured it via PrepareForSelection() before navigating here. This is just a safety net
+        // in case this page is ever reached another way (e.g. a future direct Shell route/query
+        // parameters navigation, per the QueryProperty attributes above).
+        Preload();
+        SetStage(RequestedStage);
 
         return Task.CompletedTask;
     }

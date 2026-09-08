@@ -11,7 +11,7 @@
   xmlns:viewmodel="clr-namespace:AirIQ.ViewModels"
   x:Name="pageRoot"
   x:DataType="viewmodel:AirportSearchPageViewModel"
-  Shell.TabBarIsVisible="False"
+  IsWalletVisible="False"
   PageTitle="{Binding PageTitle}">
 
   <views:BasePage.PageContent>
