@@ -21,9 +21,9 @@ public static class ImageExtension
 
     public static UIImageView LoadGifImageWithName(string imageName)
     {
-        NSUrl url = NSBundle.MainBundle.GetUrlForResource(imageName, ".gif");
+        NSUrl? url = NSBundle.MainBundle.GetUrlForResource(imageName, ".gif");
 
-        var sourceRef = CGImageSource.FromUrl(NSUrl.FromString(url.AbsoluteString));
+        var sourceRef = CGImageSource.FromUrl(NSUrl.FromString(url!.AbsoluteString));
 
         UIImageView imageView = new UIImageView();
 

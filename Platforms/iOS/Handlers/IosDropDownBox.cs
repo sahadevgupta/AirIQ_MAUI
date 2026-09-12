@@ -206,7 +206,7 @@ namespace AirIQ.Platforms.iOS.Handlers
             }
 
             SelectionList.Source = null;
-            IEnumerable<object> suggestions = items?.OfType<object>();
+            IEnumerable<object>? suggestions = items?.OfType<object>();
             if (suggestions != null && suggestions.Any())
             {
                 TableSource<object> suggestionTableSource =
@@ -419,7 +419,7 @@ namespace AirIQ.Platforms.iOS.Handlers
 
             public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
             {
-                UITableViewCell cell = tableView.DequeueReusableCell(_cellIdentifier);
+                UITableViewCell? cell = tableView.DequeueReusableCell(_cellIdentifier);
                 if (cell == null)
                 {
                     cell = new UITableViewCell(UITableViewCellStyle.Default, _cellIdentifier)

@@ -7,7 +7,7 @@ using AirIQ.Resources.Strings;
 using AirIQ.Services.Interfaces;
 using AirIQ.Views;
 
-using AirIQ_MAUI.Views;
+using AirIQ.Views;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -16,7 +16,7 @@ using Mopups.Services;
 
 namespace AirIQ.ViewModels.Common;
 
-public partial class MenuPageViewModel(IViewModelParameters viewModelParameters) : BaseViewModel(viewModelParameters)
+public partial class MenuPageViewModel(IViewModelParameters viewModelParameters, IAuthService authService) : BaseViewModel(viewModelParameters)
 {
     #region [ Properties ]
 
@@ -38,19 +38,19 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
     private void PopuplateMenuOptions()
     {
 
-        BuildNumber = $"App Version: {AppInfo.Current.VersionString}";
+        BuildNumber = string.Format(AppResource.AppVersionLabelFormat, AppInfo.Current.VersionString);
         Menus = new ObservableCollection<MenuOption>
         {
             new MenuOption{Title=AppResource.Flights, IconSource="flight", MenuType = MenuType.Flight },
             new MenuOption{Title=AppResource.SalesRecord, IconSource="finance_mode", MenuType= MenuType.SalesRecord},
             new MenuOption{Title=AppResource.RefundsRecord, IconSource="currency_exchange", MenuType = MenuType.RefundsRecord},
-            new MenuOption{Title=AppResource.Account, IconSource="account_circle", MenuType = MenuType.Account},
+            //new MenuOption{Title=AppResource.Account, IconSource="account_circle", MenuType = MenuType.Account},
             new MenuOption{Title=AppResource.AccountsLedger, IconSource="manage_accounts", MenuType = MenuType.AccountsLedger},
             new MenuOption{Title=AppResource.UploadRequest, IconSource="upload_file", MenuType = MenuType.UploadRequest},
             new MenuOption{Title=AppResource.TemporaryCredit, IconSource="credit_card", MenuType=MenuType.TemporaryCredit},
             new MenuOption{Title=AppResource.BankDetails, IconSource="account_balance", MenuType = MenuType.BankDetails},
             new MenuOption{Title=AppResource.GroupQuery,IconSource="question_exchange", MenuType = MenuType.GroupQuery},
-            new MenuOption{Title=AppResource.PaxCalendar,IconSource="pax_calendar", MenuType=MenuType.PaxCalendar},
+            //new MenuOption{Title=AppResource.PaxCalendar,IconSource="pax_calendar", MenuType=MenuType.PaxCalendar},
             new MenuOption{Title=AppResource.OnlineRecharge, IconSource="online_recharge", MenuType = MenuType.OnlineRecharge},
         };
 
@@ -74,8 +74,7 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
     private async Task Logout()
     {
         ClosePopup();
-        SecureStorage.RemoveAll();
-        Preferences.Clear();
+        authService.Logout();
 
         if (Shell.Current != null)
             await MainThread.InvokeOnMainThreadAsync(() => Shell.Current.GoToAsync("//LoginPage"));
@@ -118,7 +117,7 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
                 await ShellNavigationService.NavigateToFlyoutPage<OnlineRechargePage>();
                 break;
             case MenuType.Flight:
-                await Shell.Current.GoToAsync("///home");
+                await Shell.Current.GoToAsync("//app/home");
                 break;
         }
     }
@@ -127,7 +126,7 @@ public partial class MenuPageViewModel(IViewModelParameters viewModelParameters)
 
     #region [ override Methods ]
 
-    public override Task LoadDataWhenNavigatedTo()
+    public override Task LoadDataWhenNavigatedTo(CancellationToken cancellationToken = default)
     {
         InitializeData();
         return base.LoadDataWhenNavigatedTo();

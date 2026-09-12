@@ -67,15 +67,15 @@ public abstract partial class BaseViewModel : ViewModelBase, IDestructible
         await DialogService.ShowAlertDialog(message, alertType);
     }
 
-    public virtual Task LoadDataWhenNavigatedTo()
+    public virtual Task LoadDataWhenNavigatedTo(CancellationToken cancellationToken = default)
     {
         return Task.CompletedTask;
     }
-    public virtual Task LoadDataWhenOnAppearing()
+    public virtual Task LoadDataWhenOnAppearing(CancellationToken cancellationToken = default)
     {
         return Task.CompletedTask;
     }
-    public virtual Task LoadDataWhenOnDisappearing()
+    public virtual Task LoadDataWhenOnDisappearing(CancellationToken cancellationToken = default)
     {
         return Task.CompletedTask;
     }

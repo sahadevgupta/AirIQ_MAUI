@@ -1,7 +1,7 @@
 using AirIQ.Views;
 using AirIQ.ViewModels;
 
-namespace AirIQ_MAUI.Views;
+namespace AirIQ.Views;
 
 public partial class BankDetailsPage : BasePage
 {

@@ -7,6 +7,7 @@ using AirIQ.Enums;
 using AirIQ.Models;
 using AirIQ.Models.Request;
 using AirIQ.Models.Response;
+using AirIQ.Resources.Strings;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
 using AirIQ.Views.ContentViews;
@@ -337,7 +338,7 @@ public partial class SignupPageViewModel : BaseViewModel
             {
                 new StepBarModel()
                 {
-                    StepName="Personal",
+                    StepName=AppResource.PersonalStepName,
                     Status=StepBarStatus.InProgress,
                     IsNotLast=true,
                     IsFirst=true,
@@ -346,7 +347,7 @@ public partial class SignupPageViewModel : BaseViewModel
                 },
                 new StepBarModel()
                 {
-                    StepName="Contact",
+                    StepName=AppResource.ContactStepName,
                     Status=StepBarStatus.Pending,
                     IsNotLast=true,
                     IsFirst=false,
@@ -354,7 +355,7 @@ public partial class SignupPageViewModel : BaseViewModel
                 },
                 new StepBarModel()
                 {
-                    StepName="Business",
+                    StepName=AppResource.BusinessStepName,
                     Status=StepBarStatus.Pending,
                     IsNotLast=false,
                     IsFirst=false,
@@ -737,7 +738,7 @@ public partial class SignupPageViewModel : BaseViewModel
 
         if (!ValidateMandatoryFieldsForSubmit())
         {
-            await _dialogService.ShowStatusAlertAsync("Please fill all mandatory fields correctly before submitting.", false, 3000);
+            await _dialogService.ShowStatusAlertAsync(AppResource.FillMandatoryFieldsCorrectly, false, 3000);
             return;
         }
 
@@ -752,7 +753,7 @@ public partial class SignupPageViewModel : BaseViewModel
                 var response = await _authenticationService.SignupAsync(Signup);
                 if (!string.IsNullOrWhiteSpace(response) && response.Contains("Agency registration submitted successfully."))
                 {
-                    string message = "Thank you for registering. Your details have been received and are under review. We'll notify you by email once your account has been verified and activated. You can sign in after receiving the approval email.";
+                    string message = AppResource.RegistrationSubmittedSuccessMessage;
                     await _dialogService.ShowAlertDialog(message, AlertType.Success);
 
                     await ShellNavigationService.Navigate<LoginPage>(true);
@@ -775,43 +776,50 @@ public partial class SignupPageViewModel : BaseViewModel
         if (string.IsNullOrWhiteSpace(Signup.PanNo) || string.IsNullOrWhiteSpace(FullName))
             return;
 
-        using (LoadingService.Show())
+        try
         {
-            var response = await _zoopVerificationService.ValidatePanAsync(Signup.PanNo, FullName);
-            if (response is not null)
+            using (LoadingService.Show())
             {
-                if (response.PanType?.Equals("Person", StringComparison.OrdinalIgnoreCase) == true)
+                var response = await _zoopVerificationService.ValidatePanAsync(Signup.PanNo, FullName);
+                if (response is not null)
                 {
-                    IsPanValid = response.UserFullName?.Equals(FullName, StringComparison.OrdinalIgnoreCase) == true;
-
-                    if (IsPanValid)
+                    if (response.PanType?.Equals("Person", StringComparison.OrdinalIgnoreCase) == true)
                     {
-                        PanRegisterdName = response.UserFullName;
+                        IsPanValid = response.UserFullName?.Equals(FullName, StringComparison.OrdinalIgnoreCase) == true;
+
+                        if (IsPanValid)
+                        {
+                            PanRegisterdName = response.UserFullName;
+                        }
+                        else
+                        {
+                            PanRegisterdName = string.Empty;
+
+                            await _dialogService.ShowStatusAlertAsync(AppResource.OwnerNamePanNameMismatch, false, 3500);
+                        }
+
                     }
-                    else
+                    else if (response.PanType?.Equals("Firm", StringComparison.OrdinalIgnoreCase) == true ||
+                       response.PanType?.Equals("Comapny", StringComparison.OrdinalIgnoreCase) == true)
                     {
-                        PanRegisterdName = string.Empty;
+                        IsPanValid = response.UserFullName?.Equals(CompanyName, StringComparison.OrdinalIgnoreCase) == true;
+                        if (IsPanValid)
+                        {
+                            PanRegisterdName = response.UserFullName;
+                        }
+                        else
+                        {
+                            PanRegisterdName = string.Empty;
 
-                        await _dialogService.ShowStatusAlertAsync("Owner name and person's name on PAN Card should be same.", false, 3500);
-                    }
-
-                }
-                else if (response.PanType?.Equals("Firm", StringComparison.OrdinalIgnoreCase) == true ||
-                   response.PanType?.Equals("Comapny", StringComparison.OrdinalIgnoreCase) == true)
-                {
-                    IsPanValid = response.UserFullName?.Equals(CompanyName, StringComparison.OrdinalIgnoreCase) == true;
-                    if (IsPanValid)
-                    {
-                        PanRegisterdName = response.UserFullName;
-                    }
-                    else
-                    {
-                        PanRegisterdName = string.Empty;
-
-                        await _dialogService.ShowStatusAlertAsync("The company name and the name on the PAN should be same.", false, 3500);
+                            await _dialogService.ShowStatusAlertAsync(AppResource.CompanyNamePanNameMismatch, false, 3500);
+                        }
                     }
                 }
             }
+        }
+        catch (Exception exception)
+        {
+            HandleException(exception);
         }
     }
 
@@ -821,11 +829,18 @@ public partial class SignupPageViewModel : BaseViewModel
         if (string.IsNullOrWhiteSpace(Signup.GstNo))
             return;
 
-        using (LoadingService.Show())
+        try
         {
-            var response = await _zoopVerificationService.ValidateGstAsync(Signup.GstNo);
-            IsGstValid = response is not null;
-            GstRegisterdName = IsGstValid ? response?.TradeName : string.Empty;
+            using (LoadingService.Show())
+            {
+                var response = await _zoopVerificationService.ValidateGstAsync(Signup.GstNo);
+                IsGstValid = response is not null;
+                GstRegisterdName = IsGstValid ? response?.TradeName : string.Empty;
+            }
+        }
+        catch (Exception exception)
+        {
+            HandleException(exception);
         }
     }
 
@@ -833,7 +848,7 @@ public partial class SignupPageViewModel : BaseViewModel
 
     #region [ Override Methods ]
 
-    public override async Task LoadDataWhenNavigatedTo()
+    public override async Task LoadDataWhenNavigatedTo(CancellationToken cancellationToken = default)
     {
         await InitializeData();
     }

@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:AirIQ.Controls"
+    xmlns:ext="clr-namespace:AirIQ.Extensions"
     xmlns:mopup="clr-namespace:Mopups.Pages;assembly=Mopups"
     xmlns:mopupsanim="clr-namespace:Mopups.Animations;assembly=Mopups"
     xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
@@ -13,49 +14,174 @@
     BackgroundColor="{StaticResource PopupBackground}"
     CloseWhenBackgroundIsClicked="False">
 
-    <!-- <mopup:PopupPage.Animation>
+    <mopup:PopupPage.Animation>
         <mopupsanim:MoveAnimation
-            DurationIn="400"
-            DurationOut="400"
-            EasingIn="CubicIn"
-            EasingOut="CubicOut"
-            PositionIn="Bottom"
-            PositionOut="Bottom"/>
-    </mopup:PopupPage.Animation> -->
+            DurationIn="300"
+            DurationOut="200"
+            EasingIn="SinIn"
+            EasingOut="SinOut"
+            PositionIn="Center"
+            PositionOut="Center"/>
+    </mopup:PopupPage.Animation>
 
-    <Border StrokeShape="RoundRectangle 8"
+    <Border StrokeShape="RoundRectangle 16"
             VerticalOptions="Center"
-            Margin="10,0"
+            Margin="20,0"
             BackgroundColor="White"
-            Padding="24">
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto"
-              RowSpacing="10">
-            <Label
-                FontSize="24"
-                Style="{StaticResource Label18StyleBold}"
-                Text="{x:Static resx:AppResource.InformationRequired}"/>
+            Padding="28,24">
+        <VerticalStackLayout Spacing="4">
 
-            <Label
-                Grid.Row="1"
-                FontSize="16"
-                LineHeight="1.2"
-                Style="{StaticResource Label12Medium}"
-                Text="{x:Static resx:AppResource.SessionExpired}"/>
+            <Border StrokeShape="RoundRectangle 40"
+                    WidthRequest="80"
+                    HeightRequest="80"
+                    Padding="0"
+                    HorizontalOptions="Center"
+                    BackgroundColor="{StaticResource Primary10}">
+                <Image WidthRequest="32"
+                       HeightRequest="32"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center">
+                    <Image.Source>
+                        <FontImageSource FontFamily="MyFont"
+                                         Size="32"
+                                         Glyph="{x:Static ext:FontAwesomeIcons.Lock}"
+                                         Color="{StaticResource PrimaryColor}"/>
+                    </Image.Source>
+                </Image>
+            </Border>
 
-            <controls:ExtendedEntry
-                Title="{x:Static resx:AppResource.Password}"
-                Grid.Row="2"
-                EntryKeyboard="Password"
-                IsErrorViewVisible="{Binding IsPasswordErrorVisible}"
-                Text="{Binding Password}"/>
+            <Label Style="{StaticResource Label20Bold}"
+                   Margin="0,16,0,0"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   TextColor="{StaticResource Onyx}"
+                   Text="{x:Static resx:AppResource.SessionExpiredTitle}"/>
 
-            <Button
-                Grid.Row="3"
-                Margin="0,16"
-                Command="{Binding ConfirmCommand}"
-                Text="{x:Static resx:AppResource.Confirm}"
-                IsEnabled="{Binding Password,Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"/>
+            <Label Style="{StaticResource Label14RegularGray50Style}"
+                   FontSize="Body"
+                   Margin="0,4,0,0"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Text="{x:Static resx:AppResource.SessionExpired}"/>
 
-        </Grid>
+            <controls:ExtendedEntry Title="Password"
+                                    Margin="0,8,0,0"
+                                    PlaceholderText="Enter Password to continue"
+                                    IsPassword="True"
+                                    Text="{Binding Password}"/>
+
+            <!--  Primary action: reuses the app's centralized Login page/flow -  no auth logic lives in this popup.  -->
+            <Button Style="{StaticResource ButtonCorneredStyle}"
+                    Margin="0,20,0,0"
+                    Command="{Binding SignInCommand}"
+                    Text="{x:Static resx:AppResource.SignIn}"
+                    IsEnabled="{Binding Password,Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"/>
+
+            <Grid Margin="0,16"
+                  ColumnDefinitions="*,Auto,*"
+                  ColumnSpacing="10">
+                <BoxView Grid.Column="0"
+                         HeightRequest="1"
+                         VerticalOptions="Center"
+                         Color="{StaticResource BorderColor}"/>
+                <Label Grid.Column="1"
+                       Style="{StaticResource Label14RegularGray50Style}"
+                       TextColor="Black"
+                       Text="Or"/>
+                <BoxView Grid.Column="2"
+                         HeightRequest="1"
+                         VerticalOptions="Center"
+                         Color="{StaticResource BorderColor}"/>
+            </Grid>
+
+            <!--  Secondary/recovery actions: settings-row style, each navigating into the
+                  app's existing, centralized Forgot-Password/Login flows.  -->
+            <Grid Padding="0,10"
+                  ColumnDefinitions="Auto,*,Auto"
+                  ColumnSpacing="14"
+                  BackgroundColor="Transparent">
+                <Image Grid.Column="0"
+                       WidthRequest="20"
+                       HeightRequest="20"
+                       VerticalOptions="Center">
+                    <Image.Source>
+                        <FontImageSource FontFamily="MyFont"
+                                         Size="18"
+                                         Glyph="{x:Static ext:FontAwesomeIcons.Lock}"
+                                         Color="{StaticResource PrimaryColor}"/>
+                    </Image.Source>
+                </Image>
+                <Label Grid.Column="1"
+                       Style="{StaticResource Label16Regular}"
+                       VerticalTextAlignment="Center"
+                       TextColor="{StaticResource Onyx}"
+                       Text="{x:Static resx:AppResource.ForgotPassword}"/>
+                <Image Grid.Column="2"
+                       WidthRequest="14"
+                       HeightRequest="14"
+                       VerticalOptions="Center">
+                    <Image.Source>
+                        <FontImageSource FontFamily="MyFont"
+                                         Size="14"
+                                         Glyph="{x:Static ext:FontAwesomeIcons.ChevronRight}"
+                                         Color="{StaticResource Gray300}"/>
+                    </Image.Source>
+                </Image>
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}"/>
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <Grid Padding="0,10"
+                  ColumnDefinitions="Auto,*,Auto"
+                  ColumnSpacing="14"
+                  BackgroundColor="Transparent">
+                <Image Grid.Column="0"
+                       WidthRequest="20"
+                       HeightRequest="20"
+                       VerticalOptions="Center">
+                    <Image.Source>
+                        <FontImageSource FontFamily="MyFont"
+                                         Size="18"
+                                         Glyph="{x:Static ext:FontAwesomeIcons.User}"
+                                         Color="{StaticResource PrimaryColor}"/>
+                    </Image.Source>
+                </Image>
+                <Label Grid.Column="1"
+                       Style="{StaticResource Label16Regular}"
+                       VerticalTextAlignment="Center"
+                       TextColor="{StaticResource Onyx}"
+                       Text="{x:Static resx:AppResource.SignInDifferentAccount}"/>
+                <Image Grid.Column="2"
+                       WidthRequest="14"
+                       HeightRequest="14"
+                       VerticalOptions="Center">
+                    <Image.Source>
+                        <FontImageSource FontFamily="MyFont"
+                                         Size="14"
+                                         Glyph="{x:Static ext:FontAwesomeIcons.ChevronRight}"
+                                         Color="{StaticResource Gray300}"/>
+                    </Image.Source>
+                </Image>
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SwitchAccountCommand}"/>
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <BoxView HeightRequest="1"
+                     Margin="0,4,0,0"
+                     Color="{StaticResource BorderColor}"/>
+
+            <Label Style="{StaticResource Label16Bold}"
+                   Margin="0,16,0,0"
+                   HorizontalOptions="Center"
+                   TextColor="{StaticResource PrimaryColor}"
+                   Text="{x:Static resx:AppResource.NotNow}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NotNowCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+
+        </VerticalStackLayout>
     </Border>
 </mopup:PopupPage>

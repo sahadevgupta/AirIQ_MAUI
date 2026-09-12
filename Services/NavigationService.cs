@@ -62,7 +62,7 @@ namespace AirIQ.Services
         {
             try
             {
-                Page page = null;
+                Page? page = null;
                 if (isModal)
                     page = await Navigation.PopModalAsync();
                 else
@@ -153,9 +153,9 @@ namespace AirIQ.Services
 
         public async Task NavigateToRoot()
         {
-            if (Application.Current?.Windows[0].Page is FlyoutPage)
+            if (Application.Current?.Windows[0].Page is FlyoutPage flyoutPage)
             {
-                var detailPg = ((FlyoutPage)Application.Current?.Windows[0].Page).Detail;
+                var detailPg = flyoutPage.Detail;
                 // get the navigation page
                 var nav = (NavigationPage)detailPg;
                 // get the current displayed page
@@ -427,11 +427,9 @@ namespace AirIQ.Services
 
         private Task ClearContext(Page page)
         {
-            if (page.BindingContext != null)
-            {
-                IDestructible destructible = page.BindingContext as IDestructible;
+            if (page.BindingContext is IDestructible destructible)
                 destructible.Destory();
-            }
+
             return Task.CompletedTask;
         }
         private Task DeRegisterPageEvents(Page page)
@@ -448,9 +446,8 @@ namespace AirIQ.Services
         {
             try
             {
-                if (page is IDisposable)
+                if (page is IDisposable disposable)
                 {
-                    IDisposable disposable = page as IDisposable;
                     disposable.Dispose();
                 }
 

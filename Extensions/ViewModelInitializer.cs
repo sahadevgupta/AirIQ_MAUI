@@ -9,6 +9,7 @@ namespace AirIQ.Extensions
         {
             builder.Services.AddTransient<ChangePasswordPageViewModel>()
                             .AddTransient<DashboardPageViewModel>()
+                            .AddTransient<DashboardPage2ViewModel>()
                             .AddTransient<FlightsPageViewModel>()
                             .AddTransient<FlightBookingPageViewModel>()
                             .AddTransient<ForgotPasswordPageViewModel>()
@@ -27,7 +28,15 @@ namespace AirIQ.Extensions
                             .AddTransient<PaxCalendarPageViewModel>()
                             .AddTransient<BankDetailsPageViewModel>()
                             .AddTransient<MyAccountPageViewModel>()
-                            .AddTransient<LegalViewModel>();
+                            .AddTransient<LegalViewModel>()
+                            .AddTransient<AirportSearchPageViewModel>()
+                            .AddTransient<DepartureDatePageViewModel>()
+                            // Singleton: kept alive and pre-warmed by DashboardPage2ViewModel so
+                            // opening the date picker only has to assign a few properties on an
+                            // already-built calendar instead of constructing everything from scratch.
+                            .AddSingleton<TravelDatesPageViewModel>()
+                            .AddTransient<BiometricAuthenticationPageViewModel>()
+                            .AddTransient<WalletPageViewModel>();
 
             return builder;
         }

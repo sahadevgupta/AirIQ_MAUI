@@ -60,25 +60,32 @@ namespace AirIQ.ViewModels
         [RelayCommand]
         private async Task LoadMoreAsync()
         {
-            using (LoadingService.Show())
+            try
             {
-                var records = await operationsService.GetTempCreditRecordsAsync(AppConfiguration.CurrentUser?.AgencyId ?? 0, page, pageSize);
-                if (records.Any())
+                using (LoadingService.Show())
                 {
-                    var item = BackendToAppModelMapper.GetTempCreditRecords(records).ToList();
-                    tempCreditRecordsTemp.AddRange(item);
+                    var records = await operationsService.GetTempCreditRecordsAsync(AppConfiguration.CurrentUser?.AgencyId ?? 0, page, pageSize);
+                    if (records.Any())
+                    {
+                        var item = BackendToAppModelMapper.GetTempCreditRecords(records).ToList();
+                        tempCreditRecordsTemp.AddRange(item);
 
-                    if (string.IsNullOrEmpty(SearchText))
-                    {
-                        TempCreditRecords?.AddRange(item);
-                        OnPropertyChanged(nameof(TotalAmount));
+                        if (string.IsNullOrEmpty(SearchText))
+                        {
+                            TempCreditRecords?.AddRange(item);
+                            OnPropertyChanged(nameof(TotalAmount));
+                        }
+                        else
+                        {
+                            FilterTempCreditRecords(SearchText);
+                        }
                     }
-                    else
-                    {
-                        FilterTempCreditRecords(SearchText);
-                    }
+                    page++;
                 }
-                page++;
+            }
+            catch (Exception exception)
+            {
+                HandleException(exception);
             }
         }
 
@@ -92,7 +99,7 @@ namespace AirIQ.ViewModels
 
         #region [ Override Methods ]
 
-        public override async Task LoadDataWhenNavigatedTo()
+        public override async Task LoadDataWhenNavigatedTo(CancellationToken cancellationToken = default)
         {
             await LoadMoreAsync();
         }

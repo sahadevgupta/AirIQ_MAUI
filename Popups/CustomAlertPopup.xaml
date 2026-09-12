@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <mopup:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                 x:Class="AirIQ_MAUI.Popups.CustomAlertPopup"
+                 x:Class="AirIQ.Popups.CustomAlertPopup"
                  xmlns:mopup="clr-namespace:Mopups.Pages;assembly=Mopups"
                  xmlns:mopupsanim="clr-namespace:Mopups.Animations;assembly=Mopups"
+                 xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                  BackgroundColor="{StaticResource PopupBackground}"
                  CloseWhenBackgroundIsClicked="False"
                  x:Name="customAlertDialog">
@@ -39,7 +40,7 @@
                    HorizontalTextAlignment="Center"
                    FontSize="Body"/>
 
-            <Button Text="Ok"
+            <Button Text="{x:Static resx:AppResource.OkButton}"
                     TextColor="White"
                     BackgroundColor="Black"
                     Clicked="Button_Clicked"

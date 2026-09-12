@@ -14,7 +14,7 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodels="clr-namespace:AirIQ.ViewModels"
     xmlns:views="clr-namespace:AirIQ.Views"
-    PageTitle="Travel Details"
+    PageTitle="{x:Static resx:AppResource.TravelDetails}"
     x:DataType="viewmodels:FlightBookingPageViewModel"
     Shell.TabBarIsVisible="False">
 

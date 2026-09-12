@@ -86,8 +86,8 @@
                     </controls:ExtendedDropdown.Behaviors>
                     <controls:ExtendedDropdown.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
-                            <x:String>Adult</x:String>
-                            <x:String>Child</x:String>
+                            <x:String>{x:Static resx:AppResource.Adult}</x:String>
+                            <x:String>{x:Static resx:AppResource.Child}</x:String>
                         </x:Array>
                     </controls:ExtendedDropdown.ItemsSource>
                 </controls:ExtendedDropdown>

@@ -95,4 +95,9 @@ public partial class SearchView : ContentView
 	{
 		InitializeComponent();
 	}
+
+	public void FocusSearchEntry()
+	{
+		UserStoppedTypingEntry.Focus();
+	}
 }

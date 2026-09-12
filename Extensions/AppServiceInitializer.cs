@@ -20,6 +20,7 @@ public static class AppServiceInitializer
                         .AddTransient<IAuthenticationService, AuthenticationService>()
                         .AddTransient<IDialogService, DialogService>()
                         .AddTransient<IUpiAppLaunchService, AirIQ.Platforms.Services.UpiAppLaunchService>()
+                        .AddTransient<IBiometricAuthenticationService, AirIQ.Platforms.Services.BiometricAuthenticationService>()
 
                         .AddTransient<ILookupService, LookupService>()
                         .AddTransient<IAuthenticationService, AuthenticationService>()

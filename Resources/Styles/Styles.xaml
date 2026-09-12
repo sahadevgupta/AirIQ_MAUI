@@ -534,6 +534,25 @@
                         Value="{StaticResource PrimaryColor}"/>
         </Style>
 
+        <Style x:Key="ButtonOutlinedStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource DefaultButtonStyle}">
+                <Setter Property="CornerRadius"
+                        Value="8"/>
+                <Setter Property="HeightRequest"
+                        Value="50"/>
+                <Setter Property="BackgroundColor"
+                        Value="Transparent"/>
+                <Setter Property="TextColor"
+                        Value="{StaticResource PrimaryColor}"/>
+                <Setter Property="BorderColor"
+                        Value="{StaticResource PrimaryColor}"/>
+                <Setter Property="BorderWidth"
+                        Value="1"/>
+                <Setter Property="CharacterSpacing"
+                        Value="1.25"/>
+        </Style>
+
         <!--  ====================  -->
         <!--  BORDER STYLES  -->
         <!--  ====================  -->
@@ -548,6 +567,22 @@
                         Value="RoundRectangle 10"/>
                 <Setter Property="StrokeThickness"
                         Value="0"/>
+        </Style>
+
+        <Style TargetType="Border"
+               x:Key="IconCircleStyle">
+                <Setter Property="WidthRequest"
+                        Value="120"/>
+                <Setter Property="HeightRequest"
+                        Value="120"/>
+                <Setter Property="StrokeShape"
+                        Value="RoundRectangle 60"/>
+                <Setter Property="StrokeThickness"
+                        Value="0"/>
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource Primary0}"/>
+                <Setter Property="HorizontalOptions"
+                        Value="Center"/>
         </Style>
 
         <!--  Accent Button  -->

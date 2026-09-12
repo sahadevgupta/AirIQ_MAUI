@@ -5,7 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:helpers="clr-namespace:AirIQ.Extensions"
     xmlns:views="clr-namespace:AirIQ.Views"
-    xmlns:vm="clr-namespace:AirIQ.ViewModels">
+    xmlns:vm="clr-namespace:AirIQ.ViewModels"
+    xmlns:resx="clr-namespace:AirIQ.Resources.Strings">
 
     <views:BasePage.PageContent>
         <ScrollView>
@@ -54,7 +55,7 @@
                                 <Label
                                     FontAttributes="Bold"
                                     FontSize="14"
-                                    Text="ONLINE"
+                                    Text="{x:Static resx:AppResource.Online}"
                                     TextColor="White" />
                             </Frame>
 
@@ -124,7 +125,7 @@
                         <Label
                             Grid.Row="2"
                             FontAttributes="Bold"
-                            Text="Subtotal"
+                            Text="{x:Static resx:AppResource.Subtotal}"
                             TextColor="#444" />
 
                         <Label
@@ -138,7 +139,7 @@
                         <Label
                             Grid.Row="3"
                             FontAttributes="Bold"
-                            Text="Discount"
+                            Text="{x:Static resx:AppResource.Discount}"
                             TextColor="#444" />
 
                         <Label
@@ -167,7 +168,7 @@
                             CharacterSpacing="2"
                             FontAttributes="Bold"
                             FontSize="14"
-                            Text="TRAVELLERS"
+                            Text="{x:Static resx:AppResource.TravellersHeader}"
                             TextColor="Silver" />
 
                         <CollectionView Margin="0,10,0,10" ItemsSource="{Binding Passengers}">
@@ -211,7 +212,7 @@
                                 <Label
                                     FontSize="13"
                                     LineBreakMode="WordWrap"
-                                    Text="Confirm received commodity, $181.94 is included in this month bills."
+                                    Text="{x:Static resx:AppResource.PaymentDueMessage}"
                                     TextColor="#555" />
                             </StackLayout>
                         </Grid>
@@ -243,7 +244,7 @@
                         CornerRadius="12"
                         FontAttributes="Bold"
                         HeightRequest="50"
-                        Text="Cancel"
+                        Text="{x:Static resx:AppResource.Cancel}"
                         TextColor="Black" />
 
                     <Button
@@ -253,7 +254,7 @@
                         CornerRadius="12"
                         FontAttributes="Bold"
                         HeightRequest="50"
-                        Text="Pay now"
+                        Text="{x:Static resx:AppResource.PayNow}"
                         TextColor="White" />
                 </Grid>
 

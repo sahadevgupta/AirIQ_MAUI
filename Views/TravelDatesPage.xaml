@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                x:Class="AirIQ.Views.TravelDatesPage"
+                xmlns:controls="clr-namespace:AirIQ.Controls"
+                xmlns:helpers="clr-namespace:AirIQ.Extensions"
+                xmlns:models="clr-namespace:AirIQ.Models"
+                xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
+                xmlns:views="clr-namespace:AirIQ.Views"
+                xmlns:vm="clr-namespace:AirIQ.ViewModels"
+                x:Name="thisPage"
+                x:DataType="vm:TravelDatesPageViewModel"
+                IsNavBarVisible="False">
+
+    <views:BasePage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="StageTabStyle"
+                   TargetType="Border">
+                <Setter Property="Padding"
+                        Value="16,10"/>
+                <Setter Property="StrokeThickness"
+                        Value="0"/>
+                <Setter Property="StrokeShape"
+                        Value="RoundRectangle 12"/>
+                <Setter Property="BackgroundColor"
+                        Value="Transparent"/>
+            </Style>
+
+            <Style x:Key="StageEyebrowStyle"
+                   TargetType="Label">
+                <Setter Property="FontFamily"
+                        Value="RobotoSemiBold"/>
+                <Setter Property="FontSize"
+                        Value="11"/>
+                <Setter Property="CharacterSpacing"
+                        Value="0.4"/>
+                <Setter Property="TextColor"
+                        Value="{StaticResource Gray500}"/>
+                <Setter Property="TextTransform"
+                        Value="Uppercase"/>
+            </Style>
+
+            <Style x:Key="StageValueStyle"
+                   TargetType="Label">
+                <Setter Property="FontFamily"
+                        Value="RobotoBold"/>
+                <Setter Property="FontSize"
+                        Value="16"/>
+                <Setter Property="TextColor"
+                        Value="{StaticResource Onyx}"/>
+                <Setter Property="LineBreakMode"
+                        Value="TailTruncation"/>
+            </Style>
+        </ResourceDictionary>
+    </views:BasePage.Resources>
+
+    <views:BasePage.PageContent>
+        <Grid RowDefinitions="Auto,Auto,Auto,*,Auto"
+              BackgroundColor="White">
+
+            <!-- ==================== HEADER ==================== -->
+            <Grid Grid.Row="0"
+                  Padding="24,20,20,12"
+                  ColumnDefinitions="*,Auto">
+
+                <Label Grid.Column="0"
+                       Text="{x:Static resx:AppResource.WhensYourTrip}"
+                       Style="{StaticResource Label24Bold}"
+                       TextColor="{StaticResource Onyx}"
+                       VerticalOptions="Center"/>
+
+                <Border Grid.Column="1"
+                        WidthRequest="36"
+                        HeightRequest="36"
+                        Padding="0"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 18"
+                        BackgroundColor="{StaticResource BackgroundColor}"
+                        VerticalOptions="Center">
+                    <Label Text="{x:Static helpers:FontAwesomeIcons.Times}"
+                           FontFamily="MyFont"
+                           FontSize="14"
+                           TextColor="{StaticResource Gray500}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CloseCommand}"/>
+                    </Border.GestureRecognizers>
+                </Border>
+            </Grid>
+
+            <!-- ==================== DEPARTURE / RETURN ==================== -->
+            <!-- <Grid Grid.Row="1"
+                  Padding="20,0,20,12"
+                  ColumnDefinitions="*,*"
+                  ColumnSpacing="10">
+
+                <Border Grid.Column="0"
+                        Style="{StaticResource StageTabStyle}">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border"
+                                     Binding="{Binding IsSelectingDeparture}"
+                                     Value="True">
+                            <Setter Property="BackgroundColor"
+                                    Value="{StaticResource Primary0}"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{x:Static resx:AppResource.Departure}"
+                               Style="{StaticResource StageEyebrowStyle}"/>
+                        <Label Text="{Binding DepartureDate, StringFormat='{0:ddd, dd MMM yy}'}"
+                               Style="{StaticResource StageValueStyle}"/>
+                    </VerticalStackLayout>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectDepartureStageCommand}"/>
+                    </Border.GestureRecognizers>
+                </Border>
+
+                <Border Grid.Column="1"
+                        Style="{StaticResource StageTabStyle}">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border"
+                                     Binding="{Binding IsSelectingReturn}"
+                                     Value="True">
+                            <Setter Property="BackgroundColor"
+                                    Value="{StaticResource Primary0}"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{x:Static resx:AppResource.Return}"
+                               Style="{StaticResource StageEyebrowStyle}"/>
+                        <Label Text="{Binding ReturnDate, StringFormat='{0:ddd, dd MMM yy}', TargetNullValue={x:Static resx:AppResource.SelectReturnDate}}"
+                               Style="{StaticResource StageValueStyle}"/>
+                    </VerticalStackLayout>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectReturnStageCommand}"/>
+                    </Border.GestureRecognizers>
+                </Border>
+            </Grid> -->
+
+            <!-- ==================== WEEKDAY HEADER (fixed, doesn't scroll) ==================== -->
+            <Grid Grid.Row="2"
+                  Padding="20,8,20,8"
+                  ColumnDefinitions="*,*,*,*,*,*,*">
+                <Label Grid.Column="0"
+                       Text="{x:Static resx:AppResource.DayMon}"
+                       Style="{StaticResource Label12Medium}"
+                       TextColor="{StaticResource Gray500}"
+                       HorizontalTextAlignment="Center"/>
+                <Label Grid.Column="1"
+                       Text="{x:Static resx:AppResource.DayTue}"
+                       Style="{StaticResource Label12Medium}"
+                       TextColor="{StaticResource Gray500}"
+                       HorizontalTextAlignment="Center"/>
+                <Label Grid.Column="2"
+                       Text="{x:Static resx:AppResource.DayWed}"
+                       Style="{StaticResource Label12Medium}"
+                       TextColor="{StaticResource Gray500}"
+                       HorizontalTextAlignment="Center"/>
+                <Label Grid.Column="3"
+                       Text="{x:Static resx:AppResource.DayThu}"
+                       Style="{StaticResource Label12Medium}"
+                       TextColor="{StaticResource Gray500}"
+                       HorizontalTextAlignment="Center"/>
+                <Label Grid.Column="4"
+                       Text="{x:Static resx:AppResource.DayFri}"
+                       Style="{StaticResource Label12Medium}"
+                       TextColor="{StaticResource Gray500}"
+                       HorizontalTextAlignment="Center"/>
+                <Label Grid.Column="5"
+                       Text="{x:Static resx:AppResource.DaySat}"
+                       Style="{StaticResource Label12Medium}"
+                       TextColor="{StaticResource Gray500}"
+                       HorizontalTextAlignment="Center"/>
+                <Label Grid.Column="6"
+                       Text="{x:Static resx:AppResource.DaySun}"
+                       Style="{StaticResource Label12Medium}"
+                       TextColor="{StaticResource Gray500}"
+                       HorizontalTextAlignment="Center"/>
+            </Grid>
+
+            <!-- ==================== CALENDAR (scrolls behind the fixed Done button) ==================== -->
+            <CollectionView Grid.Row="3"
+                            IsVisible="True"
+                            ItemsSource="{Binding Months}"
+                            ItemSizingStrategy="MeasureFirstItem"
+                            RemainingItemsThreshold="2"
+                            RemainingItemsThresholdReachedCommand="{Binding LoadMoreMonthsCommand}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:CalendarMonth">
+                        <controls:CalendarMonthView Month="{Binding .}"
+                                                    DayTappedCommand="{Binding Source={x:Reference thisPage}, Path=BindingContext.SelectDayCommand}"/>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- <ScrollView Grid.Row="3">
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Months}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:CalendarMonth">
+                            <controls:CalendarMonthView Month="{Binding .}"
+                                                        DayTappedCommand="{Binding Source={x:Reference thisPage}, Path=BindingContext.SelectDayCommand}"/>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </ScrollView> -->
+
+            <!-- ==================== DONE (fixed) ==================== -->
+            <Button Grid.Row="4"
+                    Text="{x:Static resx:AppResource.Done}"
+                    Style="{StaticResource ButtonCorneredStyle}"
+                    Command="{Binding DoneCommand}"
+                    Margin="20,8,20,16"
+                    HeightRequest="56"
+                    CornerRadius="16"
+                    TextTransform="None"/>
+
+        </Grid>
+    </views:BasePage.PageContent>
+
+</views:BasePage>

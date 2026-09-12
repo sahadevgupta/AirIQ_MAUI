@@ -1,4 +1,5 @@
 using AirIQ.Models.Request;
+using AirIQ.Resources.Strings;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
 
@@ -25,7 +26,7 @@ namespace AirIQ.ViewModels
         private string? _filePath;
 
         [ObservableProperty]
-        private string _fileName = "No file chosen";
+        private string _fileName = AppResource.NoFileChosen;
 
         [ObservableProperty]
         private string? _message;
@@ -62,7 +63,7 @@ namespace AirIQ.ViewModels
         {
             var fileResult = await FilePicker.PickAsync(new PickOptions
             {
-                PickerTitle = "Select File"
+                PickerTitle = AppResource.SelectFilePickerTitle
             });
 
             if (fileResult is not null)

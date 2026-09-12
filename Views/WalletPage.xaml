@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                x:Class="AirIQ.Views.WalletPage"
+                xmlns:helpers="clr-namespace:AirIQ.Extensions"
+                xmlns:models="clr-namespace:AirIQ.Models"
+                xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
+                xmlns:views="clr-namespace:AirIQ.Views"
+                xmlns:vm="clr-namespace:AirIQ.ViewModels"
+                x:DataType="vm:WalletPageViewModel"
+                NavigationMode="Back"
+                PageTitle="{x:Static resx:AppResource.Wallet}">
+
+       <views:BasePage.Resources>
+              <ResourceDictionary>
+                     <Style TargetType="Border"
+                            x:Key="QuickActionIconStyle">
+                            <Setter Property="WidthRequest"
+                                    Value="48"/>
+                            <Setter Property="HeightRequest"
+                                    Value="48"/>
+                            <Setter Property="StrokeShape"
+                                    Value="RoundRectangle 24"/>
+                            <Setter Property="StrokeThickness"
+                                    Value="0"/>
+                            <Setter Property="BackgroundColor"
+                                    Value="{StaticResource Primary0}"/>
+                            <Setter Property="HorizontalOptions"
+                                    Value="Center"/>
+                     </Style>
+
+                     <Style TargetType="Label"
+                            x:Key="QuickActionIconLabelStyle">
+                            <Setter Property="FontFamily"
+                                    Value="MyFont"/>
+                            <Setter Property="FontSize"
+                                    Value="18"/>
+                            <Setter Property="TextColor"
+                                    Value="{StaticResource PrimaryColor}"/>
+                            <Setter Property="HorizontalOptions"
+                                    Value="Center"/>
+                            <Setter Property="VerticalOptions"
+                                    Value="Center"/>
+                     </Style>
+              </ResourceDictionary>
+       </views:BasePage.Resources>
+
+       <views:BasePage.PageContent>
+              <ScrollView>
+                     <VerticalStackLayout Padding="16"
+                                          Spacing="16"
+                                          BackgroundColor="{StaticResource BackgroundColor}">
+
+                            <!-- ==================== AVAILABLE BALANCE ==================== -->
+                            <Border StrokeShape="RoundRectangle 12"
+                                    StrokeThickness="0"
+                                    Padding="20"
+                                    Background="{StaticResource WalletIconGradient}">
+                                   <VerticalStackLayout Spacing="12">
+
+                                          <Grid ColumnDefinitions="*,Auto">
+                                                 <Label Text="{x:Static resx:AppResource.AvailableBalance}"
+                                                        Style="{StaticResource Label14Regular}"
+                                                        TextColor="White"
+                                                        Opacity="0.9"/>
+                                                 <Label Grid.Column="1"
+                                                        Text="{Binding EyeIconGlyph}"
+                                                        FontFamily="MyFont"
+                                                        FontSize="18"
+                                                        TextColor="White">
+                                                        <Label.GestureRecognizers>
+                                                               <TapGestureRecognizer Command="{Binding ToggleBalanceVisibilityCommand}"/>
+                                                        </Label.GestureRecognizers>
+                                                 </Label>
+                                          </Grid>
+
+                                          <Label Text="{Binding BalanceDisplayText}"
+                                                 Style="{StaticResource Label32Bold}"
+                                                 TextColor="White"/>
+
+                                          <Border Padding="10,4"
+                                                  HorizontalOptions="Start"
+                                                  StrokeThickness="0"
+                                                  StrokeShape="RoundRectangle 14"
+                                                  BackgroundColor="#33FFFFFF">
+                                                 <HorizontalStackLayout Spacing="8">
+                                                        <Label Text="{Binding WalletId, StringFormat={x:Static resx:AppResource.WalletIdFormat}}"
+                                                               Style="{StaticResource Label12Regular}"
+                                                               TextColor="White"
+                                                               VerticalOptions="Center"/>
+                                                        <Label Text="{x:Static helpers:FontAwesomeIcons.Copy}"
+                                                               FontFamily="MyFont"
+                                                               FontSize="12"
+                                                               TextColor="White"
+                                                               VerticalOptions="Center"/>
+                                                 </HorizontalStackLayout>
+                                                 <Border.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding CopyWalletIdCommand}"/>
+                                                 </Border.GestureRecognizers>
+                                          </Border>
+
+                                          <BoxView Color="#33FFFFFF"
+                                                   HeightRequest="1"
+                                                   Margin="0,4"/>
+
+                                          <Grid ColumnDefinitions="*,*">
+                                                 <VerticalStackLayout Spacing="2">
+                                                        <Label Text="{x:Static resx:AppResource.TotalCredits}"
+                                                               Style="{StaticResource Label12Regular}"
+                                                               TextColor="White"
+                                                               Opacity="0.9"/>
+                                                        <Label Text="{Binding TotalCredits, StringFormat='₹ {0:N2}'}"
+                                                               Style="{StaticResource Label16SemiBold}"
+                                                               TextColor="#8CF5A9"/>
+                                                 </VerticalStackLayout>
+
+                                                 <VerticalStackLayout Grid.Column="1"
+                                                                      Spacing="2">
+                                                        <Label Text="{x:Static resx:AppResource.TotalDebits}"
+                                                               Style="{StaticResource Label12Regular}"
+                                                               TextColor="White"
+                                                               Opacity="0.9"/>
+                                                        <Label Text="{Binding TotalDebits, StringFormat='₹ {0:N2}'}"
+                                                               Style="{StaticResource Label16SemiBold}"
+                                                               TextColor="#FFB4AC"/>
+                                                 </VerticalStackLayout>
+                                          </Grid>
+
+                                   </VerticalStackLayout>
+                            </Border>
+
+                            <!-- ==================== QUICK ACTIONS ==================== -->
+                            <Border Style="{StaticResource DefaultBorderStyle}">
+                                   <Grid ColumnDefinitions="*,*,*,*">
+
+                                          <VerticalStackLayout Spacing="6">
+                                                 <Border Style="{StaticResource QuickActionIconStyle}">
+                                                        <Label Text="{x:Static helpers:FontAwesomeIcons.PlusCircle}"
+                                                               Style="{StaticResource QuickActionIconLabelStyle}"/>
+                                                 </Border>
+                                                 <Label Text="{x:Static resx:AppResource.AddMoney}"
+                                                        Style="{StaticResource Label12Regular}"
+                                                        TextColor="{StaticResource Gray90}"
+                                                        HorizontalOptions="Center"
+                                                        HorizontalTextAlignment="Center"/>
+                                          </VerticalStackLayout>
+
+                                          <VerticalStackLayout Grid.Column="1"
+                                                               Spacing="6">
+                                                 <Border Style="{StaticResource QuickActionIconStyle}">
+                                                        <Label Text="{x:Static helpers:FontAwesomeIcons.ArrowUp}"
+                                                               Style="{StaticResource QuickActionIconLabelStyle}"/>
+                                                 </Border>
+                                                 <Label Text="{x:Static resx:AppResource.Withdraw}"
+                                                        Style="{StaticResource Label12Regular}"
+                                                        TextColor="{StaticResource Gray90}"
+                                                        HorizontalOptions="Center"
+                                                        HorizontalTextAlignment="Center"/>
+                                          </VerticalStackLayout>
+
+                                          <VerticalStackLayout Grid.Column="2"
+                                                               Spacing="6">
+                                                 <Border Style="{StaticResource QuickActionIconStyle}">
+                                                        <Label Text="{x:Static helpers:FontAwesomeIcons.History}"
+                                                               Style="{StaticResource QuickActionIconLabelStyle}"/>
+                                                 </Border>
+                                                 <Label Text="{x:Static resx:AppResource.TransactionHistory}"
+                                                        Style="{StaticResource Label12Regular}"
+                                                        TextColor="{StaticResource Gray90}"
+                                                        HorizontalOptions="Center"
+                                                        HorizontalTextAlignment="Center"/>
+                                          </VerticalStackLayout>
+
+                                          <VerticalStackLayout Grid.Column="3"
+                                                               Spacing="6">
+                                                 <Border Style="{StaticResource QuickActionIconStyle}">
+                                                        <Label Text="{x:Static helpers:FontAwesomeIcons.CreditCard}"
+                                                               Style="{StaticResource QuickActionIconLabelStyle}"/>
+                                                 </Border>
+                                                 <Label Text="{x:Static resx:AppResource.PaymentMethods}"
+                                                        Style="{StaticResource Label12Regular}"
+                                                        TextColor="{StaticResource Gray90}"
+                                                        HorizontalOptions="Center"
+                                                        HorizontalTextAlignment="Center"/>
+                                          </VerticalStackLayout>
+
+                                          <Grid.GestureRecognizers>
+                                                 <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                                          </Grid.GestureRecognizers>
+
+                                   </Grid>
+                            </Border>
+
+                            <!-- ==================== SECURE BANNER ==================== -->
+                            <Border BackgroundColor="{StaticResource Primary0}"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 10"
+                                    Padding="14,12">
+                                   <Grid ColumnDefinitions="Auto,*,Auto"
+                                         ColumnSpacing="12">
+                                          <Border WidthRequest="28"
+                                                  HeightRequest="28"
+                                                  Padding="0"
+                                                  StrokeThickness="0"
+                                                  StrokeShape="RoundRectangle 14"
+                                                  BackgroundColor="{StaticResource PrimaryColor}">
+                                                 <Label Text="{x:Static helpers:FontAwesomeIcons.ShieldAlt}"
+                                                        FontFamily="MyFont"
+                                                        FontSize="12"
+                                                        TextColor="White"
+                                                        HorizontalOptions="Center"
+                                                        VerticalOptions="Center"/>
+                                          </Border>
+                                          <Label Grid.Column="1"
+                                                 Text="{x:Static resx:AppResource.SecurePaymentsMessage}"
+                                                 Style="{StaticResource Label12Regular}"
+                                                 TextColor="{StaticResource Gray90}"
+                                                 VerticalOptions="Center"/>
+                                          <Label Grid.Column="2"
+                                                 Text="{x:Static helpers:FontAwesomeIcons.ChevronRight}"
+                                                 FontFamily="MyFont"
+                                                 FontSize="14"
+                                                 TextColor="{StaticResource PrimaryColor}"
+                                                 VerticalOptions="Center"/>
+                                          <Grid.GestureRecognizers>
+                                                 <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                                          </Grid.GestureRecognizers>
+                                   </Grid>
+                            </Border>
+
+                            <!-- ==================== RECENT TRANSACTIONS ==================== -->
+                            <Border Style="{StaticResource DefaultBorderStyle}"
+                                    Padding="16,12">
+                                   <VerticalStackLayout>
+
+                                          <Grid ColumnDefinitions="*,Auto"
+                                                Margin="0,0,0,8">
+                                                 <Label Text="{x:Static resx:AppResource.RecentTransactions}"
+                                                        Style="{StaticResource TitleStyleBlackBold}"/>
+                                                 <Label Grid.Column="1"
+                                                        Text="{x:Static resx:AppResource.ViewAll}"
+                                                        Style="{StaticResource Label14SemiBold}"
+                                                        TextColor="{StaticResource PrimaryColor}">
+                                                        <Label.GestureRecognizers>
+                                                               <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                                                        </Label.GestureRecognizers>
+                                                 </Label>
+                                          </Grid>
+
+                                          <CollectionView ItemsSource="{Binding RecentTransactions}"
+                                                          VerticalScrollBarVisibility="Never"
+                                                          HorizontalScrollBarVisibility="Never">
+                                                 <CollectionView.ItemsLayout>
+                                                        <LinearItemsLayout Orientation="Vertical"
+                                                                           ItemSpacing="0"/>
+                                                 </CollectionView.ItemsLayout>
+                                                 <CollectionView.ItemTemplate>
+                                                        <DataTemplate x:DataType="models:WalletTransaction">
+                                                               <VerticalStackLayout>
+                                                                      <Grid ColumnDefinitions="40,*,Auto"
+                                                                            ColumnSpacing="12"
+                                                                            Padding="0,12">
+                                                                             <Border WidthRequest="40"
+                                                                                     HeightRequest="40"
+                                                                                     Padding="0"
+                                                                                     StrokeThickness="0"
+                                                                                     StrokeShape="RoundRectangle 20"
+                                                                                     BackgroundColor="{Binding IconBackgroundColor}">
+                                                                                    <Label Text="{Binding IconGlyph}"
+                                                                                           FontFamily="MyFont"
+                                                                                           FontSize="16"
+                                                                                           TextColor="{Binding IconColor}"
+                                                                                           HorizontalOptions="Center"
+                                                                                           VerticalOptions="Center"/>
+                                                                             </Border>
+
+                                                                             <VerticalStackLayout Grid.Column="1"
+                                                                                                  Spacing="2"
+                                                                                                  VerticalOptions="Center">
+                                                                                    <Label Text="{Binding Title}"
+                                                                                           Style="{StaticResource Label14MediumGray90Style}"/>
+                                                                                    <Label Text="{Binding Date, StringFormat='{0:dd MMM yyyy, hh:mm tt}'}"
+                                                                                           Style="{StaticResource Label12Regular}"
+                                                                                           TextColor="{StaticResource Gray50}"/>
+                                                                             </VerticalStackLayout>
+
+                                                                             <VerticalStackLayout Grid.Column="2"
+                                                                                                  Spacing="2"
+                                                                                                  HorizontalOptions="End"
+                                                                                                  VerticalOptions="Center">
+                                                                                    <Label Text="{Binding AmountDisplay}"
+                                                                                           Style="{StaticResource Label14SemiBold}"
+                                                                                           TextColor="{Binding AmountColor}"
+                                                                                           HorizontalTextAlignment="End"/>
+                                                                                    <Label Text="{Binding Balance, StringFormat='Balance: ₹ {0:N2}'}"
+                                                                                           Style="{StaticResource Label12Regular}"
+                                                                                           TextColor="{StaticResource Gray50}"
+                                                                                           HorizontalTextAlignment="End"/>
+                                                                             </VerticalStackLayout>
+                                                                      </Grid>
+                                                                      <BoxView Color="{StaticResource BorderColor}"
+                                                                               HeightRequest="1"/>
+                                                               </VerticalStackLayout>
+                                                        </DataTemplate>
+                                                 </CollectionView.ItemTemplate>
+                                          </CollectionView>
+
+                                   </VerticalStackLayout>
+                            </Border>
+
+                            <!-- ==================== NEED HELP ==================== -->
+                            <Border Style="{StaticResource DefaultBorderStyle}"
+                                    Padding="16,14">
+                                   <Grid ColumnDefinitions="Auto,*,Auto"
+                                         ColumnSpacing="12">
+                                          <Border WidthRequest="32"
+                                                  HeightRequest="32"
+                                                  Padding="0"
+                                                  StrokeThickness="0"
+                                                  StrokeShape="RoundRectangle 16"
+                                                  BackgroundColor="{StaticResource PrimaryColor}">
+                                                 <Label Text="{x:Static helpers:FontAwesomeIcons.QuestionCircle}"
+                                                        FontFamily="MyFont"
+                                                        FontSize="14"
+                                                        TextColor="White"
+                                                        HorizontalOptions="Center"
+                                                        VerticalOptions="Center"/>
+                                          </Border>
+                                          <VerticalStackLayout Grid.Column="1"
+                                                               Spacing="2"
+                                                               VerticalOptions="Center">
+                                                 <Label Text="{x:Static resx:AppResource.NeedHelp}"
+                                                        Style="{StaticResource Label14MediumGray90Style}"/>
+                                                 <Label Text="{x:Static resx:AppResource.ContactSupportForWalletQueries}"
+                                                        Style="{StaticResource Label12Regular}"
+                                                        TextColor="{StaticResource Gray50}"/>
+                                          </VerticalStackLayout>
+                                          <Label Grid.Column="2"
+                                                 Text="{x:Static helpers:FontAwesomeIcons.ChevronRight}"
+                                                 FontFamily="MyFont"
+                                                 FontSize="14"
+                                                 TextColor="{StaticResource Gray50}"
+                                                 VerticalOptions="Center"/>
+                                          <Grid.GestureRecognizers>
+                                                 <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                                          </Grid.GestureRecognizers>
+                                   </Grid>
+                            </Border>
+
+                     </VerticalStackLayout>
+              </ScrollView>
+       </views:BasePage.PageContent>
+
+</views:BasePage>

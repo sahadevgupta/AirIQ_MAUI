@@ -39,8 +39,23 @@ public partial class NavigationBarControl : ContentView
 			BindableProperty.Create(nameof(IsWalletVisible), typeof(bool), typeof(NavigationBarControl), true);
 
 	public static readonly BindableProperty AmountProperty =
-		BindableProperty.Create(nameof(Amount), typeof(double), typeof(NavigationBarControl), 0.0, BindingMode.TwoWay);
+		BindableProperty.Create(nameof(Amount), typeof(double), typeof(NavigationBarControl), 0.0, BindingMode.TwoWay, propertyChanged: OnAmountChanged);
 
+	private static void OnAmountChanged(BindableObject bindable, object oldValue, object newValue)
+	{
+		if (bindable is NavigationBarControl control)
+		{
+			var num = Convert.ToDouble(newValue);
+			if (num >= 1000)
+			{
+				// Divide by 1000 and format to 1 decimal place
+				control.amountSpan.Text = $"{(num / 1000):F2}k";
+				//control.amountSpan.Text = num.ToString("00.00,k");
+			}
+			else
+				control.amountSpan.Text = num.ToString("0.##");
+		}
+	}
 
 	public ICommand NavigateCommand
 	{
@@ -112,5 +127,11 @@ public partial class NavigationBarControl : ContentView
 	public NavigationBarControl()
 	{
 		InitializeComponent();
+	}
+
+	private async void OnWalletTapped(object? sender, TappedEventArgs e)
+	{
+		if (Shell.Current != null)
+			await Shell.Current.GoToAsync("WalletPage");
 	}
 }

@@ -58,20 +58,27 @@ public partial class SalesRecordPageViewModel(IViewModelParameters viewModelPara
     [RelayCommand]
     private async Task LoadMoreAsync()
     {
-        using (LoadingService.Show())
+        try
         {
-            var records = await operationsService.GetSalesRecordsAsync(AppConfiguration.CurrentUser?.AgencyId ?? 0, page, pageSize);
-            if (records.Any())
+            using (LoadingService.Show())
             {
-                var item = BackendToAppModelMapper.GetSalesRecords(records).ToList();
-                salesRecordsTemp.AddRange(item);
+                var records = await operationsService.GetSalesRecordsAsync(AppConfiguration.CurrentUser?.AgencyId ?? 0, page, pageSize);
+                if (records.Any())
+                {
+                    var item = BackendToAppModelMapper.GetSalesRecords(records).ToList();
+                    salesRecordsTemp.AddRange(item);
 
-                if (string.IsNullOrEmpty(SearchText))
-                    SalesRecords?.AddRange(item);
-                else
-                    FilterSalesRecords(SearchText);
+                    if (string.IsNullOrEmpty(SearchText))
+                        SalesRecords?.AddRange(item);
+                    else
+                        FilterSalesRecords(SearchText);
+                }
+                page++;
             }
-            page++;
+        }
+        catch (Exception exception)
+        {
+            HandleException(exception);
         }
     }
 
@@ -85,7 +92,7 @@ public partial class SalesRecordPageViewModel(IViewModelParameters viewModelPara
 
     #region [ Override Methods ]
 
-    public override async Task LoadDataWhenNavigatedTo()
+    public override async Task LoadDataWhenNavigatedTo(CancellationToken cancellationToken = default)
     {
         await LoadMoreAsync();
     }

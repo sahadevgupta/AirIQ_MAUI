@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <views:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                x:Class="AirIQ_MAUI.Views.OnlineRechargePage"
+                x:Class="AirIQ.Views.OnlineRechargePage"
                 xmlns:controls="clr-namespace:AirIQ.Controls"
                 xmlns:helpers="clr-namespace:AirIQ.Extensions"
                 xmlns:models="clr-namespace:AirIQ.Models"
+                xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
                 xmlns:views="clr-namespace:AirIQ.Views"
                 xmlns:vm="clr-namespace:AirIQ.ViewModels"
                 x:DataType="vm:OnlineRechargePageViewModel"
                 NavigationMode="Hamburger"
-                PageTitle="Online Recharge">
+                PageTitle="{x:Static resx:AppResource.OnlineRecharge}">
 
     <views:BasePage.PageContent>
         <ScrollView>
@@ -41,7 +42,8 @@
                                         <DataTrigger TargetType="Label"
                                                      Binding="{Binding IsSelected}"
                                                      Value="True">
-                                            <Setter Property="TextColor" Value="White"/>
+                                            <Setter Property="TextColor"
+                                                    Value="White"/>
                                         </DataTrigger>
                                     </Label.Triggers>
                                 </Label>
@@ -49,8 +51,10 @@
                                     <DataTrigger TargetType="Border"
                                                  Binding="{Binding IsSelected}"
                                                  Value="True">
-                                        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
-                                        <Setter Property="Stroke" Value="{StaticResource PrimaryColor}"/>
+                                        <Setter Property="BackgroundColor"
+                                                Value="{StaticResource PrimaryColor}"/>
+                                        <Setter Property="Stroke"
+                                                Value="{StaticResource PrimaryColor}"/>
                                     </DataTrigger>
                                 </Border.Triggers>
                             </Border>
@@ -65,7 +69,7 @@
 
                         <!-- ==================== PAYMENT OPTIONS ==================== -->
                         <VerticalStackLayout Spacing="10">
-                            <Label Text="Choose payment option"
+                            <Label Text="{x:Static resx:AppResource.ChoosePaymentOption}"
                                    Style="{StaticResource TitleStyleBlackBold}"/>
 
                             <Grid ColumnDefinitions="*,*,*,*,*"
@@ -82,7 +86,8 @@
                                             <DataTrigger TargetType="Border"
                                                          Binding="{Binding PaymentOptions[0].IsSelected}"
                                                          Value="True">
-                                                <Setter Property="Stroke" Value="{StaticResource PrimaryColor}"/>
+                                                <Setter Property="Stroke"
+                                                        Value="{StaticResource PrimaryColor}"/>
                                             </DataTrigger>
                                         </Border.Triggers>
 
@@ -95,7 +100,7 @@
 
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding SelectPaymentOptionCommand}"
-                                                                   CommandParameter="{Binding PaymentOptions[0]}"/>
+                                                                  CommandParameter="{Binding PaymentOptions[0]}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
 
@@ -128,7 +133,8 @@
                                             <DataTrigger TargetType="Border"
                                                          Binding="{Binding PaymentOptions[1].IsSelected}"
                                                          Value="True">
-                                                <Setter Property="Stroke" Value="{StaticResource PrimaryColor}"/>
+                                                <Setter Property="Stroke"
+                                                        Value="{StaticResource PrimaryColor}"/>
                                             </DataTrigger>
                                         </Border.Triggers>
 
@@ -141,7 +147,7 @@
 
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding SelectPaymentOptionCommand}"
-                                                                   CommandParameter="{Binding PaymentOptions[1]}"/>
+                                                                  CommandParameter="{Binding PaymentOptions[1]}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
 
@@ -174,7 +180,8 @@
                                             <DataTrigger TargetType="Border"
                                                          Binding="{Binding PaymentOptions[2].IsSelected}"
                                                          Value="True">
-                                                <Setter Property="Stroke" Value="{StaticResource PrimaryColor}"/>
+                                                <Setter Property="Stroke"
+                                                        Value="{StaticResource PrimaryColor}"/>
                                             </DataTrigger>
                                         </Border.Triggers>
 
@@ -187,7 +194,7 @@
 
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding SelectPaymentOptionCommand}"
-                                                                   CommandParameter="{Binding PaymentOptions[2]}"/>
+                                                                  CommandParameter="{Binding PaymentOptions[2]}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
 
@@ -220,7 +227,8 @@
                                             <DataTrigger TargetType="Border"
                                                          Binding="{Binding PaymentOptions[3].IsSelected}"
                                                          Value="True">
-                                                <Setter Property="Stroke" Value="{StaticResource PrimaryColor}"/>
+                                                <Setter Property="Stroke"
+                                                        Value="{StaticResource PrimaryColor}"/>
                                             </DataTrigger>
                                         </Border.Triggers>
 
@@ -233,7 +241,7 @@
 
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding SelectPaymentOptionCommand}"
-                                                                   CommandParameter="{Binding PaymentOptions[3]}"/>
+                                                                  CommandParameter="{Binding PaymentOptions[3]}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
 
@@ -266,7 +274,8 @@
                                             <DataTrigger TargetType="Border"
                                                          Binding="{Binding PaymentOptions[4].IsSelected}"
                                                          Value="True">
-                                                <Setter Property="Stroke" Value="{StaticResource PrimaryColor}"/>
+                                                <Setter Property="Stroke"
+                                                        Value="{StaticResource PrimaryColor}"/>
                                             </DataTrigger>
                                         </Border.Triggers>
 
@@ -279,7 +288,7 @@
 
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding SelectPaymentOptionCommand}"
-                                                                   CommandParameter="{Binding PaymentOptions[4]}"/>
+                                                                  CommandParameter="{Binding PaymentOptions[4]}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
 
@@ -305,8 +314,8 @@
                         </VerticalStackLayout>
 
                         <!-- ==================== AMOUNT ==================== -->
-                        <controls:ExtendedEntry Title="Enter Amount"
-                                                PlaceholderText="0.00"
+                        <controls:ExtendedEntry Title="{x:Static resx:AppResource.EnterAmount}"
+                                                PlaceholderText="{x:Static resx:AppResource.AmountPlaceholder}"
                                                 Text="{Binding Amount}"
                                                 EntryKeyboard="Numeric"
                                                 LeadingIconType="Font"
@@ -315,13 +324,13 @@
                                                 LeadingIconSize="16"/>
 
                         <!-- ==================== PAYMENT METHOD ==================== -->
-                        <controls:ExtendedDropdown Title="Payment Method"
-                                                   PlaceholderText="Choose an Option"
+                        <controls:ExtendedDropdown Title="{x:Static resx:AppResource.PaymentMethod}"
+                                                   PlaceholderText="{x:Static resx:AppResource.ChooseAnOption}"
                                                    ItemsSource="{Binding PaymentMethods}"
                                                    SelectedItem="{Binding SelectedPaymentMethod}"/>
 
                         <!-- ==================== CONTINUE PAYMENT ==================== -->
-                        <Button Text="Continue Payment"
+                        <Button Text="{x:Static resx:AppResource.ContinuePayment}"
                                 Style="{StaticResource ButtonCorneredStyle}"
                                 HorizontalOptions="Fill"
                                 Command="{Binding ContinuePaymentCommand}"/>

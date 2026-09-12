@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:AirIQ.Extensions"
+             x:Class="AirIQ.Controls.FareCalendarView"
+             x:Name="Root">
+
+    <Grid RowDefinitions="Auto,Auto,Auto"
+          RowSpacing="18"
+          BackgroundColor="White"
+          HorizontalOptions="Fill"
+          VerticalOptions="Start">
+
+        <Grid.GestureRecognizers>
+            <SwipeGestureRecognizer Direction="Left"
+                                     Swiped="OnSwipedLeft"/>
+            <SwipeGestureRecognizer Direction="Right"
+                                     Swiped="OnSwipedRight"/>
+        </Grid.GestureRecognizers>
+
+        <!-- Month title, "Next" hint and prev/next month navigation. Swiping the grid also changes months. -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="*,Auto"
+              ColumnSpacing="8">
+
+            <HorizontalStackLayout Grid.Column="0"
+                                   Spacing="8"
+                                   VerticalOptions="Center">
+                <Label x:Name="monthLabel"
+                       Style="{StaticResource Label20Bold}"
+                       TextColor="{StaticResource Gray900}"
+                       VerticalOptions="Center"/>
+
+                <Label x:Name="nextMonthLabel"
+                       Style="{StaticResource Label14Regular}"
+                       TextColor="{StaticResource Gray400}"
+                       VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Grid.Column="1"
+                                   Spacing="8"
+                                   VerticalOptions="Center">
+                <ImageButton x:Name="leftArrow"
+                             Aspect="Center"
+                             WidthRequest="24"
+                             HeightRequest="24"
+                             BackgroundColor="Transparent"
+                             Clicked="LeftArrow_Clicked">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="{x:Static helpers:FontAwesomeIcons.ChevronLeft}"
+                                         FontFamily="MyFont"
+                                         Size="14"
+                                         Color="{StaticResource Gray400}"/>
+                    </ImageButton.Source>
+                </ImageButton>
+
+                <ImageButton x:Name="rightArrow"
+                             Aspect="Center"
+                             WidthRequest="24"
+                             HeightRequest="24"
+                             BackgroundColor="Transparent"
+                             Clicked="RightArrow_Clicked">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="{x:Static helpers:FontAwesomeIcons.ChevronRight}"
+                                         FontFamily="MyFont"
+                                         Size="14"
+                                         Color="{StaticResource Gray400}"/>
+                    </ImageButton.Source>
+                </ImageButton>
+            </HorizontalStackLayout>
+        </Grid>
+
+        <!-- Weekday header -->
+        <Grid x:Name="WeekdayHeaderGrid"
+              Grid.Row="1"
+              ColumnDefinitions="*,*,*,*,*,*,*"
+              RowDefinitions="Auto"/>
+
+        <!-- Calendar grid: pooled cells created in code-behind -->
+        <Grid x:Name="CalendarGrid"
+              Grid.Row="2"
+              ColumnDefinitions="*,*,*,*,*,*,*"
+              RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
+              RowSpacing="10"
+              ColumnSpacing="4"/>
+
+    </Grid>
+</ContentView>

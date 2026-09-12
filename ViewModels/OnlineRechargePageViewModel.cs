@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 
 using AirIQ.Enums;
 using AirIQ.Models;
+using AirIQ.Resources.Strings;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
 
@@ -16,17 +17,17 @@ namespace AirIQ.ViewModels
 
         public List<string> PaymentMethods { get; } = new()
         {
-            "Debit Card",
-            "Credit Card",
-            "Net Banking",
-            "Wallet"
+            AppResource.DebitCard,
+            AppResource.CreditCard,
+            AppResource.NetBanking,
+            AppResource.Wallet
         };
 
         [ObservableProperty]
         private ObservableCollection<RechargeProviderOption> _providerOptions = new()
         {
-            new RechargeProviderOption { Title = "EZBUZZ", ProviderType = RechargeProviderType.EzBuzz },
-            new RechargeProviderOption { Title = "CASHFREE", ProviderType = RechargeProviderType.Cashfree }
+            new RechargeProviderOption { Title = AppResource.EzBuzzProviderTitle, ProviderType = RechargeProviderType.EzBuzz },
+            new RechargeProviderOption { Title = AppResource.CashfreeProviderTitle, ProviderType = RechargeProviderType.Cashfree }
         };
 
         [ObservableProperty]
@@ -35,11 +36,11 @@ namespace AirIQ.ViewModels
         [ObservableProperty]
         private ObservableCollection<PaymentOptionItem> _paymentOptions = new()
         {
-            new PaymentOptionItem { Title = "UPI", OptionType = PaymentOptionType.Upi },
-            new PaymentOptionItem { Title = "RuPay", OptionType = PaymentOptionType.RuPay },
-            new PaymentOptionItem { Title = "Paytm", OptionType = PaymentOptionType.Paytm },
-            new PaymentOptionItem { Title = "Mastercard", OptionType = PaymentOptionType.Mastercard },
-            new PaymentOptionItem { Title = "Visa", OptionType = PaymentOptionType.Visa }
+            new PaymentOptionItem { Title = AppResource.UpiPaymentOption, OptionType = PaymentOptionType.Upi },
+            new PaymentOptionItem { Title = AppResource.RuPayPaymentOption, OptionType = PaymentOptionType.RuPay },
+            new PaymentOptionItem { Title = AppResource.Paytm, OptionType = PaymentOptionType.Paytm },
+            new PaymentOptionItem { Title = AppResource.MastercardPaymentOption, OptionType = PaymentOptionType.Mastercard },
+            new PaymentOptionItem { Title = AppResource.VisaPaymentOption, OptionType = PaymentOptionType.Visa }
         };
 
         [ObservableProperty]
@@ -153,7 +154,7 @@ namespace AirIQ.ViewModels
             try
             {
                 await ShowAlertAsync(
-                    $"Recharge of ₹{Amount} via {SelectedPaymentOption?.Title} will be processed through {SelectedProvider?.Title}.",
+                    string.Format(AppResource.RechargeProcessingMessageFormat, Amount, SelectedPaymentOption?.Title, SelectedProvider?.Title),
                     AlertType.Success);
             }
             catch (Exception ex)
@@ -170,7 +171,7 @@ namespace AirIQ.ViewModels
 
         #region [ Override Methods ]
 
-        public override Task LoadDataWhenNavigatedTo()
+        public override Task LoadDataWhenNavigatedTo(CancellationToken cancellationToken = default)
         {
             InitializeData();
             return base.LoadDataWhenNavigatedTo();

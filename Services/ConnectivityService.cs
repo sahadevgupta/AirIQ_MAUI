@@ -1,5 +1,6 @@
 using System;
 using AirIQ.Configurations.CustomExceptions;
+using AirIQ.Resources.Strings;
 using AirIQ.Services.Interfaces;
 
 namespace AirIQ.Services;
@@ -13,7 +14,7 @@ public class ConnectivityService : IConnectivityService
             return Task.CompletedTask;
         }
 
-        throw new NotConnectedException("No Internet connectivity available");
+        throw new NotConnectedException(AppResource.NoInternetConnectivityAvailable);
     }
 
 

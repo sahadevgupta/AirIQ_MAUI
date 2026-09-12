@@ -5,6 +5,7 @@
              xmlns:fonts="clr-namespace:AirIQ.Extensions"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
              x:Name="extendedDatepicker">
 
     <VerticalStackLayout>
@@ -20,7 +21,7 @@
                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
             </Border.GestureRecognizers>
             <Grid ColumnDefinitions="*,Auto">
-                <Label Text="DD/MM/YYYY"
+                <Label Text="{x:Static resx:AppResource.DateFormatPlaceholder}"
                        x:Name="datelbl"
                        VerticalTextAlignment="Center"/>
 

@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AirIQ.Resources.Strings;
 
 namespace AirIQ.Constants
 {
     public static class StringConstants
     {
-        public const string NoResultAvailable = "No Result Available";
-        public const string Mr = "Mr.";
-        public const string Mrs = "Mrs.";
-        public const string Ms = "Ms.";
-        public const string Mstr = "Mstr.";
-        public const string Miss = "Miss";
+        public static string NoResultAvailable => AppResource.NoResultAvailable;
+        public static string Mr => AppResource.TitleMr;
+        public static string Mrs => AppResource.TitleMrs;
+        public static string Ms => AppResource.TitleMs;
+        public static string Mstr => AppResource.TitleMstr;
+        public static string Miss => AppResource.TitleMiss;
     }
 }

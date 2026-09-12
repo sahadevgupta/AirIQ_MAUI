@@ -215,7 +215,7 @@ public partial class ExtendedDropdown : ContentView
             string selectedText = string.Empty;
             if (string.IsNullOrEmpty(control.DisplayMemberPath))
             {
-                selectedText = newValue.ToString();
+                selectedText = newValue.ToString() ?? string.Empty;
             }
             else
             {

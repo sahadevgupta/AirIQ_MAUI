@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopup:PopupPage xmlns:mopup="clr-namespace:Mopups.Pages;assembly=Mopups"
+                 xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:helpers="clr-namespace:AirIQ.Extensions"
+                 x:Class="AirIQ.Controls.CalendarViewV2"
+                 CloseWhenBackgroundIsClicked="True"
+                 BackgroundColor="{StaticResource PopupBackground}">
+
+    <mopup:PopupPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="HorizontalOptions"
+                    Value="Center"/>
+            <Setter Property="VerticalOptions"
+                    Value="Center"/>
+        </Style>
+    </mopup:PopupPage.Resources>
+
+    <Border StrokeShape="RoundRectangle 16"
+            StrokeThickness="0"
+            BackgroundColor="White"
+            VerticalOptions="Center"
+            Margin="20,0"
+            Padding="18,20,18,18">
+        <Border.Shadow>
+            <Shadow Brush="Black"
+                    Opacity="0.15"
+                    Radius="24"
+                    Offset="0,8"/>
+        </Border.Shadow>
+
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto"
+              RowSpacing="14">
+
+            <!-- Month/Year selector + prev/next navigation -->
+            <Grid Grid.Row="0"
+                  ColumnDefinitions="*,Auto"
+                  ColumnSpacing="8">
+
+                <HorizontalStackLayout Grid.Column="0"
+                                       Spacing="6"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Start">
+                    <HorizontalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="MonthYearTapped"/>
+                    </HorizontalStackLayout.GestureRecognizers>
+
+                    <Label x:Name="monthLabel"
+                           Style="{StaticResource Label18SemiBold}"
+                           TextColor="{StaticResource Gray900}"
+                           HorizontalOptions="Start"/>
+
+                    <Label Text="{x:Static helpers:FontAwesomeIcons.ChevronDown}"
+                           FontFamily="MyFont"
+                           FontSize="13"
+                           TextColor="{StaticResource Gray500}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label"
+                                         Binding="{Binding Source={x:Reference pickerRow},Path=IsVisible}"
+                                         Value="True">
+                                <Setter Property="Text"
+                                        Value="{x:Static helpers:FontAwesomeIcons.ChevronUp}"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Grid.Column="1"
+                                       Spacing="4"
+                                       VerticalOptions="Center">
+                    <ImageButton x:Name="leftArrow"
+                                 Aspect="Center"
+                                 WidthRequest="40"
+                                 HeightRequest="40"
+                                 BackgroundColor="Transparent"
+                                 Clicked="leftArrow_Clicked">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="{x:Static helpers:FontAwesomeIcons.ArrowLeft}"
+                                             FontFamily="MyFont"
+                                             Size="16"
+                                             Color="{StaticResource Gray500}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+
+                    <ImageButton x:Name="rightArrow"
+                                 Aspect="Center"
+                                 WidthRequest="40"
+                                 HeightRequest="40"
+                                 BackgroundColor="Transparent"
+                                 Clicked="rightArrow_Clicked">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="{x:Static helpers:FontAwesomeIcons.ArrowRight}"
+                                             FontFamily="MyFont"
+                                             Size="16"
+                                             Color="{StaticResource Gray500}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </HorizontalStackLayout>
+            </Grid>
+
+            <!-- Collapsible month/year selector -->
+            <Grid x:Name="pickerRow"
+                  Grid.Row="1"
+                  IsVisible="False"
+                  ColumnDefinitions="*,*"
+                  ColumnSpacing="8">
+
+                <Border Grid.Column="0"
+                        StrokeShape="RoundRectangle 10"
+                        Stroke="{StaticResource BorderColor}"
+                        StrokeThickness="1"
+                        Padding="10,0"
+                        BackgroundColor="{StaticResource BackgroundColor}">
+                    <Picker x:Name="monthPicker"
+                            SelectedIndexChanged="MonthPicker_SelectedIndexChanged"/>
+                </Border>
+
+                <Border Grid.Column="1"
+                        StrokeShape="RoundRectangle 10"
+                        Stroke="{StaticResource BorderColor}"
+                        StrokeThickness="1"
+                        Padding="10,0"
+                        BackgroundColor="{StaticResource BackgroundColor}">
+                    <Picker x:Name="yearPicker"
+                            SelectedIndexChanged="YearPicker_SelectedIndexChanged"/>
+                </Border>
+            </Grid>
+
+            <!-- Weekday header -->
+            <Grid Grid.Row="2"
+                  ColumnDefinitions="*,*,*,*,*,*,*">
+                <Label x:Name="daySunLabel"
+                       Grid.Column="0"
+                       Style="{StaticResource Label12Medium}"
+                       TextColor="{StaticResource Gray500}"/>
+                <Label x:Name="dayMonLabel"
+                       Grid.Column="1"
+                       Style="{StaticResource Label12Medium}"
+                       TextColor="{StaticResource Gray500}"/>
+                <Label x:Name="dayTueLabel"
+                       Grid.Column="2"
+                       Style="{StaticResource Label12Medium}"
+                       TextColor="{StaticResource Gray500}"/>
+                <Label x:Name="dayWedLabel"
+                       Grid.Column="3"
+                       Style="{StaticResource Label12Medium}"
+                       TextColor="{StaticResource Gray500}"/>
+                <Label x:Name="dayThuLabel"
+                       Grid.Column="4"
+                       Style="{StaticResource Label12Medium}"
+                       TextColor="{StaticResource Gray500}"/>
+                <Label x:Name="dayFriLabel"
+                       Grid.Column="5"
+                       Style="{StaticResource Label12Medium}"
+                       TextColor="{StaticResource Gray500}"/>
+                <Label x:Name="daySatLabel"
+                       Grid.Column="6"
+                       Style="{StaticResource Label12Medium}"
+                       TextColor="{StaticResource Gray500}"/>
+            </Grid>
+
+            <!-- Calendar grid: pooled cells created in code-behind -->
+            <Grid x:Name="CalendarGrid"
+                  Grid.Row="3"
+                  ColumnDefinitions="*,*,*,*,*,*,*"
+                  RowSpacing="6"/>
+
+        </Grid>
+    </Border>
+</mopup:PopupPage>

@@ -7,6 +7,7 @@
              xmlns:template="clr-namespace:AirIQ.Controls.TemplateSelector"
              xmlns:view ="clr-namespace:AirIQ.Views.ContentViews"
              xmlns:converter="clr-namespace:AirIQ.Converter"
+             xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
              x:Name="topTabView" 
              BackgroundColor="Transparent">
 
@@ -31,8 +32,8 @@
     </ContentView.Resources>
     <Grid RowDefinitions="Auto,Auto, *" BackgroundColor="White"
           RowSpacing="24">
-        <Label Grid.Row="0" 
-               Text="Book Flights"  
+        <Label Grid.Row="0"
+               Text="{x:Static resx:AppResource.BookFlightsHeading}"
                FontSize="22"
                Margin="0,10,0,10"
                TextColor="Black"
@@ -51,8 +52,8 @@
                     BackgroundColor="{Binding Source={x:Reference topTabView}, Path=SelectedTab,
                                               Converter={StaticResource TabHighlightConverter},
                                               ConverterParameter={x:Static enum:BookingTypes.OneWay}}">
-                <Label 
-                    Text="ONE WAY" 
+                <Label
+                    Text="{x:Static resx:AppResource.OneWayUpper}"
                     HorizontalOptions="Center" 
                     TextColor="{Binding Source={x:Reference topTabView}, Path=SelectedTab, Converter={StaticResource TabTextColorConverter},ConverterParameter={x:Static enum:BookingTypes.OneWay}}"
                     VerticalOptions="Center" />
@@ -68,7 +69,7 @@
                     BackgroundColor="{Binding Source={x:Reference topTabView}, Path=SelectedTab,
                                               Converter={StaticResource TabHighlightConverter},
                                               ConverterParameter={x:Static enum:BookingTypes.RoundTrip}}">
-                <Label Text="ROUND TRIP" 
+                <Label Text="{x:Static resx:AppResource.RoundTripUpper}"
                        HorizontalOptions="Center"
                        TextColor="{Binding Source={x:Reference topTabView}, Path=SelectedTab, Converter={StaticResource TabTextColorConverter},ConverterParameter={x:Static enum:BookingTypes.RoundTrip}}"
                        VerticalOptions="Center"/>

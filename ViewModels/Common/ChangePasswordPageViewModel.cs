@@ -65,19 +65,26 @@ public partial class ChangePasswordPageViewModel(IViewModelParameters viewModelP
     {
         if (ValidateForm())
         {
-            bool response = false;
-
-            using (LoadingService.Show())
+            try
             {
-                response = await authenticationService.ResetPasswordAsync(transactionKey!, otp!, Password!);
+                bool response;
+
+                using (LoadingService.Show())
+                {
+                    response = await authenticationService.ResetPasswordAsync(transactionKey!, otp!, Password!);
+                }
+
+                if (response)
+                {
+                    IsPasswordReseted = true;
+
+                    await Task.Delay(2000);
+                    await ShellNavigationService.Navigate<LoginPage>(true);
+                }
             }
-
-            if (response)
+            catch (Exception exception)
             {
-                IsPasswordReseted = true;
-
-                await Task.Delay(2000);
-                await ShellNavigationService.Navigate<LoginPage>(true);
+                HandleException(exception);
             }
         }
     }
