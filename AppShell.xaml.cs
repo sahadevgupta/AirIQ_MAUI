@@ -1,7 +1,7 @@
 using AirIQ.Configurations;
 using AirIQ.Enums;
 using AirIQ.Views;
-using AirIQ_MAUI.Views;
+using AirIQ.Views;
 
 namespace AirIQ;
 
@@ -63,7 +63,7 @@ public partial class AppShell : Shell
 		Navigated += OnShellNavigated;
 	}
 
-	void OnShellNavigated(object? sender, ShellNavigatedEventArgs e)
+	private async void OnShellNavigated(object? sender, ShellNavigatedEventArgs e)
 	{
 		var segment = e.Current?.Location.OriginalString
 			.Split('/', StringSplitOptions.RemoveEmptyEntries)
@@ -71,5 +71,16 @@ public partial class AppShell : Shell
 
 		if (segment is not null && RouteToMenuTypeMap.TryGetValue(segment, out var menuType))
 			AppConfiguration.SelectedMenuType = menuType;
+
+		if (e.Source != ShellNavigationSource.ShellSectionChanged) return;
+
+		var selectedSection = CurrentItem?.CurrentItem;
+		if (selectedSection == null) return;
+
+		// Reset the selected tab's navigation stack to its root when the tab is selected
+		if (selectedSection.Navigation?.NavigationStack?.Count > 1)
+		{
+			await selectedSection.Navigation.PopToRootAsync(animated: false);
+		}
 	}
 }

@@ -4,7 +4,7 @@ using AirIQ.Extensions;
 using Mopups.Pages;
 using Mopups.Services;
 
-namespace AirIQ_MAUI.Popups;
+namespace AirIQ.Popups;
 
 public partial class CustomAlertPopup : PopupPage
 {

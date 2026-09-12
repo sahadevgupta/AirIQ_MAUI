@@ -1029,6 +1029,9 @@
   <data name="FeatureComingSoon" xml:space="preserve">
     <value>This feature is coming soon.</value>
   </data>
+  <data name="ReverseRouteNotAvailable" xml:space="preserve">
+    <value>The selected return route is not available.</value>
+  </data>
   <data name="AppNameVersionFormat" xml:space="preserve">
     <value>AirIQ
 Version {0}</value>

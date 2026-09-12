@@ -192,6 +192,12 @@ namespace AirIQ.ViewModels
             await ShellNavigationService.Navigate<PrivacyPolicyPage>();
         }
 
+        [RelayCommand]
+        private async Task NavigateToLogin()
+        {
+            await ShellNavigationService.Navigate<LoginPage>(true);
+        }
+
         #endregion
     }
 }

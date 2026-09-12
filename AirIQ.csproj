@@ -11,7 +11,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>AirIQ</ApplicationTitle>
+		<ApplicationTitle>AIRiQ</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.airiq</ApplicationId>

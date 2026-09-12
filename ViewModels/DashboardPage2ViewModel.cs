@@ -1,4 +1,6 @@
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using AirIQ.Configurations;
 using AirIQ.Configurations.Mapper;
 using AirIQ.Constants;
 using AirIQ.Enums;
@@ -18,7 +20,7 @@ namespace AirIQ.ViewModels
     [QueryProperty(nameof(SelectedTravelDateResult), NavigationParamConstants.SelectedTravelDateResult)]
     [QueryProperty(nameof(SelectedReturnDateResult), NavigationParamConstants.SelectedReturnDateResult)]
     public partial class DashboardPage2ViewModel(IViewModelParameters viewModelParameters,
-        IFlightService flightService) : BaseViewModel(viewModelParameters)
+        IFlightService flightService, TravelDatesPageViewModel travelDatesPageViewModel) : BaseViewModel(viewModelParameters)
     {
         #region [ Properties ]
         private IEnumerable<FlightRoute>? Airports;
@@ -67,6 +69,9 @@ namespace AirIQ.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<FlightRoute>? _popularDestinations;
+
+        [ObservableProperty]
+        private string? _amount;
 
         #endregion
 
@@ -133,6 +138,9 @@ namespace AirIQ.ViewModels
 
         public async Task InitializeDataAsync()
         {
+            FormatAmount();
+            travelDatesPageViewModel.Preload();
+
             try
             {
                 using (LoadingService.Show())
@@ -154,6 +162,18 @@ namespace AirIQ.ViewModels
             {
                 HandleException(exception);
             }
+        }
+
+        private void FormatAmount()
+        {
+            var num = AppConfiguration.CurrentUser?.Balance ?? 0;
+            if (num >= 1000)
+            {
+                Amount = $"{(num / 1000):F2}k";
+                //control.amountSpan.Text = num.ToString("00.00,k");
+            }
+            else
+                Amount = num.ToString("0.##");
         }
 
         private void GetDestinationAirports()
@@ -181,27 +201,26 @@ namespace AirIQ.ViewModels
         [RelayCommand]
         private async Task OpenDepartureDatePicker() => await OpenTravelDatesPicker(DateSelectionStage.Departure);
 
-        [RelayCommand]
-        private async Task OpenReturnDatePicker() => await OpenTravelDatesPicker(DateSelectionStage.Return);
+        // One-way only for now - round-trip entry points are commented out rather than removed, so
+        // they can be re-enabled later alongside TravelDatesPageViewModel's round-trip logic. To bring
+        // this back: uncomment these two commands, the ReturnDate.HasValue block in
+        // OpenTravelDatesPicker below, and the Return-date row in DashboardPage2.xaml.
+        // [RelayCommand]
+        // private async Task OpenReturnDatePicker() => await OpenTravelDatesPicker(DateSelectionStage.Return);
 
-        [RelayCommand]
-        private void ClearReturnDate() => ReturnDate = null;
+        // [RelayCommand]
+        // private void ClearReturnDate() => ReturnDate = null;
 
         private async Task OpenTravelDatesPicker(DateSelectionStage stage)
         {
-            var parameters = new Dictionary<string, object>
-            {
-                { NavigationParamConstants.TravelAllowedDates, AllowedDates },
-                { NavigationParamConstants.DateSelectionStage, stage },
-            };
+            // Assigned directly on the pre-warmed singleton instance rather than round-tripped
+            // through Shell navigation query parameters - see TravelDatesPageViewModel.Preload()/
+            // PrepareForSelection().
+            Debug.WriteLine("Clicked on Travel Date : " + DateTime.Now);
+            travelDatesPageViewModel.PrepareForSelection(SelectedTravelDate, AllowedDates, stage);
 
-            if (SelectedTravelDate.HasValue)
-                parameters[NavigationParamConstants.InitialDepartureDate] = SelectedTravelDate.Value;
-
-            if (ReturnDate.HasValue)
-                parameters[NavigationParamConstants.InitialReturnDate] = ReturnDate.Value;
-
-            await ShellNavigationService.Navigate<TravelDatesPage>(parameters: parameters);
+            await ShellNavigationService.Navigate<TravelDatesPage>();
+            Debug.WriteLine("Navigation to Travel Date completed : " + DateTime.Now);
         }
 
         [RelayCommand]
@@ -238,6 +257,32 @@ namespace AirIQ.ViewModels
                 });
 
             }
+        }
+
+        // Pure check (no mutation, no alert) so the view can decide whether to run the swap
+        // animation/mutation *before* anything changes - see DashboardPage2.xaml.cs SwapButtonClicked.
+        public bool IsReverseRouteAvailable()
+        {
+            var source = SelectedSourceAirport;
+            var destination = SelectedDestinationAirport;
+
+            if (source is null || destination is null)
+                return true;
+
+            if (string.IsNullOrWhiteSpace(source.Origin) || string.IsNullOrWhiteSpace(destination.Destination))
+                return true;
+
+            if (source.Origin == destination.Destination)
+                return true;
+
+            // Airports not loaded yet (or the initial load failed) - fail open rather than block
+            // the user on a check we have no data for; GetAvailableRoutesAsync's own try/catch
+            // already surfaces load failures via HandleException.
+            if (Airports is null)
+                return true;
+
+            var a = Airports.FirstOrDefault(route => route.Origin == destination.Destination && route.Destination == source.Origin);
+            return a != null;
         }
 
         [RelayCommand]

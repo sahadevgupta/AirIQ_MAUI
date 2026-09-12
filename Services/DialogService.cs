@@ -8,7 +8,7 @@ using Application = Microsoft.Maui.Controls.Application;
 using Font = Microsoft.Maui.Font;
 using Color = Microsoft.Maui.Graphics.Color;
 using AirIQ.Enums;
-using AirIQ_MAUI.Popups;
+using AirIQ.Popups;
 
 namespace AirIQ.Services;
 

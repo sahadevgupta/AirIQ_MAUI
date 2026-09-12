@@ -2795,7 +2795,16 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("FeatureComingSoon", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to The selected return route is not available..
+        /// </summary>
+        internal static string ReverseRouteNotAvailable {
+            get {
+                return ResourceManager.GetString("ReverseRouteNotAvailable", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to AirIQ Version {0}.
         /// </summary>

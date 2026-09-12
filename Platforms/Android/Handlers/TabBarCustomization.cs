@@ -76,7 +76,7 @@ namespace AirIQ.Platforms.Handlers
                 // Access the BottomNavigationView and customize the selected item appearance
                 if (bottomNav is BottomNavigationView bnv)
                 {
-                    int selectedColor = Color.ParseColor("#BFD4FC");
+                    int selectedColor = (Color)Application.Current.Resources["PrimaryRed"];
 
                     // Set active indicator color (selected item background) - for Material Design 3
                     try

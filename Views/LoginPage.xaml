@@ -129,6 +129,7 @@
                 </Label>
 
                 <Label Grid.Row="2"
+                       IsVisible="False"
                        HorizontalTextAlignment="Center">
                     <Label.FormattedText>
                         <FormattedString>

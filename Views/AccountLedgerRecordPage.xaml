@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <views:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                x:Class="AirIQ_MAUI.Views.AccountLedgerRecordPage"
+                x:Class="AirIQ.Views.AccountLedgerRecordPage"
                 xmlns:controls="clr-namespace:AirIQ.Controls"
                 xmlns:models="clr-namespace:AirIQ.Models"
                 xmlns:resx="clr-namespace:AirIQ.Resources.Strings"

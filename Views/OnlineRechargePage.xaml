@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <views:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                x:Class="AirIQ_MAUI.Views.OnlineRechargePage"
+                x:Class="AirIQ.Views.OnlineRechargePage"
                 xmlns:controls="clr-namespace:AirIQ.Controls"
                 xmlns:helpers="clr-namespace:AirIQ.Extensions"
                 xmlns:models="clr-namespace:AirIQ.Models"
@@ -42,7 +42,8 @@
                                         <DataTrigger TargetType="Label"
                                                      Binding="{Binding IsSelected}"
                                                      Value="True">
-                                            <Setter Property="TextColor" Value="White"/>
+                                            <Setter Property="TextColor"
+                                                    Value="White"/>
                                         </DataTrigger>
                                     </Label.Triggers>
                                 </Label>
@@ -50,8 +51,10 @@
                                     <DataTrigger TargetType="Border"
                                                  Binding="{Binding IsSelected}"
                                                  Value="True">
-                                        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
-                                        <Setter Property="Stroke" Value="{StaticResource PrimaryColor}"/>
+                                        <Setter Property="BackgroundColor"
+                                                Value="{StaticResource PrimaryColor}"/>
+                                        <Setter Property="Stroke"
+                                                Value="{StaticResource PrimaryColor}"/>
                                     </DataTrigger>
                                 </Border.Triggers>
                             </Border>
@@ -83,7 +86,8 @@
                                             <DataTrigger TargetType="Border"
                                                          Binding="{Binding PaymentOptions[0].IsSelected}"
                                                          Value="True">
-                                                <Setter Property="Stroke" Value="{StaticResource PrimaryColor}"/>
+                                                <Setter Property="Stroke"
+                                                        Value="{StaticResource PrimaryColor}"/>
                                             </DataTrigger>
                                         </Border.Triggers>
 
@@ -96,7 +100,7 @@
 
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding SelectPaymentOptionCommand}"
-                                                                   CommandParameter="{Binding PaymentOptions[0]}"/>
+                                                                  CommandParameter="{Binding PaymentOptions[0]}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
 
@@ -129,7 +133,8 @@
                                             <DataTrigger TargetType="Border"
                                                          Binding="{Binding PaymentOptions[1].IsSelected}"
                                                          Value="True">
-                                                <Setter Property="Stroke" Value="{StaticResource PrimaryColor}"/>
+                                                <Setter Property="Stroke"
+                                                        Value="{StaticResource PrimaryColor}"/>
                                             </DataTrigger>
                                         </Border.Triggers>
 
@@ -142,7 +147,7 @@
 
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding SelectPaymentOptionCommand}"
-                                                                   CommandParameter="{Binding PaymentOptions[1]}"/>
+                                                                  CommandParameter="{Binding PaymentOptions[1]}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
 
@@ -175,7 +180,8 @@
                                             <DataTrigger TargetType="Border"
                                                          Binding="{Binding PaymentOptions[2].IsSelected}"
                                                          Value="True">
-                                                <Setter Property="Stroke" Value="{StaticResource PrimaryColor}"/>
+                                                <Setter Property="Stroke"
+                                                        Value="{StaticResource PrimaryColor}"/>
                                             </DataTrigger>
                                         </Border.Triggers>
 
@@ -188,7 +194,7 @@
 
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding SelectPaymentOptionCommand}"
-                                                                   CommandParameter="{Binding PaymentOptions[2]}"/>
+                                                                  CommandParameter="{Binding PaymentOptions[2]}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
 
@@ -221,7 +227,8 @@
                                             <DataTrigger TargetType="Border"
                                                          Binding="{Binding PaymentOptions[3].IsSelected}"
                                                          Value="True">
-                                                <Setter Property="Stroke" Value="{StaticResource PrimaryColor}"/>
+                                                <Setter Property="Stroke"
+                                                        Value="{StaticResource PrimaryColor}"/>
                                             </DataTrigger>
                                         </Border.Triggers>
 
@@ -234,7 +241,7 @@
 
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding SelectPaymentOptionCommand}"
-                                                                   CommandParameter="{Binding PaymentOptions[3]}"/>
+                                                                  CommandParameter="{Binding PaymentOptions[3]}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
 
@@ -267,7 +274,8 @@
                                             <DataTrigger TargetType="Border"
                                                          Binding="{Binding PaymentOptions[4].IsSelected}"
                                                          Value="True">
-                                                <Setter Property="Stroke" Value="{StaticResource PrimaryColor}"/>
+                                                <Setter Property="Stroke"
+                                                        Value="{StaticResource PrimaryColor}"/>
                                             </DataTrigger>
                                         </Border.Triggers>
 
@@ -280,7 +288,7 @@
 
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding SelectPaymentOptionCommand}"
-                                                                   CommandParameter="{Binding PaymentOptions[4]}"/>
+                                                                  CommandParameter="{Binding PaymentOptions[4]}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
 

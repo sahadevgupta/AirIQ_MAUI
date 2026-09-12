@@ -120,6 +120,7 @@
     <Color x:Key="CardColorDark">#1E1E1E</Color>
     <Color x:Key="PlaceholderColorDark">#A0A0A0</Color>
     <Color x:Key="Firebrick">#D32F2F</Color>
+    <Color x:Key="PrimaryRed">#F16367</Color>
 
     <!-- ==================== -->
     <!--    BRUSHES           -->

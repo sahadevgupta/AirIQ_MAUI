@@ -64,11 +64,11 @@
                   Icon="flight"/> -->
 
     <TabBar Route="app">
-        <ShellContent Title="{x:Static resx:AppResource.Flights}"
+        <ShellContent Title="Home"
                       ContentTemplate="{DataTemplate local:DashboardPage2}"
                       Route="home"
                       Icon="flight"/>
-        <ShellContent Title="{x:Static resx:AppResource.Hotels}"
+        <!-- <ShellContent Title="{x:Static resx:AppResource.Hotels}"
                       ContentTemplate="{DataTemplate local:HotelsPage}"
                       Route="HotelsPage">
             <ShellContent.Icon>
@@ -77,7 +77,20 @@
                     Glyph="{x:Static helpers:FontAwesomeIcons.Hotel}"
                     Size="24"/>
             </ShellContent.Icon>
+        </ShellContent> -->
+
+        <ShellContent Title="{x:Static resx:AppResource.PaxCalendar}"
+                      ContentTemplate="{DataTemplate local:PaxCalendarPage}"
+                      Route="HotelsPage"
+                      Icon="pax_calendar">
+            <!-- <ShellContent.Icon>
+                <FontImageSource
+                    FontFamily="MyFont"
+                    Glyph="{x:Static helpers:FontAwesomeIcons.Hotel}"
+                    Size="24"/>
+            </ShellContent.Icon> -->
         </ShellContent>
+
         <ShellContent Title="{x:Static resx:AppResource.Account}"
                       ContentTemplate="{DataTemplate local:MyAccountPage}"
                       Route="AccountPage">

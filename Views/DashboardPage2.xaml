@@ -152,16 +152,45 @@
                 <Span Text=""/>
                 <Span Text="{x:Static resx:AppResource.IqLowercase}"
                       Style="{StaticResource Label24Bold}"
-                      TextColor="Red"/>
+                      TextColor="{StaticResource PrimaryRed}"/>
               </FormattedString>
             </Label.FormattedText>
           </Label>
+
+          <Border Padding="10,4"
+                  StrokeShape="RoundRectangle 20"
+                  BackgroundColor="{StaticResource PrimaryColor}"
+                  StrokeThickness="1"
+                  Stroke="White"
+                  Grid.Column="2">
+
+            <HorizontalStackLayout Spacing="0">
+
+              <Label Text="₹"
+                     Style="{StaticResource Label16Regular}"
+                     TextColor="White"
+                     VerticalTextAlignment="Center"/>
+              <Label x:Name="amountSpan"
+                     Text="{Binding Amount}"
+                     Style="{StaticResource Label14Medium}"
+                     TextColor="White"
+                     VerticalTextAlignment="Center"
+                     Margin="4,0,8,0"/>
+              <Image Source="wallet_outline"
+                     HeightRequest="20"/>
+            </HorizontalStackLayout>
+
+            <!-- <Border.GestureRecognizers>
+              <TapGestureRecognizer Tapped="OnWalletTapped"/>
+            </Border.GestureRecognizers> -->
+          </Border>
 
           <Grid Grid.Column="2"
                 WidthRequest="24"
                 HeightRequest="24"
                 HorizontalOptions="End"
-                VerticalOptions="Center">
+                VerticalOptions="Center"
+                IsVisible="False">
             <Image Source="notifications"
                    WidthRequest="22"
                    HeightRequest="22"/>
@@ -221,7 +250,8 @@
                   <Label Text="{x:Static helpers:FontAwesomeIcons.PlaneDeparture}"
                          Style="{StaticResource RouteIconLabelStyle}"/>
                 </Border>
-                <VerticalStackLayout Grid.Column="1"
+                <VerticalStackLayout x:Name="fromDetailsStack"
+                                     Grid.Column="1"
                                      Spacing="2"
                                      VerticalOptions="Center">
                   <Label Text="{x:Static resx:AppResource.From}"
@@ -269,7 +299,8 @@
                   <Label Text="{x:Static helpers:FontAwesomeIcons.PlaneArrival}"
                          Style="{StaticResource RouteIconLabelStyle}"/>
                 </Border>
-                <VerticalStackLayout Grid.Column="1"
+                <VerticalStackLayout x:Name="toDetailsStack"
+                                     Grid.Column="1"
                                      Spacing="2"
                                      VerticalOptions="Center">
                   <Label Text="{x:Static resx:AppResource.To}"
@@ -293,21 +324,22 @@
               <Border Grid.Row="0"
                       Grid.RowSpan="3"
                       Grid.Column="1"
-                      WidthRequest="36"
-                      HeightRequest="36"
+                      WidthRequest="44"
+                      HeightRequest="44"
                       Padding="0"
                       VerticalOptions="Center"
-                      BackgroundColor="{StaticResource PrimaryColor}"
-                      StrokeShape="RoundRectangle 18"
+                      BackgroundColor="{StaticResource PrimaryRed}"
+                      StrokeShape="RoundRectangle 22"
                       Stroke="{StaticResource StrokeColor}"
-                      StrokeThickness="1">
+                      StrokeThickness="1"
+                      x:Name="swapIconBorder">
                 <Border.Shadow>
                   <Shadow Brush="Black"
                           Offset="0,2"
                           Radius="6"
                           Opacity="0.10"/>
                 </Border.Shadow>
-                <ImageButton Source="swap"
+                <ImageButton Source="swap_new"
                              Padding="0"
                              BackgroundColor="Transparent"
                              Command="{Binding SwapSourceDestinationCommand}"/>
@@ -356,6 +388,7 @@
 
 
                 <Grid ColumnDefinitions="Auto,Auto"
+                      HorizontalOptions="End"
                       ColumnSpacing="10"
                       Grid.Column="1">
 
@@ -382,43 +415,44 @@
 
               </Grid>
 
-              <!-- RETURN (optional) -->
-              <Grid Grid.Row="5"
-                    Grid.ColumnSpan="2"
-                    Margin="0,14,0,0"
-                    ColumnDefinitions="Auto,*,Auto"
-                    ColumnSpacing="10">
+              <!-- RETURN (optional) - one-way only for now, commented out rather than removed so
+                     round-trip can be re-enabled later (see TravelDatesPageViewModel.cs). -->
+              <!--<Grid Grid.Row="5"
+                      Grid.ColumnSpan="2"
+                      Margin="0,14,0,0"
+                      ColumnDefinitions="Auto,*,Auto"
+                      ColumnSpacing="10">
 
-                <Border Style="{StaticResource RouteIconStyle}">
-                  <Label Text="{x:Static helpers:FontAwesomeIcons.CalendarAlt}"
-                         FontSize="20"
-                         Style="{StaticResource RouteIconLabelStyle}"/>
-                </Border>
+                  <Border Style="{StaticResource RouteIconStyle}">
+                    <Label Text="{x:Static helpers:FontAwesomeIcons.CalendarAlt}"
+                           FontSize="20"
+                           Style="{StaticResource RouteIconLabelStyle}"/>
+                  </Border>
 
-                <VerticalStackLayout Grid.Column="1"
-                                     BackgroundColor="Transparent"
-                                     VerticalOptions="Center">
-                  <Label Text="{x:Static resx:AppResource.Return}"
-                         Style="{StaticResource RouteEyebrowStyle}"/>
-                  <Label Text="{Binding ReturnDate, StringFormat='{0:dd MMM yyyy}', TargetNullValue={x:Static resx:AppResource.AddReturnDate}}"
-                         Style="{StaticResource Label16Bold}"
-                         TextColor="{StaticResource Onyx}"/>
-                </VerticalStackLayout>
+                  <VerticalStackLayout Grid.Column="1"
+                                       BackgroundColor="Transparent"
+                                       VerticalOptions="Center">
+                    <Label Text="{x:Static resx:AppResource.Return}"
+                           Style="{StaticResource RouteEyebrowStyle}"/>
+                    <Label Text="{Binding ReturnDate, StringFormat='{0:dd MMM yyyy}', TargetNullValue={x:Static resx:AppResource.AddReturnDate}}"
+                           Style="{StaticResource Label16Bold}"
+                           TextColor="{StaticResource Onyx}"/>
+                  </VerticalStackLayout>
 
-                <ImageButton Grid.Column="2"
-                             Source="close"
-                             WidthRequest="16"
-                             HeightRequest="16"
-                             Padding="0"
-                             VerticalOptions="Center"
-                             BackgroundColor="Transparent"
-                             IsVisible="{Binding ReturnDate, Converter={StaticResource NotNullToBoolConverter}}"
-                             Command="{Binding ClearReturnDateCommand}"/>
+                  <ImageButton Grid.Column="2"
+                               Source="close"
+                               WidthRequest="16"
+                               HeightRequest="16"
+                               Padding="0"
+                               VerticalOptions="Center"
+                               BackgroundColor="Transparent"
+                               IsVisible="{Binding ReturnDate, Converter={StaticResource NotNullToBoolConverter}}"
+                               Command="{Binding ClearReturnDateCommand}"/>
 
-                <Grid.GestureRecognizers>
-                  <TapGestureRecognizer Command="{Binding OpenReturnDatePickerCommand}"/>
-                </Grid.GestureRecognizers>
-              </Grid>
+                  <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenReturnDatePickerCommand}"/>
+                  </Grid.GestureRecognizers>
+                </Grid>-->
 
               <Button Grid.Row="6"
                       Grid.ColumnSpan="2"
@@ -426,6 +460,7 @@
                       Margin="0,20,0,0"
                       Text="{x:Static resx:AppResource.SearchFlights}"
                       Command="{Binding SearchFlightsCommand}"
+                      BackgroundColor="{StaticResource PrimaryRed}"
                       HeightRequest="45"
                       TextTransform="Default"
                       CharacterSpacing="0"/>
