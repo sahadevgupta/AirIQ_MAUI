@@ -33,12 +33,19 @@ namespace AirIQ.ViewModels
 
         private void FilterRefundRecords(string? searchKey)
         {
-            var filtered = string.IsNullOrEmpty(searchKey)
-                ? refundRecordsTemp
-                : refundRecordsTemp.Where(x =>
+            IEnumerable<RefundRecord> filtered = refundRecordsTemp;
+
+            if (!string.IsNullOrEmpty(searchKey))
+                filtered = filtered.Where(x =>
                     x.Prefix.ContainsIgnoreCase(searchKey) ||
                     x.PNR.ContainsIgnoreCase(searchKey) ||
                     x.FDestName.ContainsIgnoreCase(searchKey));
+
+            if (FromDate.HasValue)
+                filtered = filtered.Where(x => x.EntryDate.Date >= FromDate.Value.Date);
+
+            if (ToDate.HasValue)
+                filtered = filtered.Where(x => x.EntryDate.Date <= ToDate.Value.Date);
 
             RefundRecords.ReplaceRange(filtered);
         }
@@ -93,6 +100,12 @@ namespace AirIQ.ViewModels
         public override async Task LoadDataWhenNavigatedTo(CancellationToken cancellationToken = default)
         {
             await LoadMoreAsync();
+        }
+
+        protected override Task OnDateFilterAppliedAsync(DateTime? fromDate, DateTime? toDate)
+        {
+            FilterRefundRecords(SearchText);
+            return Task.CompletedTask;
         }
 
         #endregion

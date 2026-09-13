@@ -4415,5 +4415,104 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("AddReturnDate", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        internal static string Filter {
+            get {
+                return ResourceManager.GetString("Filter", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Narrow results by a date range.
+        /// </summary>
+        internal static string FilterSubtitle {
+            get {
+                return ResourceManager.GetString("FilterSubtitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Date Range.
+        /// </summary>
+        internal static string DateRange {
+            get {
+                return ResourceManager.GetString("DateRange", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to From Date.
+        /// </summary>
+        internal static string FromDate {
+            get {
+                return ResourceManager.GetString("FromDate", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to To Date.
+        /// </summary>
+        internal static string ToDate {
+            get {
+                return ResourceManager.GetString("ToDate", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Clear All.
+        /// </summary>
+        internal static string ClearAll {
+            get {
+                return ResourceManager.GetString("ClearAll", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Today.
+        /// </summary>
+        internal static string Today {
+            get {
+                return ResourceManager.GetString("Today", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to This Week.
+        /// </summary>
+        internal static string ThisWeek {
+            get {
+                return ResourceManager.GetString("ThisWeek", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to This Month.
+        /// </summary>
+        internal static string ThisMonth {
+            get {
+                return ResourceManager.GetString("ThisMonth", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Last 30 Days.
+        /// </summary>
+        internal static string Last30Days {
+            get {
+                return ResourceManager.GetString("Last30Days", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        internal static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
     }
 }

@@ -31,16 +31,23 @@ public partial class SalesRecordPageViewModel(IViewModelParameters viewModelPara
 
     #region [ Methods & Service Calls ]
 
-    private void FilterSalesRecords(string? searchKey)
+    private void FilterSalesRecords(string? searchKey = null)
     {
-        var filtered = string.IsNullOrEmpty(searchKey)
-            ? salesRecordsTemp
-            : salesRecordsTemp.Where(x =>
+        IEnumerable<SalesRecord> filtered = salesRecordsTemp;
+
+        if (!string.IsNullOrEmpty(searchKey))
+            filtered = filtered.Where(x =>
                 x.Prefix.ContainsIgnoreCase(searchKey) ||
                 x.PNR.ContainsIgnoreCase(searchKey) ||
                 x.FDestName.ContainsIgnoreCase(searchKey) ||
                 x.AirlineName.ContainsIgnoreCase(searchKey) ||
                 x.PassengersName.ContainsIgnoreCase(searchKey));
+
+        if (FromDate.HasValue)
+            filtered = filtered.Where(x => x.EntryDate.Date >= FromDate.Value.Date);
+
+        if (ToDate.HasValue)
+            filtered = filtered.Where(x => x.EntryDate.Date <= ToDate.Value.Date);
 
         SalesRecords.ReplaceRange(filtered);
     }
@@ -95,6 +102,12 @@ public partial class SalesRecordPageViewModel(IViewModelParameters viewModelPara
     public override async Task LoadDataWhenNavigatedTo(CancellationToken cancellationToken = default)
     {
         await LoadMoreAsync();
+    }
+
+    protected override Task OnDateFilterAppliedAsync(DateTime? fromDate, DateTime? toDate)
+    {
+        FilterSalesRecords();
+        return Task.CompletedTask;
     }
 
     #endregion

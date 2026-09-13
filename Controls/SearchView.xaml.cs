@@ -48,6 +48,18 @@ public partial class SearchView : ContentView
 	public static readonly BindableProperty IsFilterVisibleProperty =
 		BindableProperty.Create(nameof(IsFilterVisible), typeof(bool), typeof(SearchView), true);
 
+	/// <summary>
+	///     Identifies the <see cref="IsFilterActive" /> bindable property.
+	/// </summary>
+	public static readonly BindableProperty IsFilterActiveProperty =
+		BindableProperty.Create(nameof(IsFilterActive), typeof(bool), typeof(SearchView), false);
+
+	/// <summary>
+	///     Identifies the <see cref="ClearFilterCommand" /> bindable property.
+	/// </summary>
+	public static readonly BindableProperty ClearFilterCommandProperty =
+		BindableProperty.Create(nameof(ClearFilterCommand), typeof(ICommand), typeof(SearchView), default(ICommand));
+
 	public string SearchText
 	{
 		get => (string)GetValue(SearchTextProperty);
@@ -88,6 +100,25 @@ public partial class SearchView : ContentView
 	{
 		get => (bool)GetValue(IsFilterVisibleProperty);
 		set => SetValue(IsFilterVisibleProperty, value);
+	}
+
+	/// <summary>
+	///     Set by the page/ViewModel to indicate a filter is currently applied. Shows a badge
+	///     on the filter button and reveals the clear-filter button.
+	/// </summary>
+	public bool IsFilterActive
+	{
+		get => (bool)GetValue(IsFilterActiveProperty);
+		set => SetValue(IsFilterActiveProperty, value);
+	}
+
+	/// <summary>
+	///     Invoked when the clear-filter button is tapped. Only shown while <see cref="IsFilterActive" /> is true.
+	/// </summary>
+	public ICommand ClearFilterCommand
+	{
+		get => (ICommand)GetValue(ClearFilterCommandProperty);
+		set => SetValue(ClearFilterCommandProperty, value);
 	}
 
 

@@ -1570,4 +1570,37 @@ Version {0}</value>
   <data name="AddReturnDate" xml:space="preserve">
     <value>+ Add return date</value>
   </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="FilterSubtitle" xml:space="preserve">
+    <value>Narrow results by a date range</value>
+  </data>
+  <data name="DateRange" xml:space="preserve">
+    <value>Date Range</value>
+  </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>From Date</value>
+  </data>
+  <data name="ToDate" xml:space="preserve">
+    <value>To Date</value>
+  </data>
+  <data name="ClearAll" xml:space="preserve">
+    <value>Clear All</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="ThisWeek" xml:space="preserve">
+    <value>This Week</value>
+  </data>
+  <data name="ThisMonth" xml:space="preserve">
+    <value>This Month</value>
+  </data>
+  <data name="Last30Days" xml:space="preserve">
+    <value>Last 30 Days</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
 </root>

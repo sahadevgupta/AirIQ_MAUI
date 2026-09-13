@@ -33,12 +33,19 @@ namespace AirIQ.ViewModels
 
         private void FilterAccountLedgerRecords(string? searchKey)
         {
-            var filtered = string.IsNullOrEmpty(searchKey)
-                ? accountLedgerRecordsTemp
-                : accountLedgerRecordsTemp.Where(x =>
+            IEnumerable<AccountLedgerRecord> filtered = accountLedgerRecordsTemp;
+
+            if (!string.IsNullOrEmpty(searchKey))
+                filtered = filtered.Where(x =>
                     x.RefNo.ContainsIgnoreCase(searchKey) ||
                     x.Particulars.ContainsIgnoreCase(searchKey) ||
                     x.Destination.ContainsIgnoreCase(searchKey));
+
+            if (FromDate.HasValue)
+                filtered = filtered.Where(x => x.Date.Date >= FromDate.Value.Date);
+
+            if (ToDate.HasValue)
+                filtered = filtered.Where(x => x.Date.Date <= ToDate.Value.Date);
 
             AccountLedgerRecords.ReplaceRange(filtered);
         }
@@ -93,6 +100,12 @@ namespace AirIQ.ViewModels
         public override async Task LoadDataWhenNavigatedTo(CancellationToken cancellationToken = default)
         {
             await LoadMoreAsync();
+        }
+
+        protected override Task OnDateFilterAppliedAsync(DateTime? fromDate, DateTime? toDate)
+        {
+            FilterAccountLedgerRecords(SearchText);
+            return Task.CompletedTask;
         }
 
         #endregion

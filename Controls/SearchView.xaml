@@ -7,7 +7,7 @@
              x:Name="searchView">
 
 
-    <Grid ColumnDefinitions="*,Auto,Auto"
+    <Grid ColumnDefinitions="*,Auto,Auto,Auto"
           ColumnSpacing="10">
 
         <Border Stroke="{StaticResource BorderColor}"
@@ -20,13 +20,14 @@
                   ColumnSpacing="8">
                 <Image Source="search"/>
                 <local:BorderlessEntry Grid.Column="1"
+                                       TextColor="Black"
                                        Text="{Binding SearchText,Source={x:Reference searchView}}"
                                        Placeholder="{Binding PlaceholderText,Source={x:Reference searchView}}"
                                        x:Name="UserStoppedTypingEntry">
                     <local:BorderlessEntry.Behaviors>
                         <toolkit:UserStoppedTypingBehavior Command="{Binding SearchCommand,Source={x:Reference searchView}}"
                                                            BindingContext="{Binding Path=BindingContext, Source={x:Reference UserStoppedTypingEntry}, x:DataType=local:BorderlessEntry}"
-                                                           StoppedTypingTimeThreshold="1000"
+                                                           StoppedTypingTimeThreshold="500"
                                                            MinimumLengthThreshold="3"
                                                            ShouldDismissKeyboardAutomatically="True"/>
                     </local:BorderlessEntry.Behaviors>
@@ -42,18 +43,34 @@
                                           Value="False"/>
                     </MultiTrigger.Conditions>
                     <Setter Property="Grid.ColumnSpan"
-                            Value="3"/>
+                            Value="4"/>
                 </MultiTrigger>
             </Border.Triggers>
         </Border>
 
-        <ImageButton Source="filter"
-                     Grid.Column="1"
-                     Command="{Binding FilterCommand,Source={x:Reference searchView}}"
-                     IsVisible="{Binding IsFilterVisible ,Source={x:Reference searchView}}"/>
+        <Grid Grid.Column="1"
+              IsVisible="{Binding IsFilterVisible ,Source={x:Reference searchView}}">
+            <ImageButton Source="filter"
+                         Command="{Binding FilterCommand,Source={x:Reference searchView}}"/>
+
+            <BoxView WidthRequest="9"
+                     HeightRequest="9"
+                     CornerRadius="4.5"
+                     Color="{StaticResource PrimaryColor}"
+                     BackgroundColor="Transparent"
+                     HorizontalOptions="End"
+                     VerticalOptions="Start"
+                     InputTransparent="True"
+                     IsVisible="{Binding IsFilterActive,Source={x:Reference searchView}}"/>
+        </Grid>
+
+        <ImageButton Source="close"
+                     Grid.Column="2"
+                     Command="{Binding ClearFilterCommand,Source={x:Reference searchView}}"
+                     IsVisible="{Binding IsFilterActive,Source={x:Reference searchView}}"/>
 
         <ImageButton Source="download"
-                     Grid.Column="2"
+                     Grid.Column="3"
                      Command="{Binding DownloadCommand,Source={x:Reference searchView}}"
                      IsVisible="{Binding IsDownloadVisible,Source={x:Reference searchView}}"/>
     </Grid>

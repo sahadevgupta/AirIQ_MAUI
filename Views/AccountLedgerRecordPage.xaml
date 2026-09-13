@@ -89,7 +89,10 @@
                     Grid.Row="1">
                 <controls:SearchView VerticalOptions="Start"
                                      SearchText="{Binding SearchText}"
-                                     SearchCommand="{Binding SearchCommand}"/>
+                                     SearchCommand="{Binding SearchCommand}"
+                                     FilterCommand="{Binding FilterCommand}"
+                                     IsFilterActive="{Binding IsFilterActive}"
+                                     ClearFilterCommand="{Binding ClearFilterCommand}"/>
             </Border>
 
             <CollectionView Grid.Row="2"

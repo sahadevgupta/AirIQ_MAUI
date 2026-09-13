@@ -39,9 +39,16 @@ namespace AirIQ.ViewModels
 
         private void FilterTempCreditRecords(string? searchKey)
         {
-            var filtered = string.IsNullOrEmpty(searchKey)
-                ? tempCreditRecordsTemp
-                : tempCreditRecordsTemp.Where(x => x.Name.ContainsIgnoreCase(searchKey));
+            IEnumerable<TempCreditRecord> filtered = tempCreditRecordsTemp;
+
+            if (!string.IsNullOrEmpty(searchKey))
+                filtered = filtered.Where(x => x.Name.ContainsIgnoreCase(searchKey));
+
+            if (FromDate.HasValue)
+                filtered = filtered.Where(x => x.Date.Date >= FromDate.Value.Date);
+
+            if (ToDate.HasValue)
+                filtered = filtered.Where(x => x.Date.Date <= ToDate.Value.Date);
 
             TempCreditRecords.ReplaceRange(filtered);
             OnPropertyChanged(nameof(TotalAmount));
@@ -102,6 +109,12 @@ namespace AirIQ.ViewModels
         public override async Task LoadDataWhenNavigatedTo(CancellationToken cancellationToken = default)
         {
             await LoadMoreAsync();
+        }
+
+        protected override Task OnDateFilterAppliedAsync(DateTime? fromDate, DateTime? toDate)
+        {
+            FilterTempCreditRecords(SearchText);
+            return Task.CompletedTask;
         }
 
         #endregion

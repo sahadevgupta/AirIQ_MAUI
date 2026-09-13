@@ -58,6 +58,9 @@ namespace AirIQ.Platforms.Handlers
 
                         // Customize selected tab item background
                         CustomizeSelectedTabBackground(bottomNav);
+
+                        // Pop the active tab's navigation stack to root when its already-selected icon is tapped again
+                        AttachTabReselectHandler(bottomNav);
                     }
                 }
             }
@@ -66,6 +69,46 @@ namespace AirIQ.Platforms.Handlers
                 System.Diagnostics.Debug.WriteLine($"Error customizing TabBar: {ex.Message}");
             }
 
+        }
+
+        private static void AttachTabReselectHandler(ViewGroup bottomNav)
+        {
+            try
+            {
+                if (bottomNav is BottomNavigationView bnv)
+                {
+                    bnv.SetOnItemReselectedListener(new ItemReselectedListener(PopCurrentTabToRootAsync));
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error attaching tab reselect handler: {ex.Message}");
+            }
+        }
+
+        private static async void PopCurrentTabToRootAsync()
+        {
+            try
+            {
+                var selectedSection = Shell.Current?.CurrentItem?.CurrentItem;
+                if (selectedSection?.Navigation?.NavigationStack?.Count > 1)
+                {
+                    await selectedSection.Navigation.PopToRootAsync(animated: false);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error popping current tab to root: {ex.Message}");
+            }
+        }
+
+        private sealed class ItemReselectedListener : Java.Lang.Object, Google.Android.Material.Navigation.NavigationBarView.IOnItemReselectedListener
+        {
+            private readonly Action _onReselected;
+
+            public ItemReselectedListener(Action onReselected) => _onReselected = onReselected;
+
+            public void OnNavigationItemReselected(IMenuItem item) => _onReselected();
         }
 
         private static void CustomizeSelectedTabBackground(ViewGroup bottomNav)

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopup:PopupPage x:Class="AirIQ.Popups.SearchFilterPopup"
+                 xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:helpers="clr-namespace:AirIQ.Extensions"
+                 xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+                 xmlns:mopup="clr-namespace:Mopups.Pages;assembly=Mopups"
+                 xmlns:mopupsanim="clr-namespace:Mopups.Animations;assembly=Mopups"
+                 xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
+                 x:Name="filterPopup"
+                 BackgroundColor="{StaticResource PopupBackground}">
+
+    <mopup:PopupPage.Animation>
+        <mopupsanim:MoveAnimation
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinIn"
+            EasingOut="SinOut"
+            PositionIn="Bottom"
+            PositionOut="Bottom"/>
+    </mopup:PopupPage.Animation>
+
+    <Border VerticalOptions="End"
+            Padding="20,12,20,20"
+            BackgroundColor="White"
+            StrokeShape="RoundRectangle 24,24,0,0">
+        <VerticalStackLayout Spacing="18">
+
+            <BoxView WidthRequest="36"
+                     HeightRequest="4"
+                     CornerRadius="2"
+                     Color="{StaticResource Gray100}"
+                     HorizontalOptions="Center"/>
+
+            <!-- HEADER -->
+            <Grid ColumnDefinitions="*,Auto">
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="{x:Static resx:AppResource.Filter}"
+                           Style="{StaticResource Label20Bold}"
+                           TextColor="{StaticResource Onyx}"/>
+                    <Label Text="{x:Static resx:AppResource.FilterSubtitle}"
+                           Style="{StaticResource Label14RegularGray50Style}"/>
+                </VerticalStackLayout>
+
+                <Border Grid.Column="1"
+                        StrokeShape="RoundRectangle 18"
+                        Stroke="Transparent"
+                        BackgroundColor="{StaticResource Gray10}"
+                        Padding="10"
+                        VerticalOptions="Start"
+                        HeightRequest="36"
+                        WidthRequest="36">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="CloseTapped"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="{x:Static helpers:FontAwesomeIcons.Times}"
+                           FontFamily="MyFont"
+                           FontSize="14"
+                           TextColor="{StaticResource Gray500}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                </Border>
+            </Grid>
+
+            <BoxView HeightRequest="1"
+                     Color="{StaticResource Gray100}"/>
+
+            <!-- QUICK PRESETS -->
+            <ScrollView Orientation="Horizontal"
+                        HorizontalScrollBarVisibility="Never">
+                <HorizontalStackLayout x:Name="presetsLayout"
+                                       Spacing="10">
+                    <Border x:Name="todayChip"
+                            StrokeShape="RoundRectangle 18"
+                            Stroke="{StaticResource BorderColor}"
+                            BackgroundColor="White"
+                            Padding="16,0"
+                            HeightRequest="36">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="PresetTapped"
+                                                  CommandParameter="Today"/>
+                        </Border.GestureRecognizers>
+                        <Label Text="{x:Static resx:AppResource.Today}"
+                               Style="{StaticResource Label14Medium}"
+                               TextColor="{StaticResource Onyx}"
+                               VerticalOptions="Center"/>
+                    </Border>
+
+                    <Border x:Name="weekChip"
+                            StrokeShape="RoundRectangle 18"
+                            Stroke="{StaticResource BorderColor}"
+                            BackgroundColor="White"
+                            Padding="16,0"
+                            HeightRequest="36">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="PresetTapped"
+                                                  CommandParameter="Week"/>
+                        </Border.GestureRecognizers>
+                        <Label Text="{x:Static resx:AppResource.ThisWeek}"
+                               Style="{StaticResource Label14Medium}"
+                               TextColor="{StaticResource Onyx}"
+                               VerticalOptions="Center"/>
+                    </Border>
+
+                    <Border x:Name="monthChip"
+                            StrokeShape="RoundRectangle 18"
+                            Stroke="{StaticResource BorderColor}"
+                            BackgroundColor="White"
+                            Padding="16,0"
+                            HeightRequest="36">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="PresetTapped"
+                                                  CommandParameter="Month"/>
+                        </Border.GestureRecognizers>
+                        <Label Text="{x:Static resx:AppResource.ThisMonth}"
+                               Style="{StaticResource Label14Medium}"
+                               TextColor="{StaticResource Onyx}"
+                               VerticalOptions="Center"/>
+                    </Border>
+
+                    <Border x:Name="last30Chip"
+                            StrokeShape="RoundRectangle 18"
+                            Stroke="{StaticResource BorderColor}"
+                            BackgroundColor="White"
+                            Padding="16,0"
+                            HeightRequest="36">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="PresetTapped"
+                                                  CommandParameter="Last30"/>
+                        </Border.GestureRecognizers>
+                        <Label Text="{x:Static resx:AppResource.Last30Days}"
+                               Style="{StaticResource Label14Medium}"
+                               TextColor="{StaticResource Onyx}"
+                               VerticalOptions="Center"/>
+                    </Border>
+                </HorizontalStackLayout>
+            </ScrollView>
+
+            <!-- DATE RANGE -->
+            <VerticalStackLayout Spacing="10">
+                <Label Text="{x:Static resx:AppResource.DateRange}"
+                       Style="{StaticResource Label12SemiBold}"
+                       TextColor="{StaticResource Gray50}"
+                       CharacterSpacing="0.6"/>
+
+                <Grid ColumnDefinitions="*,*"
+                      ColumnSpacing="12">
+
+                    <!-- FROM DATE -->
+                    <Border StrokeShape="RoundRectangle 12"
+                            Stroke="{StaticResource BorderColor}"
+                            BackgroundColor="White"
+                            Padding="12"
+                            HeightRequest="54">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="FromDateTapped"/>
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Label Text="{x:Static helpers:FontAwesomeIcons.CalendarAlt}"
+                                   FontFamily="MyFont"
+                                   FontSize="16"
+                                   TextColor="{StaticResource PrimaryColor}"
+                                   VerticalOptions="Center"/>
+
+                            <Label x:Name="fromDateLabel"
+                                   Grid.Column="1"
+                                   Text="{x:Static resx:AppResource.DateFormatPlaceholder}"
+                                   TextColor="{StaticResource Gray400}"
+                                   Margin="8,0,0,0"
+                                   VerticalTextAlignment="Center"
+                                   LineBreakMode="NoWrap"/>
+
+                            <DatePicker x:Name="fromDatePicker"
+                                        Grid.Column="1"
+                                        ios:DatePicker.UpdateMode="WhenFinished"
+                                        Closed="FromDatePicker_Closed"
+                                        IsVisible="False"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- TO DATE -->
+                    <Border Grid.Column="1"
+                            StrokeShape="RoundRectangle 12"
+                            Stroke="{StaticResource BorderColor}"
+                            BackgroundColor="White"
+                            Padding="12"
+                            HeightRequest="54">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ToDateTapped"/>
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Label Text="{x:Static helpers:FontAwesomeIcons.CalendarAlt}"
+                                   FontFamily="MyFont"
+                                   FontSize="16"
+                                   TextColor="{StaticResource PrimaryColor}"
+                                   VerticalOptions="Center"/>
+
+                            <Label x:Name="toDateLabel"
+                                   Grid.Column="1"
+                                   Text="{x:Static resx:AppResource.DateFormatPlaceholder}"
+                                   TextColor="{StaticResource Gray400}"
+                                   Margin="8,0,0,0"
+                                   VerticalTextAlignment="Center"
+                                   LineBreakMode="NoWrap"/>
+
+                            <DatePicker x:Name="toDatePicker"
+                                        Grid.Column="1"
+                                        ios:DatePicker.UpdateMode="WhenFinished"
+                                        Closed="ToDatePicker_Closed"
+                                        IsVisible="False"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </VerticalStackLayout>
+
+            <!-- FOOTER -->
+            <Grid ColumnDefinitions="Auto,*"
+                  ColumnSpacing="16">
+                <Button Text="{x:Static resx:AppResource.ClearAll}"
+                        Style="{StaticResource BorderlessButton}"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        Padding="0"
+                        CharacterSpacing="0"
+                        TextTransform="Default"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center"
+                        Clicked="ClearClicked"/>
+
+                <Button Grid.Column="1"
+                        Text="{x:Static resx:AppResource.Search}"
+                        Style="{StaticResource ButtonCorneredStyle}"
+                        CornerRadius="16"
+                        HeightRequest="54"
+                        TextTransform="Default"
+                        CharacterSpacing="0"
+                        Clicked="SearchClicked"/>
+            </Grid>
+
+        </VerticalStackLayout>
+    </Border>
+
+</mopup:PopupPage>

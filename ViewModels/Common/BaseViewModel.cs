@@ -28,7 +28,23 @@ public abstract partial class BaseViewModel : ViewModelBase, IDestructible
     private bool _isBusy;
 
     [ObservableProperty]
+    private DateTime? _fromDate;
+
+    [ObservableProperty]
+    private DateTime? _toDate;
+
+    [ObservableProperty]
     private User _currentUser = BackendToAppModelMapper.GetUser(AppConfiguration.CurrentUser);
+
+    /// <summary>
+    ///     True once a date range has been applied from the filter popup. Bind this to
+    ///     <see cref="AirIQ.Controls.SearchView.IsFilterActive" /> to show the active-filter badge.
+    /// </summary>
+    public bool IsFilterActive => FromDate.HasValue || ToDate.HasValue;
+
+    partial void OnFromDateChanged(DateTime? value) => OnPropertyChanged(nameof(IsFilterActive));
+
+    partial void OnToDateChanged(DateTime? value) => OnPropertyChanged(nameof(IsFilterActive));
 
     public BaseViewModel(IViewModelParameters parameters)
     {
@@ -108,6 +124,34 @@ public abstract partial class BaseViewModel : ViewModelBase, IDestructible
         var popupservice = ServiceHelper.GetService<IPopupNavigation>();
         await popupservice?.PushAsync(popup)!;
     }
+
+    [RelayCommand]
+    async Task Filter()
+    {
+        var popup = new SearchFilterPopup { FromDate = FromDate, ToDate = ToDate };
+        popup.Applied += async (from, to) =>
+        {
+            FromDate = from;
+            ToDate = to;
+            await OnDateFilterAppliedAsync(from, to);
+        };
+        await ServiceHelper.GetService<IPopupNavigation>()!.PushAsync(popup);
+    }
+
+    [RelayCommand]
+    private async Task ClearFilter()
+    {
+        FromDate = null;
+        ToDate = null;
+        await OnDateFilterAppliedAsync(null, null);
+    }
+
+    /// <summary>
+    ///     Called after the user applies (or clears) a date range from the filter popup, with the
+    ///     values already assigned to <see cref="FromDate" />/<see cref="ToDate" />. Override in a
+    ///     derived ViewModel to re-run its own query/filter using the selected range.
+    /// </summary>
+    protected virtual Task OnDateFilterAppliedAsync(DateTime? fromDate, DateTime? toDate) => Task.CompletedTask;
 
     #endregion
 }

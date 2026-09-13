@@ -70,6 +70,11 @@ namespace AirIQ.Platforms.Handlers
 
                 // Customize selected tab appearance
                 CustomizeSelectedTabAppearance(tabBar);
+
+                // Pop the active tab's navigation stack to root whenever a tab item is tapped
+                // (fires even when re-tapping the already-selected tab, unlike Shell's own Navigated event)
+                tabBar.ItemSelected -= OnTabItemSelected;
+                tabBar.ItemSelected += OnTabItemSelected;
                 return;
             }
 
@@ -78,6 +83,27 @@ namespace AirIQ.Platforms.Handlers
                 FindAndStyleTabBar(view.Subviews[i]);
             }
 #endif
+        }
+
+        private static void OnTabItemSelected(object? sender, UITabBarItemEventArgs e)
+        {
+            PopCurrentTabToRootAsync();
+        }
+
+        private static async void PopCurrentTabToRootAsync()
+        {
+            try
+            {
+                var selectedSection = Shell.Current?.CurrentItem?.CurrentItem;
+                if (selectedSection?.Navigation?.NavigationStack?.Count > 1)
+                {
+                    await selectedSection.Navigation.PopToRootAsync(animated: false);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error popping current tab to root: {ex.Message}");
+            }
         }
 
         private static void CustomizeSelectedTabAppearance(UITabBar tabBar)
