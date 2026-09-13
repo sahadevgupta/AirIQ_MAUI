@@ -129,19 +129,19 @@ namespace AirIQ.Platforms.Handlers
                 {
                     // Give the active indicator a square-ish shape (10dp corner radius) instead of the default pill.
                     // Kept independent of the color lookup below so a failure there can't block the shape change.
-                    try
-                    {
-                        float density = bnv.Context?.Resources?.DisplayMetrics?.Density ?? 1f;
-                        float cornerRadiusPx = 10 * density;
-                        var shapeAppearance = new ShapeAppearanceModel.Builder()
-                            .SetAllCornerSizes(cornerRadiusPx)
-                            .Build();
-                        bnv.ItemActiveIndicatorShapeAppearance = shapeAppearance;
-                    }
-                    catch
-                    {
-                        // Fallback if property not available in this version
-                    }
+                    // try
+                    // {
+                    //     float density = bnv.Context?.Resources?.DisplayMetrics?.Density ?? 1f;
+                    //     float cornerRadiusPx = 10 * density;
+                    //     var shapeAppearance = new ShapeAppearanceModel.Builder()
+                    //         .SetAllCornerSizes(cornerRadiusPx)
+                    //         .Build();
+                    //     bnv.ItemActiveIndicatorShapeAppearance = shapeAppearance;
+                    // }
+                    // catch
+                    // {
+                    //     // Fallback if property not available in this version
+                    // }
 
                     // Note: the resource is a Microsoft.Maui.Graphics.Color; ToPlatform() converts it to
                     // Android.Graphics.Color (this file aliases "Color" to the Android type above).

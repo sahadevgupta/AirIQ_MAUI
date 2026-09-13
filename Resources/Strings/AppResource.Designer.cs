@@ -2786,7 +2786,124 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("AboutApp", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Support.
+        /// </summary>
+        internal static string Support {
+            get {
+                return ResourceManager.GetString("Support", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Contact Support.
+        /// </summary>
+        internal static string ContactSupport {
+            get {
+                return ResourceManager.GetString("ContactSupport", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Account.
+        /// </summary>
+        internal static string ManageAccount {
+            get {
+                return ResourceManager.GetString("ManageAccount", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to logout?.
+        /// </summary>
+        internal static string LogoutConfirmationMessage {
+            get {
+                return ResourceManager.GetString("LogoutConfirmationMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Push Notifications.
+        /// </summary>
+        internal static string PushNotifications {
+            get {
+                return ResourceManager.GetString("PushNotifications", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Flight alerts, tickets &amp; deals.
+        /// </summary>
+        internal static string PushNotificationsSubtitle {
+            get {
+                return ResourceManager.GetString("PushNotificationsSubtitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to All Enabled.
+        /// </summary>
+        internal static string AllEnabled {
+            get {
+                return ResourceManager.GetString("AllEnabled", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Currency &amp; Region.
+        /// </summary>
+        internal static string CurrencyAndRegion {
+            get {
+                return ResourceManager.GetString("CurrencyAndRegion", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to INR (₹) · India.
+        /// </summary>
+        internal static string CurrencyAndRegionValue {
+            get {
+                return ResourceManager.GetString("CurrencyAndRegionValue", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Reach our support team for any queries.
+        /// </summary>
+        internal static string ContactSupportSubtitle {
+            get {
+                return ResourceManager.GetString("ContactSupportSubtitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Help Center &amp; FAQs.
+        /// </summary>
+        internal static string HelpCenterFaqs {
+            get {
+                return ResourceManager.GetString("HelpCenterFaqs", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Terms of Service.
+        /// </summary>
+        internal static string TermsOfService {
+            get {
+                return ResourceManager.GetString("TermsOfService", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy &amp; Data Policy.
+        /// </summary>
+        internal static string PrivacyDataPolicy {
+            get {
+                return ResourceManager.GetString("PrivacyDataPolicy", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to This feature is coming soon..
         /// </summary>
@@ -4512,6 +4629,60 @@ namespace AirIQ.Resources.Strings {
         internal static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Profile.
+        /// </summary>
+        internal static string EditProfile {
+            get {
+                return ResourceManager.GetString("EditProfile", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Agency ID.
+        /// </summary>
+        internal static string AgencyId {
+            get {
+                return ResourceManager.GetString("AgencyId", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Security &amp; Access.
+        /// </summary>
+        internal static string SecurityAndAccess {
+            get {
+                return ResourceManager.GetString("SecurityAndAccess", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to About &amp; Legal.
+        /// </summary>
+        internal static string AboutAndLegal {
+            get {
+                return ResourceManager.GetString("AboutAndLegal", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Wallet Balance.
+        /// </summary>
+        internal static string WalletBalance {
+            get {
+                return ResourceManager.GetString("WalletBalance", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to View Wallet.
+        /// </summary>
+        internal static string ViewWallet {
+            get {
+                return ResourceManager.GetString("ViewWallet", resourceCulture);
             }
         }
     }

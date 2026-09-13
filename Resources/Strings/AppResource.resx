@@ -1026,6 +1026,45 @@
   <data name="AboutApp" xml:space="preserve">
     <value>About App</value>
   </data>
+  <data name="Support" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="ContactSupport" xml:space="preserve">
+    <value>Contact Support</value>
+  </data>
+  <data name="ManageAccount" xml:space="preserve">
+    <value>Manage Account</value>
+  </data>
+  <data name="LogoutConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to logout?</value>
+  </data>
+  <data name="PushNotifications" xml:space="preserve">
+    <value>Push Notifications</value>
+  </data>
+  <data name="PushNotificationsSubtitle" xml:space="preserve">
+    <value>Flight alerts, tickets &amp; deals</value>
+  </data>
+  <data name="AllEnabled" xml:space="preserve">
+    <value>All Enabled</value>
+  </data>
+  <data name="CurrencyAndRegion" xml:space="preserve">
+    <value>Currency &amp; Region</value>
+  </data>
+  <data name="CurrencyAndRegionValue" xml:space="preserve">
+    <value>INR (₹) · India</value>
+  </data>
+  <data name="ContactSupportSubtitle" xml:space="preserve">
+    <value>Reach our support team for any queries</value>
+  </data>
+  <data name="HelpCenterFaqs" xml:space="preserve">
+    <value>Help Center &amp; FAQs</value>
+  </data>
+  <data name="TermsOfService" xml:space="preserve">
+    <value>Terms of Service</value>
+  </data>
+  <data name="PrivacyDataPolicy" xml:space="preserve">
+    <value>Privacy &amp; Data Policy</value>
+  </data>
   <data name="FeatureComingSoon" xml:space="preserve">
     <value>This feature is coming soon.</value>
   </data>
@@ -1602,5 +1641,23 @@ Version {0}</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="EditProfile" xml:space="preserve">
+    <value>Edit Profile</value>
+  </data>
+  <data name="AgencyId" xml:space="preserve">
+    <value>Agency ID</value>
+  </data>
+  <data name="SecurityAndAccess" xml:space="preserve">
+    <value>Security &amp; Access</value>
+  </data>
+  <data name="AboutAndLegal" xml:space="preserve">
+    <value>About &amp; Legal</value>
+  </data>
+  <data name="WalletBalance" xml:space="preserve">
+    <value>Wallet Balance</value>
+  </data>
+  <data name="ViewWallet" xml:space="preserve">
+    <value>View Wallet</value>
   </data>
 </root>
