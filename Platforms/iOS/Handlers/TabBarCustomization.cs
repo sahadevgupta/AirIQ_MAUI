@@ -1,4 +1,5 @@
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Platform;
 using UIKit;
 using CoreGraphics;
 
@@ -39,9 +40,18 @@ namespace AirIQ.Platforms.Handlers
 #if IOS
             if (view is UITabBar tabBar)
             {
-                // Set white background
-                tabBar.BarTintColor = UIColor.White;
-                tabBar.BackgroundColor = UIColor.White;
+                // Set light blue background
+                UIColor barBackgroundColor;
+                try
+                {
+                    barBackgroundColor = ((Color)Application.Current.Resources["Primary0"]).ToPlatform();
+                }
+                catch
+                {
+                    barBackgroundColor = UIColor.White;
+                }
+                tabBar.BarTintColor = barBackgroundColor;
+                tabBar.BackgroundColor = barBackgroundColor;
                 tabBar.Translucent = false;
 
                 // Create top border
@@ -111,19 +121,37 @@ namespace AirIQ.Platforms.Handlers
 #if IOS
             try
             {
-                // Set the selected tab item background color (red: #FF0000)
-                var selectedColor = UIColor.FromRGB(255, 0, 0);
+                // Use the app's PrimaryRed theme color for the selected tab icon/title, matching Android
+                UIColor selectedColor;
+                try
+                {
+                    selectedColor = ((Color)Application.Current.Resources["PrimaryRed"]).ToPlatform();
+                }
+                catch
+                {
+                    selectedColor = UIColor.FromRGB(241, 99, 103); // #F16367 fallback, matches PrimaryRed
+                }
 
                 // For iOS 13+, use appearance API
                 if (UIDevice.CurrentDevice.CheckSystemVersion(13, 0))
                 {
+                    UIColor barBackgroundColor;
+                    try
+                    {
+                        barBackgroundColor = ((Color)Application.Current.Resources["Primary0"]).ToPlatform();
+                    }
+                    catch
+                    {
+                        barBackgroundColor = UIColor.White;
+                    }
+
                     var appearance = new UITabBarAppearance();
                     appearance.ConfigureWithDefaultBackground();
-                    appearance.BackgroundColor = UIColor.White;
+                    appearance.BackgroundColor = barBackgroundColor;
 
-                    // Selected item appearance
+                    // Selected item appearance (icon stays white, title keeps the theme color)
                     var selectedItemAppearance = new UITabBarItemAppearance();
-                    selectedItemAppearance.Selected.IconColor = selectedColor;
+                    selectedItemAppearance.Selected.IconColor = UIColor.White;
                     selectedItemAppearance.Selected.TitleTextAttributes = new UIStringAttributes { ForegroundColor = selectedColor };
 
                     // Unselected item appearance

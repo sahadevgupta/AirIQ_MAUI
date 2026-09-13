@@ -9,6 +9,7 @@ using Paint = Android.Graphics.Paint;
 using Color = Android.Graphics.Color;
 using View = Android.Views.View;
 using Google.Android.Material.BottomNavigation;
+using Google.Android.Material.Shape;
 
 namespace AirIQ.Platforms.Handlers
 {
@@ -39,8 +40,15 @@ namespace AirIQ.Platforms.Handlers
                         // Set high elevation for prominent shadow
                         bottomNav.Elevation = 16;
 
-                        // Set white background
-                        bottomNav.SetBackgroundColor(Color.White);
+                        // Set light blue background
+                        try
+                        {
+                            bottomNav.SetBackgroundColor(Microsoft.Maui.Graphics.Color.FromArgb("#ffffff").ToPlatform());
+                        }
+                        catch
+                        {
+                            bottomNav.SetBackgroundColor(Color.White);
+                        }
 
                         // Add top border line
                         var borderView = new View(bottomNav.Context)
@@ -119,12 +127,30 @@ namespace AirIQ.Platforms.Handlers
                 // Access the BottomNavigationView and customize the selected item appearance
                 if (bottomNav is BottomNavigationView bnv)
                 {
-                    int selectedColor = (Color)Application.Current.Resources["PrimaryRed"];
+                    // Give the active indicator a square-ish shape (10dp corner radius) instead of the default pill.
+                    // Kept independent of the color lookup below so a failure there can't block the shape change.
+                    try
+                    {
+                        float density = bnv.Context?.Resources?.DisplayMetrics?.Density ?? 1f;
+                        float cornerRadiusPx = 10 * density;
+                        var shapeAppearance = new ShapeAppearanceModel.Builder()
+                            .SetAllCornerSizes(cornerRadiusPx)
+                            .Build();
+                        bnv.ItemActiveIndicatorShapeAppearance = shapeAppearance;
+                    }
+                    catch
+                    {
+                        // Fallback if property not available in this version
+                    }
+
+                    // Note: the resource is a Microsoft.Maui.Graphics.Color; ToPlatform() converts it to
+                    // Android.Graphics.Color (this file aliases "Color" to the Android type above).
+                    Color selectedColor = ((Microsoft.Maui.Graphics.Color)Application.Current.Resources["Primary10"]).ToPlatform();
 
                     // Set active indicator color (selected item background) - for Material Design 3
                     try
                     {
-                        bnv.ItemActiveIndicatorColor = ColorStateList.ValueOf(new Color(selectedColor));
+                        bnv.ItemActiveIndicatorColor = ColorStateList.ValueOf(selectedColor);
                     }
                     catch
                     {
@@ -132,7 +158,24 @@ namespace AirIQ.Platforms.Handlers
                     }
 
                     // Set the ripple color for selection feedback
-                    bnv.ItemRippleColor = ColorStateList.ValueOf(new Color(selectedColor));
+                    bnv.ItemRippleColor = ColorStateList.ValueOf(selectedColor);
+
+                    // Set the selected icon color to white, independent of the title text color
+                    // try
+                    // {
+                    //     Color unselectedIconColor = ((Microsoft.Maui.Graphics.Color)Application.Current.Resources["Gray600"]).ToPlatform();
+                    //     var iconStates = new int[][]
+                    //     {
+                    //         new int[] { global::Android.Resource.Attribute.StateChecked },
+                    //         new int[] { }
+                    //     };
+                    //     var iconColors = new int[] { Color.White.ToArgb(), unselectedIconColor.ToArgb() };
+                    //     bnv.ItemIconTintList = new ColorStateList(iconStates, iconColors);
+                    // }
+                    // catch
+                    // {
+                    //     // Fallback if property not available in this version
+                    // }
                 }
             }
             catch (Exception ex)
