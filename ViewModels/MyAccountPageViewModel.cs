@@ -18,6 +18,10 @@ namespace AirIQ.ViewModels
         [ObservableProperty]
         private Color _biometricStatusColor = Colors.Gray;
 
+        public string AppVersionDisplay => $"v{AppInfo.Current.VersionString}";
+
+        public string WalletBalanceDisplay => $"₹ {CurrentUser.Balance:N2}";
+
         public override Task LoadDataWhenOnAppearing(CancellationToken cancellationToken = default)
         {
             RefreshBiometricStatus();
@@ -52,6 +56,18 @@ namespace AirIQ.ViewModels
         }
 
         [RelayCommand]
+        private async Task OpenWallet()
+        {
+            await ShellNavigationService.Navigate<WalletPage>();
+        }
+
+        [RelayCommand]
+        private async Task OpenAccountLedger()
+        {
+            await ShellNavigationService.Navigate<AccountLedgerRecordPage>();
+        }
+
+        [RelayCommand]
         private async Task OpenTermsAndConditions()
         {
             await ShellNavigationService.Navigate<TermsAndConditionsPage>();
@@ -76,6 +92,18 @@ namespace AirIQ.ViewModels
 
             if (Shell.Current != null)
                 await MainThread.InvokeOnMainThreadAsync(() => Shell.Current.GoToAsync("//LoginPage"));
+        }
+
+        [RelayCommand]
+        private async Task RequestAccountDeletionByEmail()
+        {
+            await Launcher.Default.OpenAsync(new Uri($"mailto:{AppResource.SupportEmailAddress}"));
+        }
+
+        [RelayCommand]
+        private async Task RequestAccountDeletionByPhone()
+        {
+            await Launcher.Default.OpenAsync(new Uri($"tel:{AppResource.SupportPhoneNumber.Replace(" ", "")}"));
         }
 
         #endregion

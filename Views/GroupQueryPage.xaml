@@ -75,161 +75,220 @@
 
             </controls:AdvSegmentedControl>
 
-            <Border Grid.Row="1"
-                    Margin="16"
-                    Padding="12"
-                    BackgroundColor="White"
-                    StrokeShape="RoundRectangle 4"
-                    StrokeThickness="0">
-                <ScrollView VerticalScrollBarVisibility="Never">
+            <Grid Grid.Row="1">
+
+                <!-- DETAILS VIEW -->
+                <Border
+                    Style="{StaticResource CardBorderStyle}">
+
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border"
+                                     Binding="{Binding Source={x:Reference tabs},Path=SelectedTabIndex}"
+                                     Value="1">
+                            <Setter Property="IsVisible"
+                                    Value="False"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+
+                    <ScrollView VerticalScrollBarVisibility="Never">
 
 
-                    <Grid RowDefinitions="Auto,Auto,Auto"
-                          RowSpacing="16">
 
-                        <HorizontalStackLayout Spacing="12">
-                            <Label Text="{x:Static resx:AppResource.OneWay}"
-                                   VerticalTextAlignment="Center"/>
-                            <Image Source="toggle_on"/>
-                            <!-- <Switch VerticalOptions="Start"/> -->
-                            <Label Text="{x:Static resx:AppResource.RoundTrip}"
-                                   VerticalTextAlignment="Center"/>
-                        </HorizontalStackLayout>
+                        <!-- DETAILS VIEW -->
+                        <Grid RowDefinitions="Auto,Auto,Auto"
+                              RowSpacing="16">
 
-                        <Grid ColumnDefinitions="*,*"
-                              ColumnSpacing="10"
-                              RowDefinitions="Auto,Auto"
-                              Grid.Row="1">
+                            <HorizontalStackLayout Spacing="12">
+                                <Label Text="{x:Static resx:AppResource.OneWay}"
+                                       VerticalTextAlignment="Center"/>
 
-                            <controls:ExtendedEntry Title="{x:Static resx:AppResource.SectorOnward}"
-                                                    SuffixText="*"
-                                                    PlaceholderText="{x:Static resx:AppResource.SectorPlaceholder}"
-                                                    LeadingIconType="Font"
-                                                    LeadingIcon="{x:Static helpers:FontAwesomeIcons.MapMarkerAlt}"
-                                                    LeadingIconColor="{StaticResource Gray50}"
-                                                    LeadingIconSize="16"/>
+                                <controls:SwitchControl x:Name="switchcontrol"/>
 
-                            <controls:ExtendedEntry Title="{x:Static resx:AppResource.TravelDate}"
-                                                    SuffixText="*"
-                                                    PlaceholderText="{x:Static resx:AppResource.DateFormatPlaceholder}"
-                                                    LeadingIconType="Font"
-                                                    LeadingIcon="{x:Static helpers:FontAwesomeIcons.CalendarAlt}"
-                                                    LeadingIconColor="{StaticResource Gray50}"
-                                                    LeadingIconSize="16"
-                                                    Grid.Column="1"/>
+                                <!-- <Switch VerticalOptions="Start"/> -->
+                                <Label Text="{x:Static resx:AppResource.RoundTrip}"
+                                       VerticalTextAlignment="Center"/>
+                            </HorizontalStackLayout>
 
-                            <controls:ExtendedEntry Title="{x:Static resx:AppResource.SectorReturn}"
-                                                    SuffixText="*"
-                                                    PlaceholderText="{x:Static resx:AppResource.SectorPlaceholder}"
-                                                    LeadingIconType="Font"
-                                                    LeadingIcon="{x:Static helpers:FontAwesomeIcons.MapMarkerAlt}"
-                                                    LeadingIconColor="{StaticResource Gray50}"
-                                                    LeadingIconSize="16"
-                                                    Grid.Row="1"
-                                                    Grid.Column="0"
-                                                    Margin="0,16,0,0"
-                                                    IsVisible="False">
-                                <controls:ExtendedEntry.Triggers>
+                            <Grid ColumnDefinitions="*,*"
+                                  ColumnSpacing="10"
+                                  RowDefinitions="Auto,Auto"
+                                  Grid.Row="1">
+
+                                <controls:ExtendedEntry Title="{x:Static resx:AppResource.SectorOnward}"
+                                                        SuffixText="*"
+                                                        PlaceholderText="{x:Static resx:AppResource.SectorPlaceholder}"
+                                                        LeadingIconType="Font"
+                                                        LeadingIcon="{x:Static helpers:FontAwesomeIcons.MapMarkerAlt}"
+                                                        LeadingIconColor="{StaticResource Gray50}"
+                                                        LeadingIconSize="16"/>
+
+                                <controls:ExtendedEntry Title="{x:Static resx:AppResource.TravelDate}"
+                                                        SuffixText="*"
+                                                        PlaceholderText="{x:Static resx:AppResource.DateFormatPlaceholder}"
+                                                        LeadingIconType="Font"
+                                                        LeadingIcon="{x:Static helpers:FontAwesomeIcons.CalendarAlt}"
+                                                        LeadingIconColor="{StaticResource Gray50}"
+                                                        LeadingIconSize="16"
+                                                        Grid.Column="1"/>
+
+                                <controls:ExtendedEntry Title="{x:Static resx:AppResource.SectorReturn}"
+                                                        SuffixText="*"
+                                                        PlaceholderText="{x:Static resx:AppResource.SectorPlaceholder}"
+                                                        LeadingIconType="Font"
+                                                        LeadingIcon="{x:Static helpers:FontAwesomeIcons.MapMarkerAlt}"
+                                                        LeadingIconColor="{StaticResource Gray50}"
+                                                        LeadingIconSize="16"
+                                                        Grid.Row="1"
+                                                        Grid.Column="0"
+                                                        Margin="0,16,0,0"
+                                                        IsVisible="{Binding Source={x:Reference switchcontrol},Path=IsToggled}">
+                                    <!-- <controls:ExtendedEntry.Triggers>
+                                    <DataTrigger TargetType="controls:ExtendedEntry"
+                                                 Binding="{Binding Source={x:Reference switchcontrol},Path=IsToggled}"
+                                                 Value="true">
+                                        <Setter Property="IsVisible"
+                                                Value="True"/>
+                                    </DataTrigger>
+                                </controls:ExtendedEntry.Triggers> -->
+                                </controls:ExtendedEntry>
+
+                                <controls:ExtendedEntry Title="{x:Static resx:AppResource.ReturnTravelDate}"
+                                                        SuffixText="*"
+                                                        PlaceholderText="{x:Static resx:AppResource.DateFormatPlaceholder}"
+                                                        LeadingIconType="Font"
+                                                        LeadingIcon="{x:Static helpers:FontAwesomeIcons.CalendarAlt}"
+                                                        LeadingIconColor="{StaticResource Gray50}"
+                                                        LeadingIconSize="16"
+                                                        Grid.Column="1"
+                                                        Grid.Row="1"
+                                                        Margin="0,16,0,0"
+                                                        IsVisible="{Binding Source={x:Reference switchcontrol},Path=IsToggled}">
+                                    <!-- <controls:ExtendedEntry.Triggers>
                                     <DataTrigger TargetType="controls:ExtendedEntry"
                                                  Binding="{Binding Source={x:Reference tabs},Path=SelectedTabIndex}"
                                                  Value="1">
                                         <Setter Property="IsVisible"
                                                 Value="True"/>
                                     </DataTrigger>
-                                </controls:ExtendedEntry.Triggers>
-                            </controls:ExtendedEntry>
-
-                            <controls:ExtendedEntry Title="{x:Static resx:AppResource.ReturnTravelDate}"
-                                                    SuffixText="*"
-                                                    PlaceholderText="{x:Static resx:AppResource.DateFormatPlaceholder}"
-                                                    LeadingIconType="Font"
-                                                    LeadingIcon="{x:Static helpers:FontAwesomeIcons.CalendarAlt}"
-                                                    LeadingIconColor="{StaticResource Gray50}"
-                                                    LeadingIconSize="16"
-                                                    Grid.Column="1"
-                                                    Grid.Row="1"
-                                                    Margin="0,16,0,0"
-                                                    IsVisible="False">
-                                <controls:ExtendedEntry.Triggers>
-                                    <DataTrigger TargetType="controls:ExtendedEntry"
-                                                 Binding="{Binding Source={x:Reference tabs},Path=SelectedTabIndex}"
-                                                 Value="1">
-                                        <Setter Property="IsVisible"
-                                                Value="True"/>
-                                    </DataTrigger>
-                                </controls:ExtendedEntry.Triggers>
-                            </controls:ExtendedEntry>
+                                </controls:ExtendedEntry.Triggers> -->
+                                </controls:ExtendedEntry>
 
 
 
-                            <!-- <controls:EntryWithTitleImage 
+                                <!-- <controls:EntryWithTitleImage 
                                         IsDateViewVisible="True"
                                         AllowedDates="{Binding AllowedDates}"
                                         Title="{x:Static resx:AppResource.Departure}"
                                         Margin="0,12,0,0"
                                         Icon="calendar"/> -->
+                            </Grid>
+
+                            <VerticalStackLayout Grid.Row="2">
+                                <controls:ExtendedEntry Title="{x:Static resx:AppResource.NoOfPax}"
+                                                        PlaceholderText="{x:Static resx:AppResource.EnterNumberOfPax}"
+                                                        LeadingIconType="Font"
+                                                        LeadingIcon="{x:Static helpers:FontAwesomeIcons.Users}"
+                                                        LeadingIconColor="{StaticResource Gray50}"
+                                                        LeadingIconSize="16"/>
+                                <controls:ExtendedEntry Title="{x:Static resx:AppResource.ExpectedFare}"
+                                                        SuffixText="*"
+                                                        Margin="0,16,0,0"
+                                                        PlaceholderText="{x:Static resx:AppResource.EnterExpectedFare}"
+                                                        LeadingIconType="Font"
+                                                        LeadingIcon="{x:Static helpers:FontAwesomeIcons.RupeeSign}"
+                                                        LeadingIconSize="16"
+                                                        LeadingIconColor="{StaticResource Gray50}"/>
+                                <controls:ExtendedEntry Title="{x:Static resx:AppResource.PreferredAirline}"
+                                                        SuffixText="*"
+                                                        Margin="0,16,0,0"
+                                                        PlaceholderText="{x:Static resx:AppResource.EnterPreferredAirline}"
+                                                        LeadingIcon="{x:Static helpers:FontAwesomeIcons.PaperPlane}"
+                                                        LeadingIconColor="{StaticResource Gray50}"
+                                                        LeadingIconSize="16"
+                                                        LeadingIconType="Font"/>
+                                <controls:ExtendedEntry Title="{x:Static resx:AppResource.ContactNo}"
+                                                        SuffixText="*"
+                                                        Margin="0,16,0,0"
+                                                        LeadingIconType="Font"
+                                                        PlaceholderText="{x:Static resx:AppResource.Enter10DigitMobileNumber}"
+                                                        LeadingIcon="{x:Static helpers:FontAwesomeIcons.PhoneAlt}"
+                                                        LeadingIconColor="{StaticResource Gray50}"
+                                                        LeadingIconSize="16"/>
+                                <Label x:Name="TitleLabel"
+                                       Grid.Row="0"
+                                       Style="{StaticResource TitleStyleBlackBold}"
+                                       Text="{x:Static resx:AppResource.AddNote}"
+                                       Margin="0,16,0,0"/>
+                                <Border StrokeShape="RoundRectangle 8"
+                                        Grid.Row="1"
+                                        Opacity="1"
+                                        BackgroundColor="White"
+                                        Padding="10,0"
+                                        Margin="0,5,0,0">
+                                    <controls:BorderlessEditor HeightRequest="150"
+                                                               AutoSize="Disabled"
+                                                               Placeholder="{x:Static resx:AppResource.IncludeExtraDetailsPlaceholder}"
+                                                               Text="{Binding Message}"
+                                                               VerticalOptions="Start"/>
+                                </Border>
+                                <Button
+                                    Grid.Row="2"
+                                    Margin="0,16,0,0"
+                                    Text="{x:Static resx:AppResource.Submit}"
+                                    Command="{Binding ConfirmBookingCommand}"
+                                    Style="{StaticResource ButtonCorneredStyle}"
+                                    VerticalOptions="End"/>
+                            </VerticalStackLayout>
+
                         </Grid>
 
-                        <VerticalStackLayout Grid.Row="2">
-                            <controls:ExtendedEntry Title="{x:Static resx:AppResource.NoOfPax}"
-                                                    PlaceholderText="{x:Static resx:AppResource.EnterNumberOfPax}"
-                                                    LeadingIconType="Font"
-                                                    LeadingIcon="{x:Static helpers:FontAwesomeIcons.Users}"
-                                                    LeadingIconColor="{StaticResource Gray50}"
-                                                    LeadingIconSize="16"/>
-                            <controls:ExtendedEntry Title="{x:Static resx:AppResource.ExpectedFare}"
-                                                    SuffixText="*"
-                                                    Margin="0,16,0,0"
-                                                    PlaceholderText="{x:Static resx:AppResource.EnterExpectedFare}"
-                                                    LeadingIconType="Font"
-                                                    LeadingIcon="{x:Static helpers:FontAwesomeIcons.RupeeSign}"
-                                                    LeadingIconSize="16"
-                                                    LeadingIconColor="{StaticResource Gray50}"/>
-                            <controls:ExtendedEntry Title="{x:Static resx:AppResource.PreferredAirline}"
-                                                    SuffixText="*"
-                                                    Margin="0,16,0,0"
-                                                    PlaceholderText="{x:Static resx:AppResource.EnterPreferredAirline}"
-                                                    LeadingIcon="{x:Static helpers:FontAwesomeIcons.PaperPlane}"
-                                                    LeadingIconColor="{StaticResource Gray50}"
-                                                    LeadingIconSize="16"
-                                                    LeadingIconType="Font"/>
-                            <controls:ExtendedEntry Title="{x:Static resx:AppResource.ContactNo}"
-                                                    SuffixText="*"
-                                                    Margin="0,16,0,0"
-                                                    LeadingIconType="Font"
-                                                    PlaceholderText="{x:Static resx:AppResource.Enter10DigitMobileNumber}"
-                                                    LeadingIcon="{x:Static helpers:FontAwesomeIcons.PhoneAlt}"
-                                                    LeadingIconColor="{StaticResource Gray50}"
-                                                    LeadingIconSize="16"/>
-                            <Label x:Name="TitleLabel"
-                                   Grid.Row="0"
-                                   Style="{StaticResource TitleStyleBlackBold}"
-                                   Text="{x:Static resx:AppResource.AddNote}"
-                                   Margin="0,16,0,0"/>
-                            <Border StrokeShape="RoundRectangle 8"
-                                    Grid.Row="1"
-                                    Opacity="1"
-                                    BackgroundColor="White"
-                                    Padding="10,0"
-                                    Margin="0,5,0,0">
-                                <controls:BorderlessEditor HeightRequest="150"
-                                                           AutoSize="Disabled"
-                                                           Placeholder="{x:Static resx:AppResource.IncludeExtraDetailsPlaceholder}"
-                                                           Text="{Binding Message}"
-                                                           VerticalOptions="Start"/>
-                            </Border>
-                            <Button
-                                Grid.Row="2"
-                                Margin="0,16,0,0"
-                                Text="{x:Static resx:AppResource.Submit}"
-                                Command="{Binding ConfirmBookingCommand}"
-                                Style="{StaticResource ButtonCorneredStyle}"
-                                VerticalOptions="End"/>
-                        </VerticalStackLayout>
+                    </ScrollView>
+                </Border>
 
-                    </Grid>
-                </ScrollView>
-            </Border>
+                <!-- HISTORY VIEW -->
+
+                <Grid RowDefinitions="Auto,*"
+                      IsVisible="False">
+
+                    <Grid.Triggers>
+                        <DataTrigger TargetType="Grid"
+                                     Binding="{Binding Source={x:Reference tabs},Path=SelectedTabIndex}"
+                                     Value="1">
+                            <Setter Property="IsVisible"
+                                    Value="True"/>
+                        </DataTrigger>
+                    </Grid.Triggers>
+
+                    <Border Style="{StaticResource CardBorderStyle}">
+                        <Grid ColumnDefinitions="*,*"
+                              ColumnSpacing="10"
+                              RowSpacing="12"
+                              RowDefinitions="Auto,Auto,Auto">
+
+                            <controls:ExtendedDatePicker Title="From"/>
+                            <controls:ExtendedDatePicker Title="To"
+                                                         Grid.Column="1"/>
+
+                            <controls:ExtendedDropdown Title="Trip Type"
+                                                       PlaceholderText="Select Trip Type"
+                                                       Grid.Row="1"
+                                                       Grid.Column="0"/>
+
+                            <controls:ExtendedDropdown Title="Status"
+                                                       PlaceholderText="Select Status"
+                                                       Grid.Row="1"
+                                                       Grid.Column="1"/>
+
+                            <Button Grid.Row="2"
+                                    Grid.ColumnSpan="2"
+                                    Style="{StaticResource ButtonCorneredStyle}"
+                                    Text="Submit"/>
+
+                        </Grid>
+                    </Border>
+                </Grid>
+
+            </Grid>
 
         </Grid>
     </views:BasePage.PageContent>

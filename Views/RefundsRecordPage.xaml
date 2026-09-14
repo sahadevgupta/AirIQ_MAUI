@@ -22,7 +22,11 @@
                              Padding="16">
                             <controls:SearchView VerticalOptions="Start"
                                                  SearchText="{Binding SearchText}"
-                                                 SearchCommand="{Binding SearchCommand}"/>
+                                                 SearchCommand="{Binding SearchCommand}"
+                                                 FilterCommand="{Binding FilterCommand}"
+                                                 IsFilterActive="{Binding IsFilterActive}"
+                                                 ClearFilterCommand="{Binding ClearFilterCommand}"
+                                                 DownloadCommand="{Binding DownloadCommand}"/>
                      </Border>
 
                      <CollectionView Grid.Row="1"

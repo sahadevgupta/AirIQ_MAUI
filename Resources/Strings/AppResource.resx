@@ -1026,8 +1026,71 @@
   <data name="AboutApp" xml:space="preserve">
     <value>About App</value>
   </data>
+  <data name="Support" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="ContactSupport" xml:space="preserve">
+    <value>Contact Support</value>
+  </data>
+  <data name="ManageAccount" xml:space="preserve">
+    <value>Manage Account</value>
+  </data>
+  <data name="LogoutConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to logout?</value>
+  </data>
+  <data name="PushNotifications" xml:space="preserve">
+    <value>Push Notifications</value>
+  </data>
+  <data name="PushNotificationsSubtitle" xml:space="preserve">
+    <value>Flight alerts, tickets &amp; deals</value>
+  </data>
+  <data name="AllEnabled" xml:space="preserve">
+    <value>All Enabled</value>
+  </data>
+  <data name="CurrencyAndRegion" xml:space="preserve">
+    <value>Currency &amp; Region</value>
+  </data>
+  <data name="CurrencyAndRegionValue" xml:space="preserve">
+    <value>INR (₹) · India</value>
+  </data>
+  <data name="ContactSupportSubtitle" xml:space="preserve">
+    <value>Reach our support team for any queries</value>
+  </data>
+  <data name="HelpCenterFaqs" xml:space="preserve">
+    <value>Help Center &amp; FAQs</value>
+  </data>
+  <data name="TermsOfService" xml:space="preserve">
+    <value>Terms of Service</value>
+  </data>
+  <data name="PrivacyDataPolicy" xml:space="preserve">
+    <value>Privacy &amp; Data Policy</value>
+  </data>
   <data name="FeatureComingSoon" xml:space="preserve">
     <value>This feature is coming soon.</value>
+  </data>
+  <data name="NoSalesRecordsToExport" xml:space="preserve">
+    <value>No sales records available to export.</value>
+  </data>
+  <data name="SalesRecordsExportedSuccessfully" xml:space="preserve">
+    <value>Sales records exported successfully.</value>
+  </data>
+  <data name="NoAccountLedgerRecordsToExport" xml:space="preserve">
+    <value>No account ledger records available to export.</value>
+  </data>
+  <data name="AccountLedgerRecordsExportedSuccessfully" xml:space="preserve">
+    <value>Account ledger records exported successfully.</value>
+  </data>
+  <data name="NoTempCreditRecordsToExport" xml:space="preserve">
+    <value>No temporary credit records available to export.</value>
+  </data>
+  <data name="TempCreditRecordsExportedSuccessfully" xml:space="preserve">
+    <value>Temporary credit records exported successfully.</value>
+  </data>
+  <data name="NoRefundRecordsToExport" xml:space="preserve">
+    <value>No refund records available to export.</value>
+  </data>
+  <data name="RefundRecordsExportedSuccessfully" xml:space="preserve">
+    <value>Refund records exported successfully.</value>
   </data>
   <data name="ReverseRouteNotAvailable" xml:space="preserve">
     <value>The selected return route is not available.</value>
@@ -1569,5 +1632,56 @@ Version {0}</value>
   </data>
   <data name="AddReturnDate" xml:space="preserve">
     <value>+ Add return date</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="FilterSubtitle" xml:space="preserve">
+    <value>Narrow results by a date range</value>
+  </data>
+  <data name="DateRange" xml:space="preserve">
+    <value>Date Range</value>
+  </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>From Date</value>
+  </data>
+  <data name="ToDate" xml:space="preserve">
+    <value>To Date</value>
+  </data>
+  <data name="ClearAll" xml:space="preserve">
+    <value>Clear All</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="ThisWeek" xml:space="preserve">
+    <value>This Week</value>
+  </data>
+  <data name="ThisMonth" xml:space="preserve">
+    <value>This Month</value>
+  </data>
+  <data name="Last30Days" xml:space="preserve">
+    <value>Last 30 Days</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="EditProfile" xml:space="preserve">
+    <value>Edit Profile</value>
+  </data>
+  <data name="AgencyId" xml:space="preserve">
+    <value>Agency ID</value>
+  </data>
+  <data name="SecurityAndAccess" xml:space="preserve">
+    <value>Security &amp; Access</value>
+  </data>
+  <data name="AboutAndLegal" xml:space="preserve">
+    <value>About &amp; Legal</value>
+  </data>
+  <data name="WalletBalance" xml:space="preserve">
+    <value>Wallet Balance</value>
+  </data>
+  <data name="ViewWallet" xml:space="preserve">
+    <value>View Wallet</value>
   </data>
 </root>

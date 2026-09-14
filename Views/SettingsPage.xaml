@@ -1,13 +1,532 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
-             x:Class="AirIQ.Views.SettingsPage"
-             Title="{x:Static resx:AppResource.SettingsPageTitle}">
-    <VerticalStackLayout>
-        <Label
-            Text="{x:Static resx:AppResource.WelcomeToNetMaui}"
-            VerticalOptions="Center"
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
-</ContentPage>
+<views:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                x:Class="AirIQ.Views.SettingsPage"
+                xmlns:helpers="clr-namespace:AirIQ.Extensions"
+                xmlns:resx="clr-namespace:AirIQ.Resources.Strings"
+                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                xmlns:views="clr-namespace:AirIQ.Views"
+                xmlns:vm="clr-namespace:AirIQ.ViewModels"
+                x:DataType="vm:SettingsViewModel"
+                NavigationMode="Hamburger"
+                PageTitle="{x:Static resx:AppResource.Settings}">
+
+    <views:BasePage.Resources>
+        <ResourceDictionary>
+
+            <!-- Coral tint reused from the app's existing AccentColor treatment (logout card below) -->
+            <Color x:Key="TintCoralBackground">#FDEDEC</Color>
+
+            <Style TargetType="Label"
+                   x:Key="ChevronStyle">
+                <Setter Property="Text"
+                        Value="{x:Static helpers:FontAwesomeIcons.ChevronRight}"/>
+                <Setter Property="FontFamily"
+                        Value="MyFont"/>
+                <Setter Property="FontSize"
+                        Value="12"/>
+                <Setter Property="TextColor"
+                        Value="{StaticResource Gray50}"/>
+                <Setter Property="VerticalOptions"
+                        Value="Center"/>
+            </Style>
+
+            <Style TargetType="Border"
+                   x:Key="IconCircleStyleBase">
+                <Setter Property="WidthRequest"
+                        Value="40"/>
+                <Setter Property="HeightRequest"
+                        Value="40"/>
+                <Setter Property="StrokeThickness"
+                        Value="0"/>
+                <Setter Property="StrokeShape"
+                        Value="RoundRectangle 20"/>
+                <Setter Property="HorizontalOptions"
+                        Value="Start"/>
+                <Setter Property="VerticalOptions"
+                        Value="Center"/>
+            </Style>
+
+            <Style TargetType="Label"
+                   x:Key="RowIconStyle">
+                <Setter Property="FontFamily"
+                        Value="MyFont"/>
+                <Setter Property="FontSize"
+                        Value="16"/>
+                <Setter Property="HorizontalOptions"
+                        Value="Center"/>
+                <Setter Property="VerticalOptions"
+                        Value="Center"/>
+            </Style>
+
+            <Style TargetType="Label"
+                   x:Key="SectionCaptionStyle">
+                <Setter Property="FontFamily"
+                        Value="RobotoSemiBold"/>
+                <Setter Property="FontSize"
+                        Value="12"/>
+                <Setter Property="TextColor"
+                        Value="{StaticResource Gray50}"/>
+                <Setter Property="CharacterSpacing"
+                        Value="0.6"/>
+                <Setter Property="TextTransform"
+                        Value="Uppercase"/>
+                <Setter Property="Margin"
+                        Value="4,0,0,4"/>
+            </Style>
+
+            <Style TargetType="Label"
+                   x:Key="RowTitleStyle"
+                   BasedOn="{StaticResource Label14SemiBold}">
+                <Setter Property="TextColor"
+                        Value="{StaticResource Gray90}"/>
+            </Style>
+
+            <Style TargetType="Label"
+                   x:Key="RowSubtitleStyle"
+                   BasedOn="{StaticResource Label12Regular}">
+                <Setter Property="TextColor"
+                        Value="{StaticResource Gray50}"/>
+            </Style>
+
+            <Style TargetType="Label"
+                   x:Key="RowValueStyle"
+                   BasedOn="{StaticResource Label12Regular}">
+                <Setter Property="TextColor"
+                        Value="{StaticResource Gray50}"/>
+                <Setter Property="VerticalOptions"
+                        Value="Center"/>
+            </Style>
+
+        </ResourceDictionary>
+    </views:BasePage.Resources>
+
+    <views:BasePage.PageContent>
+        <ScrollView>
+            <VerticalStackLayout Padding="16"
+                                 Spacing="20"
+                                 BackgroundColor="{StaticResource BackgroundColor}">
+
+                <!-- ==================== PROFILE SUMMARY ==================== -->
+                <Border Style="{StaticResource DefaultBorderStyle}">
+                    <Grid ColumnDefinitions="56,*,Auto"
+                          ColumnSpacing="14">
+
+                        <toolkit:AvatarView Grid.Column="0"
+                                            Text="{Binding CurrentUser.ContactPersonInitials}"
+                                            HeightRequest="56"
+                                            WidthRequest="56"
+                                            CornerRadius="28"
+                                            BackgroundColor="{StaticResource Primary0}"
+                                            FontSize="20"
+                                            FontFamily="RobotoMedium"
+                                            TextColor="{StaticResource Secondary50}"/>
+
+                        <VerticalStackLayout Grid.Column="1"
+                                             Spacing="2"
+                                             VerticalOptions="Center">
+                            <Label Text="{Binding CurrentUser.ContactPerson}"
+                                   Style="{StaticResource Label18Bold}"
+                                   TextColor="{StaticResource Gray90}"
+                                   LineBreakMode="TailTruncation"/>
+                            <Label Text="{Binding CurrentUser.EmailId}"
+                                   Style="{StaticResource Label14Regular}"
+                                   TextColor="{StaticResource Gray50}"
+                                   LineBreakMode="TailTruncation"/>
+                            <Label Text="{x:Static resx:AppResource.ManageAccount}"
+                                   Style="{StaticResource Label14SemiBold}"
+                                   TextColor="{StaticResource PrimaryColor}"
+                                   Margin="0,2,0,0"/>
+                        </VerticalStackLayout>
+
+                        <Label Grid.Column="2"
+                               Style="{StaticResource ChevronStyle}"/>
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ManageAccountCommand}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </Border>
+
+                <!-- ==================== PREFERENCES ==================== -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{x:Static resx:AppResource.Preferences}"
+                           Style="{StaticResource SectionCaptionStyle}"/>
+
+                    <Border Style="{StaticResource DefaultBorderStyle}"
+                            Padding="16,4">
+                        <VerticalStackLayout>
+
+                            <Grid ColumnDefinitions="40,*,Auto"
+                                  ColumnSpacing="12"
+                                  Padding="0,14">
+                                <Border Grid.Column="0"
+                                        Style="{StaticResource IconCircleStyleBase}"
+                                        BackgroundColor="{StaticResource Primary0}">
+                                    <Label Style="{StaticResource RowIconStyle}"
+                                           Text="{x:Static helpers:FontAwesomeIcons.Bell}"
+                                           TextColor="{StaticResource PrimaryColor}"/>
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1"
+                                                     VerticalOptions="Center"
+                                                     Spacing="1">
+                                    <Label Text="{x:Static resx:AppResource.PushNotifications}"
+                                           Style="{StaticResource RowTitleStyle}"/>
+                                    <Label Text="{x:Static resx:AppResource.PushNotificationsSubtitle}"
+                                           Style="{StaticResource RowSubtitleStyle}"/>
+                                </VerticalStackLayout>
+                                <Grid Grid.Column="2"
+                                      ColumnDefinitions="Auto,Auto"
+                                      ColumnSpacing="8"
+                                      VerticalOptions="Center">
+                                    <Label Grid.Column="0"
+                                           Text="{x:Static resx:AppResource.AllEnabled}"
+                                           Style="{StaticResource RowValueStyle}"/>
+                                    <Label Grid.Column="1"
+                                           Style="{StaticResource ChevronStyle}"/>
+                                </Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+
+                            <BoxView Color="{StaticResource BorderColor}"
+                                     HeightRequest="1"/>
+
+                            <Grid ColumnDefinitions="40,*,Auto"
+                                  ColumnSpacing="12"
+                                  Padding="0,14">
+                                <Border Grid.Column="0"
+                                        Style="{StaticResource IconCircleStyleBase}"
+                                        BackgroundColor="{StaticResource Primary0}">
+                                    <Label Style="{StaticResource RowIconStyle}"
+                                           Text="{x:Static helpers:FontAwesomeIcons.Globe}"
+                                           TextColor="{StaticResource PrimaryColor}"/>
+                                </Border>
+                                <Label Grid.Column="1"
+                                       Text="{x:Static resx:AppResource.Language}"
+                                       Style="{StaticResource RowTitleStyle}"
+                                       VerticalOptions="Center"/>
+                                <Grid Grid.Column="2"
+                                      ColumnDefinitions="Auto,Auto"
+                                      ColumnSpacing="8"
+                                      VerticalOptions="Center">
+                                    <Label Grid.Column="0"
+                                           Text="{x:Static resx:AppResource.English}"
+                                           Style="{StaticResource RowValueStyle}"/>
+                                    <Label Grid.Column="1"
+                                           Style="{StaticResource ChevronStyle}"/>
+                                </Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+
+                            <BoxView Color="{StaticResource BorderColor}"
+                                     HeightRequest="1"/>
+
+                            <Grid ColumnDefinitions="40,*,Auto"
+                                  ColumnSpacing="12"
+                                  Padding="0,14">
+                                <Border Grid.Column="0"
+                                        Style="{StaticResource IconCircleStyleBase}"
+                                        BackgroundColor="{StaticResource Primary0}">
+                                    <Label Style="{StaticResource RowIconStyle}"
+                                           Text="{x:Static helpers:FontAwesomeIcons.Moon}"
+                                           TextColor="{StaticResource PrimaryColor}"/>
+                                </Border>
+                                <Label Grid.Column="1"
+                                       Text="{x:Static resx:AppResource.Theme}"
+                                       Style="{StaticResource RowTitleStyle}"
+                                       VerticalOptions="Center"/>
+                                <Grid Grid.Column="2"
+                                      ColumnDefinitions="Auto,Auto"
+                                      ColumnSpacing="8"
+                                      VerticalOptions="Center">
+                                    <Label Grid.Column="0"
+                                           Text="{x:Static resx:AppResource.SystemDefault}"
+                                           Style="{StaticResource RowValueStyle}"/>
+                                    <Label Grid.Column="1"
+                                           Style="{StaticResource ChevronStyle}"/>
+                                </Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+
+                            <BoxView Color="{StaticResource BorderColor}"
+                                     HeightRequest="1"/>
+
+                            <Grid ColumnDefinitions="40,*,Auto"
+                                  ColumnSpacing="12"
+                                  Padding="0,14">
+                                <Border Grid.Column="0"
+                                        Style="{StaticResource IconCircleStyleBase}"
+                                        BackgroundColor="{StaticResource Primary0}">
+                                    <Label Style="{StaticResource RowIconStyle}"
+                                           FontSize="14"
+                                           Text="₹"
+                                           TextColor="{StaticResource PrimaryColor}"/>
+                                </Border>
+                                <Label Grid.Column="1"
+                                       Text="{x:Static resx:AppResource.CurrencyAndRegion}"
+                                       Style="{StaticResource RowTitleStyle}"
+                                       VerticalOptions="Center"/>
+                                <Grid Grid.Column="2"
+                                      ColumnDefinitions="Auto,Auto"
+                                      ColumnSpacing="8"
+                                      VerticalOptions="Center">
+                                    <Label Grid.Column="0"
+                                           Text="{x:Static resx:AppResource.CurrencyAndRegionValue}"
+                                           Style="{StaticResource RowValueStyle}"/>
+                                    <Label Grid.Column="1"
+                                           Style="{StaticResource ChevronStyle}"/>
+                                </Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- ==================== SUPPORT ==================== -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{x:Static resx:AppResource.Support}"
+                           Style="{StaticResource SectionCaptionStyle}"/>
+
+                    <Border Style="{StaticResource DefaultBorderStyle}"
+                            Padding="16,4">
+                        <VerticalStackLayout>
+
+                            <Grid ColumnDefinitions="40,*,Auto"
+                                  ColumnSpacing="12"
+                                  Padding="0,14">
+                                <Border Grid.Column="0"
+                                        Style="{StaticResource IconCircleStyleBase}"
+                                        BackgroundColor="{StaticResource TintCoralBackground}">
+                                    <Label Style="{StaticResource RowIconStyle}"
+                                           Text="{x:Static helpers:FontAwesomeIcons.Headset}"
+                                           TextColor="{StaticResource AccentColor}"/>
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1"
+                                                     VerticalOptions="Center"
+                                                     Spacing="1">
+                                    <Label Text="{x:Static resx:AppResource.ContactSupport}"
+                                           Style="{StaticResource RowTitleStyle}"/>
+                                    <Label Text="{x:Static resx:AppResource.ContactSupportSubtitle}"
+                                           Style="{StaticResource RowSubtitleStyle}"/>
+                                </VerticalStackLayout>
+                                <Label Grid.Column="2"
+                                       Style="{StaticResource ChevronStyle}"/>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ContactSupportCommand}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+
+                            <BoxView Color="{StaticResource BorderColor}"
+                                     HeightRequest="1"/>
+
+                            <Grid ColumnDefinitions="40,*,Auto"
+                                  ColumnSpacing="12"
+                                  Padding="0,14">
+                                <Border Grid.Column="0"
+                                        Style="{StaticResource IconCircleStyleBase}"
+                                        BackgroundColor="{StaticResource Gray10}">
+                                    <Label Style="{StaticResource RowIconStyle}"
+                                           Text="{x:Static helpers:FontAwesomeIcons.QuestionCircle}"
+                                           TextColor="{StaticResource Gray90}"/>
+                                </Border>
+                                <Label Grid.Column="1"
+                                       Text="{x:Static resx:AppResource.HelpCenterFaqs}"
+                                       Style="{StaticResource RowTitleStyle}"
+                                       VerticalOptions="Center"/>
+                                <Label Grid.Column="2"
+                                       Style="{StaticResource ChevronStyle}"/>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NotAvailableCommand}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- ==================== ABOUT ==================== -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{x:Static resx:AppResource.About}"
+                           Style="{StaticResource SectionCaptionStyle}"/>
+
+                    <Border Style="{StaticResource DefaultBorderStyle}"
+                            Padding="16,4">
+                        <VerticalStackLayout>
+
+                            <Grid ColumnDefinitions="40,*,Auto"
+                                  ColumnSpacing="12"
+                                  Padding="0,14">
+                                <Border Grid.Column="0"
+                                        Style="{StaticResource IconCircleStyleBase}"
+                                        BackgroundColor="{StaticResource Gray10}">
+                                    <Label Style="{StaticResource RowIconStyle}"
+                                           Text="{x:Static helpers:FontAwesomeIcons.InfoCircle}"
+                                           TextColor="{StaticResource Gray90}"/>
+                                </Border>
+                                <Label Grid.Column="1"
+                                       Text="{x:Static resx:AppResource.AboutApp}"
+                                       Style="{StaticResource RowTitleStyle}"
+                                       VerticalOptions="Center"/>
+                                <Grid Grid.Column="2"
+                                      ColumnDefinitions="Auto,Auto"
+                                      ColumnSpacing="8"
+                                      VerticalOptions="Center">
+                                    <Label Grid.Column="0"
+                                           Text="{Binding AppVersionDisplay}"
+                                           Style="{StaticResource RowValueStyle}"/>
+                                    <Label Grid.Column="1"
+                                           Style="{StaticResource ChevronStyle}"/>
+                                </Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding AboutAppCommand}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+
+                            <BoxView Color="{StaticResource BorderColor}"
+                                     HeightRequest="1"/>
+
+                            <Grid ColumnDefinitions="40,*,Auto"
+                                  ColumnSpacing="12"
+                                  Padding="0,14">
+                                <Border Grid.Column="0"
+                                        Style="{StaticResource IconCircleStyleBase}"
+                                        BackgroundColor="{StaticResource Gray10}">
+                                    <Label Style="{StaticResource RowIconStyle}"
+                                           Text="{x:Static helpers:FontAwesomeIcons.FileAlt}"
+                                           TextColor="{StaticResource Gray90}"/>
+                                </Border>
+                                <Label Grid.Column="1"
+                                       Text="{x:Static resx:AppResource.TermsOfService}"
+                                       Style="{StaticResource RowTitleStyle}"
+                                       VerticalOptions="Center"/>
+                                <Label Grid.Column="2"
+                                       Style="{StaticResource ChevronStyle}"/>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OpenTermsAndConditionsCommand}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+
+                            <BoxView Color="{StaticResource BorderColor}"
+                                     HeightRequest="1"/>
+
+                            <Grid ColumnDefinitions="40,*,Auto"
+                                  ColumnSpacing="12"
+                                  Padding="0,14">
+                                <Border Grid.Column="0"
+                                        Style="{StaticResource IconCircleStyleBase}"
+                                        BackgroundColor="{StaticResource Gray10}">
+                                    <Label Style="{StaticResource RowIconStyle}"
+                                           Text="{x:Static helpers:FontAwesomeIcons.ShieldAlt}"
+                                           TextColor="{StaticResource Gray90}"/>
+                                </Border>
+                                <Label Grid.Column="1"
+                                       Text="{x:Static resx:AppResource.PrivacyDataPolicy}"
+                                       Style="{StaticResource RowTitleStyle}"
+                                       VerticalOptions="Center"/>
+                                <Label Grid.Column="2"
+                                       Style="{StaticResource ChevronStyle}"/>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OpenPrivacyPolicyCommand}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8">
+
+                    <Label Text="🔐 Account Deletion Request"
+                           Style="{StaticResource SectionCaptionStyle}"/>
+
+
+                    <Border Style="{StaticResource DefaultBorderStyle}"
+                            Stroke="#FF6B6B"
+                            StrokeThickness="1"
+                            Padding="16">
+
+                        <VerticalStackLayout Spacing="8"
+                                             BackgroundColor="White">
+                            <!-- <Label Text="🔐 Account Deletion Request"
+                                   Style="{StaticResource Label14MediumGray90Style}"
+                                   AutomationProperties.Name="Account Deletion"/> -->
+                            <Label Text="If you would like to request deletion of your account or have questions regarding your personal information, please contact our Data Protection Officer."
+                                   Style="{StaticResource Label14Regular}"
+                                   LineHeight="1.2"/>
+
+                            <Grid ColumnDefinitions="*,*"
+                                  ColumnSpacing="12"
+                                  Margin="0,4,0,0">
+                                <Button Grid.Column="0"
+                                        Text="Email"
+                                        BorderWidth="1"
+                                        Style="{StaticResource SmallBorderButtonStyle}"
+                                        BackgroundColor="White"
+                                        BorderColor="{StaticResource PrimaryColor}"
+                                        AutomationProperties.Name="Email Privacy Team"
+                                        Command="{Binding RequestAccountDeletionByEmailCommand}">
+                                    <Button.ImageSource>
+                                        <FontImageSource FontFamily="MyFont"
+                                                         Glyph="{x:Static helpers:FontAwesomeIcons.Envelope}"
+                                                         Color="{StaticResource PrimaryColor}"
+                                                         Size="18"/>
+                                    </Button.ImageSource>
+                                </Button>
+
+                                <Button Grid.Column="1"
+                                        Text="Call"
+                                        BorderWidth="1"
+                                        Style="{StaticResource SmallBorderButtonStyle}"
+                                        BackgroundColor="White"
+                                        BorderColor="{StaticResource PrimaryColor}"
+                                        AutomationProperties.Name="Call Privacy Team"
+                                        Command="{Binding RequestAccountDeletionByPhoneCommand}">
+                                    <Button.ImageSource>
+                                        <FontImageSource FontFamily="MyFont"
+                                                         Glyph="{x:Static helpers:FontAwesomeIcons.PhoneAlt}"
+                                                         Color="{StaticResource PrimaryColor}"
+                                                         Size="18"/>
+                                    </Button.ImageSource>
+                                </Button>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+                <!-- ==================== LOGOUT ==================== -->
+                <Border BackgroundColor="{StaticResource TintCoralBackground}"
+                        Stroke="yellow"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 12"
+                        Padding="14"
+                        IsVisible="False">
+                    <HorizontalStackLayout Spacing="10"
+                                           HorizontalOptions="Center">
+                        <Label Text="{x:Static helpers:FontAwesomeIcons.SignOutAlt}"
+                               FontFamily="MyFont"
+                               FontSize="16"
+                               TextColor="{StaticResource Red}"
+                               VerticalOptions="Center"/>
+                        <Label Text="{x:Static resx:AppResource.Logout}"
+                               Style="{StaticResource Label16SemiBold}"
+                               TextColor="{StaticResource Red}"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding LogoutCommand}"/>
+                    </Border.GestureRecognizers>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </views:BasePage.PageContent>
+
+</views:BasePage>

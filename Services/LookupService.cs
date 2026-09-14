@@ -1,4 +1,5 @@
 using AirIQ.Configurations.CustomExceptions;
+using AirIQ.Constants;
 using AirIQ.Enums;
 using AirIQ.Models;
 using AirIQ.Models.Request;
@@ -8,17 +9,24 @@ using AirIQ.Services.Interfaces;
 namespace AirIQ.Services
 {
     public class LookupService(IApiServiceBaseParams apiServiceBaseParams,
-        IAuthenticationApi authenticationApi) : ApiServiceBase(apiServiceBaseParams), ILookupService
+        IAuthenticationApi authenticationApi,
+        IApiCacheService apiCacheService) : ApiServiceBase(apiServiceBaseParams), ILookupService
     {
         public async Task<IEnumerable<CountryDto>> GetCountriesAsync()
         {
             IEnumerable<CountryDto> countryDtos = Enumerable.Empty<CountryDto>();
             try
             {
-                await Connectivity.CheckConnected();
+                var cached = await apiCacheService.GetAsync<List<CountryDto>>(
+                    ApiCacheKeys.LookupCountries,
+                    async () =>
+                    {
+                        await Connectivity.CheckConnected();
+                        var apiResponse = await authenticationApi.GetCountries().ConfigureAwait(false);
+                        return apiResponse?.ToList();
+                    });
 
-                var apiResponse = await authenticationApi.GetCountries().ConfigureAwait(false);
-                countryDtos = apiResponse ?? Enumerable.Empty<CountryDto>();
+                countryDtos = cached ?? Enumerable.Empty<CountryDto>();
             }
             catch (NotConnectedException notConntectedException)
             {
@@ -57,10 +65,16 @@ namespace AirIQ.Services
             IEnumerable<StateDto> stateDtos = Enumerable.Empty<StateDto>();
             try
             {
-                await Connectivity.CheckConnected();
+                var cached = await apiCacheService.GetAsync<List<StateDto>>(
+                    ApiCacheKeys.LookupStates,
+                    async () =>
+                    {
+                        await Connectivity.CheckConnected();
+                        var apiResponse = await authenticationApi.GetStates().ConfigureAwait(false);
+                        return apiResponse?.ToList();
+                    });
 
-                var apiResponse = await authenticationApi.GetStates().ConfigureAwait(false);
-                stateDtos = apiResponse ?? Enumerable.Empty<StateDto>();
+                stateDtos = cached ?? Enumerable.Empty<StateDto>();
             }
             catch (NotConnectedException notConntectedException)
             {

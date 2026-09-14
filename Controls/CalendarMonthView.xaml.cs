@@ -27,9 +27,9 @@ public partial class CalendarMonthView : ContentView
     const int Rows = 6;
     const int Cols = 7;
     const int CellCount = Rows * Cols;
-    const float PillRadius = 20f;
-    const float TodayDotRadius = 2f;
-    const float TodayDotOffset = 16f;
+    const float PillRadiusRatio = 0.4f;
+    const float TodayDotRadiusRatio = 0.04f;
+    const float TodayDotGapRatio = 0.08f;
 
     // Approximates the app's "RobotoSemiBold" (registered as a MAUI font alias, not something
     // SkiaSharp can resolve by that name) with the platform's semi-bold system font.
@@ -39,9 +39,9 @@ public partial class CalendarMonthView : ContentView
     readonly PropertyChangedEventHandler _onDayChanged;
     readonly List<CalendarDay> _subscribedDays = new(CellCount);
 
-    SKColor _onyx;
     SKColor _gray300;
     SKColor _primaryColor;
+    SKColor _standardOrange;
 
     CalendarMonth? _month;
 
@@ -112,9 +112,14 @@ public partial class CalendarMonthView : ContentView
 
         float cellWidth = e.Info.Width / (float)Cols;
         float cellHeight = e.Info.Height / (float)Rows;
+        float minCellDimension = Math.Min(cellWidth, cellHeight);
+        float pillRadius = minCellDimension * PillRadiusRatio;
+        float todayDotRadius = minCellDimension * TodayDotRadiusRatio;
+        float todayDotOffset = pillRadius + todayDotRadius + (minCellDimension * TodayDotGapRatio);
 
         using var pillPaint = new SKPaint { Color = _primaryColor, IsAntialias = true, Style = SKPaintStyle.Fill };
         using var dotPaint = new SKPaint { Color = _primaryColor, IsAntialias = true, Style = SKPaintStyle.Fill };
+        using var selectedDotPaint = new SKPaint { Color = _standardOrange, IsAntialias = true, Style = SKPaintStyle.Fill };
         using var textPaint = new SKPaint { IsAntialias = true };
         using var font = new SKFont(DayTypeface, cellHeight * 0.34f);
         var fontMetrics = font.Metrics;
@@ -130,17 +135,19 @@ public partial class CalendarMonthView : ContentView
             float cx = (col + 0.5f) * cellWidth;
             float cy = (row + 0.5f) * cellHeight;
 
-            if (day.IsSelectedEndpoint)
-                canvas.DrawCircle(cx, cy, PillRadius, pillPaint);
+            if (!day.IsDisabled)
+                canvas.DrawCircle(cx, cy, pillRadius, pillPaint);
 
-            textPaint.Color = day.IsSelectedEndpoint ? SKColors.White : day.IsDisabled ? _gray300 : _onyx;
+            textPaint.Color = day.IsDisabled ? _gray300 : SKColors.White;
 
             string text = day.DayNumber.ToString();
             float textY = cy - ((fontMetrics.Ascent + fontMetrics.Descent) / 2f);
             canvas.DrawText(text, cx, textY, SKTextAlign.Center, font, textPaint);
 
-            if (day.IsToday && !day.IsSelectedEndpoint)
-                canvas.DrawCircle(cx, cy + TodayDotOffset, TodayDotRadius, dotPaint);
+            if (day.IsSelectedEndpoint)
+                canvas.DrawCircle(cx, cy + todayDotOffset, todayDotRadius + 2, selectedDotPaint);
+            else if (day.IsToday)
+                canvas.DrawCircle(cx, cy + todayDotOffset, todayDotRadius, dotPaint);
         }
     }
 
@@ -173,9 +180,9 @@ public partial class CalendarMonthView : ContentView
 
     void CacheColors()
     {
-        _onyx = ToSkColor(ResColor("Onyx"));
         _gray300 = ToSkColor(ResColor("Gray300"));
         _primaryColor = ToSkColor(ResColor("PrimaryColor"));
+        _standardOrange = ToSkColor(ResColor("StandardOrange"));
     }
 
     static SKColor ToSkColor(Color color) =>

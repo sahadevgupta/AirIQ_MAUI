@@ -1,3 +1,4 @@
+using Microsoft.Maui;
 using Microsoft.Maui.Handlers;
 using Mopups.Interfaces;
 
@@ -62,8 +63,10 @@ public partial class ExtendedDatePicker : ContentView
     private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
     {
 #if ANDROID
-        var handler = datepicker.Handler as IDatePickerHandler;
-        handler.PlatformView.PerformClick();
+        if (datepicker.Handler is IPlatformViewHandler handler)
+        {
+            handler.PlatformView?.PerformClick();
+        }
 #else
         datepicker.Focus();
 #endif
