@@ -2914,6 +2914,78 @@ namespace AirIQ.Resources.Strings {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to No sales records available to export..
+        /// </summary>
+        internal static string NoSalesRecordsToExport {
+            get {
+                return ResourceManager.GetString("NoSalesRecordsToExport", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Sales records exported successfully..
+        /// </summary>
+        internal static string SalesRecordsExportedSuccessfully {
+            get {
+                return ResourceManager.GetString("SalesRecordsExportedSuccessfully", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to No account ledger records available to export..
+        /// </summary>
+        internal static string NoAccountLedgerRecordsToExport {
+            get {
+                return ResourceManager.GetString("NoAccountLedgerRecordsToExport", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Account ledger records exported successfully..
+        /// </summary>
+        internal static string AccountLedgerRecordsExportedSuccessfully {
+            get {
+                return ResourceManager.GetString("AccountLedgerRecordsExportedSuccessfully", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to No temporary credit records available to export..
+        /// </summary>
+        internal static string NoTempCreditRecordsToExport {
+            get {
+                return ResourceManager.GetString("NoTempCreditRecordsToExport", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Temporary credit records exported successfully..
+        /// </summary>
+        internal static string TempCreditRecordsExportedSuccessfully {
+            get {
+                return ResourceManager.GetString("TempCreditRecordsExportedSuccessfully", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to No refund records available to export..
+        /// </summary>
+        internal static string NoRefundRecordsToExport {
+            get {
+                return ResourceManager.GetString("NoRefundRecordsToExport", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Refund records exported successfully..
+        /// </summary>
+        internal static string RefundRecordsExportedSuccessfully {
+            get {
+                return ResourceManager.GetString("RefundRecordsExportedSuccessfully", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to The selected return route is not available..
         /// </summary>
         internal static string ReverseRouteNotAvailable {

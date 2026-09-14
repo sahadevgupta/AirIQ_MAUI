@@ -92,7 +92,8 @@
                                      SearchCommand="{Binding SearchCommand}"
                                      FilterCommand="{Binding FilterCommand}"
                                      IsFilterActive="{Binding IsFilterActive}"
-                                     ClearFilterCommand="{Binding ClearFilterCommand}"/>
+                                     ClearFilterCommand="{Binding ClearFilterCommand}"
+                                     DownloadCommand="{Binding DownloadCommand}"/>
             </Border>
 
             <CollectionView Grid.Row="2"

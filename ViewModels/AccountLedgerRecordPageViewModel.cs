@@ -4,6 +4,7 @@ using AirIQ.Constants;
 using AirIQ.Extensions;
 using AirIQ.Helpers;
 using AirIQ.Models;
+using AirIQ.Resources.Strings;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
 
@@ -13,14 +14,17 @@ using CommunityToolkit.Mvvm.Input;
 namespace AirIQ.ViewModels
 {
     public partial class AccountLedgerRecordPageViewModel(IViewModelParameters viewModelParameters,
-        IOperationsService operationsService) : BaseViewModel(viewModelParameters)
+        IOperationsService operationsService,
+        IPublicFileSaverService publicFileSaverService) : BaseViewModel(viewModelParameters)
     {
         #region [ Properties ]
 
         const int pageSize = 20;
+        const string ExcelContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
         int page = 1;
 
         private List<AccountLedgerRecord> accountLedgerRecordsTemp = new();
+        private bool isExportingAccountLedgerRecords;
 
         [ObservableProperty]
         private ObservableRangeCollection<AccountLedgerRecord> _accountLedgerRecords = new();
@@ -91,6 +95,58 @@ namespace AirIQ.ViewModels
         private void Search(string? searchText)
         {
             FilterAccountLedgerRecords(searchText);
+        }
+
+        [RelayCommand]
+        private async Task DownloadAsync()
+        {
+            if (isExportingAccountLedgerRecords)
+                return;
+
+            if (!AccountLedgerRecords.Any())
+            {
+                ShowToast(AppResource.NoAccountLedgerRecordsToExport);
+                return;
+            }
+
+            isExportingAccountLedgerRecords = true;
+            try
+            {
+                using (LoadingService.Show())
+                {
+                    var recordsToExport = AccountLedgerRecords.ToList();
+                    var fileBytes = await Task.Run(() => AccountLedgerRecordExcelExporter.Export(recordsToExport));
+                    var fileName = $"AccountLedger_{DateTime.Now:yyyy-MM-dd_HHmmss}.xlsx";
+
+                    try
+                    {
+                        await publicFileSaverService.SaveToDownloadsAsync(fileName, fileBytes, ExcelContentType);
+                    }
+                    catch (Exception saveException)
+                    {
+                        SentrySdk.CaptureException(saveException);
+                    }
+
+                    var filePath = Path.Combine(FileSystem.CacheDirectory, fileName);
+                    await File.WriteAllBytesAsync(filePath, fileBytes);
+
+                    await Share.Default.RequestAsync(new ShareFileRequest
+                    {
+                        Title = AppResource.AccountLedgerTitle,
+                        File = new ShareFile(filePath)
+                    });
+                }
+
+                ShowToast(AppResource.AccountLedgerRecordsExportedSuccessfully);
+            }
+            catch (Exception exception)
+            {
+                HandleException(exception);
+            }
+            finally
+            {
+                isExportingAccountLedgerRecords = false;
+            }
         }
 
         #endregion
