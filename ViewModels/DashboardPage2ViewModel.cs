@@ -297,6 +297,20 @@ namespace AirIQ.ViewModels
             }
         }
 
+        // Looks up the FlightRoute sector record for destination->source (i.e. the reverse of the
+        // current From/To pairing), if the backend's sector master lists it. Returns null when
+        // either side is unset, the master list hasn't loaded, or no such sector exists.
+        private FlightRoute? FindReverseRoute(FlightRoute? source, FlightRoute? destination)
+        {
+            if (source is null || destination is null || Airports is null)
+                return null;
+
+            if (string.IsNullOrWhiteSpace(source.Origin) || string.IsNullOrWhiteSpace(destination.Destination))
+                return null;
+
+            return Airports.FirstOrDefault(route => route.Origin == destination.Destination && route.Destination == source.Origin);
+        }
+
         // Pure check (no mutation, no alert) so the view can decide whether to run the swap
         // animation/mutation *before* anything changes - see DashboardPage2.xaml.cs SwapButtonClicked.
         public bool IsReverseRouteAvailable()
@@ -319,16 +333,28 @@ namespace AirIQ.ViewModels
             if (Airports is null)
                 return true;
 
-            var a = Airports.FirstOrDefault(route => route.Origin == destination.Destination && route.Destination == source.Origin);
-            return a != null;
+            return FindReverseRoute(source, destination) != null;
         }
 
         [RelayCommand]
         private void SwapSourceDestination()
         {
-            var temp = SelectedSourceAirport;
-            SelectedSourceAirport = SelectedDestinationAirport;
-            SelectedDestinationAirport = temp;
+            var source = SelectedSourceAirport;
+            var destination = SelectedDestinationAirport;
+
+            // A FlightRoute is a one-directional sector record - Origin, Destination and Sector
+            // (e.g. "MUMBAI//GUWAHATI") all describe the single pairing it was fetched for. Simply
+            // swapping the two object references would leave the From/To display text
+            // (OriginRoute/DestinationRoute, both derived from Sector) still pointing at the old
+            // direction. Use the actual reverse-direction sector - the same one
+            // IsReverseRouteAvailable validated - so both slots get an object whose Sector/Origin/
+            // Destination genuinely represent the new From/To pairing. Falls back to a plain
+            // reference swap when no such sector is found (matches IsReverseRouteAvailable's
+            // fail-open cases: unset selection, master list not loaded, same-code edge case).
+            var reversedRoute = FindReverseRoute(source, destination);
+
+            SelectedSourceAirport = reversedRoute ?? destination;
+            SelectedDestinationAirport = reversedRoute ?? source;
         }
 
         [RelayCommand]
