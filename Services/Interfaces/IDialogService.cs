@@ -12,4 +12,5 @@ public interface IDialogService
     Task<bool> DisplayAlertAsync(string title, string message, string acceptText, string cancelText);
     Task DisplayAlertAsync(string title, string message, string cancelText);
     Task ShowAlertDialog(string message, AlertType alertType = AlertType.Warning);
+    Task CopyToClipboardAsync(string text);
 }

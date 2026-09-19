@@ -173,5 +173,9 @@ public class DialogService(IPopupNavigation popupNavigation) : IDialogService
         }
     }
 
+    public async Task CopyToClipboardAsync(string text)
+    {
+        await Clipboard.Default.SetTextAsync(text);
+    }
 }
 

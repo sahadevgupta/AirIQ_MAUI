@@ -73,6 +73,13 @@ public abstract partial class BaseViewModel : ViewModelBase, IDestructible
 
     }
 
+    public async Task CopyToClipBoardAsync(string message, string text, double fontSize)
+    {
+        await DialogService.CopyToClipboardAsync(text);
+        await DialogService.ShowSnackBarAync(message, true, fontSize: fontSize, 3000, string.Empty, null);
+
+    }
+
     public async Task ShowStatusAlertAsync(string message, bool response = true, int timeout = 2500)
     {
         await DialogService.ShowStatusAlertAsync(message, response, timeout);

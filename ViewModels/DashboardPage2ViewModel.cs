@@ -153,7 +153,7 @@ namespace AirIQ.ViewModels
             {
                 var dates = await flightService.GetAvailableBookingDatesAsync(SelectedSourceAirport?.Origin!, SelectedDestinationAirport?.Destination!);
                 AllowedDates = new ObservableCollection<DateTime>(dates);
-                AllowedDatesLoaded = true;
+                AllowedDatesLoaded = AllowedDates.Any();
             }
             catch (Exception exception)
             {
