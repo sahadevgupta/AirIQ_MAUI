@@ -49,6 +49,15 @@ namespace AirIQ.ViewModels
         [ObservableProperty]
         private ObservableCollection<DateTime> _allowedDates = new();
 
+        /// <summary>
+        ///     Whether <see cref="AllowedDates"/> reflects a completed server response for the
+        ///     currently selected route. False before the first fetch, while a fetch is in flight, or
+        ///     after a fetch fails - so the date picker knows to keep every day disabled rather than
+        ///     treating "no dates yet" as "no restriction".
+        /// </summary>
+        [ObservableProperty]
+        private bool _allowedDatesLoaded;
+
         [ObservableProperty]
         private DateTime? _selectedTravelDate;
 
@@ -126,14 +135,30 @@ namespace AirIQ.ViewModels
         {
             SelectedTravelDate = null;
             ReturnDate = null;
+
+            // The previous route's allowed dates no longer apply to the new one - clear them so the
+            // picker stays disabled rather than briefly showing stale availability.
+            AllowedDatesLoaded = false;
+            AllowedDates = new ObservableCollection<DateTime>();
+
             if (!string.IsNullOrWhiteSpace(SelectedSourceAirport?.Origin) && !string.IsNullOrWhiteSpace(SelectedDestinationAirport?.Destination))
                 _ = GetAvailableBookingDatesAsync();
         }
 
         private async Task GetAvailableBookingDatesAsync()
         {
-            var dates = await flightService.GetAvailableBookingDatesAsync(SelectedSourceAirport?.Origin!, SelectedDestinationAirport?.Destination!);
-            AllowedDates = new ObservableCollection<DateTime>(dates);
+            AllowedDatesLoaded = false;
+
+            try
+            {
+                var dates = await flightService.GetAvailableBookingDatesAsync(SelectedSourceAirport?.Origin!, SelectedDestinationAirport?.Destination!);
+                AllowedDates = new ObservableCollection<DateTime>(dates);
+                AllowedDatesLoaded = true;
+            }
+            catch (Exception exception)
+            {
+                HandleException(exception);
+            }
         }
 
         public async Task InitializeDataAsync()
@@ -166,7 +191,14 @@ namespace AirIQ.ViewModels
 
         private void FormatAmount()
         {
-            var num = AppConfiguration.CurrentUser?.Balance ?? 0;
+            var balance = AppConfiguration.CurrentUser?.Balance;
+            if (!balance.HasValue)
+            {
+                Amount = "--";
+                return;
+            }
+
+            var num = balance.Value;
             if (num >= 1000)
             {
                 Amount = $"{(num / 1000):F2}k";
@@ -178,7 +210,13 @@ namespace AirIQ.ViewModels
 
         private void GetDestinationAirports()
         {
-            DestinationAirports = new ObservableCollection<FlightRoute>(Airports!.Where(x => x.Origin == SelectedSourceAirport?.Origin && !string.IsNullOrEmpty(x.Destination))
+            if (Airports is null)
+            {
+                DestinationAirports = new();
+                return;
+            }
+
+            DestinationAirports = new ObservableCollection<FlightRoute>(Airports.Where(x => x.Origin == SelectedSourceAirport?.Origin && !string.IsNullOrEmpty(x.Destination))
                                                                            .Distinct());
         }
 
@@ -217,7 +255,7 @@ namespace AirIQ.ViewModels
             // through Shell navigation query parameters - see TravelDatesPageViewModel.Preload()/
             // PrepareForSelection().
             Debug.WriteLine("Clicked on Travel Date : " + DateTime.Now);
-            travelDatesPageViewModel.PrepareForSelection(SelectedTravelDate, AllowedDates, stage);
+            travelDatesPageViewModel.PrepareForSelection(SelectedTravelDate, AllowedDates, AllowedDatesLoaded, stage);
 
             await ShellNavigationService.Navigate<TravelDatesPage>();
             Debug.WriteLine("Navigation to Travel Date completed : " + DateTime.Now);

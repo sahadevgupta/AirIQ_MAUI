@@ -118,6 +118,9 @@ public partial class StepBarViewCell : ContentView
 	private void StepTapped_Tapped(object sender, EventArgs e)
 	{
 		var model = ((View)sender).BindingContext as StepBarModel;
+		if (model is null)
+			return;
+
 		if (model.Status == StepBarStatus.Completed)
 		{
 			model.Status = StepBarStatus.InProgress;

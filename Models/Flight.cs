@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace AirIQ.Models;
 
@@ -42,9 +43,9 @@ public class Flight
     {
         get
         {
-            var result = FlightNumber?.Split(" ");
+            var code = FlightNumber?.Split(' ').FirstOrDefault() ?? "default";
 
-            return $"https://airiq.in/img/airlinelogos/{result[0]}.png";
+            return $"https://airiq.in/img/airlinelogos/{code}.png";
         }
     }
 
@@ -61,7 +62,7 @@ public class Flight
     {
         get
         {
-            DateTime.TryParse(DepartureDate, out DateTime result);
+            DateTime.TryParse(ArrivalDate, out DateTime result);
             return result;
         }
     }
@@ -70,8 +71,11 @@ public class Flight
     {
         get
         {
-            DateTime departure = DateTime.Parse($"{DepartureDate} {DepartureTime}");
-            DateTime arrival = DateTime.Parse($"{ArrivalDate} {ArrivalTime}");
+            if (!DateTime.TryParse($"{DepartureDate} {DepartureTime}", out DateTime departure) ||
+                !DateTime.TryParse($"{ArrivalDate} {ArrivalTime}", out DateTime arrival))
+            {
+                return "-";
+            }
 
             TimeSpan duration = arrival - departure;
             return $"{duration.Hours}hr {duration.Minutes}min";

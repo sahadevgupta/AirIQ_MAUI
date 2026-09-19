@@ -12,29 +12,55 @@ namespace AirIQ.Services
     {
         public async Task<PanValidationDto> ValidatePanAsync(string panNumber, string holderName)
         {
-            var response = await zoopApi.ValidatePanAsync(new PanLiteRequest
+            try
             {
-                PanData = new PanDataRequest
+                var response = await zoopApi.ValidatePanAsync(new PanLiteRequest
                 {
-                    CustomerPanNumber = panNumber,
-                    PanHolderName = holderName
-                }
-            });
+                    PanData = new PanDataRequest
+                    {
+                        CustomerPanNumber = panNumber,
+                        PanHolderName = holderName
+                    }
+                });
 
-            return response.Result ?? null!;
+                if (!response.Success)
+                {
+                    throw new InvalidOperationException(response.ResponseMessage ?? "PAN validation failed.");
+                }
+
+                return response.Result ?? null!;
+            }
+            catch (Exception exception)
+            {
+                SentrySdk.CaptureException(exception);
+                throw;
+            }
         }
 
         public async Task<GstValidationDto> ValidateGstAsync(string gstNumber)
         {
-            var response = await zoopApi.ValidateGstAsync(new GstLiteRequest
+            try
             {
-                GstData = new GstDataRequest
+                var response = await zoopApi.ValidateGstAsync(new GstLiteRequest
                 {
-                    BusinessGstinNumber = gstNumber
-                }
-            });
+                    GstData = new GstDataRequest
+                    {
+                        BusinessGstinNumber = gstNumber
+                    }
+                });
 
-            return response.Result ?? null!;
+                if (!response.Success)
+                {
+                    throw new InvalidOperationException(response.ResponseMessage ?? "GST validation failed.");
+                }
+
+                return response.Result ?? null!;
+            }
+            catch (Exception exception)
+            {
+                SentrySdk.CaptureException(exception);
+                throw;
+            }
         }
     }
 }

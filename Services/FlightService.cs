@@ -60,21 +60,24 @@ public class FlightService(IApiServiceBaseParams apiServiceBaseParams, IApiCache
 
             var response = await BackendService.DatesAvailability(request, headers).ConfigureAwait(false);
 
-            foreach (var dateStr in response.Data)
+            if (response?.Data != null)
             {
-                if (DateTime.TryParseExact(dateStr, "dd-MMM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
+                foreach (var dateStr in response.Data)
                 {
-                    availableDates.Add(date);
-                }
-                else
-                {
-                    Console.WriteLine($"Invalid date format: {dateStr}");
+                    if (DateTime.TryParseExact(dateStr, "dd-MMM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
+                    {
+                        availableDates.Add(date);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Invalid date format: {dateStr}");
+                    }
                 }
             }
         }
         catch (Exception exception)
         {
-
+            HandleException(exception);
         }
         return availableDates;
     }

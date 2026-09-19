@@ -245,6 +245,7 @@
                         FontAttributes="Bold"
                         HeightRequest="50"
                         Text="{x:Static resx:AppResource.Cancel}"
+                        Command="{Binding CancelCommand}"
                         TextColor="Black" />
 
                     <Button

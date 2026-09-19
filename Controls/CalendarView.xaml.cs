@@ -98,7 +98,7 @@ public partial class CalendarView : PopupPage
         var picked = new DateTime(_displayMonth.Year, _displayMonth.Month, day);
 
 
-        if (!AllowedDates.Contains(picked))
+        if (AllowedDates == null || !AllowedDates.Contains(picked))
             return; // not allowed
 
 
@@ -142,7 +142,7 @@ public partial class CalendarView : PopupPage
 
 
                 bool isCurrentMonth = cellDate.Month == month.Month && cellDate.Year == month.Year;
-                bool isAllowed = AllowedDates.Any() ? AllowedDates.Contains(cellDate.Date) : false;
+                bool isAllowed = AllowedDates != null && AllowedDates.Any() && AllowedDates.Contains(cellDate.Date);
                 bool isSelected = _selected.HasValue && _selected.Value.Date == cellDate.Date;
 
 

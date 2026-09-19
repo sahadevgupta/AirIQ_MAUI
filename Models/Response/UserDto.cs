@@ -25,7 +25,7 @@ public record UserDto
     public string? Country { get; set; }
 
     [JsonPropertyName("balance")]
-    public double Balance { get; set; }
+    public double? Balance { get; set; }
 
     [JsonPropertyName("email_id")]
     public string? EmailId { get; set; }

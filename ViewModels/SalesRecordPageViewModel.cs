@@ -25,6 +25,7 @@ public partial class SalesRecordPageViewModel(IViewModelParameters viewModelPara
 
     private List<SalesRecord> salesRecordsTemp = new();
     private bool isExportingSalesRecords;
+    private bool isLoadingMoreSalesRecords;
 
     [ObservableProperty]
     private ObservableRangeCollection<SalesRecord> _salesRecords = new();
@@ -69,6 +70,10 @@ public partial class SalesRecordPageViewModel(IViewModelParameters viewModelPara
     [RelayCommand]
     private async Task LoadMoreAsync()
     {
+        if (isLoadingMoreSalesRecords)
+            return;
+
+        isLoadingMoreSalesRecords = true;
         try
         {
             using (LoadingService.Show())
@@ -90,6 +95,10 @@ public partial class SalesRecordPageViewModel(IViewModelParameters viewModelPara
         catch (Exception exception)
         {
             HandleException(exception);
+        }
+        finally
+        {
+            isLoadingMoreSalesRecords = false;
         }
     }
 

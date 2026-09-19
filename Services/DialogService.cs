@@ -76,18 +76,25 @@ public class DialogService(IPopupNavigation popupNavigation) : IDialogService
         }
     }
 
-    public async void ShowToast(string message, double toastfontSize = 14, ToastDuration toastDuration = ToastDuration.Short)
+    public void ShowToast(string message, double toastfontSize = 14, ToastDuration toastDuration = ToastDuration.Short)
     {
         MainThread.BeginInvokeOnMainThread(async () =>
         {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            try
+            {
+                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
-            ToastDuration duration = toastDuration;
-            double fontSize = Helpers.ScalingHelper.ScaleFontSize(toastfontSize);
+                ToastDuration duration = toastDuration;
+                double fontSize = Helpers.ScalingHelper.ScaleFontSize(toastfontSize);
 
-            var toast = Toast.Make(message, duration, fontSize);
+                var toast = Toast.Make(message, duration, fontSize);
 
-            await toast.Show(cancellationTokenSource.Token);
+                await toast.Show(cancellationTokenSource.Token);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error in ShowToast: {ex.Message}");
+            }
         });
     }
 
@@ -138,6 +145,10 @@ public class DialogService(IPopupNavigation popupNavigation) : IDialogService
 
     public async Task ShowAlertDialog(string message, AlertType alertType = AlertType.Warning)
     {
+        var appResources = Application.Current?.Resources;
+        var orangeColor = appResources != null && appResources.TryGetValue("StandardOrange", out var orange) && orange is Color o ? o : Colors.Orange;
+        var greenColor = appResources != null && appResources.TryGetValue("Green", out var green) && green is Color g ? g : Colors.Green;
+
         var popup = new CustomAlertPopup
         {
             Message = message,
@@ -146,8 +157,8 @@ public class DialogService(IPopupNavigation popupNavigation) : IDialogService
                   (alertType == AlertType.Success ? FontAwesomeIcons.CheckCircle : FontAwesomeIcons.TimesCircle),
 
             IconTintColor = alertType == AlertType.Warning ?
-                   (Color)Application.Current!.Resources["StandardOrange"] :
-                  (alertType == AlertType.Success ? (Color)Application.Current!.Resources["Green"] : Colors.Red),
+                   orangeColor :
+                  (alertType == AlertType.Success ? greenColor : Colors.Red),
         };
 
         bool isMyPopupOpen = popupNavigation.PopupStack

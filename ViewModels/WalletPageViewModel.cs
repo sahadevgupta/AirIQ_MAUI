@@ -30,7 +30,9 @@ namespace AirIQ.ViewModels
         [ObservableProperty]
         private ObservableCollection<WalletTransaction> _recentTransactions = [];
 
-        public string BalanceDisplayText => IsBalanceVisible ? $"₹ {CurrentUser.Balance:N2}" : "₹ ••••••";
+        public string BalanceDisplayText => !CurrentUser.Balance.HasValue
+            ? "--"
+            : IsBalanceVisible ? $"₹ {CurrentUser.Balance:N2}" : "₹ ••••••";
 
         public string EyeIconGlyph => IsBalanceVisible ? FontAwesomeIcons.EyeSlash : FontAwesomeIcons.Eye;
 

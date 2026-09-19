@@ -23,6 +23,14 @@
 
             <controls:ExtendedDropdown Title="{x:Static resx:AppResource.Airline}" Grid.Row="3"/>
 
+            <!-- No round-trip search command/properties exist at the ViewModel level (see
+                 DashboardPage2ViewModel.cs: "One-way only for now - round-trip entry points are
+                 commented out rather than removed"), and this whole view is not currently hosted by
+                 any reachable page (TopTabView, the only thing that references
+                 OneWayTripContentView/RoundTripContentView, is itself not embedded in any page's
+                 XAML). Rather than fabricate a round-trip search implementation, the button is
+                 disabled until round-trip support and this content view are actually wired up -
+                 see report for the product/engineering decision needed here. -->
             <Button Text="{x:Static resx:AppResource.SearchFlights}"
                 BackgroundColor="#FFD93B"
                 TextColor="Black"
@@ -30,6 +38,7 @@
                 FontAttributes="Bold"
                 HeightRequest="48"
                 Margin="0,10,0,0"
+                IsEnabled="False"
                 Grid.Row="4"/>
 
 

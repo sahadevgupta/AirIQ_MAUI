@@ -234,6 +234,10 @@ public abstract class BasePage : ContentPage
 		}
 #endif
 
+		// TODO: NavigationBarControl.Amount is a non-nullable double, so a missing/errored
+		// balance from the API still renders as "0" here instead of a distinct
+		// "unavailable" state. Fixing this needs NavigationBarControl to accept a
+		// nullable amount (or a separate "unavailable" flag) end-to-end.
 		_navBar.Amount = AppConfiguration.CurrentUser?.Balance ?? 0;
 	}
 

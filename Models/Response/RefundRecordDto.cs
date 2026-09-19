@@ -20,7 +20,7 @@ namespace AirIQ.Models.Response
         public string? PNR { get; set; }
 
         [JsonPropertyName("EntryDate")]
-        public DateTime EntryDate { get; set; }
+        public DateTime? EntryDate { get; set; }
 
         [JsonPropertyName("FDestName")]
         public string? FDestName { get; set; }
@@ -32,12 +32,12 @@ namespace AirIQ.Models.Response
         public int Qty { get; set; }
 
         [JsonPropertyName("Amount")]
-        public double Amount { get; set; }
+        public double? Amount { get; set; }
 
         [JsonPropertyName("CancelChrg")]
-        public double CancelChrg { get; set; }
+        public double? CancelChrg { get; set; }
 
         [JsonPropertyName("RefundAmount")]
-        public double RefundAmount { get; set; }
+        public double? RefundAmount { get; set; }
     }
 }

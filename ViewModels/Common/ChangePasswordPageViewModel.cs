@@ -1,5 +1,7 @@
 using System.Text.RegularExpressions;
 using AirIQ.Constants;
+using AirIQ.Enums;
+using AirIQ.Resources.Strings;
 using AirIQ.Services.Interfaces;
 using AirIQ.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -80,6 +82,10 @@ public partial class ChangePasswordPageViewModel(IViewModelParameters viewModelP
 
                     await Task.Delay(2000);
                     await ShellNavigationService.Navigate<LoginPage>(true);
+                }
+                else
+                {
+                    await ShowAlertAsync(AppResource.PasswordResetFailedTryAgain, AlertType.Error);
                 }
             }
             catch (Exception exception)

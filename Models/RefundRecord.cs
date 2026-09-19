@@ -12,7 +12,7 @@ namespace AirIQ.Models
 
         public string? PNR { get; set; }
 
-        public DateTime EntryDate { get; set; }
+        public DateTime? EntryDate { get; set; }
 
         public string? FDestName { get; set; }
 
@@ -20,10 +20,10 @@ namespace AirIQ.Models
 
         public int Qty { get; set; }
 
-        public double Amount { get; set; }
+        public double? Amount { get; set; }
 
-        public double CancelChrg { get; set; }
+        public double? CancelChrg { get; set; }
 
-        public double RefundAmount { get; set; }
+        public double? RefundAmount { get; set; }
     }
 }

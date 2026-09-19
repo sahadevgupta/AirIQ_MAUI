@@ -1,4 +1,5 @@
 using AirIQ.Constants;
+using AirIQ.Resources.Strings;
 using AirIQ.Services.Interfaces;
 using AirIQ.ViewModels.Common;
 using AirIQ.Views;
@@ -41,6 +42,8 @@ public partial class ForgotPasswordPageViewModel(IViewModelParameters viewModelP
 
             if (!string.IsNullOrWhiteSpace(transactionKey))
                 IsForgotVerificationViewVisible = true;
+            else
+                await ShowAlertAsync(AppResource.UnableToSendOtpTryAgain);
         }
         catch (Exception exception)
         {
@@ -67,6 +70,10 @@ public partial class ForgotPasswordPageViewModel(IViewModelParameters viewModelP
                     { NavigationParamConstants.TransactionKey, transactionKey },
                     { NavigationParamConstants.Value, OtpValue },
                 });
+            }
+            else
+            {
+                await ShowAlertAsync(AppResource.InvalidOrExpiredOtp);
             }
         }
         catch (Exception exception)

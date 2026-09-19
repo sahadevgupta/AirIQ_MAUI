@@ -33,9 +33,12 @@ public static class RefundRecordExcelExporter
             worksheet.Cell(row, 2).Value = record.Prefix;
             worksheet.Cell(row, 3).Value = record.PNR;
 
-            var entryDateCell = worksheet.Cell(row, 4);
-            entryDateCell.Value = record.EntryDate;
-            entryDateCell.Style.DateFormat.Format = "dd MMM yyyy HH:mm";
+            if (record.EntryDate.HasValue)
+            {
+                var entryDateCell = worksheet.Cell(row, 4);
+                entryDateCell.Value = record.EntryDate.Value;
+                entryDateCell.Style.DateFormat.Format = "dd MMM yyyy HH:mm";
+            }
 
             var travelDateCell = worksheet.Cell(row, 5);
             travelDateCell.Value = record.TravelDateTime;
@@ -44,13 +47,19 @@ public static class RefundRecordExcelExporter
             worksheet.Cell(row, 6).Value = record.FDestName;
             worksheet.Cell(row, 7).Value = record.Qty;
 
-            var cancelChargeCell = worksheet.Cell(row, 8);
-            cancelChargeCell.Value = record.CancelChrg;
-            cancelChargeCell.Style.NumberFormat.Format = "₹ #,##0.00";
+            if (record.CancelChrg.HasValue)
+            {
+                var cancelChargeCell = worksheet.Cell(row, 8);
+                cancelChargeCell.Value = record.CancelChrg.Value;
+                cancelChargeCell.Style.NumberFormat.Format = "₹ #,##0.00";
+            }
 
-            var refundAmountCell = worksheet.Cell(row, 9);
-            refundAmountCell.Value = record.RefundAmount;
-            refundAmountCell.Style.NumberFormat.Format = "₹ #,##0.00";
+            if (record.RefundAmount.HasValue)
+            {
+                var refundAmountCell = worksheet.Cell(row, 9);
+                refundAmountCell.Value = record.RefundAmount.Value;
+                refundAmountCell.Style.NumberFormat.Format = "₹ #,##0.00";
+            }
 
             row++;
         }

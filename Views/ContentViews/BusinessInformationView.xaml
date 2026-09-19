@@ -107,13 +107,17 @@
                         <controls:ExtendedEntry Title="{x:Static resx:AppResource.OnlineOtasWorkingWith}"
                                                 SuffixText="*"
                                                 PlaceholderText="{x:Static resx:AppResource.OnlineOTA1}"
-                                                Text="{Binding Signup.OnlineOta1}"/>
+                                                Text="{Binding Signup.OnlineOta1}"
+                                                IsErrorViewVisible="{Binding IsOnlineOta1ErrorVisible}"
+                                                ErrorText="{x:Static resx:AppResource.OnlineOTA1IsRequired}"/>
                         <controls:ExtendedEntry PlaceholderText="{x:Static resx:AppResource.OnlineOTA1}"
                                                 Text="{Binding Signup.OnlineOta2}"/>
                         <controls:ExtendedEntry Title="{x:Static resx:AppResource.SeriesOtasWorkingWith}"
                                                 SuffixText="*"
                                                 PlaceholderText="{x:Static resx:AppResource.SeriesOTA1}"
-                                                Text="{Binding Signup.SeriesOta1}"/>
+                                                Text="{Binding Signup.SeriesOta1}"
+                                                IsErrorViewVisible="{Binding IsSeriesOta1ErrorVisible}"
+                                                ErrorText="{x:Static resx:AppResource.SeriesOTA1IsRequired}"/>
                         <controls:ExtendedEntry PlaceholderText="{x:Static resx:AppResource.SeriesOTA1}"
                                                 Text="{Binding Signup.SeriesOta2}"/>
 

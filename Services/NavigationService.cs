@@ -348,39 +348,72 @@ namespace AirIQ.Services
 
         private async void ToPage_Disappearing(object sender, EventArgs e)
         {
-            if (sender is Page thisPage)
+            try
             {
-                await CallDisappearing(thisPage);
+                if (sender is Page thisPage)
+                {
+                    await CallDisappearing(thisPage);
+                }
+            }
+            catch (Exception exception)
+            {
+                SentrySdk.CaptureException(exception);
+                Debug.WriteLine($"Failed during ToPage_Disappearing: {exception}");
             }
         }
 
         private async void ToPage_Appearing(object sender, EventArgs e)
         {
-            if (sender is Page thisPage)
+            try
             {
-                await CallAppearing(thisPage);
+                if (sender is Page thisPage)
+                {
+                    await CallAppearing(thisPage);
+                }
+            }
+            catch (Exception exception)
+            {
+                SentrySdk.CaptureException(exception);
+                Debug.WriteLine($"Failed during ToPage_Appearing: {exception}");
             }
         }
 
 
         private async void ToPage_NavigatedFrom(object sender, NavigatedFromEventArgs e)
         {
-            //To determine forward navigation, we look at the 2nd to last item on the NavigationStack
-            //If that entry equals the sender, it means we navigated forward from the sender to another page
-            bool isForwardNavigation = Navigation.NavigationStack.Count > 1 && Navigation.NavigationStack[^2] == sender;
-
-            if (sender is Page thisPage)
+            try
             {
-                if (!isForwardNavigation)
-                    thisPage.NavigatedFrom -= ToPage_NavigatedFrom;
+                //To determine forward navigation, we look at the 2nd to last item on the NavigationStack
+                //If that entry equals the sender, it means we navigated forward from the sender to another page
+                bool isForwardNavigation = Navigation.NavigationStack.Count > 1 && Navigation.NavigationStack[^2] == sender;
 
-                await CallNavigatedFrom(thisPage, isForwardNavigation);
+                if (sender is Page thisPage)
+                {
+                    if (!isForwardNavigation)
+                        thisPage.NavigatedFrom -= ToPage_NavigatedFrom;
+
+                    await CallNavigatedFrom(thisPage, isForwardNavigation);
+                }
             }
-
+            catch (Exception exception)
+            {
+                SentrySdk.CaptureException(exception);
+                Debug.WriteLine($"Failed during ToPage_NavigatedFrom: {exception}");
+            }
         }
 
         private async void ToPage_NavigatedTo(object sender, NavigatedToEventArgs e)
-           => await CallNavigatedTo(sender as Page);
+        {
+            try
+            {
+                await CallNavigatedTo(sender as Page);
+            }
+            catch (Exception exception)
+            {
+                SentrySdk.CaptureException(exception);
+                Debug.WriteLine($"Failed during ToPage_NavigatedTo: {exception}");
+            }
+        }
 
         private Task CallNavigatedTo(Page page)
         {

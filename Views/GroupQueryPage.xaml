@@ -120,7 +120,8 @@
                                                         LeadingIconType="Font"
                                                         LeadingIcon="{x:Static helpers:FontAwesomeIcons.MapMarkerAlt}"
                                                         LeadingIconColor="{StaticResource Gray50}"
-                                                        LeadingIconSize="16"/>
+                                                        LeadingIconSize="16"
+                                                        Text="{Binding SectorOnward}"/>
 
                                 <controls:ExtendedEntry Title="{x:Static resx:AppResource.TravelDate}"
                                                         SuffixText="*"
@@ -129,7 +130,8 @@
                                                         LeadingIcon="{x:Static helpers:FontAwesomeIcons.CalendarAlt}"
                                                         LeadingIconColor="{StaticResource Gray50}"
                                                         LeadingIconSize="16"
-                                                        Grid.Column="1"/>
+                                                        Grid.Column="1"
+                                                        Text="{Binding TravelDate}"/>
 
                                 <controls:ExtendedEntry Title="{x:Static resx:AppResource.SectorReturn}"
                                                         SuffixText="*"
@@ -141,6 +143,7 @@
                                                         Grid.Row="1"
                                                         Grid.Column="0"
                                                         Margin="0,16,0,0"
+                                                        Text="{Binding SectorReturn}"
                                                         IsVisible="{Binding Source={x:Reference switchcontrol},Path=IsToggled}">
                                     <!-- <controls:ExtendedEntry.Triggers>
                                     <DataTrigger TargetType="controls:ExtendedEntry"
@@ -162,6 +165,7 @@
                                                         Grid.Column="1"
                                                         Grid.Row="1"
                                                         Margin="0,16,0,0"
+                                                        Text="{Binding ReturnTravelDate}"
                                                         IsVisible="{Binding Source={x:Reference switchcontrol},Path=IsToggled}">
                                     <!-- <controls:ExtendedEntry.Triggers>
                                     <DataTrigger TargetType="controls:ExtendedEntry"
@@ -189,7 +193,8 @@
                                                         LeadingIconType="Font"
                                                         LeadingIcon="{x:Static helpers:FontAwesomeIcons.Users}"
                                                         LeadingIconColor="{StaticResource Gray50}"
-                                                        LeadingIconSize="16"/>
+                                                        LeadingIconSize="16"
+                                                        Text="{Binding NoOfPax}"/>
                                 <controls:ExtendedEntry Title="{x:Static resx:AppResource.ExpectedFare}"
                                                         SuffixText="*"
                                                         Margin="0,16,0,0"
@@ -197,7 +202,8 @@
                                                         LeadingIconType="Font"
                                                         LeadingIcon="{x:Static helpers:FontAwesomeIcons.RupeeSign}"
                                                         LeadingIconSize="16"
-                                                        LeadingIconColor="{StaticResource Gray50}"/>
+                                                        LeadingIconColor="{StaticResource Gray50}"
+                                                        Text="{Binding ExpectedFare}"/>
                                 <controls:ExtendedEntry Title="{x:Static resx:AppResource.PreferredAirline}"
                                                         SuffixText="*"
                                                         Margin="0,16,0,0"
@@ -205,7 +211,8 @@
                                                         LeadingIcon="{x:Static helpers:FontAwesomeIcons.PaperPlane}"
                                                         LeadingIconColor="{StaticResource Gray50}"
                                                         LeadingIconSize="16"
-                                                        LeadingIconType="Font"/>
+                                                        LeadingIconType="Font"
+                                                        Text="{Binding PreferredAirline}"/>
                                 <controls:ExtendedEntry Title="{x:Static resx:AppResource.ContactNo}"
                                                         SuffixText="*"
                                                         Margin="0,16,0,0"
@@ -213,7 +220,8 @@
                                                         PlaceholderText="{x:Static resx:AppResource.Enter10DigitMobileNumber}"
                                                         LeadingIcon="{x:Static helpers:FontAwesomeIcons.PhoneAlt}"
                                                         LeadingIconColor="{StaticResource Gray50}"
-                                                        LeadingIconSize="16"/>
+                                                        LeadingIconSize="16"
+                                                        Text="{Binding ContactNo}"/>
                                 <Label x:Name="TitleLabel"
                                        Grid.Row="0"
                                        Style="{StaticResource TitleStyleBlackBold}"
@@ -265,27 +273,64 @@
                               RowSpacing="12"
                               RowDefinitions="Auto,Auto,Auto">
 
-                            <controls:ExtendedDatePicker Title="From"/>
+                            <controls:ExtendedDatePicker Title="From"
+                                                         Date="{Binding HistoryFromDate}"/>
                             <controls:ExtendedDatePicker Title="To"
-                                                         Grid.Column="1"/>
+                                                         Grid.Column="1"
+                                                         Date="{Binding HistoryToDate}"/>
 
                             <controls:ExtendedDropdown Title="Trip Type"
                                                        PlaceholderText="Select Trip Type"
                                                        Grid.Row="1"
-                                                       Grid.Column="0"/>
+                                                       Grid.Column="0"
+                                                       ItemsSource="{Binding TripTypes}"
+                                                       SelectedItem="{Binding SelectedTripType}"/>
 
                             <controls:ExtendedDropdown Title="Status"
                                                        PlaceholderText="Select Status"
                                                        Grid.Row="1"
-                                                       Grid.Column="1"/>
+                                                       Grid.Column="1"
+                                                       ItemsSource="{Binding Statuses}"
+                                                       SelectedItem="{Binding SelectedStatus}"/>
 
                             <Button Grid.Row="2"
                                     Grid.ColumnSpan="2"
                                     Style="{StaticResource ButtonCorneredStyle}"
-                                    Text="Submit"/>
+                                    Text="Submit"
+                                    Command="{Binding SearchGroupQueryHistoryCommand}"/>
 
                         </Grid>
                     </Border>
+
+                    <CollectionView Grid.Row="1"
+                                    Margin="0,12,0,0"
+                                    ItemsSource="{Binding GroupQueryRecords}"
+                                    VerticalScrollBarVisibility="Never">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical"
+                                               ItemSpacing="10"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:GroupQuery">
+                                <Border Style="{StaticResource CardBorderStyle}">
+                                    <Grid RowDefinitions="Auto,Auto,Auto"
+                                          RowSpacing="4">
+                                        <Label Text="{Binding RouteDetails}"
+                                               Style="{StaticResource TitleStyleBlackBold}"/>
+                                        <Label Grid.Row="1"
+                                               Text="{Binding TravelDates}"
+                                               Style="{StaticResource Label14Medium}"/>
+                                        <HorizontalStackLayout Grid.Row="2"
+                                                               Spacing="16">
+                                            <Label Text="{Binding Pax, StringFormat='Pax: {0}'}"/>
+                                            <Label Text="{Binding QuotedFare, StringFormat='Fare: {0:N0}'}"/>
+                                            <Label Text="{Binding Status}"/>
+                                        </HorizontalStackLayout>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </Grid>
 
             </Grid>
