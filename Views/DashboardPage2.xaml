@@ -246,10 +246,27 @@
               <Grid Grid.Row="0"
                     ColumnDefinitions="Auto,*"
                     ColumnSpacing="14">
-                <Border Style="{StaticResource RouteIconStyle}">
-                  <Label Text="{x:Static helpers:FontAwesomeIcons.PlaneDeparture}"
-                         Style="{StaticResource RouteIconLabelStyle}"/>
+                <!-- <Border Style="{StaticResource RouteIconStyle}"
+                        Padding="0">
+                  <Image Source="departure.png"
+                      Aspect="AspectFit"
+                         WidthRequest="150"/>
+                </Border> -->
+
+
+                <Border StrokeShape="RoundRectangle 25"
+                        HeightRequest="40"
+                        WidthRequest="40"
+                        Stroke="{StaticResource PrimaryColor}"
+                        StrokeThickness="1">
+                  <ImageButton Source="departure.png"
+                               HeightRequest="50"
+                               WidthRequest="50"/>
                 </Border>
+
+
+
+
                 <VerticalStackLayout x:Name="fromDetailsStack"
                                      Grid.Column="1"
                                      Spacing="2"
@@ -295,9 +312,18 @@
                     Margin="0,4,0,0"
                     ColumnDefinitions="Auto,*"
                     ColumnSpacing="14">
-                <Border Style="{StaticResource RouteIconStyle}">
+                <!-- <Border Style="{StaticResource RouteIconStyle}">
                   <Label Text="{x:Static helpers:FontAwesomeIcons.PlaneArrival}"
                          Style="{StaticResource RouteIconLabelStyle}"/>
+                </Border> -->
+                <Border StrokeShape="RoundRectangle 25"
+                        HeightRequest="40"
+                        WidthRequest="40"
+                        Stroke="{StaticResource PrimaryColor}"
+                        StrokeThickness="1">
+                  <ImageButton Source="arrival.png"
+                               HeightRequest="50"
+                               WidthRequest="50"/>
                 </Border>
                 <VerticalStackLayout x:Name="toDetailsStack"
                                      Grid.Column="1"
@@ -321,6 +347,15 @@
               </Grid>
 
               <!-- SWAP BUTTON -->
+              <!-- <ImageButton Source="circle_swap"
+                           Padding="0"
+                           BackgroundColor="Transparent"
+                           Command="{Binding SwapSourceDestinationCommand}"
+                           Grid.RowSpan="3"
+                           Grid.Column="1"
+                           Grid.Row="0"
+                           WidthRequest="44"
+                           HeightRequest="44"/> -->
               <Border Grid.Row="0"
                       Grid.RowSpan="3"
                       Grid.Column="1"
@@ -328,21 +363,24 @@
                       HeightRequest="44"
                       Padding="0"
                       VerticalOptions="Center"
-                      BackgroundColor="{StaticResource PrimaryRed}"
+                      BackgroundColor="Transparent"
                       StrokeShape="RoundRectangle 22"
-                      Stroke="{StaticResource StrokeColor}"
+                      Stroke="{StaticResource PrimaryColor}"
                       StrokeThickness="1"
-                      x:Name="swapIconBorder">
-                <Border.Shadow>
+                      x:Name="swapIconBorder"
+                      IsVisible="True">
+                <!-- <Border.Shadow>
                   <Shadow Brush="Black"
                           Offset="0,2"
                           Radius="6"
                           Opacity="0.10"/>
-                </Border.Shadow>
-                <ImageButton Source="swap_new"
-                             Padding="0"
-                             BackgroundColor="Transparent"
-                             Command="{Binding SwapSourceDestinationCommand}"/>
+                </Border.Shadow> -->
+
+                <Image Source="circle_swap"
+                       WidthRequest="55"
+                       HeightRequest="55"
+                       TranslationX="-1"/>
+
               </Border>
 
               <BoxView Grid.Row="3"
@@ -366,10 +404,20 @@
                       VerticalOptions="Start"
                       ColumnSpacing="10">
 
-                  <Border Style="{StaticResource RouteIconStyle}">
+                  <!-- <Border Style="{StaticResource RouteIconStyle}">
                     <Label Text="{x:Static helpers:FontAwesomeIcons.CalendarAlt}"
                            FontSize="20"
                            Style="{StaticResource RouteIconLabelStyle}"/>
+                  </Border> -->
+
+                  <Border StrokeShape="RoundRectangle 25"
+                          HeightRequest="40"
+                          WidthRequest="40"
+                          Stroke="{StaticResource PrimaryColor}"
+                          StrokeThickness="1">
+                    <ImageButton Source="circle_calendar.png"
+                                 HeightRequest="30"
+                                 WidthRequest="30"/>
                   </Border>
 
                   <VerticalStackLayout Grid.Column="1"
@@ -392,11 +440,21 @@
                       ColumnSpacing="10"
                       Grid.Column="1">
 
-                  <Border Style="{StaticResource RouteIconStyle}"
+                  <!-- <Border Style="{StaticResource RouteIconStyle}"
                           VerticalOptions="Start">
                     <Label Text="{x:Static helpers:FontAwesomeIcons.User}"
                            FontSize="20"
                            Style="{StaticResource RouteIconLabelStyle}"/>
+                  </Border> -->
+
+                  <Border StrokeShape="Ellipse"
+                          HeightRequest="40"
+                          WidthRequest="40"
+                          Stroke="{StaticResource PrimaryColor}">
+
+                    <Image Source="traveler.png"
+                           HeightRequest="40"
+                           WidthRequest="40"/>
                   </Border>
 
                   <VerticalStackLayout Grid.Column="1"
