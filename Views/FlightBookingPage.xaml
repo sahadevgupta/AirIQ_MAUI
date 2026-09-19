@@ -44,7 +44,7 @@
               RowSpacing="10">
             <CollectionView ItemsSource="{Binding Passengers}"
                             ItemTemplate="{StaticResource PassengerTemplateSelector}"
-                            BackgroundColor="White"
+                            BackgroundColor="{StaticResource BackgroundColor}"
                             x:Name="passengerList">
                 <CollectionView.Header>
                     <Grid Margin="10"
@@ -186,15 +186,32 @@
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
-            </HorizontalStackLayout >
+            </HorizontalStackLayout>
 
-            <Button
-                Grid.Row="2"
-                Margin="10,-10,10,10"
-                Text="{x:Static resx:AppResource.ConfirmBooking}"
-                Command="{Binding ConfirmBookingCommand}"
-                Style="{StaticResource ButtonCorneredStyle}"
-                VerticalOptions="End"/>
+            <Grid  Grid.Row="2"
+                   ColumnDefinitions="*,*"
+                   ColumnSpacing="10"
+                   BackgroundColor="White"
+                   Margin="10,-10,10,10">
+
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Total"/>
+                            <Span Text="&#10;"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Button Grid.Column="1"
+                        Text="{x:Static resx:AppResource.ConfirmBooking}"
+                        Command="{Binding ConfirmBookingCommand}"
+                        Style="{StaticResource SmallBorderButtonStyle}"
+                        BackgroundColor="{StaticResource PrimaryColor}"
+                        TextColor="White"
+                        VerticalOptions="Center"/>
+            </Grid>
+
         </Grid>
     </views:BasePage.PageContent>
 

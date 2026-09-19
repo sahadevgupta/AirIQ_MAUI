@@ -25,6 +25,7 @@ namespace AirIQ.ViewModels
 
         private List<AccountLedgerRecord> accountLedgerRecordsTemp = new();
         private bool isExportingAccountLedgerRecords;
+        private bool isLoadingMoreAccountLedgerRecords;
 
         [ObservableProperty]
         private ObservableRangeCollection<AccountLedgerRecord> _accountLedgerRecords = new();
@@ -46,10 +47,10 @@ namespace AirIQ.ViewModels
                     x.Destination.ContainsIgnoreCase(searchKey));
 
             if (FromDate.HasValue)
-                filtered = filtered.Where(x => x.Date.Date >= FromDate.Value.Date);
+                filtered = filtered.Where(x => x.Date.HasValue && x.Date.Value.Date >= FromDate.Value.Date);
 
             if (ToDate.HasValue)
-                filtered = filtered.Where(x => x.Date.Date <= ToDate.Value.Date);
+                filtered = filtered.Where(x => x.Date.HasValue && x.Date.Value.Date <= ToDate.Value.Date);
 
             AccountLedgerRecords.ReplaceRange(filtered);
         }
@@ -67,6 +68,10 @@ namespace AirIQ.ViewModels
         [RelayCommand]
         private async Task LoadMoreAsync()
         {
+            if (isLoadingMoreAccountLedgerRecords)
+                return;
+
+            isLoadingMoreAccountLedgerRecords = true;
             try
             {
                 using (LoadingService.Show())
@@ -88,6 +93,10 @@ namespace AirIQ.ViewModels
             catch (Exception exception)
             {
                 HandleException(exception);
+            }
+            finally
+            {
+                isLoadingMoreAccountLedgerRecords = false;
             }
         }
 

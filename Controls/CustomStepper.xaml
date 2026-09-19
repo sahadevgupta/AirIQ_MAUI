@@ -12,13 +12,17 @@
                      BorderWidth="1"
                      Clicked="minus_Clicked"/>
 
-        <local:BorderlessEntry Text="{Binding Value, Source={x:Reference stepperView}}"
+        <local:BorderlessEntry x:Name="valueEntry"
+                               Text="{Binding Value, Source={x:Reference stepperView}}"
                                Style="{StaticResource FieldEntryStyleGreyRegular}"
                                FontAttributes="Bold"
                                MinimumWidthRequest="25"
                                HorizontalTextAlignment="Center"
                                MaxLength="99"
-                               VerticalOptions="Center"/>
+                               VerticalOptions="Center"
+                               Keyboard="Numeric"
+                               TextChanged="valueEntry_TextChanged"
+                               Unfocused="valueEntry_Unfocused"/>
 
         <ImageButton Source="circle_plus"
                      BorderWidth="1"

@@ -78,8 +78,15 @@ namespace AirIQ.ViewModels
 
         private async Task GetAvailableBookingDatesAsync()
         {
-            var dates = await flightService.GetAvailableBookingDatesAsync(SelectedSourceAirport?.Origin!, SelectedDestinationAirport?.Destination!);
-            AllowedDates = new ObservableCollection<DateTime>(dates);
+            try
+            {
+                var dates = await flightService.GetAvailableBookingDatesAsync(SelectedSourceAirport?.Origin!, SelectedDestinationAirport?.Destination!);
+                AllowedDates = new ObservableCollection<DateTime>(dates);
+            }
+            catch (Exception exception)
+            {
+                HandleException(exception);
+            }
         }
 
         public async Task InitializeDataAsync()
@@ -104,7 +111,13 @@ namespace AirIQ.ViewModels
 
         private void GetDestinationAirports()
         {
-            DestinationAirports = new ObservableCollection<FlightRoute>(Airports!.Where(x => x.Origin == SelectedSourceAirport?.Origin && !string.IsNullOrEmpty(x.Destination))
+            if (Airports is null)
+            {
+                DestinationAirports = new();
+                return;
+            }
+
+            DestinationAirports = new ObservableCollection<FlightRoute>(Airports.Where(x => x.Origin == SelectedSourceAirport?.Origin && !string.IsNullOrEmpty(x.Destination))
                                                                            .Distinct());
         }
 

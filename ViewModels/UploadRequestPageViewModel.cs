@@ -1,3 +1,4 @@
+using AirIQ.Enums;
 using AirIQ.Models.Request;
 using AirIQ.Resources.Strings;
 using AirIQ.Services.Interfaces;
@@ -45,7 +46,7 @@ namespace AirIQ.ViewModels
 
         private bool ValidateRequest()
         {
-            IsAmountErrorVisible = Amount <= 0;
+            IsAmountErrorVisible = !Amount.HasValue || Amount <= 0;
             IsReferenceNumberErrorVisible = string.IsNullOrWhiteSpace(ReferenceNumber);
             IsPaymentModeErrorVisible = string.IsNullOrWhiteSpace(SelectedPaymentMode);
 
@@ -84,25 +85,36 @@ namespace AirIQ.ViewModels
 
             IsBusy = true;
 
-            bool response = false;
-            using (LoadingService.Show())
+            try
             {
-
-
-                var request = new UploadRequest
+                bool response;
+                using (LoadingService.Show())
                 {
-                    Amount = Amount.GetValueOrDefault(),
-                    FilePath = FilePath,
-                    Message = Message,
-                    PaymentMode = SelectedPaymentMode,
-                    RefNumber = ReferenceNumber
-                };
+                    var request = new UploadRequest
+                    {
+                        Amount = Amount.GetValueOrDefault(),
+                        FilePath = FilePath,
+                        Message = Message,
+                        PaymentMode = SelectedPaymentMode,
+                        RefNumber = ReferenceNumber
+                    };
 
-                response = await operationsService.UploadRequestAsync(request);
+                    response = await operationsService.UploadRequestAsync(request);
+                }
+
+                if (response)
+                    await ShellNavigationService.NavigateBack();
+                else
+                    await ShowAlertAsync(AppResource.UploadRequestFailedTryAgain, AlertType.Error);
             }
-
-            if (response)
-                await ShellNavigationService.NavigateBack();
+            catch (Exception exception)
+            {
+                HandleException(exception);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         #endregion

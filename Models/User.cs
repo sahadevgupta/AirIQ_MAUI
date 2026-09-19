@@ -14,7 +14,7 @@ public class User
 
     public string? Country { get; set; }
 
-    public double Balance { get; set; }
+    public double? Balance { get; set; }
 
     public string? EmailId { get; set; }
 

@@ -64,6 +64,15 @@ public partial class TravelDatesPageViewModel(IViewModelParameters viewModelPara
     [ObservableProperty]
     private ObservableCollection<DateTime> _allowedDates = new();
 
+    /// <summary>
+    ///     Whether <see cref="AllowedDates"/> reflects a completed server response for the current
+    ///     route, as opposed to not having been fetched yet (or the fetch having failed). While this
+    ///     is false, every day is treated as unavailable rather than defaulting to open - see
+    ///     <see cref="RecomputeSelectionState"/>.
+    /// </summary>
+    [ObservableProperty]
+    private bool _allowedDatesLoaded;
+
     #endregion
 
     #region [ Property Changed ]
@@ -164,6 +173,7 @@ public partial class TravelDatesPageViewModel(IViewModelParameters viewModelPara
         var returnDate = ReturnDate?.Date;
         bool hasRange = departure.HasValue && returnDate.HasValue && returnDate.Value > departure.Value;
         bool restrictToAllowedDates = _allowedDateSet.Count > 0;
+        bool notYetLoaded = !AllowedDatesLoaded;
 
         foreach (var month in Months)
         {
@@ -181,7 +191,8 @@ public partial class TravelDatesPageViewModel(IViewModelParameters viewModelPara
 
                     bool isPast = day.Date < Today;
                     bool isBeforeDeparture = IsSelectingReturn && departure.HasValue && day.Date < departure.Value;
-                    bool isUnavailable = !IsSelectingReturn && restrictToAllowedDates && !_allowedDateSet.Contains(day.Date);
+                    bool isUnavailable = !IsSelectingReturn &&
+                        (notYetLoaded || (restrictToAllowedDates && !_allowedDateSet.Contains(day.Date)));
 
                     day.IsDisabled = !day.IsCurrentMonth || isPast || isBeforeDeparture || isUnavailable;
                     day.IsToday = day.IsCurrentMonth && day.Date == Today;
@@ -247,10 +258,13 @@ public partial class TravelDatesPageViewModel(IViewModelParameters viewModelPara
     ///     navigating in, so opening the picker only ever means updating a few properties on an
     ///     already-built calendar.
     /// </summary>
-    public void PrepareForSelection(DateTime? departureDate, ObservableCollection<DateTime> allowedDates, DateSelectionStage stage)
+    public void PrepareForSelection(DateTime? departureDate, ObservableCollection<DateTime> allowedDates, bool allowedDatesLoaded, DateSelectionStage stage)
     {
         Preload();
 
+        // Set before AllowedDates so RecomputeSelectionState (triggered by OnAllowedDatesChanged)
+        // sees the right loaded state for this route on the first pass.
+        AllowedDatesLoaded = allowedDatesLoaded;
         AllowedDates = allowedDates;
         DepartureDate = departureDate;
 

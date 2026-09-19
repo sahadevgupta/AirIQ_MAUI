@@ -96,7 +96,7 @@ public partial class ExtendedEntry : ContentView
     public Color LeadingIconColor
     {
         get => (Color)GetValue(LeadingIconColorProperty);
-        set => SetValue(LeadingIconProperty, value);
+        set => SetValue(LeadingIconColorProperty, value);
     }
 
     public static readonly BindableProperty TrailingIconColorProperty =

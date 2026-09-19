@@ -8,12 +8,24 @@ namespace AirIQ.Extensions
     {
         private static List<Airport>? _airports;
         private static Dictionary<string, Airport>? _airportsByIata;
+        private static Task? _initializeTask;
+        private static readonly object _initializeLock = new();
 
         /// <summary>
         /// Load airports.json from Resources/Raw.
-        /// Call once during app startup.
+        /// Call once during app startup. Safe to call multiple times/concurrently;
+        /// lookups below await this same task so they never race the initial load.
         /// </summary>
-        public static async Task InitializeAsync()
+        public static Task InitializeAsync()
+        {
+            lock (_initializeLock)
+            {
+                _initializeTask ??= InitializeCoreAsync();
+                return _initializeTask;
+            }
+        }
+
+        private static async Task InitializeCoreAsync()
         {
             if (_airports != null)
                 return;
@@ -36,13 +48,32 @@ namespace AirIQ.Extensions
         /// <summary>
         /// Returns the first airport matching the city.
         /// </summary>
+        public static async Task<Airport?> GetAirportByCityAsync(this string city)
+        {
+            await InitializeAsync();
+
+            return _airports?.FirstOrDefault(x =>
+                    string.Equals(x.City, city, StringComparison.OrdinalIgnoreCase) && !string.IsNullOrEmpty(x.Iata));
+        }
+
+        /// <summary>
+        /// Returns the first airport matching the city.
+        /// </summary>
         public static Airport? GetAirportByCity(this string city)
         {
-            if (_airports == null)
-                throw new InvalidOperationException("AirportExtensions.InitializeAsync() must be called first.");
+            return city.GetAirportByCityAsync().GetAwaiter().GetResult();
+        }
 
-            return _airports.FirstOrDefault(x =>
-                    string.Equals(x.City, city, StringComparison.OrdinalIgnoreCase) && !string.IsNullOrEmpty(x.Iata));
+        /// <summary>
+        /// Returns all airports for a city.
+        /// </summary>
+        public static async Task<List<Airport>> GetAirportsByCityAsync(this string city)
+        {
+            await InitializeAsync();
+
+            return (_airports ?? new List<Airport>())
+                .Where(x => string.Equals(x.City, city, StringComparison.OrdinalIgnoreCase))
+                .ToList();
         }
 
         /// <summary>
@@ -50,12 +81,7 @@ namespace AirIQ.Extensions
         /// </summary>
         public static List<Airport> GetAirportsByCity(this string city)
         {
-            if (_airports == null)
-                throw new InvalidOperationException("AirportExtensions.InitializeAsync() must be called first.");
-
-            return _airports
-                .Where(x => string.Equals(x.City, city, StringComparison.OrdinalIgnoreCase))
-                .ToList();
+            return city.GetAirportsByCityAsync().GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -77,15 +103,22 @@ namespace AirIQ.Extensions
         /// <summary>
         /// Returns the airport matching the Iata Code.
         /// </summary>
-        public static Airport? GetAirportByIata(this string? iataCode)
+        public static async Task<Airport?> GetAirportByIataAsync(this string? iataCode)
         {
-            if (_airportsByIata == null)
-                throw new InvalidOperationException("AirportExtensions.InitializeAsync() must be called first.");
-
             if (string.IsNullOrWhiteSpace(iataCode))
                 return null;
 
-            return _airportsByIata.GetValueOrDefault(iataCode);
+            await InitializeAsync();
+
+            return _airportsByIata?.GetValueOrDefault(iataCode);
+        }
+
+        /// <summary>
+        /// Returns the airport matching the Iata Code.
+        /// </summary>
+        public static Airport? GetAirportByIata(this string? iataCode)
+        {
+            return iataCode.GetAirportByIataAsync().GetAwaiter().GetResult();
         }
     }
 }

@@ -22,6 +22,7 @@ namespace AirIQ.Extensions
                             .AddTransient<RefundsRecordPageViewModel>()
                             .AddTransient<TempCreditPageViewModel>()
                             .AddTransient<GroupQueryPageViewModel>()
+                            .AddTransient<SummaryPageViewModel>()
                             .AddTransient<AccountLedgerRecordPageViewModel>()
                             .AddTransient<UploadRequestPageViewModel>()
                             .AddTransient<OnlineRechargePageViewModel>()

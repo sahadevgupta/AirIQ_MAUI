@@ -30,15 +30,21 @@ public static class TempCreditRecordExcelExporter
         {
             worksheet.Cell(row, 1).Value = record.CreditId;
 
-            var dateCell = worksheet.Cell(row, 2);
-            dateCell.Value = record.Date;
-            dateCell.Style.DateFormat.Format = "dd MMM yyyy HH:mm";
+            if (record.Date.HasValue)
+            {
+                var dateCell = worksheet.Cell(row, 2);
+                dateCell.Value = record.Date.Value;
+                dateCell.Style.DateFormat.Format = "dd MMM yyyy HH:mm";
+            }
 
             worksheet.Cell(row, 3).Value = record.Name;
 
-            var amountCell = worksheet.Cell(row, 4);
-            amountCell.Value = record.Amount;
-            amountCell.Style.NumberFormat.Format = "₹ #,##0.00";
+            if (record.Amount.HasValue)
+            {
+                var amountCell = worksheet.Cell(row, 4);
+                amountCell.Value = record.Amount.Value;
+                amountCell.Style.NumberFormat.Format = "₹ #,##0.00";
+            }
 
             row++;
         }

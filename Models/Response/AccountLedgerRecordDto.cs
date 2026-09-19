@@ -8,7 +8,7 @@ namespace AirIQ.Models.Response
         public string? RefNo { get; set; }
 
         [JsonPropertyName("Date")]
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
 
         [JsonPropertyName("Particulars")]
         public string? Particulars { get; set; }
@@ -20,9 +20,9 @@ namespace AirIQ.Models.Response
         public DateTime? TravelDate { get; set; }
 
         [JsonPropertyName("Amount")]
-        public double Amount { get; set; }
+        public double? Amount { get; set; }
 
         [JsonPropertyName("Balance")]
-        public double Balance { get; set; }
+        public double? Balance { get; set; }
     }
 }

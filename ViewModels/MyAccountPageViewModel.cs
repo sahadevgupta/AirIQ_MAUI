@@ -20,7 +20,7 @@ namespace AirIQ.ViewModels
 
         public string AppVersionDisplay => $"v{AppInfo.Current.VersionString}";
 
-        public string WalletBalanceDisplay => $"₹ {CurrentUser.Balance:N2}";
+        public string WalletBalanceDisplay => CurrentUser.Balance.HasValue ? $"₹ {CurrentUser.Balance:N2}" : "--";
 
         public override Task LoadDataWhenOnAppearing(CancellationToken cancellationToken = default)
         {

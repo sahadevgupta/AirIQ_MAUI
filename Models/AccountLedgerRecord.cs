@@ -4,7 +4,7 @@ namespace AirIQ.Models
     {
         public string? RefNo { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
 
         public string? Particulars { get; set; }
 
@@ -12,8 +12,8 @@ namespace AirIQ.Models
 
         public DateTime? TravelDate { get; set; }
 
-        public double Amount { get; set; }
+        public double? Amount { get; set; }
 
-        public double Balance { get; set; }
+        public double? Balance { get; set; }
     }
 }

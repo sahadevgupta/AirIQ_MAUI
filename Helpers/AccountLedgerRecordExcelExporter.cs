@@ -30,9 +30,12 @@ public static class AccountLedgerRecordExcelExporter
         {
             worksheet.Cell(row, 1).Value = record.RefNo;
 
-            var dateCell = worksheet.Cell(row, 2);
-            dateCell.Value = record.Date;
-            dateCell.Style.DateFormat.Format = "dd MMM yyyy HH:mm";
+            if (record.Date.HasValue)
+            {
+                var dateCell = worksheet.Cell(row, 2);
+                dateCell.Value = record.Date.Value;
+                dateCell.Style.DateFormat.Format = "dd MMM yyyy HH:mm";
+            }
 
             worksheet.Cell(row, 3).Value = record.Particulars;
             worksheet.Cell(row, 4).Value = record.Destination;
@@ -44,13 +47,19 @@ public static class AccountLedgerRecordExcelExporter
                 travelDateCell.Style.DateFormat.Format = "dd MMM yyyy HH:mm";
             }
 
-            var amountCell = worksheet.Cell(row, 6);
-            amountCell.Value = record.Amount;
-            amountCell.Style.NumberFormat.Format = "₹ #,##0.00";
+            if (record.Amount.HasValue)
+            {
+                var amountCell = worksheet.Cell(row, 6);
+                amountCell.Value = record.Amount.Value;
+                amountCell.Style.NumberFormat.Format = "₹ #,##0.00";
+            }
 
-            var balanceCell = worksheet.Cell(row, 7);
-            balanceCell.Value = record.Balance;
-            balanceCell.Style.NumberFormat.Format = "₹ #,##0.00";
+            if (record.Balance.HasValue)
+            {
+                var balanceCell = worksheet.Cell(row, 7);
+                balanceCell.Value = record.Balance.Value;
+                balanceCell.Style.NumberFormat.Format = "₹ #,##0.00";
+            }
 
             row++;
         }

@@ -28,6 +28,7 @@ namespace AirIQ.ViewModels
 
         private List<TempCreditRecord> tempCreditRecordsTemp = new();
         private bool isExportingTempCreditRecords;
+        private bool isLoadingMoreTempCreditRecords;
 
         [ObservableProperty]
         private ObservableRangeCollection<TempCreditRecord> _tempCreditRecords = new();
@@ -35,7 +36,7 @@ namespace AirIQ.ViewModels
         [ObservableProperty]
         private string? _searchText;
 
-        public double TotalAmount => TempCreditRecords.Sum(x => x.Amount);
+        public double TotalAmount => TempCreditRecords.Sum(x => x.Amount ?? 0);
 
         #endregion
 
@@ -49,10 +50,10 @@ namespace AirIQ.ViewModels
                 filtered = filtered.Where(x => x.Name.ContainsIgnoreCase(searchKey));
 
             if (FromDate.HasValue)
-                filtered = filtered.Where(x => x.Date.Date >= FromDate.Value.Date);
+                filtered = filtered.Where(x => x.Date.HasValue && x.Date.Value.Date >= FromDate.Value.Date);
 
             if (ToDate.HasValue)
-                filtered = filtered.Where(x => x.Date.Date <= ToDate.Value.Date);
+                filtered = filtered.Where(x => x.Date.HasValue && x.Date.Value.Date <= ToDate.Value.Date);
 
             TempCreditRecords.ReplaceRange(filtered);
             OnPropertyChanged(nameof(TotalAmount));
@@ -71,6 +72,10 @@ namespace AirIQ.ViewModels
         [RelayCommand]
         private async Task LoadMoreAsync()
         {
+            if (isLoadingMoreTempCreditRecords)
+                return;
+
+            isLoadingMoreTempCreditRecords = true;
             try
             {
                 using (LoadingService.Show())
@@ -97,6 +102,10 @@ namespace AirIQ.ViewModels
             catch (Exception exception)
             {
                 HandleException(exception);
+            }
+            finally
+            {
+                isLoadingMoreTempCreditRecords = false;
             }
         }
 

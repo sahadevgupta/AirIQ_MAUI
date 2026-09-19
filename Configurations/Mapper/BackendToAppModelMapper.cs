@@ -116,6 +116,16 @@ public static class BackendToAppModelMapper
         return refundRecordDtos.Select(converter.Convert);
     }
 
+    public static IEnumerable<GroupQuery> GetGroupQueryRecords(IEnumerable<GroupQueryResponseDto> groupQueryRecordDtos)
+    {
+        if (groupQueryRecordDtos == null)
+        {
+            return new List<GroupQuery>();
+        }
+        var converter = new GroupQueryDtoToGroupQueryConverter();
+        return groupQueryRecordDtos.Select(converter.Convert);
+    }
+
     public static IEnumerable<AccountLedgerRecord> GetAccountLedgerRecords(IEnumerable<AccountLedgerRecordDto> accountLedgerRecordDtos)
     {
         if (accountLedgerRecordDtos == null)

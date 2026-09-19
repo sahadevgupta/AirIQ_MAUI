@@ -68,7 +68,7 @@ namespace AirIQ.Models.Response
             get
             {
                 var parts = Sector?.Split(new string[] { "//" }, StringSplitOptions.RemoveEmptyEntries);
-                if (parts?.Length > 0)
+                if (parts?.Length > 1)
                 {
                     return parts[1].Trim();
                 }

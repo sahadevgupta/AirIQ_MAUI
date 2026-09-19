@@ -25,6 +25,7 @@ namespace AirIQ.ViewModels
 
         private List<RefundRecord> refundRecordsTemp = new();
         private bool isExportingRefundRecords;
+        private bool isLoadingMoreRefundRecords;
 
         [ObservableProperty]
         private ObservableRangeCollection<RefundRecord> _refundRecords = new();
@@ -46,10 +47,10 @@ namespace AirIQ.ViewModels
                     x.FDestName.ContainsIgnoreCase(searchKey));
 
             if (FromDate.HasValue)
-                filtered = filtered.Where(x => x.EntryDate.Date >= FromDate.Value.Date);
+                filtered = filtered.Where(x => x.EntryDate.HasValue && x.EntryDate.Value.Date >= FromDate.Value.Date);
 
             if (ToDate.HasValue)
-                filtered = filtered.Where(x => x.EntryDate.Date <= ToDate.Value.Date);
+                filtered = filtered.Where(x => x.EntryDate.HasValue && x.EntryDate.Value.Date <= ToDate.Value.Date);
 
             RefundRecords.ReplaceRange(filtered);
         }
@@ -67,6 +68,10 @@ namespace AirIQ.ViewModels
         [RelayCommand]
         private async Task LoadMoreAsync()
         {
+            if (isLoadingMoreRefundRecords)
+                return;
+
+            isLoadingMoreRefundRecords = true;
             try
             {
                 using (LoadingService.Show())
@@ -88,6 +93,10 @@ namespace AirIQ.ViewModels
             catch (Exception exception)
             {
                 HandleException(exception);
+            }
+            finally
+            {
+                isLoadingMoreRefundRecords = false;
             }
         }
 

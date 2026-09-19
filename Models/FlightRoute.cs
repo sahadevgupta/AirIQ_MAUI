@@ -31,7 +31,7 @@ public class FlightRoute
         get
         {
             var parts = Sector?.Split(new string[] { "//" }, StringSplitOptions.RemoveEmptyEntries);
-            if (parts?.Length > 0)
+            if (parts?.Length > 1)
             {
                 DestinationAiportName = parts[1].Trim();
                 return $"{parts[1].Trim()} ({Destination})";

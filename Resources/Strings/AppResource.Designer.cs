@@ -860,7 +860,16 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("EnterPANNo", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter a valid PAN number.
+        /// </summary>
+        internal static string PanNoFormatInvalid {
+            get {
+                return ResourceManager.GetString("PanNoFormatInvalid", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Company GST No.
         /// </summary>
@@ -896,7 +905,16 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("OnlineOTA1", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Online OTA is required.
+        /// </summary>
+        internal static string OnlineOTA1IsRequired {
+            get {
+                return ResourceManager.GetString("OnlineOTA1IsRequired", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Online OTA 2.
         /// </summary>
@@ -932,7 +950,16 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("SeriesOTA1", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Series OTA is required.
+        /// </summary>
+        internal static string SeriesOTA1IsRequired {
+            get {
+                return ResourceManager.GetString("SeriesOTA1IsRequired", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
@@ -1139,7 +1166,61 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("LoginFailedTryAgain", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Please add passenger details before confirming the booking..
+        /// </summary>
+        internal static string PassengerDetailsRequired {
+            get {
+                return ResourceManager.GetString("PassengerDetailsRequired", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to load flight details. Please select a flight again..
+        /// </summary>
+        internal static string FlightDetailsUnavailable {
+            get {
+                return ResourceManager.GetString("FlightDetailsUnavailable", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Password reset failed. Please try again..
+        /// </summary>
+        internal static string PasswordResetFailedTryAgain {
+            get {
+                return ResourceManager.GetString("PasswordResetFailedTryAgain", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to send OTP. Please check the entered details and try again..
+        /// </summary>
+        internal static string UnableToSendOtpTryAgain {
+            get {
+                return ResourceManager.GetString("UnableToSendOtpTryAgain", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The OTP you entered is invalid or has expired..
+        /// </summary>
+        internal static string InvalidOrExpiredOtp {
+            get {
+                return ResourceManager.GetString("InvalidOrExpiredOtp", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Upload request failed. Please try again..
+        /// </summary>
+        internal static string UploadRequestFailedTryAgain {
+            get {
+                return ResourceManager.GetString("UploadRequestFailedTryAgain", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to ! .
         /// </summary>
@@ -2824,6 +2905,15 @@ namespace AirIQ.Resources.Strings {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to cancel this booking?.
+        /// </summary>
+        internal static string CancelBookingConfirmationMessage {
+            get {
+                return ResourceManager.GetString("CancelBookingConfirmationMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Push Notifications.
         /// </summary>
         internal static string PushNotifications {
@@ -3434,7 +3524,16 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("EnterPincode", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Pin code is required.
+        /// </summary>
+        internal static string PinCodeIsRequired {
+            get {
+                return ResourceManager.GetString("PinCodeIsRequired", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Address.
         /// </summary>
@@ -3452,7 +3551,16 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("EnterAddress", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Address is required.
+        /// </summary>
+        internal static string AddressIsRequired {
+            get {
+                return ResourceManager.GetString("AddressIsRequired", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Specify your Locality.
         /// </summary>

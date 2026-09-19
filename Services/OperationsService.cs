@@ -162,6 +162,12 @@ namespace AirIQ.Services
                                                        file: streamPart)
                                                       .ConfigureAwait(false);
 
+                if (!apiResponse.IsSuccessStatusCode)
+                {
+                    HandleException(new Exception(apiResponse.Error?.Message ?? "Failed to upload request."));
+                    return false;
+                }
+
                 return true;
             }
             catch (NotConnectedException notConntectedException)

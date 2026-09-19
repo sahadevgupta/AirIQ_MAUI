@@ -127,6 +127,10 @@ public partial class SignupPageViewModel : BaseViewModel
     [ObservableProperty]
     private bool _isNearestAirportErrorVisible;
     [ObservableProperty]
+    private bool _isPinCodeErrorVisible;
+    [ObservableProperty]
+    private bool _isAddressErrorVisible;
+    [ObservableProperty]
     private bool _isPrimaryBusinessTypeErrorVisible;
     [ObservableProperty]
     private bool _isPrimaryMonthlyIncomeErrorVisible;
@@ -134,6 +138,10 @@ public partial class SignupPageViewModel : BaseViewModel
     private bool _isSecondaryBusinessTypeErrorVisible;
     [ObservableProperty]
     private bool _isSecondaryMonthlyIncomeErrorVisible;
+    [ObservableProperty]
+    private bool _isOnlineOta1ErrorVisible;
+    [ObservableProperty]
+    private bool _isSeriesOta1ErrorVisible;
 
     [ObservableProperty]
     private string? _whatsAppNumber;
@@ -504,12 +512,16 @@ public partial class SignupPageViewModel : BaseViewModel
         IsDistrictErrorVisible = SelectedDistrict is null;
         IsCityErrorVisible = SelectedCity is null;
         IsNearestAirportErrorVisible = SelectedAirport is null;
+        IsPinCodeErrorVisible = string.IsNullOrWhiteSpace(Signup.PinCode);
+        IsAddressErrorVisible = string.IsNullOrWhiteSpace(Signup.Add1);
 
         return !IsCountryErrorVisible
             && !IsStateErrorVisible
             && !IsDistrictErrorVisible
             && !IsCityErrorVisible
-            && !IsNearestAirportErrorVisible;
+            && !IsNearestAirportErrorVisible
+            && !IsPinCodeErrorVisible
+            && !IsAddressErrorVisible;
     }
 
     private bool ValidateBusinessInformationStep()
@@ -522,10 +534,15 @@ public partial class SignupPageViewModel : BaseViewModel
         IsSecondaryMonthlyIncomeErrorVisible = SelectedSecondaryBusinessType is not null
                                             && string.IsNullOrWhiteSpace(SecondaryMonthlyIncome);
 
+        IsOnlineOta1ErrorVisible = string.IsNullOrWhiteSpace(Signup.OnlineOta1);
+        IsSeriesOta1ErrorVisible = string.IsNullOrWhiteSpace(Signup.SeriesOta1);
+
         return !IsPrimaryBusinessTypeErrorVisible
             && !IsPrimaryMonthlyIncomeErrorVisible
             && !IsSecondaryBusinessTypeErrorVisible
-            && !IsSecondaryMonthlyIncomeErrorVisible;
+            && !IsSecondaryMonthlyIncomeErrorVisible
+            && !IsOnlineOta1ErrorVisible
+            && !IsSeriesOta1ErrorVisible;
     }
 
     private bool ValidateMandatoryFieldsForSubmit()
@@ -764,6 +781,10 @@ public partial class SignupPageViewModel : BaseViewModel
                 }
             }
         }
+        catch (Exception exception)
+        {
+            HandleException(exception);
+        }
         finally
         {
             IsBusy = false;
@@ -775,6 +796,13 @@ public partial class SignupPageViewModel : BaseViewModel
     {
         if (string.IsNullOrWhiteSpace(Signup.PanNo) || string.IsNullOrWhiteSpace(FullName))
             return;
+
+        // Client-side format check before spending a call on the paid Zoop verification API.
+        if (!Regex.IsMatch(Signup.PanNo, AppConstants.PanRegex))
+        {
+            await _dialogService.ShowStatusAlertAsync(AppResource.PanNoFormatInvalid, false, 3500);
+            return;
+        }
 
         try
         {

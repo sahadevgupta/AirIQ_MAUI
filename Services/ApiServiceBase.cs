@@ -127,11 +127,29 @@ public abstract class ApiServiceBase
 
     public void ErrorResponse<T>(ServiceResponse<T> response)
     {
-        // if (response.Error != null)
-        // {
-        //     Log.Error(CorrelationId + response.Error.ErrorCode.ToString(), response.Error.Message);
-        //     SetException(response);
-        //     return;
-        // }
+        if (response == null)
+        {
+            return;
+        }
+
+        var errorMessage = !string.IsNullOrWhiteSpace(response.Message)
+            ? response.Message
+            : "An error occurred while processing the request.";
+
+        SentrySdk.CaptureMessage($"API business error {response.ErrorCode}: {errorMessage}", SentryLevel.Error);
+
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            Debug.WriteLine($"ApiServiceBase ErrorResponse  Code: {response.ErrorCode}, Status: {response.Status}, Message: {errorMessage}");
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
+            ToastDuration duration = ToastDuration.Short;
+            double fontSize = 14;
+
+            var toast = Toast.Make(errorMessage, duration, fontSize);
+
+            toast.Show(cancellationTokenSource.Token);
+        });
     }
 }

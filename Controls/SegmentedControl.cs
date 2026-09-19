@@ -125,8 +125,11 @@ namespace AirIQ.Controls
         static void OnItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var tabbedView = bindable as SegmentedControl;
-            var scrollView = (tabbedView.Content as ScrollView);
-            var innerStackLayout = scrollView.Content as StackLayout;
+            var scrollView = (tabbedView?.Content as ScrollView);
+            var innerStackLayout = scrollView?.Content as StackLayout;
+
+            if (tabbedView == null || scrollView == null || innerStackLayout == null)
+                return;
 
             void newValueINotifyCollectionChanged_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
             {
@@ -175,7 +178,7 @@ namespace AirIQ.Controls
                 innerStackLayout.Children.Clear();
                 IEnumerable items = (IEnumerable)newValue;
 
-                if (items.Any())
+                if (items != null && items.Any())
                 {
                     foreach (var item in items)
                     {
@@ -231,6 +234,9 @@ namespace AirIQ.Controls
     {
         public static bool Any(this IEnumerable source)
         {
+            if (source is null)
+                return false;
+
             foreach (var item in source)
             {
                 return true;

@@ -56,11 +56,15 @@
                         <controls:ExtendedEntry Title="{x:Static resx:AppResource.PinCode}"
                                                 SuffixText="*"
                                                 PlaceholderText="{x:Static resx:AppResource.EnterPincode}"
-                                                Text="{Binding Signup.PinCode}"/>
+                                                Text="{Binding Signup.PinCode}"
+                                                IsErrorViewVisible="{Binding IsPinCodeErrorVisible}"
+                                                ErrorText="{x:Static resx:AppResource.PinCodeIsRequired}"/>
                         <controls:ExtendedEntry Title="{x:Static resx:AppResource.Address}"
                                                 SuffixText="*"
                                                 PlaceholderText="{x:Static resx:AppResource.EnterAddress}"
-                                                Text="{Binding Signup.Add1}"/>
+                                                Text="{Binding Signup.Add1}"
+                                                IsErrorViewVisible="{Binding IsAddressErrorVisible}"
+                                                ErrorText="{x:Static resx:AppResource.AddressIsRequired}"/>
                         <controls:ExtendedEntry Title="{x:Static resx:AppResource.SpecifyYourLocality}"
                                                 SuffixText="*"
                                                 PlaceholderText="{x:Static resx:AppResource.EnterLocality}"

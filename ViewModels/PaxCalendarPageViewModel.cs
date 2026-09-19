@@ -115,15 +115,22 @@ namespace AirIQ.ViewModels
 
         private async Task LoadFlightBookingsAsync(DateTime travelDate)
         {
-            using (LoadingService.Show())
+            try
             {
-                var result = await operationsService.GetPaxCalendarFlightAsync(
-                    AppConfiguration.CurrentUser?.AgencyId ?? 0,
+                using (LoadingService.Show())
+                {
+                    var result = await operationsService.GetPaxCalendarFlightAsync(
+                        AppConfiguration.CurrentUser?.AgencyId ?? 0,
 "2026-09-01");
-                // travelDate.ToString("yyyy-MM-dd"));
+                    // travelDate.ToString("yyyy-MM-dd"));
 
-                flightBookingsTemp = result?.ToList() ?? new List<PaxCalendarFlightDto>();
-                FilterFlightBookings(SearchText);
+                    flightBookingsTemp = result?.ToList() ?? new List<PaxCalendarFlightDto>();
+                    FilterFlightBookings(SearchText);
+                }
+            }
+            catch (Exception exception)
+            {
+                HandleException(exception);
             }
         }
 
