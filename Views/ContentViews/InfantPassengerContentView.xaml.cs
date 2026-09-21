@@ -12,6 +12,16 @@ public partial class InfantPassengerContentView : ContentView
 		get => (ICommand)GetValue(SaveCommandProperty);
 		set => SetValue(SaveCommandProperty, value);
 	}
+
+	public static readonly BindableProperty RemoveCommandProperty =
+		BindableProperty.Create(nameof(RemoveCommand), typeof(ICommand), typeof(InfantPassengerContentView));
+
+	public ICommand RemoveCommand
+	{
+		get => (ICommand)GetValue(RemoveCommandProperty);
+		set => SetValue(RemoveCommandProperty, value);
+	}
+
 	public InfantPassengerContentView()
 	{
 		InitializeComponent();

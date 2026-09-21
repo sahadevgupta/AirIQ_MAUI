@@ -28,7 +28,8 @@
 
             <DataTemplate x:DataType="models:Passenger"
                           x:Key="infantTemplate">
-                <local:InfantPassengerContentView SaveCommand="{Binding BindingContext.CanSaveExecuteCommand,Source={x:Reference passengerList}}"/>
+                <local:InfantPassengerContentView SaveCommand="{Binding BindingContext.CanSaveExecuteCommand,Source={x:Reference passengerList}}"
+                                                  RemoveCommand="{Binding BindingContext.RemoveInfantPassengerCommand,Source={x:Reference passengerList}}"/>
             </DataTemplate>
 
             <dataTemplates:PassengerTemplateSelector AdultTemplate="{StaticResource adultTemplate}"
@@ -189,16 +190,20 @@
             </HorizontalStackLayout>
 
             <Grid  Grid.Row="2"
-                   ColumnDefinitions="*,*"
+                   ColumnDefinitions="4*,6*"
                    ColumnSpacing="10"
                    BackgroundColor="White"
                    Margin="10,-10,10,10">
 
-                <Label>
+                <Label Margin="20,0,0,0">
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="Total"/>
+                            <Span Text="Total"
+                                    TextColor="{StaticResource Gray50}"/>
                             <Span Text="&#10;"/>
+                            <Span Text="{Binding TotalPrice, StringFormat='₹ {0:N2}'}"
+                                  FontAttributes="Bold"
+                                  FontSize="20"/>
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
@@ -206,9 +211,9 @@
                 <Button Grid.Column="1"
                         Text="{x:Static resx:AppResource.ConfirmBooking}"
                         Command="{Binding ConfirmBookingCommand}"
-                        Style="{StaticResource SmallBorderButtonStyle}"
-                        BackgroundColor="{StaticResource PrimaryColor}"
-                        TextColor="White"
+                        Style="{StaticResource ButtonCorneredStyle}"
+                        HeightRequest="45"
+                        Padding="0"
                         VerticalOptions="Center"/>
             </Grid>
 

@@ -116,12 +116,12 @@ public partial class FlightsPageViewModel(IViewModelParameters viewModelParamete
     private async Task CopyFlightDetail(Flight selectedFlight)
     {
         string flightDetails = $@"Sector : {selectedFlight.Origin} - {selectedFlight.Destination}
-            Routing : {selectedFlight.FlightRoute}
-            Travel Date : {selectedFlight.DepartureDateTime:dd MMM - ddd}
-            Airline : {selectedFlight.Airline} , {selectedFlight.FlightNumber}
-            Dep. & Arr. : {selectedFlight.DepartureTime} - {selectedFlight.ArrivalTime}
-            Flight Duration : {selectedFlight.TotalDuration}
-            Fare Per Pax : {selectedFlight.Price:C}";
+    Routing : {selectedFlight.FlightRoute}
+    Travel Date : {selectedFlight.DepartureDateTime:dd MMM - ddd}
+    Airline : {selectedFlight.Airline} , {selectedFlight.FlightNumber}
+    Dep. & Arr. : {selectedFlight.DepartureTime} - {selectedFlight.ArrivalTime}
+    Flight Duration : {selectedFlight.TotalDuration}
+    Fare Per Pax : {selectedFlight.Price:C}";
 
         await CopyToClipBoardAsync(AppResource.DetailsCopied, flightDetails, fontSize: ScalingHelper.ScaleFontSize(16));
     }

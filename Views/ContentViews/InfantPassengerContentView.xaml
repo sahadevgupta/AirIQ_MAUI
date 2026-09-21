@@ -45,24 +45,40 @@
                         </Image>
                     </HorizontalStackLayout>
 
-                    <Image HorizontalOptions="End"
-                           VerticalOptions="Center"
-                           Margin="0,0,16,0">
-                        <Image.Source>
-                            <FontImageSource FontFamily="MyFont"
-                                             Glyph="{x:Static helpers:FontAwesomeIcons.ChevronDown}"
-                                             Size="20"
-                                             Color="Black"/>
-                        </Image.Source>
-                        <Image.Triggers>
-                            <DataTrigger TargetType="Image"
-                                         Binding="{Binding IsSectionOpen}"
-                                         Value="False">
-                                <Setter Property="Rotation"
-                                        Value="270"/>
-                            </DataTrigger>
-                        </Image.Triggers>
-                    </Image>
+                    <HorizontalStackLayout HorizontalOptions="End"
+                                           VerticalOptions="Center"
+                                           Spacing="12"
+                                           Margin="0,0,16,0">
+
+                        <ImageButton Command="{Binding Source={x:Reference infantview}, Path=RemoveCommand}"
+                                     CommandParameter="{Binding Source={x:Reference border}, Path=BindingContext}"
+                                     BackgroundColor="Transparent">
+                            <ImageButton.Source>
+                                <FontImageSource FontFamily="MyFont"
+                                                 Glyph="{x:Static helpers:FontAwesomeIcons.Trash}"
+                                                 Size="18"
+                                                 Color="Red"/>
+                            </ImageButton.Source>
+                        </ImageButton>
+
+                        <Image>
+                            <Image.Source>
+                                <FontImageSource FontFamily="MyFont"
+                                                 Glyph="{x:Static helpers:FontAwesomeIcons.ChevronDown}"
+                                                 Size="20"
+                                                 Color="Black"/>
+                            </Image.Source>
+                            <Image.Triggers>
+                                <DataTrigger TargetType="Image"
+                                             Binding="{Binding IsSectionOpen}"
+                                             Value="False">
+                                    <Setter Property="Rotation"
+                                            Value="270"/>
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+
+                    </HorizontalStackLayout>
 
                 </Grid>
             </toolkit:Expander.Header>

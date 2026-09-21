@@ -246,6 +246,7 @@
 
                                 <Button Text="{Binding Pax, StringFormat={x:Static resx:AppResource.CopySeatsButton}}"
                                         Command="{Binding BindingContext.CopyFlightDetailCommand,Source={x:Reference flightsCollectionView}}"
+                                        CommandParameter="{Binding .}"
                                         Grid.Row="3"
                                         BorderColor="{StaticResource Gray30}"
                                         BorderWidth="1"

@@ -100,9 +100,16 @@ namespace AirIQ.ViewModels
             GetDestinationAirports();
         }
 
+        private AirportSelectionResult? _lastHandledAirportSelectionResult;
+
         partial void OnAirportSelectionResultChanged(AirportSelectionResult? value)
         {
-            if (value?.SelectedAirport is null)
+            if (value is null || ReferenceEquals(value, _lastHandledAirportSelectionResult))
+                return;
+
+            _lastHandledAirportSelectionResult = value;
+
+            if (value.SelectedAirport is null)
                 return;
 
             if (value.FieldType == AirportFieldType.Source)

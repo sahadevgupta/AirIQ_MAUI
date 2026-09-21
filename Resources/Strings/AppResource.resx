@@ -1720,4 +1720,7 @@ Version {0}</value>
   <data name="ViewWallet" xml:space="preserve">
     <value>View Wallet</value>
   </data>
+  <data name="TermsAndConditionsRequired" xml:space="preserve">
+    <value>Please accept the Terms &amp; Conditions to proceed.</value>
+  </data>
 </root>

@@ -4865,5 +4865,14 @@ namespace AirIQ.Resources.Strings {
                 return ResourceManager.GetString("ViewWallet", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Please accept the Terms &amp; Conditions to proceed..
+        /// </summary>
+        internal static string TermsAndConditionsRequired {
+            get {
+                return ResourceManager.GetString("TermsAndConditionsRequired", resourceCulture);
+            }
+        }
     }
 }

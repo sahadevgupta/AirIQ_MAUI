@@ -45,6 +45,9 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
     [ObservableProperty]
     private bool _isTermChecked;
 
+    [ObservableProperty]
+    private double _totalPrice;
+
     private int? adultCount;
 
     private int infantId = 1;
@@ -90,6 +93,7 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
                                                                                       .Select(a => a.Header.Replace("Passenger", "Adult")));
 
                 AddInfantPassengerCommand.NotifyCanExecuteChanged();
+                CalculateTotalPrice();
             }
         }
         catch (Exception ex)
@@ -145,6 +149,20 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
         return infantPassengers?.Count() < adultCount;
     }
 
+    private void CalculateTotalPrice()
+    {
+        if (SelectedAirline is null || Passengers is null)
+        {
+            TotalPrice = 0;
+            return;
+        }
+
+        var adultAndChildCount = Passengers.Count(p => p.Type == PassengerType.Adult || p.Type == PassengerType.Child);
+        var infantCount = Passengers.Count(p => p.Type == PassengerType.Infant);
+
+        TotalPrice = (adultAndChildCount * SelectedAirline.Price) + (infantCount * SelectedAirline.InfantPrice);
+    }
+
 
     #endregion
 
@@ -180,11 +198,22 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
             return;
         }
 
-        bool hasIncompletePassenger = Passengers.Any(p => !p.IsCompleted);
-        bool termsNotAccepted = !IsTermChecked;
+        foreach (var passenger in Passengers)
+        {
+            CanSaveExecute(passenger);
+        }
 
-        if (hasIncompletePassenger || termsNotAccepted)
+        if (Passengers.Any(p => !p.IsCompleted))
+        {
+            await ShowAlertAsync(AppResource.FillMandatoryFieldsCorrectly);
             return;
+        }
+
+        if (!IsTermChecked)
+        {
+            await ShowAlertAsync(AppResource.TermsAndConditionsRequired);
+            return;
+        }
 
         try
         {
@@ -272,6 +301,24 @@ public partial class FlightBookingPageViewModel(IViewModelParameters viewModelPa
         newInfant.TravelWith = AssignInfantToAdult(newInfant, Passengers[newInfant.Id - 1]);
         Passengers?.Add(newInfant);
         AddInfantPassengerCommand.NotifyCanExecuteChanged();
+        CalculateTotalPrice();
+    }
+
+    [RelayCommand]
+    private void RemoveInfantPassenger(Passenger passenger)
+    {
+        if (Passengers is null || passenger is not Infant infant)
+            return;
+
+        var assignedAdult = Passengers.FirstOrDefault(p => p.AssignedInfant == infant);
+        if (assignedAdult != null)
+        {
+            assignedAdult.AssignedInfant = null;
+        }
+
+        Passengers.Remove(infant);
+        AddInfantPassengerCommand.NotifyCanExecuteChanged();
+        CalculateTotalPrice();
     }
 
     #endregion
