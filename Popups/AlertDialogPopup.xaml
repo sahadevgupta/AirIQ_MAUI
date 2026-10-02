@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopup:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="AirIQ.Popups.AlertDialogPopup"
+                 xmlns:mopup="clr-namespace:Mopups.Pages;assembly=Mopups"
+                 xmlns:mopupsanim="clr-namespace:Mopups.Animations;assembly=Mopups"
+                 xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                 BackgroundColor="{StaticResource PopupBackground}"
+                 CloseWhenBackgroundIsClicked="False"
+                 x:Name="alertDialog">
+    <mopup:PopupPage.Animation>
+        <mopupsanim:MoveAnimation
+            DurationIn="300"
+            DurationOut="200"
+            EasingIn="SinIn"
+            EasingOut="SinOut"
+            PositionIn="Center"
+            PositionOut="Center"/>
+    </mopup:PopupPage.Animation>
+
+    <Border x:Name="CardBorder"
+            StrokeShape="RoundRectangle 20"
+            StrokeThickness="0"
+            VerticalOptions="Center"
+            Margin="28,0"
+            BackgroundColor="White"
+            Padding="24,32,24,24">
+        <Border.Shadow>
+            <Shadow Brush="Black"
+                    Opacity="0.18"
+                    Radius="24"
+                    Offset="0,10"/>
+        </Border.Shadow>
+        <VerticalStackLayout Spacing="4">
+
+            <Image WidthRequest="60"
+                   HeightRequest="60"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center">
+                <Image.Source>
+                    <FontImageSource
+                        FontFamily="MyFont"
+                        Size="60"
+                        Glyph="{Binding Icon, Source={x:Reference alertDialog}}"
+                        Color="{Binding IconTintColor, Source={x:Reference alertDialog}}"/>
+                </Image.Source>
+            </Image>
+
+            <Label Style="{StaticResource Label20Bold}"
+                   Margin="0,18,0,0"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   TextColor="{StaticResource Onyx}"
+                   Text="{Binding HeaderTitle, Source={x:Reference alertDialog}}"
+                   IsVisible="{Binding HeaderTitle, Source={x:Reference alertDialog}, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}"/>
+
+            <Label Style="{StaticResource Label14RegularGray50Style}"
+                   FontSize="Body"
+                   Margin="0,8,0,0"
+                   LineBreakMode="WordWrap"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Text="{Binding Message, Source={x:Reference alertDialog}}"/>
+
+            <Grid Margin="0,28,0,0"
+                  ColumnDefinitions="*,*"
+                  ColumnSpacing="12">
+                <Button x:Name="CancelButton"
+                        Grid.Column="0"
+                        Style="{StaticResource ButtonOutlinedStyle}"
+                        Text="{Binding CancelText, Source={x:Reference alertDialog}}"
+                        IsVisible="{Binding IsCancelVisible, Source={x:Reference alertDialog}}"
+                        Clicked="OnCancelClicked"/>
+                <Button x:Name="AcceptButton"
+                        Grid.Column="1"
+                        Style="{StaticResource ButtonCorneredStyle}"
+                        Text="{Binding AcceptText, Source={x:Reference alertDialog}}"
+                        Clicked="OnAcceptClicked">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button"
+                                     Binding="{Binding IsCancelVisible, Source={x:Reference alertDialog}}"
+                                     Value="False">
+                            <Setter Property="Grid.Column"
+                                    Value="0"/>
+                            <Setter Property="Grid.ColumnSpan"
+                                    Value="2"/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+            </Grid>
+
+        </VerticalStackLayout>
+    </Border>
+</mopup:PopupPage>

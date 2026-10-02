@@ -129,18 +129,36 @@ public class DialogService(IPopupNavigation popupNavigation) : IDialogService
 
     public async Task<bool> DisplayAlertAsync(string title, string message, string acceptText, string cancelText)
     {
-        return await MainThread.InvokeOnMainThreadAsync(async () =>
-        {
-            return await Shell.Current.DisplayAlertAsync(title, message, acceptText, cancelText);
-        });
+        var primaryColor = GetThemeColor("PrimaryColor", Colors.Black);
+
+        return await AlertDialogPopup.ShowAsync(
+            popupNavigation,
+            title,
+            message,
+            acceptText,
+            cancelText,
+            FontAwesomeIcons.QuestionCircle,
+            primaryColor);
     }
 
     public async Task DisplayAlertAsync(string title, string message, string cancelText)
     {
-        await MainThread.InvokeOnMainThreadAsync(async () =>
-        {
-            await Shell.Current.DisplayAlertAsync(title, message, cancelText);
-        });
+        var primaryColor = GetThemeColor("PrimaryColor", Colors.Black);
+
+        await AlertDialogPopup.ShowAsync(
+            popupNavigation,
+            title,
+            message,
+            cancelText,
+            null,
+            FontAwesomeIcons.InfoCircle,
+            primaryColor);
+    }
+
+    private static Color GetThemeColor(string key, Color fallback)
+    {
+        var appResources = Application.Current?.Resources;
+        return appResources != null && appResources.TryGetValue(key, out var value) && value is Color color ? color : fallback;
     }
 
     public async Task ShowAlertDialog(string message, AlertType alertType = AlertType.Warning)
